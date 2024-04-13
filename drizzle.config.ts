@@ -13,4 +13,3 @@ export default {
 		connectionString: DATABASE_URL
 	}
 } satisfies Config;
-

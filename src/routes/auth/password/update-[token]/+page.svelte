@@ -1,23 +1,23 @@
 <script lang="ts">
-	import * as Form from '$lib/components/ui/form';
-	import * as Card from '$lib/components/ui/card';
-	import * as Alert from '$lib/components/ui/alert';
-	import { userUpdatePasswordSchema } from '$lib/config/zod-schemas';
-	import type { SuperValidated } from 'sveltekit-superforms';
-	import { Loader2 } from 'lucide-svelte';
-	import { AlertCircle } from 'lucide-svelte';
+import * as Form from '$lib/components/ui/form';
+import * as Card from '$lib/components/ui/card';
+import * as Alert from '$lib/components/ui/alert';
+import { userUpdatePasswordSchema } from '$lib/config/zod-schemas';
+import type { SuperValidated } from 'sveltekit-superforms';
+import { Loader2 } from 'lucide-svelte';
+import { AlertCircle } from 'lucide-svelte';
 
-	type UserUpdatePasswordSchema = typeof userUpdatePasswordSchema;
+type UserUpdatePasswordSchema = typeof userUpdatePasswordSchema;
 
-	export let form: SuperValidated<UserUpdatePasswordSchema>;
+export let form: SuperValidated<UserUpdatePasswordSchema>;
 </script>
 
-<div class="flex items-center justify-center mx-auto max-w-2xl">
+<div class="mx-auto flex max-w-2xl items-center justify-center">
 	<Form.Root
 		let:submitting
 		let:errors
 		method="POST"
-		{form}
+		form={form}
 		schema={userUpdatePasswordSchema}
 		let:config
 	>
@@ -39,14 +39,14 @@
 					</Alert.Root>
 				{/if}
 
-				<Form.Field {config} name="password">
+				<Form.Field config={config} name="password">
 					<Form.Item>
 						<Form.Label>New Password</Form.Label>
 						<Form.Input type="password" />
 						<Form.Validation />
 					</Form.Item>
 				</Form.Field>
-				<Form.Field {config} name="confirmPassword">
+				<Form.Field config={config} name="confirmPassword">
 					<Form.Item>
 						<Form.Label>Confirm New Password</Form.Label>
 						<Form.Input type="password" />

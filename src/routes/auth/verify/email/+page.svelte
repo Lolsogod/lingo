@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { APP_NAME } from '$lib/config/constants';
-	export let data;
+import { APP_NAME } from '$lib/config/constants';
+export let data;
 </script>
 
 <section class="container grid items-center gap-6">

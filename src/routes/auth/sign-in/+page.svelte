@@ -1,25 +1,25 @@
 <script lang="ts">
-	import * as Form from '$lib/components/ui/form';
-	import * as Card from '$lib/components/ui/card';
+import * as Form from '$lib/components/ui/form';
+import * as Card from '$lib/components/ui/card';
 
-	import * as Alert from '$lib/components/ui/alert';
-	import { userSchema } from '$lib/config/zod-schemas';
-	import type { SuperValidated } from 'sveltekit-superforms';
-	import { Loader2 } from 'lucide-svelte';
-	import { AlertCircle } from 'lucide-svelte';
+import * as Alert from '$lib/components/ui/alert';
+import { userSchema } from '$lib/config/zod-schemas';
+import type { SuperValidated } from 'sveltekit-superforms';
+import { Loader2 } from 'lucide-svelte';
+import { AlertCircle } from 'lucide-svelte';
 
-	const signInSchema = userSchema.pick({
-		email: true,
-		password: true
-	});
+const signInSchema = userSchema.pick({
+	email: true,
+	password: true
+});
 
-	type SignInSchema = typeof signInSchema;
+type SignInSchema = typeof signInSchema;
 
-	export let form: SuperValidated<SignInSchema>;
+export let form: SuperValidated<SignInSchema>;
 </script>
 
-<div class="flex items-center justify-center mx-auto max-w-2xl">
-	<Form.Root let:submitting let:errors method="POST" {form} schema={signInSchema} let:config>
+<div class="mx-auto flex max-w-2xl items-center justify-center">
+	<Form.Root let:submitting let:errors method="POST" form={form} schema={signInSchema} let:config>
 		<Card.Root>
 			<Card.Header class="space-y-1">
 				<Card.Title class="text-2xl">Sign in</Card.Title>
@@ -40,14 +40,14 @@
 						</Alert.Description>
 					</Alert.Root>
 				{/if}
-				<Form.Field {config} name="email">
+				<Form.Field config={config} name="email">
 					<Form.Item>
 						<Form.Label>Email</Form.Label>
 						<Form.Input />
 						<Form.Validation />
 					</Form.Item>
 				</Form.Field>
-				<Form.Field {config} name="password">
+				<Form.Field config={config} name="password">
 					<Form.Item>
 						<Form.Label>Password</Form.Label>
 						<Form.Input type="password" />

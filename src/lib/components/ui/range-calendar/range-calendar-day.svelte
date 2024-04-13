@@ -1,21 +1,21 @@
 <script lang="ts">
-	import { RangeCalendar as RangeCalendarPrimitive } from "bits-ui";
-	import { buttonVariants } from "$lib/components/ui/button/index.js";
-	import { cn } from "$lib/utils.js";
+import { RangeCalendar as RangeCalendarPrimitive } from 'bits-ui';
+import { buttonVariants } from '$lib/components/ui/button/index.js';
+import { cn } from '$lib/utils.js';
 
-	type $$Props = RangeCalendarPrimitive.DayProps;
-	type $$Events = RangeCalendarPrimitive.DayEvents;
+type $$Props = RangeCalendarPrimitive.DayProps;
+type $$Events = RangeCalendarPrimitive.DayEvents;
 
-	export let date: $$Props["date"];
-	export let month: $$Props["month"];
-	let className: $$Props["class"] = undefined;
-	export { className as class };
+export let date: $$Props['date'];
+export let month: $$Props['month'];
+let className: $$Props['class'] = undefined;
+export { className as class };
 </script>
 
 <RangeCalendarPrimitive.Day
 	on:click
-	{date}
-	{month}
+	date={date}
+	month={month}
 	class={cn(
 		buttonVariants({ variant: "ghost" }),
 		"h-9 w-9 p-0 font-normal data-[selected]:opacity-100",
@@ -37,7 +37,7 @@
 	let:unavailable
 	let:builder
 >
-	<slot {disabled} {unavailable} {builder}>
+	<slot disabled={disabled} unavailable={unavailable} builder={builder}>
 		{date.day}
 	</slot>
 </RangeCalendarPrimitive.Day>

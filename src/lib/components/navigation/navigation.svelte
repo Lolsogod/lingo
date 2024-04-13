@@ -1,36 +1,36 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import * as Command from '$lib/components/ui/command';
-	import * as Avatar from '$lib/components/ui/avatar';
-	import { Sun, Moon, SunMoon, UserRound, LogOut } from 'lucide-svelte';
-	import { setMode, resetMode } from 'mode-watcher';
-	import { APP_NAME } from '$lib/config/constants';
-	import Logo from '$lib/components/logo/logo.svelte';
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import convertNameToInitials from '$lib/_helpers/convertNameToInitials';
+import { Button } from '$lib/components/ui/button';
+import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+import * as Command from '$lib/components/ui/command';
+import * as Avatar from '$lib/components/ui/avatar';
+import { Sun, Moon, SunMoon, UserRound, LogOut } from 'lucide-svelte';
+import { setMode, resetMode } from 'mode-watcher';
+import { APP_NAME } from '$lib/config/constants';
+import Logo from '$lib/components/logo/logo.svelte';
+import { goto } from '$app/navigation';
+import { page } from '$app/stores';
+import convertNameToInitials from '$lib/_helpers/convertNameToInitials';
 
-	export let user: any;
-	$: currentPage = $page.url.pathname;
+export let user: any;
+$: currentPage = $page.url.pathname;
 
-	function signOut() {
-		var form = document.createElement('form');
-		form.method = 'POST';
-		form.action = '/auth/sign-out';
-		document.body.appendChild(form);
-		form.submit();
+function signOut() {
+	var form = document.createElement('form');
+	form.method = 'POST';
+	form.action = '/auth/sign-out';
+	document.body.appendChild(form);
+	form.submit();
+}
+
+let initials: string = '';
+$: {
+	if (user) {
+		initials = convertNameToInitials(user.firstName, user.lastName);
 	}
-
-	let initials: string = '';
-	$: {
-		if (user) {
-			initials = convertNameToInitials(user.firstName, user.lastName);
-		}
-	}
+}
 </script>
 
-<header class="bg-background sticky top-0 z-40 w-full border-b">
+<header class="sticky top-0 z-40 w-full border-b bg-background">
 	<div class="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
 		<div class="flex gap-6 md:gap-10">
 			<a class="flex items-center space-x-2" href="/"
@@ -133,7 +133,7 @@
 </header>
 
 <style>
-	.active {
-		@apply text-primary;
-	}
+.active {
+	@apply text-primary;
+}
 </style>

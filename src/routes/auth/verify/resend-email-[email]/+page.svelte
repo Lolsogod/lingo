@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Loader2 } from 'lucide-svelte';
+import { Loader2 } from 'lucide-svelte';
 
-	export let data: { result: { heading?: string; message?: string } };
+export let data: { result: { heading?: string; message?: string } };
 </script>
 
 <section class="container grid items-center gap-6">

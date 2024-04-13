@@ -45,4 +45,3 @@ export const updateEmailAddressSuccessEmail = async (
 	const subjectChange = `Your email address for ${APP_NAME} has changed.`;
 	sendEmail(oldEmail, subjectChange, htmlEmailChange);
 };
-

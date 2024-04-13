@@ -1,24 +1,31 @@
 <script lang="ts">
-	import * as Form from '$lib/components/ui/form';
-	import * as Card from '$lib/components/ui/card';
+import * as Form from '$lib/components/ui/form';
+import * as Card from '$lib/components/ui/card';
 
-	import * as Alert from '$lib/components/ui/alert';
-	import { userSchema } from '$lib/config/zod-schemas';
-	import type { SuperValidated } from 'sveltekit-superforms';
-	import { Loader2 } from 'lucide-svelte';
-	import { AlertCircle } from 'lucide-svelte';
+import * as Alert from '$lib/components/ui/alert';
+import { userSchema } from '$lib/config/zod-schemas';
+import type { SuperValidated } from 'sveltekit-superforms';
+import { Loader2 } from 'lucide-svelte';
+import { AlertCircle } from 'lucide-svelte';
 
-	const resetPasswordSchema = userSchema.pick({
-		email: true
-	});
+const resetPasswordSchema = userSchema.pick({
+	email: true
+});
 
-	type ResetPasswordSchema = typeof resetPasswordSchema;
+type ResetPasswordSchema = typeof resetPasswordSchema;
 
-	export let form: SuperValidated<ResetPasswordSchema>;
+export let form: SuperValidated<ResetPasswordSchema>;
 </script>
 
-<div class="flex items-center justify-center mx-auto max-w-2xl">
-	<Form.Root let:submitting let:errors method="POST" {form} schema={resetPasswordSchema} let:config>
+<div class="mx-auto flex max-w-2xl items-center justify-center">
+	<Form.Root
+		let:submitting
+		let:errors
+		method="POST"
+		form={form}
+		schema={resetPasswordSchema}
+		let:config
+	>
 		<Card.Root>
 			<Card.Header class="space-y-1">
 				<Card.Title class="text-2xl">Reset Your Password</Card.Title>
@@ -36,7 +43,7 @@
 						</Alert.Description>
 					</Alert.Root>
 				{/if}
-				<Form.Field {config} name="email">
+				<Form.Field config={config} name="email">
 					<Form.Item>
 						<Form.Label>Email</Form.Label>
 						<Form.Input />

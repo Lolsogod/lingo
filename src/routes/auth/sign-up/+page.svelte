@@ -1,30 +1,30 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import * as Form from '$lib/components/ui/form';
-	import * as Card from '$lib/components/ui/card';
+import { goto } from '$app/navigation';
+import * as Form from '$lib/components/ui/form';
+import * as Card from '$lib/components/ui/card';
 
-	import * as Alert from '$lib/components/ui/alert';
-	import { userSchema } from '$lib/config/zod-schemas';
-	import type { SuperValidated } from 'sveltekit-superforms';
-	import { Loader2 } from 'lucide-svelte';
-	import { AlertCircle } from 'lucide-svelte';
-	import { Button } from '$lib/components/ui/button';
-	const signUpSchema = userSchema.pick({
-		firstName: true,
-		lastName: true,
-		email: true,
-		password: true,
-		terms: true
-	});
+import * as Alert from '$lib/components/ui/alert';
+import { userSchema } from '$lib/config/zod-schemas';
+import type { SuperValidated } from 'sveltekit-superforms';
+import { Loader2 } from 'lucide-svelte';
+import { AlertCircle } from 'lucide-svelte';
+import { Button } from '$lib/components/ui/button';
+const signUpSchema = userSchema.pick({
+	firstName: true,
+	lastName: true,
+	email: true,
+	password: true,
+	terms: true
+});
 
-	type SignUpSchema = typeof signUpSchema;
+type SignUpSchema = typeof signUpSchema;
 
-	export let form: SuperValidated<SignUpSchema>;
+export let form: SuperValidated<SignUpSchema>;
 </script>
 
 <!--<Button on:click={() => goto('/auth/oauth/google')}>Sign up with Google</Button>-->
-<div class="flex items-center justify-center mx-auto max-w-2xl">
-	<Form.Root let:submitting let:errors method="POST" {form} schema={signUpSchema} let:config>
+<div class="mx-auto flex max-w-2xl items-center justify-center">
+	<Form.Root let:submitting let:errors method="POST" form={form} schema={signUpSchema} let:config>
 		<Card.Root>
 			<Card.Header class="space-y-1">
 				<Card.Title class="text-2xl">Create an account</Card.Title>
@@ -45,35 +45,35 @@
 						</Alert.Description>
 					</Alert.Root>
 				{/if}
-				<Form.Field {config} name="firstName">
+				<Form.Field config={config} name="firstName">
 					<Form.Item>
 						<Form.Label>First Name</Form.Label>
 						<Form.Input />
 						<Form.Validation />
 					</Form.Item>
 				</Form.Field>
-				<Form.Field {config} name="lastName">
+				<Form.Field config={config} name="lastName">
 					<Form.Item>
 						<Form.Label>Last Name</Form.Label>
 						<Form.Input />
 						<Form.Validation />
 					</Form.Item>
 				</Form.Field>
-				<Form.Field {config} name="email">
+				<Form.Field config={config} name="email">
 					<Form.Item>
 						<Form.Label>Email</Form.Label>
 						<Form.Input />
 						<Form.Validation />
 					</Form.Item>
 				</Form.Field>
-				<Form.Field {config} name="password">
+				<Form.Field config={config} name="password">
 					<Form.Item>
 						<Form.Label>Password</Form.Label>
 						<Form.Input type="password" />
 						<Form.Validation />
 					</Form.Item>
 				</Form.Field>
-				<Form.Field {config} name="terms">
+				<Form.Field config={config} name="terms">
 					<Form.Item class="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
 						<Form.Checkbox />
 						<div class="space-y-1 leading-none">

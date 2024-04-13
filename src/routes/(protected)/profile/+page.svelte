@@ -1,29 +1,29 @@
 <script lang="ts">
-	import * as Form from '$lib/components/ui/form';
-	import * as Card from '$lib/components/ui/card';
-	import { Button } from '$lib/components/ui/button';
-	import * as Alert from '$lib/components/ui/alert';
-	import { userSchema } from '$lib/config/zod-schemas';
-	import type { SuperValidated } from 'sveltekit-superforms';
-	import { Loader2 } from 'lucide-svelte';
-	import { AlertCircle } from 'lucide-svelte';
-	import { goto } from '$app/navigation';
-	export let data: any;
+import * as Form from '$lib/components/ui/form';
+import * as Card from '$lib/components/ui/card';
+import { Button } from '$lib/components/ui/button';
+import * as Alert from '$lib/components/ui/alert';
+import { userSchema } from '$lib/config/zod-schemas';
+import type { SuperValidated } from 'sveltekit-superforms';
+import { Loader2 } from 'lucide-svelte';
+import { AlertCircle } from 'lucide-svelte';
+import { goto } from '$app/navigation';
+export let data: any;
 
-	const profileSchema = userSchema.pick({
-		firstName: true,
-		lastName: true,
-		email: true
-	});
+const profileSchema = userSchema.pick({
+	firstName: true,
+	lastName: true,
+	email: true
+});
 
-	type ProfileSchema = typeof profileSchema;
+type ProfileSchema = typeof profileSchema;
 
-	export let form: SuperValidated<ProfileSchema>;
-	form = data.form;
+export let form: SuperValidated<ProfileSchema>;
+form = data.form;
 </script>
 
-<div class="flex items-center justify-center mx-auto max-w-2xl">
-	<Form.Root let:submitting let:errors method="POST" {form} schema={profileSchema} let:config>
+<div class="mx-auto flex max-w-2xl items-center justify-center">
+	<Form.Root let:submitting let:errors method="POST" form={form} schema={profileSchema} let:config>
 		<Card.Root>
 			<Card.Header class="space-y-1">
 				<Card.Title class="text-2xl">Profile</Card.Title>
@@ -41,21 +41,21 @@
 						</Alert.Description>
 					</Alert.Root>
 				{/if}
-				<Form.Field {config} name="firstName">
+				<Form.Field config={config} name="firstName">
 					<Form.Item>
 						<Form.Label>First Name</Form.Label>
 						<Form.Input />
 						<Form.Validation />
 					</Form.Item>
 				</Form.Field>
-				<Form.Field {config} name="lastName">
+				<Form.Field config={config} name="lastName">
 					<Form.Item>
 						<Form.Label>Last Name</Form.Label>
 						<Form.Input />
 						<Form.Validation />
 					</Form.Item>
 				</Form.Field>
-				<Form.Field {config} name="email">
+				<Form.Field config={config} name="email">
 					<Form.Item>
 						<Form.Label>Email</Form.Label>
 						<Form.Input />

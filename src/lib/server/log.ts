@@ -9,7 +9,6 @@ import { DOMAIN } from '$lib/config/constants';
 //@ts-ignore
 export default async function log(statusCode: number, event) {
 	try {
-
 		let level = 'info';
 		if (statusCode >= 400) {
 			level = 'error';
