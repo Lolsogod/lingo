@@ -1,25 +1,24 @@
 <script lang="ts">
 import * as Form from '$lib/components/ui/form';
 import * as Card from '$lib/components/ui/card';
-
 import * as Alert from '$lib/components/ui/alert';
-import { userSchema } from '$lib/config/zod-schemas';
-import type { SuperValidated } from 'sveltekit-superforms';
+import { signInSchema, userSchema } from '$lib/config/zod-schemas';
+import { superForm, type SuperValidated } from 'sveltekit-superforms';
 import { Loader2 } from 'lucide-svelte';
 import { AlertCircle } from 'lucide-svelte';
+import { zodClient } from 'sveltekit-superforms/adapters';
+import { Input } from '$lib/components/ui/input/index.js';
 
-const signInSchema = userSchema.pick({
-	email: true,
-	password: true
+export let data;
+const form = superForm(data.form, {
+	validators: zodClient(signInSchema)
 });
 
-type SignInSchema = typeof signInSchema;
-
-export let form: SuperValidated<SignInSchema>;
+const { form: formData, enhance, submitting, errors } = form;
 </script>
 
 <div class="mx-auto flex max-w-2xl items-center justify-center">
-	<Form.Root let:submitting let:errors method="POST" form={form} schema={signInSchema} let:config>
+	<form method="POST" use:enhance>
 		<Card.Root>
 			<Card.Header class="space-y-1">
 				<Card.Title class="text-2xl">Sign in</Card.Title>
@@ -29,36 +28,37 @@ export let form: SuperValidated<SignInSchema>;
 				>
 			</Card.Header>
 			<Card.Content class="grid gap-4">
-				{#if errors?._errors?.length}
+				{#if $errors._errors?.length}
 					<Alert.Root variant="destructive">
 						<AlertCircle class="h-4 w-4" />
 						<Alert.Title>Error</Alert.Title>
 						<Alert.Description>
-							{#each errors._errors as error}
+							{#each $errors._errors as error}
 								{error}
 							{/each}
 						</Alert.Description>
 					</Alert.Root>
 				{/if}
-				<Form.Field config={config} name="email">
-					<Form.Item>
+				<Form.Field form={form} name="email">
+					<Form.Control let:attrs>
 						<Form.Label>Email</Form.Label>
-						<Form.Input />
-						<Form.Validation />
-					</Form.Item>
+						<Input {...attrs} bind:value={$formData.email} />
+					</Form.Control>
+					<Form.FieldErrors />
 				</Form.Field>
-				<Form.Field config={config} name="password">
-					<Form.Item>
+
+				<Form.Field form={form} name="password">
+					<Form.Control let:attrs>
 						<Form.Label>Password</Form.Label>
-						<Form.Input type="password" />
-						<Form.Validation />
-					</Form.Item>
+						<Input {...attrs} bind:value={$formData.password} type="password" />
+					</Form.Control>
+					<Form.FieldErrors />
 				</Form.Field>
 			</Card.Content>
 			<Card.Footer>
 				<div class="block w-full">
-					<Form.Button class="w-full" disabled={submitting}
-						>{#if submitting}
+					<Form.Button class="w-full" disabled={$submitting}
+						>{#if $submitting}
 							<Loader2 class="mr-2 h-4 w-4 animate-spin" />
 							Please wait{:else}Sign In{/if}
 					</Form.Button>
@@ -69,5 +69,5 @@ export let form: SuperValidated<SignInSchema>;
 				</div>
 			</Card.Footer>
 		</Card.Root>
-	</Form.Root>
+	</form>
 </div>

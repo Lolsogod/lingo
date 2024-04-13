@@ -1,7 +1,6 @@
 <script lang="ts">
 import { Button } from '$lib/components/ui/button';
 import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-import * as Command from '$lib/components/ui/command';
 import * as Avatar from '$lib/components/ui/avatar';
 import { Sun, Moon, SunMoon, UserRound, LogOut } from 'lucide-svelte';
 import { setMode, resetMode } from 'mode-watcher';
@@ -10,8 +9,9 @@ import Logo from '$lib/components/logo/logo.svelte';
 import { goto } from '$app/navigation';
 import { page } from '$app/stores';
 import convertNameToInitials from '$lib/_helpers/convertNameToInitials';
+import type { User } from 'lucia';
 
-export let user: any;
+export let user: User | null;
 $: currentPage = $page.url.pathname;
 
 function signOut() {

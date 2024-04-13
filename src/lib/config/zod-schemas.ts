@@ -54,3 +54,20 @@ export const userUpdatePasswordSchema = userSchema
 	});
 
 export type UserUpdatePasswordSchema = typeof userUpdatePasswordSchema;
+
+//derived schemas
+export const signInSchema = z.object({
+	email: userSchema.shape.email,
+	password: userSchema.shape.password
+});
+
+export type SignInSchema = typeof signInSchema;
+
+export const signUpSchema = z.object({
+	firstName: userSchema.shape.firstName,
+	lastName: userSchema.shape.lastName,
+	email: userSchema.shape.email,
+	password: userSchema.shape.password,
+	terms: userSchema.shape.terms
+});
+export type SignUpSchema = typeof signUpSchema;

@@ -3,19 +3,15 @@ import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms/server';
 import { lucia } from '$lib/server/lucia';
 import { Argon2id } from 'oslo/password';
-import { userSchema } from '$lib/config/zod-schemas';
 import { getUserByEmail } from '$lib/server/database/user-model';
-
-const signInSchema = userSchema.pick({
-	email: true,
-	password: true
-});
+import { zod } from 'sveltekit-superforms/adapters';
+import { signInSchema } from '$lib/config/zod-schemas';
 
 export const load = async (event) => {
 	if (event.locals.user) {
 		redirect(302, '/dashboard');
 	}
-	const form = await superValidate(event, signInSchema);
+	const form = await superValidate(event, zod(signInSchema));
 	return {
 		form
 	};
@@ -23,7 +19,7 @@ export const load = async (event) => {
 
 export const actions = {
 	default: async (event) => {
-		const form = await superValidate(event, signInSchema);
+		const form = await superValidate(event, zod(signInSchema));
 		//console.log(form);
 
 		if (!form.valid) {
