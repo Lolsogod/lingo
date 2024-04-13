@@ -3,7 +3,7 @@ import { goto } from '$app/navigation';
 import { Button } from '$lib/components/ui/button';
 import { APP_NAME } from '$lib/config/constants';
 
-export let data: any;
+export let data;
 </script>
 
 <div class="flex-1">

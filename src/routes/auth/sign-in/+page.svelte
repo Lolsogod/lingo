@@ -2,8 +2,8 @@
 import * as Form from '$lib/components/ui/form';
 import * as Card from '$lib/components/ui/card';
 import * as Alert from '$lib/components/ui/alert';
-import { signInSchema, userSchema } from '$lib/config/zod-schemas';
-import { superForm, type SuperValidated } from 'sveltekit-superforms';
+import { signInSchema } from '$lib/config/zod-schemas';
+import { superForm } from 'sveltekit-superforms';
 import { Loader2 } from 'lucide-svelte';
 import { AlertCircle } from 'lucide-svelte';
 import { zodClient } from 'sveltekit-superforms/adapters';

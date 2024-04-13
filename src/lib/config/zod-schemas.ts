@@ -55,19 +55,21 @@ export const userUpdatePasswordSchema = userSchema
 
 export type UserUpdatePasswordSchema = typeof userUpdatePasswordSchema;
 
-//derived schemas
-export const signInSchema = z.object({
-	email: userSchema.shape.email,
-	password: userSchema.shape.password
-});
-
+//периписать на pick?
+export const signInSchema = userSchema.pick({ email: true, password: true });
 export type SignInSchema = typeof signInSchema;
-
-export const signUpSchema = z.object({
-	firstName: userSchema.shape.firstName,
-	lastName: userSchema.shape.lastName,
-	email: userSchema.shape.email,
-	password: userSchema.shape.password,
-	terms: userSchema.shape.terms
+export const signUpSchema = userSchema.pick({
+	firstName: true,
+	lastName: true,
+	email: true,
+	password: true,
+	terms: true
 });
+
 export type SignUpSchema = typeof signUpSchema;
+
+export const editUserSchema = userSchema.pick({ firstName: true, lastName: true, email: true });
+export type EditUserSchema = typeof editUserSchema;
+
+export const resetPasswordSchema = userSchema.pick({ email: true });
+export type ResetPasswordSchema = typeof resetPasswordSchema;

@@ -1,7 +1,6 @@
 <script lang="ts">
-/** @type {import('./$types').PageData} */
 import { Loader2 } from 'lucide-svelte';
-export let data: { heading?: string; message?: string };
+export let data;
 </script>
 
 <section class="container grid items-center gap-6">
@@ -12,7 +11,7 @@ export let data: { heading?: string; message?: string };
 			</h1>
 		{/if}
 		{#if data.message}
-			<p class="max-w-[700px] text-lg text-muted-foreground">{@html data.message}</p>
+			<p class="max-w-[700px] text-lg text-muted-foreground">{data.message}</p>
 		{:else}
 			<Loader2 class="mr-2 h-12 w-12 animate-spin" />
 		{/if}

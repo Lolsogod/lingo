@@ -1,18 +1,13 @@
 import { fail } from '@sveltejs/kit';
 import { setError, superValidate, message } from 'sveltekit-superforms/server';
 import { setFlash } from 'sveltekit-flash-message/server';
-import { userSchema } from '$lib/config/zod-schemas';
+import { editUserSchema } from '$lib/config/zod-schemas';
 import { updateEmailAddressSuccessEmail } from '$lib/config/email-messages';
 import { updateUser } from '$lib/server/database/user-model.js';
-
-const profileSchema = userSchema.pick({
-	firstName: true,
-	lastName: true,
-	email: true
-});
+import { zod } from 'sveltekit-superforms/adapters';
 
 export const load = async (event) => {
-	const form = await superValidate(event, profileSchema);
+	const form = await superValidate(event, zod(editUserSchema));
 
 	const user = event.locals.user;
 	if (!user) {
@@ -33,7 +28,7 @@ export const load = async (event) => {
 
 export const actions = {
 	default: async (event) => {
-		const form = await superValidate(event, profileSchema);
+		const form = await superValidate(event, zod(editUserSchema));
 		//console.log(form);
 
 		if (!form.valid) {
