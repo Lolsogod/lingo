@@ -1,5 +1,5 @@
 <script lang="ts">
-import { page } from '$app/stores';
+import { page } from "$app/stores";
 </script>
 
 <section class="container grid items-center gap-6">
@@ -7,6 +7,13 @@ import { page } from '$app/stores';
 		{#if $page.status === 404}
 			<h1 class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
 				Страница не найдена
+			</h1>
+			<p class="max-w-[700px] text-lg text-muted-foreground">
+				<a href="/" class="underline">Домой</a>
+			</p>
+		{:else if $page.status === 401}
+			<h1 class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
+				Доступ запрещен
 			</h1>
 			<p class="max-w-[700px] text-lg text-muted-foreground">
 				<a href="/" class="underline">Домой</a>

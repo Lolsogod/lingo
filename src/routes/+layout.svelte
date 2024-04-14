@@ -7,12 +7,13 @@ import { Toaster } from '$lib/components/ui/sonner';
 import { toast } from 'svelte-sonner';
 import Navigation from '$lib/components/navigation/navigation.svelte';
 import type { User } from 'lucia';
+import type{ PageData } from './$types';
 
-export let data;
+export let data: PageData;
 let user: User | null;
 $: user = data.user;
 const flash = getFlash(page);
-$: if ($flash) {
+$: if ($flash) { 
 	switch ($flash.type) {
 		case 'success':
 			toast.success($flash.message);

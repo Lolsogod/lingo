@@ -1,20 +1,20 @@
-import { fail, redirect } from '@sveltejs/kit';
-import { setFlash } from 'sveltekit-flash-message/server';
-import { setError, superValidate } from 'sveltekit-superforms/server';
-import { Argon2id } from 'oslo/password';
-import { lucia } from '$lib/server/lucia';
-import { createUser } from '$lib/server/database/user-model';
-import { signUpSchema } from '$lib/config/zod-schemas';
-import { sendVerificationEmail } from '$lib/config/email-messages';
-import { zod } from 'sveltekit-superforms/adapters';
+import { sendVerificationEmail } from "$lib/config/email-messages";
+import { signUpSchema } from "$lib/config/zod-schemas";
+import { createUser } from "$lib/server/database/user-model";
+import { lucia } from "$lib/server/lucia";
+import { fail, redirect } from "@sveltejs/kit";
+import { Argon2id } from "oslo/password";
+import { setFlash } from "sveltekit-flash-message/server";
+import { zod } from "sveltekit-superforms/adapters";
+import { setError, superValidate } from "sveltekit-superforms/server";
 
 export const load = async (event) => {
 	if (event.locals.user) {
-		redirect(302, '/dashboard');
+		redirect(302, "/dashboard");
 	}
 	const form = await superValidate(event, zod(signUpSchema));
 	return {
-		form
+		form,
 	};
 };
 
@@ -25,7 +25,7 @@ export const actions = {
 
 		if (!form.valid) {
 			return fail(400, {
-				form
+				form,
 			});
 		}
 
@@ -39,12 +39,12 @@ export const actions = {
 				firstName: form.data.firstName,
 				lastName: form.data.lastName,
 				password: password,
-				role: 'USER',
+				role: "USER",
 				verified: false,
 				receiveEmail: true,
 				token: token,
 				createdAt: new Date(),
-				updatedAt: new Date()
+				updatedAt: new Date(),
 			};
 			const newUser = await createUser(user);
 			if (newUser) {
@@ -52,24 +52,28 @@ export const actions = {
 				const session = await lucia.createSession(newUser.id, {});
 				const sessionCookie = lucia.createSessionCookie(session.id);
 				event.cookies.set(sessionCookie.name, sessionCookie.value, {
-					path: '.',
-					...sessionCookie.attributes
+					path: ".",
+					...sessionCookie.attributes,
 				});
 				setFlash(
 					{
-						type: 'success',
-						message: 'Account created. Please check your email to verify your account.'
+						type: "success",
+						message:
+							"Account created. Please check your email to verify your account.",
 					},
-					event
+					event,
 				);
 			}
 		} catch (e) {
 			console.error(e);
-			setFlash({ type: 'error', message: 'Account was not able to be created.' }, event);
+			setFlash(
+				{ type: "error", message: "Account was not able to be created." },
+				event,
+			);
 			// email already in use
 			//might be other type of error but this is most common and this is how lucia docs sets the error to duplicate user
-			return setError(form, 'email', 'A user with that email already exists.');
+			return setError(form, "email", "A user with that email already exists.");
 		}
 		return { form };
-	}
+	},
 };

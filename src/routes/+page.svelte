@@ -1,9 +1,10 @@
 <script lang="ts">
-import { goto } from '$app/navigation';
-import { Button } from '$lib/components/ui/button';
-import { APP_NAME } from '$lib/config/constants';
+import { goto } from "$app/navigation";
+import { Button } from "$lib/components/ui/button";
+import { APP_NAME } from "$lib/config/constants";
+import type { PageData } from "./$types";
 
-export let data;
+export let data: PageData;
 </script>
 
 <div class="flex-1">

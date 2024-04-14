@@ -1,13 +1,13 @@
-import { fail, redirect } from '@sveltejs/kit';
-import { setError, superValidate } from 'sveltekit-superforms/server';
-import { userUpdatePasswordSchema } from '$lib/config/zod-schemas';
-import { getUserByToken, updateUser } from '$lib/server/database/user-model.js';
-import { Argon2id } from 'oslo/password';
-import { zod } from 'sveltekit-superforms/adapters';
+import { userUpdatePasswordSchema } from "$lib/config/zod-schemas";
+import { getUserByToken, updateUser } from "$lib/server/database/user-model.js";
+import { fail, redirect } from "@sveltejs/kit";
+import { Argon2id } from "oslo/password";
+import { zod } from "sveltekit-superforms/adapters";
+import { setError, superValidate } from "sveltekit-superforms/server";
 export const load = async (event) => {
 	const form = await superValidate(event, zod(userUpdatePasswordSchema));
 	return {
-		form
+		form,
 	};
 };
 
@@ -17,13 +17,13 @@ export const actions = {
 
 		if (!form.valid) {
 			return fail(400, {
-				form
+				form,
 			});
 		}
 
 		try {
 			const token = event.params.token as string;
-			console.log('update user password');
+			console.log("update user password");
 			const newToken = crypto.randomUUID();
 			//get email from token
 			const user = await getUserByToken(token);
@@ -37,18 +37,18 @@ export const actions = {
 			} else {
 				return setError(
 					form,
-					'Email address not found for this token. Please contact support if you need further help.'
+					"Email address not found for this token. Please contact support if you need further help.",
 				);
 			}
 		} catch (e) {
 			console.error(e);
 			return setError(
 				form,
-				'The was a problem resetting your password. Please contact support if you need further help.'
+				"The was a problem resetting your password. Please contact support if you need further help.",
 			);
 		}
 		const token = event.params.token as string;
 		redirect(302, `/auth/password/update-${token}/success`);
 		//		return { form };
-	}
+	},
 };

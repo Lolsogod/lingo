@@ -1,28 +1,28 @@
 <script lang="ts">
-import { Button } from '$lib/components/ui/button';
-import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-import * as Avatar from '$lib/components/ui/avatar';
-import { Sun, Moon, SunMoon, UserRound, LogOut } from 'lucide-svelte';
-import { setMode, resetMode } from 'mode-watcher';
-import { APP_NAME } from '$lib/config/constants';
-import Logo from '$lib/components/logo/logo.svelte';
-import { goto } from '$app/navigation';
-import { page } from '$app/stores';
-import convertNameToInitials from '$lib/_helpers/convertNameToInitials';
-import type { User } from 'lucia';
+import { goto } from "$app/navigation";
+import { page } from "$app/stores";
+import convertNameToInitials from "$lib/_helpers/convertNameToInitials";
+import Logo from "$lib/components/logo/logo.svelte";
+import * as Avatar from "$lib/components/ui/avatar";
+import { Button } from "$lib/components/ui/button";
+import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+import { APP_NAME } from "$lib/config/constants";
+import type { User } from "lucia";
+import { LogOut, Moon, Sun, SunMoon, UserRound } from "lucide-svelte";
+import { resetMode, setMode } from "mode-watcher";
 
 export let user: User | null;
 $: currentPage = $page.url.pathname;
 
-function signOut() {
-	var form = document.createElement('form');
-	form.method = 'POST';
-	form.action = '/auth/sign-out';
+const signOut = () => {
+	const form = document.createElement("form");
+	form.method = "POST";
+	form.action = "/auth/sign-out";
 	document.body.appendChild(form);
 	form.submit();
-}
+};
 
-let initials: string = '';
+let initials = "";
 $: {
 	if (user) {
 		initials = convertNameToInitials(user.firstName, user.lastName);
@@ -132,7 +132,7 @@ $: {
 	</div>
 </header>
 
-<style>
+<style lang="postcss">
 .active {
 	@apply text-primary;
 }

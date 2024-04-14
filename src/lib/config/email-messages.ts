@@ -1,5 +1,5 @@
-import sendEmail from '$lib/server/email-send';
-import { BASE_URL, APP_NAME } from '$lib/config/constants';
+import { APP_NAME, BASE_URL } from "$lib/config/constants";
+import sendEmail from "$lib/server/email-send";
 
 // Send an email to verify the user's address
 export const sendVerificationEmail = async (email: string, token: string) => {
@@ -33,7 +33,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 export const updateEmailAddressSuccessEmail = async (
 	email: string,
 	oldEmail: string,
-	token: string
+	token: string,
 ) => {
 	const verifyEmailURL = `${BASE_URL}/auth/verify/email-${token}`;
 	const htmlEmail = `<p>Пожалуйста, нажмите на эту <a href="${verifyEmailURL}">ссылку</a>, чтобы подтвердить адрес электронной почты для вашей учетной записи ${APP_NAME}.</p> <p>Вы также можете перейти по ссылке ниже.</p><p>${verifyEmailURL}</p>`;
