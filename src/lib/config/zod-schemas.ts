@@ -1,5 +1,6 @@
+import { Description } from "formsnap";
 import { z } from "zod";
-
+//TODO разделить всё даа
 export const userSchema = z.object({
 	firstName: z
 		.string({ required_error: "First Name is required" })
@@ -57,7 +58,6 @@ export const userUpdatePasswordSchema = userSchema
 
 export type UserUpdatePasswordSchema = typeof userUpdatePasswordSchema;
 
-//периписать на pick?
 export const signInSchema = userSchema.pick({ email: true, password: true });
 export type SignInSchema = typeof signInSchema;
 export const signUpSchema = userSchema.pick({
@@ -79,3 +79,21 @@ export type EditUserSchema = typeof editUserSchema;
 
 export const resetPasswordSchema = userSchema.pick({ email: true });
 export type ResetPasswordSchema = typeof resetPasswordSchema;
+
+// колоды
+export const deckSchema = z.object({
+	name: z
+		.string()
+		.min(1, { message: "Deck name is required" })
+		.max(50, { message: "Deck name is too long" }),
+	description: z.string().optional(),
+	public: z.boolean().default(false),
+});
+export type DeckSchema = typeof deckSchema;
+
+export const createDeckSchema = deckSchema.pick({
+	name: true,
+	description: true,
+	public: true,
+});
+export type CreateDeckSchema = typeof createDeckSchema;

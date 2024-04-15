@@ -30,5 +30,17 @@
 			"yarn.lock",
 			"src/lib/components/ui/**"
 		]
-	}
+	},
+	"overrides": [
+		{
+			"include": ["*.svelte"],
+			"linter": {
+				"rules": {
+					"style": {
+						"useConst": "off"
+					}
+				}
+			}
+		}
+	]
 }
