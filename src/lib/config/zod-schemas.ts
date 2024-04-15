@@ -97,3 +97,22 @@ export const createDeckSchema = deckSchema.pick({
 	public: true,
 });
 export type CreateDeckSchema = typeof createDeckSchema;
+
+//карты
+//блок отдельной схемой?
+export const cardSchema = z.object({
+	topicName: z.string().min(1, { message: "Topic name is required" }),
+	blocks: z.array(
+		z.object({
+			content: z.string(),
+		})
+	).min(1, { message: "At least one block is required" }),
+});
+export type CardSchema = typeof cardSchema;
+
+export const createCardSchema = cardSchema.pick({
+	topicName: true,
+	blocks: true,
+});
+//наверное все так задавать надо бы
+export type CreateCardSchema = z.infer<typeof createCardSchema>;

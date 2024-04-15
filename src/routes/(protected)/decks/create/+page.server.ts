@@ -23,7 +23,7 @@ export const actions = {
 		}
 		//add deck to db
 		try {
-			//check for deck of same name
+			//check for deck of same name?
 			const newDeck = await createDeck(form.data);
 			if (newDeck) {
 				setFlash({ type: "success", message: "Колода создана" }, event);

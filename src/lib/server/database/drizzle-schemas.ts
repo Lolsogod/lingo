@@ -9,7 +9,7 @@ import {
 	varchar,
 } from "drizzle-orm/pg-core";
 
-//TODO: seoparate all this
+//TODO: seoparate all this also rename them as somethingTable
 export const userTable = pgTable("users", {
 	id: text("id").notNull().primaryKey(),
 	provider: text("provider").notNull().default("email"),
@@ -42,7 +42,7 @@ export const sessionTable = pgTable("sessions", {
 		mode: "date",
 	}).notNull(),
 });
-
+//change to name
 export const topic = pgTable("topic", {
 	id: uuid("id").notNull().primaryKey().defaultRandom(),
 	content: varchar("content").notNull().unique(),
@@ -55,7 +55,6 @@ export const block = pgTable("block", {
 
 export const card = pgTable("card", {
 	id: uuid("id").notNull().primaryKey().defaultRandom(),
-	content: text("content").notNull(),
 	topicId: uuid("topic_id")
 		.notNull()
 		.references(() => topic.id),
@@ -67,7 +66,17 @@ export const deck = pgTable("deck", {
 	description: text("description"),
 	public: boolean("public").notNull().default(false),
 });
-
+export const cardBlock = pgTable(
+	"card_block",
+	{
+		cardId: uuid("card_id")
+			.notNull()
+			.references(() => card.id),
+		blockId: uuid("block_id")
+			.notNull()
+			.references(() => block.id),
+	}
+)
 export const cardDeck = pgTable(
 	"card_deck",
 	{
@@ -101,6 +110,7 @@ export const cardRelations = relations(card, ({ one, many }) => {
 			references: [topic.id],
 		}),
 		deck: many(cardDeck),
+		blocks: many(cardBlock),
 	};
 });
 export const topicRelations = relations(topic, ({ many }) => {
@@ -108,7 +118,23 @@ export const topicRelations = relations(topic, ({ many }) => {
 		cards: many(card),
 	};
 });
-
+export const blockRelations = relations(block, ({ many }) => {
+	return {
+		cards: many(cardBlock),
+	};
+})
+export const cardBlockRelations = relations(cardBlock, ({ one }) => {
+	return {
+		card: one(card, {
+			fields: [cardBlock.cardId],
+			references: [card.id],
+		}),
+		block: one(block, {
+			fields: [cardBlock.blockId],
+			references: [block.id],
+		})
+	};
+})
 export const deckRelations = relations(deck, ({ many }) => {
 	return {
 		cards: many(cardDeck),

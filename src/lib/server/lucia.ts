@@ -1,6 +1,6 @@
 import { dev } from "$app/environment";
 import db from "$lib/server/database/drizzle";
-import { sessionTable, userTable } from "$lib/server/database/drizzle-schemas";
+import { sessionTable, topic, userTable } from "$lib/server/database/drizzle-schemas";
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 import { Lucia, TimeSpan } from "lucia";
 

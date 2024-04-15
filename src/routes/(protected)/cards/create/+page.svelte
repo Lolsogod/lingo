@@ -2,31 +2,32 @@
     import { zodClient } from "sveltekit-superforms/adapters";
     import type { PageData } from "./$types";
     import { superForm } from "sveltekit-superforms";
-    import { createDeckSchema } from "$lib/config/zod-schemas";
+    import { createCardSchema } from "$lib/config/zod-schemas";
     import * as Alert from "$lib/components/ui/alert";
     import * as Card from "$lib/components/ui/card";
     import * as Form from "$lib/components/ui/form";
     import { Input } from "$lib/components/ui/input";
     import { AlertCircle } from "lucide-svelte";
-    import { Textarea } from "$lib/components/ui/textarea";
     import { Loader2 } from "lucide-svelte";
-    import { Checkbox } from "$lib/components/ui/checkbox";
-    
-
+    import { Button } from "$lib/components/ui/button";
     export let data: PageData;
 
     const form = superForm(data.form, {
-        validators: zodClient(createDeckSchema),
+        validators: zodClient(createCardSchema),
+        dataType: "json"
     });
     const { form: formData, enhance, submitting, errors } = form;
+
+    const addBlock = () => {
+        $formData.blocks = [...$formData.blocks, { content: "" }];
+    };
 </script>
 
 <section class="container grid items-center gap-6">
-   
     <form method="POST" use:enhance>
         <Card.Root>
             <Card.Header class="space-y-1">
-                <Card.Title class="text-2xl">Create Deck</Card.Title>
+                <Card.Title class="text-2xl">Create card</Card.Title>
             </Card.Header>
             <Card.Content class="grid gap-4">
                 {#if $errors._errors?.length}
@@ -40,36 +41,26 @@
                         </Alert.Description>
                     </Alert.Root>
                 {/if}
-    
-                <Form.Field form={form} name="name">
+                <Form.Field {form} name="topicName">
                     <Form.Control let:attrs>
-                        <Form.Label>Deck Name</Form.Label>
-                        <Input {...attrs} bind:value={$formData.name} />
+                        <Form.Label>Топик</Form.Label>
+                        <Input {...attrs} bind:value={$formData.topicName} />
                     </Form.Control>
                     <Form.FieldErrors />
                 </Form.Field>
-    
-                <Form.Field form={form} name="description">
-                    <Form.Control let:attrs>
-                        <Form.Label>Description</Form.Label>
-                        <Textarea {...attrs} bind:value={$formData.description} />
-                    </Form.Control>
-                    <Form.FieldErrors />
-                </Form.Field>
-    
-                <Form.Field
-					form={form}
-					name="public"
-					class="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4"
-				>
-					<Form.Control let:attrs>
-						<Checkbox {...attrs} bind:checked={$formData.public} />
-						<div class="space-y-1 leading-none">
-							<Form.Label>Public deck.</Form.Label>
-						</div>
-						<input name={attrs.name} value={$formData.public} hidden />
-					</Form.Control>
-				</Form.Field>
+                {#each $formData.blocks as _, i}
+                    <Form.Field {form} name="blocks">
+                        <Form.Control let:attrs>
+                            <Form.Label>Блок {i+1}</Form.Label>
+                            <Input
+                            {...attrs}
+                                bind:value={$formData.blocks[i].content}
+                            />
+                        </Form.Control>
+                        <Form.FieldErrors />
+                    </Form.Field>
+                {/each}
+                <Button variant="secondary" on:click={addBlock}>+</Button>
             </Card.Content>
             <Card.Footer>
                 <div class="block w-full">
