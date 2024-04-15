@@ -1,6 +1,6 @@
 import { createDeckSchema } from "$lib/config/zod-schemas";
 import { createDeck } from "$lib/server/database/deck-model";
-import { fail } from "@sveltejs/kit";
+import { error, fail } from "@sveltejs/kit";
 import { setFlash } from "sveltekit-flash-message/server";
 import { setError, superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
@@ -15,6 +15,8 @@ export const load = (async (event) => {
 
 export const actions = {
 	default: async (event) => {
+		const user = await event.locals.user;
+		console.log(user);
 		const form = await superValidate(event, zod(createDeckSchema));
 		if (!form.valid) {
 			return fail(400, {
@@ -24,7 +26,16 @@ export const actions = {
 		//add deck to db
 		try {
 			//check for deck of same name?
-			const newDeck = await createDeck(form.data);
+			//откуда взялся userID и почему он андефайнд
+			if (!user?.id) {
+				throw new Error("Invalid user");
+			}
+			const newDeck = await createDeck({
+				name: form.data.name,
+				description: form.data.description,
+				public: form.data.public,
+				authorId: user.id,
+			});
 			if (newDeck) {
 				setFlash({ type: "success", message: "Колода создана" }, event);
 			}

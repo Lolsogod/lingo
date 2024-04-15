@@ -65,18 +65,18 @@ export const deck = pgTable("deck", {
 	name: varchar("name").notNull(),
 	description: text("description"),
 	public: boolean("public").notNull().default(false),
+	authorId: text("author_id")
+		.notNull()
+		.references(() => userTable.id),
 });
-export const cardBlock = pgTable(
-	"card_block",
-	{
-		cardId: uuid("card_id")
-			.notNull()
-			.references(() => card.id),
-		blockId: uuid("block_id")
-			.notNull()
-			.references(() => block.id),
-	}
-)
+export const cardBlock = pgTable("card_block", {
+	cardId: uuid("card_id")
+		.notNull()
+		.references(() => card.id),
+	blockId: uuid("block_id")
+		.notNull()
+		.references(() => block.id),
+});
 export const cardDeck = pgTable(
 	"card_deck",
 	{
@@ -122,7 +122,7 @@ export const blockRelations = relations(block, ({ many }) => {
 	return {
 		cards: many(cardBlock),
 	};
-})
+});
 export const cardBlockRelations = relations(cardBlock, ({ one }) => {
 	return {
 		card: one(card, {
@@ -132,9 +132,9 @@ export const cardBlockRelations = relations(cardBlock, ({ one }) => {
 		block: one(block, {
 			fields: [cardBlock.blockId],
 			references: [block.id],
-		})
+		}),
 	};
-})
+});
 export const deckRelations = relations(deck, ({ many }) => {
 	return {
 		cards: many(cardDeck),

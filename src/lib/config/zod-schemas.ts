@@ -88,6 +88,7 @@ export const deckSchema = z.object({
 		.max(50, { message: "Deck name is too long" }),
 	description: z.string().optional(),
 	public: z.boolean().default(false),
+	authorId: z.string(),
 });
 export type DeckSchema = typeof deckSchema;
 
@@ -102,11 +103,13 @@ export type CreateDeckSchema = typeof createDeckSchema;
 //блок отдельной схемой?
 export const cardSchema = z.object({
 	topicName: z.string().min(1, { message: "Topic name is required" }),
-	blocks: z.array(
-		z.object({
-			content: z.string(),
-		})
-	).min(1, { message: "At least one block is required" }),
+	blocks: z
+		.array(
+			z.object({
+				content: z.string(),
+			}),
+		)
+		.min(1, { message: "At least one block is required" }),
 });
 export type CardSchema = typeof cardSchema;
 
