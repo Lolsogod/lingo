@@ -1,10 +1,11 @@
+import { isUUID } from "$lib/_helpers/isUIID";
 import { createCardSchema } from "$lib/config/zod-schemas";
 import {
 	addCardToDeck,
 	createCard,
 	getCardsByDeckId,
 } from "$lib/server/database/card-models";
-import { getDeckById } from "$lib/server/database/deck-model";
+import { addDeckToUser, getDeckById } from "$lib/server/database/deck-model";
 import { error, fail } from "@sveltejs/kit";
 import { setFlash } from "sveltekit-flash-message/server";
 import { setError, superValidate } from "sveltekit-superforms";
@@ -27,7 +28,7 @@ export const load = (async (event) => {
 
 // код повторяется пофиксить
 export const actions = {
-	default: async (event) => {
+	addCard: async (event) => {
 		const deckId = event.params.id;
 		const form = await superValidate(event, zod(createCardSchema));
 		if (!form.valid) {
@@ -50,7 +51,22 @@ export const actions = {
 			setFlash({ type: "error", message: "Не удалось создать карту" }, event);
 			return setError(form, "blocks._errors", "ошибка наверное");
 		}
-		console.log(form);
 		return { form };
+	},
+	//нужна ли тут суперформа?
+	addToUser: async (event) => {
+		console.log("triggered");
+		const deckId = event.params.id;
+		const userId = event.locals.user?.id;
+		if (!userId || !isUUID(deckId)) {
+			return fail(400, {});
+		}
+		try {
+			return await addDeckToUser(userId, deckId);
+		} catch (e) {
+			console.error(e);
+			setFlash({ type: "error", message: "Не удалось создать карту" }, event);
+			return fail(400, {});
+		}
 	},
 };

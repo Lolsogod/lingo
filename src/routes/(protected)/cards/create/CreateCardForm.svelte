@@ -15,6 +15,7 @@
     import { Button } from "$lib/components/ui/button";
     //TODO: вынести компонент в lib
     export let data: {form : SuperValidated<CreateCardSchema>};
+    export let action: string = "";
 
     const form = superForm(data.form, {
         validators: zodClient(createCardSchema),
@@ -28,7 +29,7 @@
     };
 </script>
 
-<form method="POST" use:enhance>
+<form method="POST" use:enhance action={action}>
     <Card.Root>
         <Card.Header class="space-y-1">
             <Card.Title class="text-2xl">Create card</Card.Title>

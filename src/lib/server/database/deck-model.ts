@@ -1,6 +1,6 @@
 import { isUUID } from "$lib/_helpers/isUIID";
 import db from "$lib/server/database/drizzle";
-import { deck } from "$lib/server/database/drizzle-schemas";
+import { deck, userDeck } from "$lib/server/database/drizzle-schemas";
 import type { Deck } from "$lib/server/database/drizzle-schemas";
 import { and, eq, ne, or } from "drizzle-orm";
 
@@ -16,7 +16,7 @@ export const createDeck = async (data: Deck) => {
 	return result[0];
 };
 
-export const getPublicDecks = async (authorId = "") : Promise<Deck[] | null> => {
+export const getPublicDecks = async (authorId = ""): Promise<Deck[] | null> => {
 	const decks = await db
 		.select()
 		.from(deck)
@@ -55,4 +55,21 @@ export const getDeckById = async (id: string, userId = "") => {
 		return null;
 	}
 	return foundDeck[0];
+};
+
+export const addDeckToUser = async (userId: string, deckId: string) => {
+	const result = await db
+		.insert(userDeck)
+		.values({ userId, deckId })
+		.onConflictDoNothing()
+		.returning();
+	return result;
+};
+
+export const getStudyDecks = async (userId: string) => {
+	const decks = await db.query.userDeck.findMany({
+		where: eq(userDeck.userId, userId),
+		with: { deck: true },
+	});
+	return decks;
 };

@@ -119,3 +119,12 @@ export const createCardSchema = cardSchema.pick({
 });
 //наверное все так задавать надо бы
 export type CreateCardSchema = z.infer<typeof createCardSchema>;
+
+export const userDeckSchema = z.object({
+	deckId: z.string(),
+	userId: z.string(),
+});
+// is it even needed? maybe will be when adding from browse page
+export const addDeckToUserSchema = userDeckSchema.pick({
+	deckId: true,
+});

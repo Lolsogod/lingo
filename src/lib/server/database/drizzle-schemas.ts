@@ -93,6 +93,15 @@ export const cardDeck = pgTable(
 		};
 	},
 );
+
+export const userDeck = pgTable("user_deck", {
+	userId: text("user_id")
+		.notNull()
+		.references(() => userTable.id),
+	deckId: uuid("deck_id")
+		.notNull()
+		.references(() => deck.id),
+});
 //types
 export type User = typeof userTable.$inferInsert;
 export type UpdateUser = Partial<typeof userTable.$inferInsert>;
@@ -135,9 +144,14 @@ export const cardBlockRelations = relations(cardBlock, ({ one }) => {
 		}),
 	};
 });
-export const deckRelations = relations(deck, ({ many }) => {
+export const deckRelations = relations(deck, ({ many, one }) => {
 	return {
 		cards: many(cardDeck),
+		author: one(userTable, {
+			fields: [deck.authorId],
+			references: [userTable.id],
+		}),
+		userDecks: many(userDeck),
 	};
 });
 
@@ -150,6 +164,36 @@ export const cardDeckRelations = relations(cardDeck, ({ one }) => {
 		deck: one(deck, {
 			fields: [cardDeck.deckId],
 			references: [deck.id],
+		}),
+	};
+});
+
+export const userDeckRelations = relations(userDeck, ({ one }) => {
+	return {
+		user: one(userTable, {
+			fields: [userDeck.userId],
+			references: [userTable.id],
+		}),
+		deck: one(deck, {
+			fields: [userDeck.deckId],
+			references: [deck.id],
+		}),
+	};
+});
+
+export const userRelations = relations(userTable, ({ many }) => {
+	return {
+		sessions: many(sessionTable),
+		userDecks: many(userDeck),
+		decks: many(deck),
+	};
+});
+
+export const sessionRelations = relations(sessionTable, ({ one }) => {
+	return {
+		user: one(userTable, {
+			fields: [sessionTable.userId],
+			references: [userTable.id],
 		}),
 	};
 });

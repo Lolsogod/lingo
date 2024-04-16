@@ -1,13 +1,13 @@
+import { getStudyDecks } from "$lib/server/database/deck-model.js";
 import { redirect } from "@sveltejs/kit";
+
 export const load = async (event) => {
-	//I only have this function here so it will check page again
-	//instead of keeping it cache if it was client side only.
-	//If only client side, it might still show the page even
-	//if the user has logged out.
-	//const session = await event.locals.auth.validate();
+	//везде почекать и убрать бросающиеся ошибки с редиректам(старый стиль)
 	const user = event.locals.user;
-	if (!user) {
+	if (!user?.id) {
 		redirect(302, "/auth/sign-in");
 	}
-	return user;
+	const studyDecks = await getStudyDecks(user.id);
+
+	return { studyDecks };
 };

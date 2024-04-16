@@ -51,7 +51,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 	event.locals.user = user;
 	event.locals.session = session;
-	
+
 	if (event.route.id?.startsWith("/(admin)")) {
 		if (user?.role !== "ADMIN") redirect(302, "/auth/sign-in");
 	}

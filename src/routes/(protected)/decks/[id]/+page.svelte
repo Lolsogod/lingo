@@ -4,17 +4,23 @@
     import { Card, CardContent } from "$lib/components/ui/card";
     import * as Dialog from "$lib/components/ui/dialog";
     import CreateCardForm from "../../cards/create/CreateCardForm.svelte";
+    import { enhance } from "$app/forms";
+    import Input from "$lib/components/ui/input/input.svelte";
     export let data: PageData;
 </script>
 
 <section class="container grid items-center gap-6">
-    <div class="flex">
+    <div class="flex gap-5">
         <h1
             class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl flex-1"
         >
             Колода {data.deck.name}
         </h1>
         <a href="/decks/{data.deck.id}/edit"><Button>Редактировать?</Button></a>
+        <!---чекать есть ли она уже у юзера + ради пендинга можно суперформу всё же и визульно лучше будет..-->
+        <form action="?/addToUser" method="POST" use:enhance>
+            <Input type="submit" value="Начать изучать"/>
+        </form>
     </div>
     <h2
         class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
@@ -31,7 +37,7 @@
             <Button>Добавить карту</Button>
         </Dialog.Trigger>
         <Dialog.Content>
-            <CreateCardForm {data} />
+            <CreateCardForm {data} action="?/addCard"/>
         </Dialog.Content>
     </Dialog.Root>
 </section>

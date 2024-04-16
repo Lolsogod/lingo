@@ -36,6 +36,20 @@
 			"when": 1713182796464,
 			"tag": "0004_moaning_senator_kelly",
 			"breakpoints": true
+		},
+		{
+			"idx": 5,
+			"version": "5",
+			"when": 1713252561416,
+			"tag": "0005_elite_revanche",
+			"breakpoints": true
+		},
+		{
+			"idx": 6,
+			"version": "5",
+			"when": 1713252651108,
+			"tag": "0006_sharp_forge",
+			"breakpoints": true
 		}
 	]
 }

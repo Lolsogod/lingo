@@ -1,0 +1,1 @@
+ALTER TABLE "user_deck" ALTER COLUMN "deck_id" SET DATA TYPE uuid;
