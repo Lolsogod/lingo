@@ -1,6 +1,6 @@
 import { sendPasswordResetEmail } from '$lib/config/email-messages';
 import { resetPasswordSchema } from '$lib/config/zod-schemas';
-import { getUserByEmail, updateUser } from '$lib/server/database/user-model.js';
+import { getUserByEmail, updateUser } from '$lib/server/database/models/user';
 import { fail, redirect } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
 import { setError, superValidate } from 'sveltekit-superforms/server';

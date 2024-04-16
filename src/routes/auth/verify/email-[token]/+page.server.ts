@@ -1,6 +1,6 @@
 import { sendWelcomeEmail } from '$lib/config/email-messages';
-import type { User } from '$lib/server/database/drizzle-schemas';
-import { getUserByToken, updateUser } from '$lib/server/database/user-model.js';
+import type { User } from '$lib/server/database/schema';
+import { getUserByToken, updateUser } from '$lib/server/database/models/user';
 import { fail } from '@sveltejs/kit';
 
 export async function load({ params }) {

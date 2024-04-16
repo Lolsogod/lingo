@@ -1,11 +1,11 @@
 import { isUUID } from '$lib/_helpers/isUIID';
 import db from '$lib/server/database/drizzle';
-import { deck, userDeck } from '$lib/server/database/drizzle-schemas';
-import type { Deck } from '$lib/server/database/drizzle-schemas';
+import { deckTable, userDeckTable } from '$lib/server/database/schema';
+import type { Deck } from '$lib/server/database/schema';
 import { and, eq, ne, or } from 'drizzle-orm';
 
 export const createDeck = async (data: Deck) => {
-	const result = await db.insert(deck).values(data).onConflictDoNothing().returning();
+	const result = await db.insert(deckTable).values(data).onConflictDoNothing().returning();
 	if (result.length === 0) {
 		return null;
 	}
@@ -15,8 +15,8 @@ export const createDeck = async (data: Deck) => {
 export const getPublicDecks = async (authorId = ''): Promise<Deck[] | null> => {
 	const decks = await db
 		.select()
-		.from(deck)
-		.where(and(eq(deck.public, true), ne(deck.authorId, authorId)));
+		.from(deckTable)
+		.where(and(eq(deckTable.public, true), ne(deckTable.authorId, authorId)));
 	if (decks.length === 0) {
 		return null;
 	}
@@ -27,7 +27,7 @@ export const getDecksByAuthor = async (authorId?: string) => {
 	if (!authorId) {
 		return null;
 	}
-	const decks = await db.select().from(deck).where(eq(deck.authorId, authorId));
+	const decks = await db.select().from(deckTable).where(eq(deckTable.authorId, authorId));
 	if (decks.length === 0) {
 		return null;
 	}
@@ -40,8 +40,10 @@ export const getDeckById = async (id: string, userId = '') => {
 	}
 	const foundDeck = await db
 		.select()
-		.from(deck)
-		.where(and(eq(deck.id, id), or(eq(deck.authorId, userId), eq(deck.public, true))));
+		.from(deckTable)
+		.where(
+			and(eq(deckTable.id, id), or(eq(deckTable.authorId, userId), eq(deckTable.public, true)))
+		);
 	if (foundDeck.length === 0) {
 		return null;
 	}
@@ -50,7 +52,7 @@ export const getDeckById = async (id: string, userId = '') => {
 
 export const addDeckToUser = async (userId: string, deckId: string) => {
 	const result = await db
-		.insert(userDeck)
+		.insert(userDeckTable)
 		.values({ userId, deckId })
 		.onConflictDoNothing()
 		.returning();
@@ -58,8 +60,8 @@ export const addDeckToUser = async (userId: string, deckId: string) => {
 };
 
 export const getStudyDecks = async (userId: string) => {
-	const decks = await db.query.userDeck.findMany({
-		where: eq(userDeck.userId, userId),
+	const decks = await db.query.userDeckTable.findMany({
+		where: eq(userDeckTable.userId, userId),
 		with: { deck: true }
 	});
 	return decks;

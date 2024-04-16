@@ -1,5 +1,5 @@
 import { createDeckSchema } from '$lib/config/zod-schemas';
-import { createDeck } from '$lib/server/database/deck-model';
+import { createDeck } from '$lib/server/database/models/deck';
 import { fail } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';

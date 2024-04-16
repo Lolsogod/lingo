@@ -41,7 +41,7 @@ export const updateEmailAddressSuccessEmail = async (
 	sendEmail(email, subject, htmlEmail);
 
 	//send email to user about email change.
-	const htmlEmailChange = `<p>Your ${APP_NAME} account email has been updated from ${oldEmail} to ${email}.</p><p>If you DID NOT request this change, please contact support at: <a href='${BASE_URL}'>${BASE_URL}</a> to revert the changes.</p>`;
-	const subjectChange = `Your email address for ${APP_NAME} has changed.`;
+	const htmlEmailChange = `<p>Электронная почта вашей учетной записи ${APP_NAME} была обновлена с ${oldEmail} на ${email}.</p><p>Если вы НЕ запрашивали это изменение, обратитесь в службу поддержки по адресу: <a href='${BASE_URL}'>${BASE_URL}</a> для возврата изменений.</p>`;
+	const subjectChange = `Ваш адрес электронной почты для ${APP_NAME} изменился.`;
 	sendEmail(oldEmail, subjectChange, htmlEmailChange);
 };

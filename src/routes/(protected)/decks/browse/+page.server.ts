@@ -1,4 +1,4 @@
-import { getDecksByAuthor, getPublicDecks } from '$lib/server/database/deck-model';
+import { getDecksByAuthor, getPublicDecks } from '$lib/server/database/models/deck';
 import type { PageServerLoad } from './$types';
 
 export const load = (async (event) => {

@@ -1,5 +1,5 @@
 import { sendVerificationEmail } from '$lib/config/email-messages';
-import { getUserByEmail, updateUser } from '$lib/server/database/user-model';
+import { getUserByEmail, updateUser } from '$lib/server/database/models/user';
 import { fail } from '@sveltejs/kit';
 
 export async function load({ params }) {

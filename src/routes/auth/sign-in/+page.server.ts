@@ -1,5 +1,5 @@
 import { signInSchema } from '$lib/config/zod-schemas';
-import { getUserByEmail } from '$lib/server/database/user-model';
+import { getUserByEmail } from '$lib/server/database/models/user';
 import { lucia } from '$lib/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
 import { Argon2id } from 'oslo/password';

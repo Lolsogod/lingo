@@ -25,7 +25,7 @@ export let data: PageData;
 		Список карт <!---доделать-->
 	</h2>
 	{#each data.cards as card}
-		{card.topic.content}
+		{card.topic.name}
 		<br />
 	{/each}
 	<!--кнопка багано появляется-->

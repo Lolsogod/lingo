@@ -1,6 +1,6 @@
 import { sendVerificationEmail } from '$lib/config/email-messages';
 import { signUpSchema } from '$lib/config/zod-schemas';
-import { createUser } from '$lib/server/database/user-model';
+import { createUser } from '$lib/server/database/models/user';
 import { lucia } from '$lib/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
 import { Argon2id } from 'oslo/password';

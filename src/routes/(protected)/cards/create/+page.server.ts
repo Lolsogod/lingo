@@ -1,5 +1,5 @@
 import { createCardSchema } from '$lib/config/zod-schemas';
-import { createCard } from '$lib/server/database/card-models';
+import { createCard } from '$lib/server/database/models/card';
 import { fail } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';

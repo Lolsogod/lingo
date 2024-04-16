@@ -1,4 +1,4 @@
-import { getStudyDecks } from '$lib/server/database/deck-model.js';
+import { getStudyDecks } from '$lib/server/database/models/deck';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async (event) => {

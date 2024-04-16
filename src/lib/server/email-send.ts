@@ -14,9 +14,9 @@ export default async function sendEmail(email: string, subject: string, bodyHtml
 		console.log('E-mail sent successfully!');
 		return {
 			statusCode: 200,
-			message: 'E-mail sent successfully.'
+			message: 'Письмо успешно отправлено'
 		};
 	} catch (error) {
-		throw new Error(`Error sending email: ${JSON.stringify(error)}`);
+		throw new Error(`Ошибка при отправке письма: ${JSON.stringify(error)}`);
 	}
 }

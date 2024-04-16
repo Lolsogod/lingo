@@ -1,7 +1,7 @@
 import { isUUID } from '$lib/_helpers/isUIID';
 import { createCardSchema } from '$lib/config/zod-schemas';
-import { addCardToDeck, createCard, getCardsByDeckId } from '$lib/server/database/card-models';
-import { addDeckToUser, getDeckById } from '$lib/server/database/deck-model';
+import { addCardToDeck, createCard, getCardsByDeckId } from '$lib/server/database/models/card';
+import { addDeckToUser, getDeckById } from '$lib/server/database/models/deck';
 import { error, fail } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';
@@ -34,6 +34,7 @@ export const actions = {
 		}
 		//add card to db
 		try {
+			//транзакцией?
 			const newCard = await createCard(form.data);
 			const newCardDeck = await addCardToDeck(deckId, newCard.id);
 			if (newCard && newCardDeck) {

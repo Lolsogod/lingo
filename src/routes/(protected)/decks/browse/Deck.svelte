@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Card, CardContent } from '$lib/components/ui/card';
-import type { Deck } from '$lib/server/database/drizzle-schemas';
+import type { Deck } from '$lib/server/database/schema';
 export let deckInfo: Deck;
 </script>
 

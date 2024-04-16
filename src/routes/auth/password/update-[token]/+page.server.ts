@@ -1,5 +1,5 @@
 import { userUpdatePasswordSchema } from '$lib/config/zod-schemas';
-import { getUserByToken, updateUser } from '$lib/server/database/user-model.js';
+import { getUserByToken, updateUser } from '$lib/server/database/models/user';
 import { fail, redirect } from '@sveltejs/kit';
 import { Argon2id } from 'oslo/password';
 import { zod } from 'sveltekit-superforms/adapters';
