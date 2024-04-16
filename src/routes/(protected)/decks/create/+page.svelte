@@ -54,20 +54,34 @@ const { form: formData, enhance, submitting, errors } = form;
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
-
-				<Form.Field
-					form={form}
-					name="public"
-					class="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4"
-				>
-					<Form.Control let:attrs>
-						<Checkbox {...attrs} bind:checked={$formData.public} />
-						<div class="space-y-1 leading-none">
-							<Form.Label>Public deck.</Form.Label>
-						</div>
-						<input name={attrs.name} value={$formData.public} hidden />
-					</Form.Control>
-				</Form.Field>
+				<div class="rounded-md border p-4 flex flex-col gap-4">
+					<Form.Field
+						form={form}
+						name="public"
+						class="flex flex-row items-start space-x-3 space-y-0 "
+					>
+						<Form.Control let:attrs>
+							<Checkbox {...attrs} bind:checked={$formData.public} />
+							<div class="space-y-1 leading-none">
+								<Form.Label>Public deck.</Form.Label>
+							</div>
+							<input name={attrs.name} value={$formData.public} hidden />
+						</Form.Control>
+					</Form.Field>
+					<Form.Field
+						form={form}
+						name="addToStudy"
+						class="flex flex-row items-start space-x-3 space-y-0 "
+					>
+						<Form.Control let:attrs>
+							<Checkbox {...attrs} bind:checked={$formData.addToStudy} />
+							<div class="space-y-1 leading-none">
+								<Form.Label>Add to study.</Form.Label>
+							</div>
+							<input name={attrs.name} value={$formData.addToStudy} hidden />
+						</Form.Control>
+					</Form.Field>
+				</div>
 			</Card.Content>
 			<Card.Footer>
 				<div class="block w-full">
@@ -76,7 +90,7 @@ const { form: formData, enhance, submitting, errors } = form;
 							<Loader2 class="mr-2 h-4 w-4 animate-spin" />
 							Please wait
 						{:else}
-							Submit
+							Создать
 						{/if}
 					</Form.Button>
 				</div>

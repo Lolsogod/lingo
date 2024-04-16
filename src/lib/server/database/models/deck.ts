@@ -38,16 +38,11 @@ export const getDeckById = async (id: string, userId = '') => {
 	if (!isUUID(id)) {
 		return null;
 	}
-	const foundDeck = await db
-		.select()
-		.from(deckTable)
-		.where(
-			and(eq(deckTable.id, id), or(eq(deckTable.authorId, userId), eq(deckTable.public, true)))
-		);
-	if (foundDeck.length === 0) {
-		return null;
-	}
-	return foundDeck[0];
+	const foundDeck = await db.query.deckTable.findFirst({
+		where: and(eq(deckTable.id, id), or(eq(deckTable.authorId, userId), eq(deckTable.public, true))),
+		with: { userDecks: true }
+	});
+	return foundDeck;
 };
 
 export const addDeckToUser = async (userId: string, deckId: string) => {

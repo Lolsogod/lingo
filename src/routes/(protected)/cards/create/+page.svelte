@@ -6,5 +6,5 @@ export let data: PageData;
 </script>
 
 <section class="container grid items-center gap-6">
-	<CreateCardForm data={data} />
+	<CreateCardForm data={data.form} />
 </section>

@@ -1,5 +1,5 @@
 import { isUUID } from '$lib/_helpers/isUIID';
-import { createCardSchema } from '$lib/config/zod-schemas';
+import { createCardSchema, startStudySchema } from '$lib/config/zod-schemas';
 import { addCardToDeck, createCard, getCardsByDeckId } from '$lib/server/database/models/card';
 import { addDeckToUser, getDeckById } from '$lib/server/database/models/deck';
 import { error, fail } from '@sveltejs/kit';
@@ -16,26 +16,27 @@ export const load = (async (event) => {
 	if (!deck) {
 		return error(404, 'Deck not found');
 	}
-	const form = await superValidate(event, zod(createCardSchema));
+	const addCardForm = await superValidate(event, zod(createCardSchema));
+	const startStudyForm = await superValidate(event, zod(startStudySchema));
 	const cards = await getCardsByDeckId(deckId);
-
-	return { deck, form, cards };
+	const alredyStudying = deck.userDecks.some(ud => ud.userId === user?.id); //кривые структуры как то в порядок преводить на этапе модели например дека
+	return { addCardForm, startStudyForm, deck, cards, alredyStudying };
 }) satisfies PageServerLoad;
 
 // код повторяется пофиксить
 export const actions = {
 	addCard: async (event) => {
 		const deckId = event.params.id;
-		const form = await superValidate(event, zod(createCardSchema));
-		if (!form.valid) {
+		const addCardform = await superValidate(event, zod(createCardSchema));
+		if (!addCardform.valid) {
 			return fail(400, {
-				form
+				addCardform
 			});
 		}
 		//add card to db
 		try {
 			//транзакцией?
-			const newCard = await createCard(form.data);
+			const newCard = await createCard(addCardform.data);
 			const newCardDeck = await addCardToDeck(deckId, newCard.id);
 			if (newCard && newCardDeck) {
 				setFlash({ type: 'success', message: 'Карта создана и добавленна в колоду' }, event);
@@ -43,24 +44,34 @@ export const actions = {
 		} catch (e) {
 			console.error(e);
 			setFlash({ type: 'error', message: 'Не удалось создать карту' }, event);
-			return setError(form, 'blocks._errors', 'ошибка наверное');
+			return setError(addCardform, 'blocks._errors', 'ошибка наверное');
 		}
-		return { form };
+		return { addCardform };
 	},
 	//нужна ли тут суперформа?
 	addToUser: async (event) => {
-		console.log('triggered');
+		const startStudyForm = await superValidate(event, zod(startStudySchema));
+		if (!startStudyForm.valid) {
+			return fail(400, {
+				startStudyForm
+			});
+		}
 		const deckId = event.params.id;
 		const userId = event.locals.user?.id;
 		if (!userId || !isUUID(deckId)) {
 			return fail(400, {});
 		}
 		try {
-			return await addDeckToUser(userId, deckId);
+			const result = await addDeckToUser(userId, deckId);
+			if (result) {
+				setFlash({ type: 'success', message: 'Колода добавлена в обучение' }, event);
+			}
 		} catch (e) {
 			console.error(e);
-			setFlash({ type: 'error', message: 'Не удалось создать карту' }, event);
-			return fail(400, {});
+			setFlash({ type: 'error', message: 'Не удалось добавить к обучению' }, event);
+			return setError(startStudyForm, 'addToStudy', 'ошибка наверное');
 		}
+
+		return { startStudyForm };
 	}
 };

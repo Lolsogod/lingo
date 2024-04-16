@@ -1,6 +1,7 @@
 import { createDeckSchema } from '$lib/config/zod-schemas';
-import { createDeck } from '$lib/server/database/models/deck';
-import { fail } from '@sveltejs/kit';
+import { addDeckToUser, createDeck } from '$lib/server/database/models/deck';
+import type { Deck } from '$lib/server/database/schema';
+import { fail, redirect } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
@@ -16,6 +17,7 @@ export const load = (async (event) => {
 export const actions = {
 	default: async (event) => {
 		const user = await event.locals.user;
+		let newDeck: Deck | null;
 		console.log(user);
 		const form = await superValidate(event, zod(createDeckSchema));
 		if (!form.valid) {
@@ -30,21 +32,28 @@ export const actions = {
 			if (!user?.id) {
 				throw new Error('Invalid user');
 			}
-			const newDeck = await createDeck({
+			newDeck = await createDeck({
 				name: form.data.name,
 				description: form.data.description,
 				public: form.data.public,
 				authorId: user.id
 			});
-			if (newDeck) {
+			if (newDeck?.id) {
 				setFlash({ type: 'success', message: 'Колода создана' }, event);
+				if (form.data.addToStudy) {
+					const newUserDeck = await addDeckToUser(user.id, newDeck.id);
+					if (newUserDeck) {
+						setFlash({ type: 'success', message: 'Колода добавлена в обучение' }, event);
+					}
+				}
 			}
 		} catch (e) {
 			console.error(e);
 			setFlash({ type: 'error', message: 'Не удалось создать колоду' }, event);
-			return setError(form, 'name', 'Колода с таким именем существует???');
+			return setError(form, 'name', 'Потом наптшу сообщение об ошибке');
 		}
-		console.log(form);
-		return { form };
+		if (newDeck) {
+			redirect(302, '/decks/' + newDeck.id);
+		}
 	}
 };

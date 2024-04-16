@@ -3,9 +3,17 @@ import type { PageData } from './$types';
 import { Button } from '$lib/components/ui/button';
 import * as Dialog from '$lib/components/ui/dialog';
 import CreateCardForm from '../../cards/create/CreateCardForm.svelte';
-import { enhance } from '$app/forms';
-import Input from '$lib/components/ui/input/input.svelte';
+import * as Form from '$lib/components/ui/form';
+import { superForm } from 'sveltekit-superforms';
+import { zodClient } from 'sveltekit-superforms/adapters';
+import { startStudySchema } from '$lib/config/zod-schemas';
+import { Loader2, Check } from 'lucide-svelte';
 export let data: PageData;
+//как будто вадидация тут не нужна
+const form = superForm(data.startStudyForm, {
+	validators: zodClient(startStudySchema)
+});
+const { form: formData, enhance, submitting, errors } = form;
 </script>
 
 <section class="container grid items-center gap-6">
@@ -13,10 +21,25 @@ export let data: PageData;
 		<h1 class="flex-1 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
 			Колода {data.deck.name}
 		</h1>
-		<a href="/decks/{data.deck.id}/edit"><Button>Редактировать?</Button></a>
-		<!---чекать есть ли она уже у юзера + ради пендинга можно суперформу всё же и визульно лучше будет..-->
+		<!---<a href="/decks/{data.deck.id}/edit"><Button>Редактировать?</Button></a>-->
+		<!---чекать есть ли она уже у юзера + както кривовато-->
 		<form action="?/addToUser" method="POST" use:enhance>
-			<Input type="submit" value="Начать изучать" />
+			<Form.Field form={form} name="addToStudy">
+			<Form.Control let:attrs>
+				<input name={attrs.name} value={$formData.addToStudy} hidden />
+			</Form.Control>
+			</Form.Field>
+			<Form.Button class="w-full" disabled={data.alredyStudying ||$submitting}>
+				{#if $submitting}
+					<Loader2 class="mr-2 h-4 w-4 animate-spin" />
+					Please wait
+				{:else if data.alredyStudying}
+					<Check class="mr-2 h-4 w-4" />
+					В изучении
+				{:else}
+					Добавить в изучение
+				{/if}
+			</Form.Button>
 		</form>
 	</div>
 	<h2
@@ -34,7 +57,7 @@ export let data: PageData;
 			<Button>Добавить карту</Button>
 		</Dialog.Trigger>
 		<Dialog.Content>
-			<CreateCardForm data={data} action="?/addCard" />
+			<CreateCardForm data={data.addCardForm} action="?/addCard" />
 		</Dialog.Content>
 	</Dialog.Root>
 </section>
