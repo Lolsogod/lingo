@@ -1,7 +1,7 @@
 <script lang="ts">
 import { zodClient } from 'sveltekit-superforms/adapters';
 
-import { superForm, type SuperValidated } from 'sveltekit-superforms';
+import { superForm } from 'sveltekit-superforms';
 import { createCardSchema } from '$lib/config/zod-schemas';
 import * as Alert from '$lib/components/ui/alert';
 import * as Card from '$lib/components/ui/card';
@@ -11,7 +11,7 @@ import { AlertCircle } from 'lucide-svelte';
 import { Loader2 } from 'lucide-svelte';
 import { Button } from '$lib/components/ui/button';
 //TODO: вынести компонент в lib
-export let data: any; //подумать
+export let data: any; //подумать super validated
 export let action: string = '';
 
 const form = superForm(data, {

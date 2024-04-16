@@ -16,15 +16,15 @@ export const createDeckSchema = deckSchema.pick({
 	name: true,
 	description: true,
 	public: true,
-	addToStudy: true// отдельную схему мб, неуверен
+	addToStudy: true // отдельную схему мб, неуверен
 });
 export type CreateDeckSchema = typeof createDeckSchema;
 
 export const userDeckSchema = z.object({
 	deckId: z.string(),
-	userId: z.string(),
+	userId: z.string()
 });
 // is it even needed? maybe will be when adding from browse page
 export const startStudySchema = deckSchema.pick({
-	addToStudy: true 
+	addToStudy: true
 });

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const blockSchema = z.object({
-	content: z.string().min(1, { message: 'Введите содержание блока' }),
+	content: z.string().min(1, { message: 'Введите содержание блока' })
 });
 
 export const cardSchema = z.object({
@@ -16,4 +16,3 @@ export const createCardSchema = cardSchema.pick({
 });
 //наверное все так задавать надо бы
 export type CreateCardSchema = z.infer<typeof createCardSchema>;
-

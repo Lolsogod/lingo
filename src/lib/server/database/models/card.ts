@@ -39,7 +39,7 @@ export const createCard = async (data: CreateCardSchema) => {
 		);
 		return newCard;
 	});
-	return result
+	return result;
 };
 
 export const addCardToDeck = async (deckId: string, cardId: string) => {

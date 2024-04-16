@@ -19,7 +19,7 @@ export const load = (async (event) => {
 	const addCardForm = await superValidate(event, zod(createCardSchema));
 	const startStudyForm = await superValidate(event, zod(startStudySchema));
 	const cards = await getCardsByDeckId(deckId);
-	const alredyStudying = deck.userDecks.some(ud => ud.userId === user?.id); //кривые структуры как то в порядок преводить на этапе модели например дека
+	const alredyStudying = deck.userDecks.some((ud) => ud.userId === user?.id); //кривые структуры как то в порядок преводить на этапе модели например дека
 	return { addCardForm, startStudyForm, deck, cards, alredyStudying };
 }) satisfies PageServerLoad;
 

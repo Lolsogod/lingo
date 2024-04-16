@@ -39,7 +39,10 @@ export const getDeckById = async (id: string, userId = '') => {
 		return null;
 	}
 	const foundDeck = await db.query.deckTable.findFirst({
-		where: and(eq(deckTable.id, id), or(eq(deckTable.authorId, userId), eq(deckTable.public, true))),
+		where: and(
+			eq(deckTable.id, id),
+			or(eq(deckTable.authorId, userId), eq(deckTable.public, true))
+		),
 		with: { userDecks: true }
 	});
 	return foundDeck;

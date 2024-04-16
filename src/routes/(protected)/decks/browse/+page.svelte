@@ -13,7 +13,7 @@ export let data: PageData;
 	</h2>
 
 	{#if data.userCreatedDecks}
-		<div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 gap-5">
+		<div class="grid grid-cols-3 gap-5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8">
 			{#each data.userCreatedDecks as deck}
 				<Deck deckInfo={deck} />
 			{/each}
@@ -27,7 +27,7 @@ export let data: PageData;
 		Общие колоды
 	</h2>
 	{#if data.publicDecks}
-		<div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 gap-5">
+		<div class="grid grid-cols-3 gap-5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8">
 			{#each data.publicDecks as deck}
 				<Deck deckInfo={deck} />
 			{/each}

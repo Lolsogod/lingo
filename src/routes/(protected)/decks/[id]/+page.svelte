@@ -13,7 +13,7 @@ export let data: PageData;
 const form = superForm(data.startStudyForm, {
 	validators: zodClient(startStudySchema)
 });
-const { form: formData, enhance, submitting, errors } = form;
+const { form: formData, enhance, submitting } = form;
 </script>
 
 <section class="container grid items-center gap-6">
@@ -25,9 +25,9 @@ const { form: formData, enhance, submitting, errors } = form;
 		<!---чекать есть ли она уже у юзера + както кривовато-->
 		<form action="?/addToUser" method="POST" use:enhance>
 			<Form.Field form={form} name="addToStudy">
-			<Form.Control let:attrs>
-				<input name={attrs.name} value={$formData.addToStudy} hidden />
-			</Form.Control>
+				<Form.Control let:attrs>
+					<input name={attrs.name} value={$formData.addToStudy} hidden />
+				</Form.Control>
 			</Form.Field>
 			<Form.Button class="w-full" disabled={data.alredyStudying ||$submitting}>
 				{#if $submitting}

@@ -54,7 +54,7 @@ const { form: formData, enhance, submitting, errors } = form;
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
-				<div class="rounded-md border p-4 flex flex-col gap-4">
+				<div class="flex flex-col gap-4 rounded-md border p-4">
 					<Form.Field
 						form={form}
 						name="public"
