@@ -1,19 +1,19 @@
 <script lang="ts">
-import * as Alert from "$lib/components/ui/alert";
-import * as Card from "$lib/components/ui/card";
-import { Checkbox } from "$lib/components/ui/checkbox";
-import * as Form from "$lib/components/ui/form";
-import { Input } from "$lib/components/ui/input/index.js";
-import { signUpSchema } from "$lib/config/zod-schemas";
-import { Loader2 } from "lucide-svelte";
-import { AlertCircle } from "lucide-svelte";
-import { superForm } from "sveltekit-superforms";
-import { zodClient } from "sveltekit-superforms/adapters";
-import type { PageData } from "./$types";
+import * as Alert from '$lib/components/ui/alert';
+import * as Card from '$lib/components/ui/card';
+import { Checkbox } from '$lib/components/ui/checkbox';
+import * as Form from '$lib/components/ui/form';
+import { Input } from '$lib/components/ui/input/index.js';
+import { signUpSchema } from '$lib/config/zod-schemas';
+import { Loader2 } from 'lucide-svelte';
+import { AlertCircle } from 'lucide-svelte';
+import { superForm } from 'sveltekit-superforms';
+import { zodClient } from 'sveltekit-superforms/adapters';
+import type { PageData } from './$types';
 
 export let data: PageData;
 const form = superForm(data.form, {
-	validators: zodClient(signUpSchema),
+	validators: zodClient(signUpSchema)
 });
 
 const { form: formData, enhance, submitting, errors } = form;

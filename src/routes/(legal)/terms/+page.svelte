@@ -5,8 +5,8 @@ import {
 	TERMS_PRIVACY_COMPANY,
 	TERMS_PRIVACY_CONTACT_EMAIL,
 	TERMS_PRIVACY_COUNTRY,
-	TERMS_PRIVACY_EFFECTIVE_DATE,
-} from "$lib/config/constants";
+	TERMS_PRIVACY_EFFECTIVE_DATE
+} from '$lib/config/constants';
 </script>
 
 <section class="container grid items-center gap-6">

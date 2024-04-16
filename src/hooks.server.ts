@@ -1,31 +1,31 @@
-import log from "$lib/server/log";
-import { lucia } from "$lib/server/lucia";
-import { type Handle, redirect } from "@sveltejs/kit";
-import type { HandleServerError } from "@sveltejs/kit";
+import log from '$lib/server/log';
+import { lucia } from '$lib/server/lucia';
+import { type Handle, redirect } from '@sveltejs/kit';
+import type { HandleServerError } from '@sveltejs/kit';
 // странно это всё работает...
 export const handleError: HandleServerError = async ({ error, event }) => {
 	const errorId = crypto.randomUUID();
 
-	event.locals.error = error?.toString() || "";
+	event.locals.error = error?.toString() || '';
 	if (error instanceof Error) {
-		event.locals.errorStackTrace = error.stack || "";
+		event.locals.errorStackTrace = error.stack || '';
 	} else {
-		event.locals.errorStackTrace = "";
+		event.locals.errorStackTrace = '';
 	}
 	event.locals.errorId = errorId;
 	log(500, event);
 
 	return {
-		message: "An unexpected error occurred.",
-		errorId,
+		message: 'An unexpected error occurred.',
+		errorId
 	};
 };
 export const handle: Handle = async ({ event, resolve }) => {
 	const startTimer = Date.now();
 	event.locals.startTimer = startTimer;
 	const sessionId = event.cookies.get(lucia.sessionCookieName);
-	if (event.route.id?.startsWith("/(protected)")) {
-		if (!sessionId) redirect(302, "/auth/sign-in");
+	if (event.route.id?.startsWith('/(protected)')) {
+		if (!sessionId) redirect(302, '/auth/sign-in');
 		//TODO: set up resend domain, for now no verification needed
 		//if (!user.verified) redirect(302, '/auth/verify/email');
 	}
@@ -38,22 +38,22 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (session?.fresh) {
 		const sessionCookie = lucia.createSessionCookie(session.id);
 		event.cookies.set(sessionCookie.name, sessionCookie.value, {
-			path: ".",
-			...sessionCookie.attributes,
+			path: '.',
+			...sessionCookie.attributes
 		});
 	}
 	if (!session) {
 		const sessionCookie = lucia.createBlankSessionCookie();
 		event.cookies.set(sessionCookie.name, sessionCookie.value, {
-			path: ".",
-			...sessionCookie.attributes,
+			path: '.',
+			...sessionCookie.attributes
 		});
 	}
 	event.locals.user = user;
 	event.locals.session = session;
 
-	if (event.route.id?.startsWith("/(admin)")) {
-		if (user?.role !== "ADMIN") redirect(302, "/auth/sign-in");
+	if (event.route.id?.startsWith('/(admin)')) {
+		if (user?.role !== 'ADMIN') redirect(302, '/auth/sign-in');
 	}
 
 	const response = await resolve(event);

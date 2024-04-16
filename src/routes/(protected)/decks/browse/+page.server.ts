@@ -1,8 +1,5 @@
-import {
-	getDecksByAuthor,
-	getPublicDecks,
-} from "$lib/server/database/deck-model";
-import type { PageServerLoad } from "./$types";
+import { getDecksByAuthor, getPublicDecks } from '$lib/server/database/deck-model';
+import type { PageServerLoad } from './$types';
 
 export const load = (async (event) => {
 	const user = event.locals.user;

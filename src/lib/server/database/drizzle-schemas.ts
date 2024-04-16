@@ -1,106 +1,98 @@
-import { relations } from "drizzle-orm";
-import {
-	boolean,
-	pgTable,
-	primaryKey,
-	text,
-	timestamp,
-	uuid,
-	varchar,
-} from "drizzle-orm/pg-core";
+import { relations } from 'drizzle-orm';
+import { boolean, pgTable, primaryKey, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
 //TODO: seoparate all this also rename them as somethingTable
-export const userTable = pgTable("users", {
-	id: text("id").notNull().primaryKey(),
-	provider: text("provider").notNull().default("email"),
-	providerId: text("provider_id").notNull().default(""),
-	email: text("email").notNull().unique(),
-	firstName: text("first_name").notNull(),
-	lastName: text("last_name").notNull(),
-	role: text("role").notNull().default("USER"),
-	verified: boolean("verified").notNull().default(false),
-	receiveEmail: boolean("receive_email").notNull().default(true),
-	password: text("password"),
-	token: text("token").unique(),
-	createdAt: timestamp("created_at", {
+export const userTable = pgTable('users', {
+	id: text('id').notNull().primaryKey(),
+	provider: text('provider').notNull().default('email'),
+	providerId: text('provider_id').notNull().default(''),
+	email: text('email').notNull().unique(),
+	firstName: text('first_name').notNull(),
+	lastName: text('last_name').notNull(),
+	role: text('role').notNull().default('USER'),
+	verified: boolean('verified').notNull().default(false),
+	receiveEmail: boolean('receive_email').notNull().default(true),
+	password: text('password'),
+	token: text('token').unique(),
+	createdAt: timestamp('created_at', {
 		withTimezone: true,
-		mode: "date",
+		mode: 'date'
 	}).notNull(),
-	updatedAt: timestamp("updated_at", {
+	updatedAt: timestamp('updated_at', {
 		withTimezone: true,
-		mode: "date",
-	}).notNull(),
+		mode: 'date'
+	}).notNull()
 });
 
-export const sessionTable = pgTable("sessions", {
-	id: text("id").notNull().primaryKey(),
-	userId: text("user_id")
+export const sessionTable = pgTable('sessions', {
+	id: text('id').notNull().primaryKey(),
+	userId: text('user_id')
 		.notNull()
 		.references(() => userTable.id),
-	expiresAt: timestamp("expires_at", {
+	expiresAt: timestamp('expires_at', {
 		withTimezone: true,
-		mode: "date",
-	}).notNull(),
+		mode: 'date'
+	}).notNull()
 });
 //change to name
-export const topic = pgTable("topic", {
-	id: uuid("id").notNull().primaryKey().defaultRandom(),
-	content: varchar("content").notNull().unique(),
+export const topic = pgTable('topic', {
+	id: uuid('id').notNull().primaryKey().defaultRandom(),
+	content: varchar('content').notNull().unique()
 });
 
-export const block = pgTable("block", {
-	id: uuid("id").notNull().primaryKey().defaultRandom(),
-	content: text("content").notNull(),
+export const block = pgTable('block', {
+	id: uuid('id').notNull().primaryKey().defaultRandom(),
+	content: text('content').notNull()
 });
 
-export const card = pgTable("card", {
-	id: uuid("id").notNull().primaryKey().defaultRandom(),
-	topicId: uuid("topic_id")
+export const card = pgTable('card', {
+	id: uuid('id').notNull().primaryKey().defaultRandom(),
+	topicId: uuid('topic_id')
 		.notNull()
-		.references(() => topic.id),
+		.references(() => topic.id)
 });
 
-export const deck = pgTable("deck", {
-	id: uuid("id").notNull().primaryKey().defaultRandom(),
-	name: varchar("name").notNull(),
-	description: text("description"),
-	public: boolean("public").notNull().default(false),
-	authorId: text("author_id")
+export const deck = pgTable('deck', {
+	id: uuid('id').notNull().primaryKey().defaultRandom(),
+	name: varchar('name').notNull(),
+	description: text('description'),
+	public: boolean('public').notNull().default(false),
+	authorId: text('author_id')
 		.notNull()
-		.references(() => userTable.id),
+		.references(() => userTable.id)
 });
-export const cardBlock = pgTable("card_block", {
-	cardId: uuid("card_id")
+export const cardBlock = pgTable('card_block', {
+	cardId: uuid('card_id')
 		.notNull()
 		.references(() => card.id),
-	blockId: uuid("block_id")
+	blockId: uuid('block_id')
 		.notNull()
-		.references(() => block.id),
+		.references(() => block.id)
 });
 export const cardDeck = pgTable(
-	"card_deck",
+	'card_deck',
 	{
-		cardId: uuid("card_id")
+		cardId: uuid('card_id')
 			.notNull()
 			.references(() => card.id),
-		deckId: uuid("deck_id")
+		deckId: uuid('deck_id')
 			.notNull()
-			.references(() => deck.id),
+			.references(() => deck.id)
 	},
 	(table) => {
 		return {
-			pk: primaryKey({ columns: [table.cardId, table.deckId] }),
+			pk: primaryKey({ columns: [table.cardId, table.deckId] })
 		};
-	},
+	}
 );
 
-export const userDeck = pgTable("user_deck", {
-	userId: text("user_id")
+export const userDeck = pgTable('user_deck', {
+	userId: text('user_id')
 		.notNull()
 		.references(() => userTable.id),
-	deckId: uuid("deck_id")
+	deckId: uuid('deck_id')
 		.notNull()
-		.references(() => deck.id),
+		.references(() => deck.id)
 });
 //types
 export type User = typeof userTable.$inferInsert;
@@ -116,32 +108,32 @@ export const cardRelations = relations(card, ({ one, many }) => {
 	return {
 		topic: one(topic, {
 			fields: [card.topicId],
-			references: [topic.id],
+			references: [topic.id]
 		}),
 		deck: many(cardDeck),
-		blocks: many(cardBlock),
+		blocks: many(cardBlock)
 	};
 });
 export const topicRelations = relations(topic, ({ many }) => {
 	return {
-		cards: many(card),
+		cards: many(card)
 	};
 });
 export const blockRelations = relations(block, ({ many }) => {
 	return {
-		cards: many(cardBlock),
+		cards: many(cardBlock)
 	};
 });
 export const cardBlockRelations = relations(cardBlock, ({ one }) => {
 	return {
 		card: one(card, {
 			fields: [cardBlock.cardId],
-			references: [card.id],
+			references: [card.id]
 		}),
 		block: one(block, {
 			fields: [cardBlock.blockId],
-			references: [block.id],
-		}),
+			references: [block.id]
+		})
 	};
 });
 export const deckRelations = relations(deck, ({ many, one }) => {
@@ -149,9 +141,9 @@ export const deckRelations = relations(deck, ({ many, one }) => {
 		cards: many(cardDeck),
 		author: one(userTable, {
 			fields: [deck.authorId],
-			references: [userTable.id],
+			references: [userTable.id]
 		}),
-		userDecks: many(userDeck),
+		userDecks: many(userDeck)
 	};
 });
 
@@ -159,12 +151,12 @@ export const cardDeckRelations = relations(cardDeck, ({ one }) => {
 	return {
 		card: one(card, {
 			fields: [cardDeck.cardId],
-			references: [card.id],
+			references: [card.id]
 		}),
 		deck: one(deck, {
 			fields: [cardDeck.deckId],
-			references: [deck.id],
-		}),
+			references: [deck.id]
+		})
 	};
 });
 
@@ -172,12 +164,12 @@ export const userDeckRelations = relations(userDeck, ({ one }) => {
 	return {
 		user: one(userTable, {
 			fields: [userDeck.userId],
-			references: [userTable.id],
+			references: [userTable.id]
 		}),
 		deck: one(deck, {
 			fields: [userDeck.deckId],
-			references: [deck.id],
-		}),
+			references: [deck.id]
+		})
 	};
 });
 
@@ -185,7 +177,7 @@ export const userRelations = relations(userTable, ({ many }) => {
 	return {
 		sessions: many(sessionTable),
 		userDecks: many(userDeck),
-		decks: many(deck),
+		decks: many(deck)
 	};
 });
 
@@ -193,7 +185,7 @@ export const sessionRelations = relations(sessionTable, ({ one }) => {
 	return {
 		user: one(userTable, {
 			fields: [sessionTable.userId],
-			references: [userTable.id],
-		}),
+			references: [userTable.id]
+		})
 	};
 });

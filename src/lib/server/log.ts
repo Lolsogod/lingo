@@ -1,16 +1,17 @@
-import { AXIOM_DATASET, AXIOM_ORG_ID, AXIOM_TOKEN } from "$env/static/private";
-import getAllUrlParams from "$lib/_helpers/getAllUrlParams";
-import parseMessage from "$lib/_helpers/parseMessage";
-import parseTrack from "$lib/_helpers/parseTrack";
-import { DOMAIN } from "$lib/config/constants";
-import { Axiom } from "@axiomhq/js";
+import { AXIOM_DATASET, AXIOM_ORG_ID, AXIOM_TOKEN } from '$env/static/private';
+import getAllUrlParams from '$lib/_helpers/getAllUrlParams';
+import parseMessage from '$lib/_helpers/parseMessage';
+import parseTrack from '$lib/_helpers/parseTrack';
+import { DOMAIN } from '$lib/config/constants';
+import { Axiom } from '@axiomhq/js';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 export default async function log(statusCode: number, event) {
 	try {
-		let level = "info";
+		let level = 'info';
 		if (statusCode >= 400) {
-			level = "error";
+			level = 'error';
 		}
 		const error = event?.locals?.error || undefined;
 		const errorId = event?.locals?.errorId || undefined;
@@ -28,11 +29,11 @@ export default async function log(statusCode: number, event) {
 			trackEvents = await parseTrack(event?.locals?.track);
 		}
 
-		let referer = event.request.headers.get("referer");
+		let referer = event.request.headers.get('referer');
 		if (referer) {
 			const refererUrl = await new URL(referer);
 			const refererHostname = refererUrl.hostname;
-			if (refererHostname === "localhost" || refererHostname === DOMAIN) {
+			if (refererHostname === 'localhost' || refererHostname === DOMAIN) {
 				referer = refererUrl.pathname;
 			}
 		} else {
@@ -52,12 +53,12 @@ export default async function log(statusCode: number, event) {
 			errorStackTrace: errorStackTrace,
 			...urlParams,
 			...messageEvents,
-			...trackEvents,
+			...trackEvents
 		};
-		console.log("log: ", JSON.stringify(logData));
+		console.log('log: ', JSON.stringify(logData));
 		const client = new Axiom({
 			token: AXIOM_TOKEN,
-			orgId: AXIOM_ORG_ID,
+			orgId: AXIOM_ORG_ID
 		});
 		client.ingest(AXIOM_DATASET, [logData]);
 	} catch (err) {

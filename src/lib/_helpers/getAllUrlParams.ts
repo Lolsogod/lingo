@@ -5,7 +5,7 @@ export default async function getAllUrlParams(url: string): Promise<object> {
 		if (!newUrl) return {}; //if no params return
 		paramsObj = await Object.fromEntries(await new URLSearchParams(newUrl));
 	} catch (error) {
-		console.log("error: ", error);
+		console.log('error: ', error);
 	}
 	return paramsObj;
 }

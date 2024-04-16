@@ -1,10 +1,10 @@
 <script lang="ts">
-import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
-import { cn } from "$lib/utils.js";
+import { ContextMenu as ContextMenuPrimitive } from 'bits-ui';
+import { cn } from '$lib/utils.js';
 
 type $$Props = ContextMenuPrimitive.SeparatorProps;
 
-let className: $$Props["class"] = undefined;
+let className: $$Props['class'] = undefined;
 export { className as class };
 </script>
 

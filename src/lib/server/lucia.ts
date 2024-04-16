@@ -1,24 +1,20 @@
-import { dev } from "$app/environment";
-import db from "$lib/server/database/drizzle";
-import {
-	sessionTable,
-	topic,
-	userTable,
-} from "$lib/server/database/drizzle-schemas";
-import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { Lucia, TimeSpan } from "lucia";
+import { dev } from '$app/environment';
+import db from '$lib/server/database/drizzle';
+import { sessionTable, userTable } from '$lib/server/database/drizzle-schemas';
+import { DrizzlePostgreSQLAdapter } from '@lucia-auth/adapter-drizzle';
+import { Lucia, TimeSpan } from 'lucia';
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);
 
 export const lucia = new Lucia(adapter, {
 	sessionCookie: {
-		name: "session",
+		name: 'session',
 		expires: false, // session cookies have very long lifespan (2 years)
 		attributes: {
-			secure: !dev,
-		},
+			secure: !dev
+		}
 	},
-	sessionExpiresIn: new TimeSpan(30, "d"), // no more active/idle
+	sessionExpiresIn: new TimeSpan(30, 'd'), // no more active/idle
 	getUserAttributes: (attributes) => {
 		return {
 			userId: attributes.id,
@@ -30,12 +26,12 @@ export const lucia = new Lucia(adapter, {
 			role: attributes.role,
 			verified: attributes.verified,
 			receiveEmail: attributes.receiveEmail,
-			token: attributes.token,
+			token: attributes.token
 		};
-	},
+	}
 });
 
-declare module "lucia" {
+declare module 'lucia' {
 	interface Register {
 		Lucia: typeof lucia;
 		DatabaseUserAttributes: DatabaseUserAttributes;

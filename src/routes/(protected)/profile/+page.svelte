@@ -1,22 +1,22 @@
 <script lang="ts">
-import { goto } from "$app/navigation";
-import * as Alert from "$lib/components/ui/alert";
-import { Button } from "$lib/components/ui/button";
-import * as Card from "$lib/components/ui/card";
-import * as Form from "$lib/components/ui/form";
-import { Input } from "$lib/components/ui/input";
-import { editUserSchema } from "$lib/config/zod-schemas";
-import { Loader2 } from "lucide-svelte";
-import { AlertCircle } from "lucide-svelte";
-import { superForm } from "sveltekit-superforms";
-import { zodClient } from "sveltekit-superforms/adapters";
-import type { PageData } from "./$types";
+import { goto } from '$app/navigation';
+import * as Alert from '$lib/components/ui/alert';
+import { Button } from '$lib/components/ui/button';
+import * as Card from '$lib/components/ui/card';
+import * as Form from '$lib/components/ui/form';
+import { Input } from '$lib/components/ui/input';
+import { editUserSchema } from '$lib/config/zod-schemas';
+import { Loader2 } from 'lucide-svelte';
+import { AlertCircle } from 'lucide-svelte';
+import { superForm } from 'sveltekit-superforms';
+import { zodClient } from 'sveltekit-superforms/adapters';
+import type { PageData } from './$types';
 
 export let data: PageData;
 
 //TODO: on submit form not changes visualy, only after reload
 const form = superForm(data.form, {
-	validators: zodClient(editUserSchema),
+	validators: zodClient(editUserSchema)
 });
 
 const { form: formData, enhance, submitting, errors } = form;

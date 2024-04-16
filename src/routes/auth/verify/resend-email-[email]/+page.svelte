@@ -1,6 +1,6 @@
 <script lang="ts">
-import { Loader2 } from "lucide-svelte";
-import type { PageData } from "./$types";
+import { Loader2 } from 'lucide-svelte';
+import type { PageData } from './$types';
 export let data: PageData;
 </script>
 

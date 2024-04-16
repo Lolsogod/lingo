@@ -1,22 +1,18 @@
-import { isUUID } from "$lib/_helpers/isUIID";
-import db from "$lib/server/database/drizzle";
-import { deck, userDeck } from "$lib/server/database/drizzle-schemas";
-import type { Deck } from "$lib/server/database/drizzle-schemas";
-import { and, eq, ne, or } from "drizzle-orm";
+import { isUUID } from '$lib/_helpers/isUIID';
+import db from '$lib/server/database/drizzle';
+import { deck, userDeck } from '$lib/server/database/drizzle-schemas';
+import type { Deck } from '$lib/server/database/drizzle-schemas';
+import { and, eq, ne, or } from 'drizzle-orm';
 
 export const createDeck = async (data: Deck) => {
-	const result = await db
-		.insert(deck)
-		.values(data)
-		.onConflictDoNothing()
-		.returning();
+	const result = await db.insert(deck).values(data).onConflictDoNothing().returning();
 	if (result.length === 0) {
 		return null;
 	}
 	return result[0];
 };
 
-export const getPublicDecks = async (authorId = ""): Promise<Deck[] | null> => {
+export const getPublicDecks = async (authorId = ''): Promise<Deck[] | null> => {
 	const decks = await db
 		.select()
 		.from(deck)
@@ -38,19 +34,14 @@ export const getDecksByAuthor = async (authorId?: string) => {
 	return decks;
 };
 
-export const getDeckById = async (id: string, userId = "") => {
+export const getDeckById = async (id: string, userId = '') => {
 	if (!isUUID(id)) {
 		return null;
 	}
 	const foundDeck = await db
 		.select()
 		.from(deck)
-		.where(
-			and(
-				eq(deck.id, id),
-				or(eq(deck.authorId, userId), eq(deck.public, true)),
-			),
-		);
+		.where(and(eq(deck.id, id), or(eq(deck.authorId, userId), eq(deck.public, true))));
 	if (foundDeck.length === 0) {
 		return null;
 	}
@@ -69,7 +60,7 @@ export const addDeckToUser = async (userId: string, deckId: string) => {
 export const getStudyDecks = async (userId: string) => {
 	const decks = await db.query.userDeck.findMany({
 		where: eq(userDeck.userId, userId),
-		with: { deck: true },
+		with: { deck: true }
 	});
 	return decks;
 };
