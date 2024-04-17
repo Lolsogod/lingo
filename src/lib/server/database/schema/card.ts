@@ -1,6 +1,7 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, primaryKey, text, uuid, varchar } from 'drizzle-orm/pg-core';
+import { pgTable, primaryKey, text, uuid, varchar, boolean } from 'drizzle-orm/pg-core';
 import { cardDeckTable } from './deck';
+import { userTable } from './user';
 
 export const topicTable = pgTable('topic', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
@@ -16,7 +17,11 @@ export const cardTable = pgTable('card', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
 	topicId: uuid('topic_id')
 		.notNull()
-		.references(() => topicTable.id)
+		.references(() => topicTable.id),
+	public: boolean('public').notNull().default(true),
+	authorId: text('author_id')
+		.notNull()
+		.references(() => userTable.id)
 });
 
 export const cardBlockTable = pgTable(
@@ -38,6 +43,7 @@ export const cardBlockTable = pgTable(
 
 //types
 export type Card = typeof cardTable.$inferInsert;
+export type CardWithTopic = Card & { topic: Topic };
 export type Block = typeof blockTable.$inferInsert;
 export type Topic = typeof topicTable.$inferInsert;
 
@@ -49,7 +55,11 @@ export const cardRelations = relations(cardTable, ({ one, many }) => {
 			references: [topicTable.id]
 		}),
 		deck: many(cardDeckTable),
-		blocks: many(cardBlockTable)
+		blocks: many(cardBlockTable),
+		author: one(userTable, {
+			fields: [cardTable.authorId],
+			references: [userTable.id]
+		})
 	};
 });
 export const topicRelations = relations(topicTable, ({ many }) => {

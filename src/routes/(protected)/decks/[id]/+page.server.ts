@@ -27,8 +27,9 @@ export const load = (async (event) => {
 export const actions = {
 	addCard: async (event) => {
 		const deckId = event.params.id;
+		const userId = event.locals.user?.id;
 		const addCardform = await superValidate(event, zod(createCardSchema));
-		if (!addCardform.valid) {
+		if (!addCardform.valid || !userId || !isUUID(deckId)) {
 			return fail(400, {
 				addCardform
 			});
@@ -36,7 +37,7 @@ export const actions = {
 		//add card to db
 		try {
 			//транзакцией?
-			const newCard = await createCard(addCardform.data);
+			const newCard = await createCard(addCardform.data, userId);
 			const newCardDeck = await addCardToDeck(deckId, newCard.id);
 			if (newCard && newCardDeck) {
 				setFlash({ type: 'success', message: 'Карта создана и добавленна в колоду' }, event);

@@ -1,6 +1,6 @@
 import type { CreateCardSchema } from '$lib/config/zod-schemas';
 import db from '$lib/server/database/drizzle';
-import { eq } from 'drizzle-orm';
+import { and, eq, ne } from 'drizzle-orm';
 import { blockTable, cardTable, cardBlockTable, cardDeckTable, topicTable } from '../schema';
 
 export const findTopicByName = async (name: string) => {
@@ -10,7 +10,7 @@ export const findTopicByName = async (name: string) => {
 	return foundTopic;
 };
 
-export const createCard = async (data: CreateCardSchema) => {
+export const createCard = async (data: CreateCardSchema, authorId: string) => {
 	let existingTopic = await findTopicByName(data.topicName);
 	const result = await db.transaction(async (tx) => {
 		if (!existingTopic) {
@@ -26,7 +26,8 @@ export const createCard = async (data: CreateCardSchema) => {
 			await tx
 				.insert(cardTable)
 				.values({
-					topicId: existingTopic.id
+					topicId: existingTopic.id,
+					authorId
 				})
 				.returning()
 		)[0];
@@ -59,4 +60,29 @@ export const getCardsByDeckId = async (deckId: string) => {
 		}
 	});
 	return cardDecks.map((cardDecks) => cardDecks.card);
+};
+
+export const getPublicCards = async (userId = '') => {
+	const cards = await db.query.cardTable.findMany({
+		where: and(eq(cardTable.public, true), ne(cardTable.authorId, userId)),
+		with: { topic: true }
+	});
+	if (cards.length === 0) {
+		return null;
+	}
+	return cards;
+};
+
+export const getCardsByAuthor = async (authorId?: string) => {
+	if (!authorId) {
+		return null;
+	}
+	const cards = await db.query.cardTable.findMany({
+		where: eq(cardTable.authorId, authorId),
+		with: { topic: true } //add some processomg to check if it is inside deck
+	});
+	if (cards.length === 0) {
+		return null;
+	}
+	return cards;
 };

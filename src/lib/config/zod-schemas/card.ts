@@ -16,3 +16,12 @@ export const createCardSchema = cardSchema.pick({
 });
 //наверное все так задавать надо бы
 export type CreateCardSchema = z.infer<typeof createCardSchema>;
+
+export const cardDeckSchema = z.object({
+	cardId: z.string(),
+	deckId: z.string()
+});
+
+export const addCardToDeckSchema = cardDeckSchema.pick({
+	cardId: true
+});

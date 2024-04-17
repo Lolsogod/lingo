@@ -13,15 +13,16 @@ export const load = (async (event) => {
 
 export const actions = {
 	default: async (event) => {
+		const userId = event.locals.user?.id;
 		const form = await superValidate(event, zod(createCardSchema));
-		if (!form.valid) {
+		if (!form.valid || !userId) {
 			return fail(400, {
 				form
 			});
 		}
 		//add card to db
 		try {
-			const newCard = await createCard(form.data);
+			const newCard = await createCard(form.data, userId);
 			if (newCard) {
 				setFlash({ type: 'success', message: 'Карта создана' }, event);
 			}
