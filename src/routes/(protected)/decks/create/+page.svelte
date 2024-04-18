@@ -3,14 +3,13 @@ import { zodClient } from 'sveltekit-superforms/adapters';
 import type { PageData } from './$types';
 import { superForm } from 'sveltekit-superforms';
 import { createDeckSchema } from '$lib/config/zod-schemas';
-import * as Alert from '$lib/components/ui/alert';
 import * as Card from '$lib/components/ui/card';
 import * as Form from '$lib/components/ui/form';
 import { Input } from '$lib/components/ui/input';
-import { AlertCircle } from 'lucide-svelte';
 import { Textarea } from '$lib/components/ui/textarea';
 import { Loader2 } from 'lucide-svelte';
 import { Checkbox } from '$lib/components/ui/checkbox';
+import DisplayErrors from '$lib/components/forms/DisplayErrors.svelte';
 
 export let data: PageData;
 
@@ -27,18 +26,7 @@ const { form: formData, enhance, submitting, errors } = form;
 				<Card.Title class="text-2xl">Create Deck</Card.Title>
 			</Card.Header>
 			<Card.Content class="grid gap-4">
-				{#if $errors._errors?.length}
-					<Alert.Root variant="destructive">
-						<AlertCircle class="h-4 w-4" />
-						<Alert.Title>Error</Alert.Title>
-						<Alert.Description>
-							{#each $errors._errors as error}
-								{error}
-							{/each}
-						</Alert.Description>
-					</Alert.Root>
-				{/if}
-
+				<DisplayErrors errors={errors} />
 				<Form.Field form={form} name="name">
 					<Form.Control let:attrs>
 						<Form.Label>Deck Name</Form.Label>

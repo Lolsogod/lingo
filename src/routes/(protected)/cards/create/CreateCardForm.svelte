@@ -1,15 +1,13 @@
 <script lang="ts">
 import { zodClient } from 'sveltekit-superforms/adapters';
-
 import { superForm } from 'sveltekit-superforms';
 import { createCardSchema } from '$lib/config/zod-schemas';
-import * as Alert from '$lib/components/ui/alert';
 import * as Card from '$lib/components/ui/card';
 import * as Form from '$lib/components/ui/form';
 import { Input } from '$lib/components/ui/input';
-import { AlertCircle } from 'lucide-svelte';
 import { Loader2 } from 'lucide-svelte';
 import { Button } from '$lib/components/ui/button';
+import DisplayErrors from '$lib/components/forms/DisplayErrors.svelte';
 //TODO: вынести компонент в lib
 export let data: any; //подумать super validated
 export let action: string = '';
@@ -32,17 +30,7 @@ const addBlock = () => {
 			<Card.Title class="text-2xl">Create card</Card.Title>
 		</Card.Header>
 		<Card.Content class="grid gap-4">
-			{#if $errors._errors?.length}
-				<Alert.Root variant="destructive">
-					<AlertCircle class="h-4 w-4" />
-					<Alert.Title>Error</Alert.Title>
-					<Alert.Description>
-						{#each $errors._errors as error}
-							{error}
-						{/each}
-					</Alert.Description>
-				</Alert.Root>
-			{/if}
+			<DisplayErrors errors={errors} />
 			<Form.Field form={form} name="topicName">
 				<Form.Control let:attrs>
 					<Form.Label>Топик</Form.Label>

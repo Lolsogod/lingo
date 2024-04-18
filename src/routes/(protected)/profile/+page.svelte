@@ -1,16 +1,15 @@
 <script lang="ts">
 import { goto } from '$app/navigation';
-import * as Alert from '$lib/components/ui/alert';
 import { Button } from '$lib/components/ui/button';
 import * as Card from '$lib/components/ui/card';
 import * as Form from '$lib/components/ui/form';
 import { Input } from '$lib/components/ui/input';
 import { editUserSchema } from '$lib/config/zod-schemas';
 import { Loader2 } from 'lucide-svelte';
-import { AlertCircle } from 'lucide-svelte';
 import { superForm } from 'sveltekit-superforms';
 import { zodClient } from 'sveltekit-superforms/adapters';
 import type { PageData } from './$types';
+import DisplayErrors from '$lib/components/forms/DisplayErrors.svelte';
 
 export let data: PageData;
 
@@ -30,17 +29,7 @@ const { form: formData, enhance, submitting, errors } = form;
 				<Card.Description>Update your profile settings below.</Card.Description>
 			</Card.Header>
 			<Card.Content class="grid gap-4">
-				{#if $errors._errors?.length}
-					<Alert.Root variant="destructive">
-						<AlertCircle class="h-4 w-4" />
-						<Alert.Title>Error</Alert.Title>
-						<Alert.Description>
-							{#each $errors._errors as error}
-								{error}
-							{/each}
-						</Alert.Description>
-					</Alert.Root>
-				{/if}
+				<DisplayErrors errors={errors} />
 				<Form.Field form={form} name="firstName">
 					<Form.Control let:attrs>
 						<Form.Label>First Name</Form.Label>

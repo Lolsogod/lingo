@@ -12,7 +12,7 @@ export let data: {
 		{
 			cardId: string;
 		},
-		any,//я хочу умереть
+		any, //я хочу умереть
 		{
 			cardId: string;
 		}

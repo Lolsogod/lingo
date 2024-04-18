@@ -47,28 +47,34 @@ export const actions = {
 				updatedAt: new Date()
 			};
 			const newUser = await createUser(user);
-			if (newUser) {
-				await sendVerificationEmail(newUser.email, token);
-				const session = await lucia.createSession(newUser.id, {});
-				const sessionCookie = lucia.createSessionCookie(session.id);
-				event.cookies.set(sessionCookie.name, sessionCookie.value, {
-					path: '.',
-					...sessionCookie.attributes
-				});
-				setFlash(
-					{
-						type: 'success',
-						message: 'Account created. Please check your email to verify your account.'
-					},
-					event
-				);
+			if (!newUser) {
+				throw new Error('Failed to create user');
 			}
+			await sendVerificationEmail(newUser.email, token);
+			const session = await lucia.createSession(newUser.id, {});
+			const sessionCookie = lucia.createSessionCookie(session.id);
+			event.cookies.set(sessionCookie.name, sessionCookie.value, {
+				path: '.',
+				...sessionCookie.attributes
+			});
+			setFlash(
+				{
+					type: 'success',
+					message:
+						'Учетная запись создана. Пожалуйста, проверьте свою электронную почту, чтобы подтвердить свою учетную запись.'
+				},
+				event
+			);
 		} catch (e) {
 			console.error(e);
-			setFlash({ type: 'error', message: 'Account was not able to be created.' }, event);
+			setFlash({ type: 'error', message: 'Не удалось создать учетную запись.' }, event);
 			// email already in use
 			//might be other type of error but this is most common and this is how lucia docs sets the error to duplicate user
-			return setError(form, 'email', 'A user with that email already exists.');
+			return setError(
+				form,
+				'email',
+				'Пользователь с таким адресом электронной почты уже существует.'
+			);
 		}
 		return { form };
 	}

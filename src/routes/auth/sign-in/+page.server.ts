@@ -28,13 +28,13 @@ export const actions = {
 			});
 		}
 
-		//add user to db
+		// добавить пользователя в базу данных
 		try {
 			const email = form.data.email.toLowerCase();
 			const existingUser = await getUserByEmail(email);
 			if (!existingUser) {
-				setFlash({ type: 'error', message: 'The email or password is incorrect.' }, event);
-				return setError(form, 'The email or password is incorrect.');
+				setFlash({ type: 'error', message: 'Неверный адрес электронной почты или пароль.' }, event);
+				return setError(form, 'Неверный адрес электронной почты или пароль.');
 			}
 
 			if (existingUser.password) {
@@ -43,25 +43,28 @@ export const actions = {
 					form.data.password
 				);
 				if (!validPassword) {
-					setFlash({ type: 'error', message: 'The email or password is incorrect.' }, event);
-					return setError(form, 'The email or password is incorrect.');
+					setFlash(
+						{ type: 'error', message: 'Неверный адрес электронной почты или пароль.' },
+						event
+					);
+					return setError(form, 'Неверный адрес электронной почты или пароль.');
 				}
-				//password valid - set session
+				// пароль верный - установить сессию
 				const session = await lucia.createSession(existingUser.id, {});
 				const sessionCookie = lucia.createSessionCookie(session.id);
 				event.cookies.set(sessionCookie.name, sessionCookie.value, {
 					path: '.',
 					...sessionCookie.attributes
 				});
-				setFlash({ type: 'success', message: 'Sign in successful.' }, event);
+				setFlash({ type: 'success', message: 'Успешный вход.' }, event);
 			}
 		} catch (e) {
-			//TODO: need to return error message to client
+			//TODO: нужно вернуть сообщение об ошибке клиенту
 			console.error(e);
-			// email already in use
+			// электронная почта уже используется
 			//const { fieldErrors: errors } = e.flatten();
-			setFlash({ type: 'error', message: 'The email or password is incorrect.' }, event);
-			return setError(form, 'The email or password is incorrect.');
+			setFlash({ type: 'error', message: 'Неверный адрес электронной почты или пароль.' }, event);
+			return setError(form, 'Неверный адрес электронной почты или пароль.');
 		}
 
 		return { form };
