@@ -25,7 +25,6 @@ const inputs = [
 		type: 'password'
 	}
 ];
-const { form: formData, enhance, submitting, errors } = form;
 </script>
 
 <div class="mx-auto flex max-w-2xl items-center justify-center">
