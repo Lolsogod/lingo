@@ -16,9 +16,9 @@ export const load = async (event) => {
 		});
 	}
 	form.data = {
-		firstName: user?.firstName,
-		lastName: user?.lastName,
-		email: user?.email
+		firstName: user.firstName,
+		lastName: user.lastName,
+		email: user.email
 	};
 	return {
 		form
@@ -62,6 +62,7 @@ export const actions = {
 			return setError(form, 'There was a problem updating your profile.');
 		}
 		console.log('profile updated successfully');
+		console.log(form.data);
 		return message(form, 'Profile updated successfully.');
 	}
 };

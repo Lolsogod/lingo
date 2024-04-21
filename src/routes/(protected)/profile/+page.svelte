@@ -3,7 +3,7 @@ import { goto } from '$app/navigation';
 import { Button } from '$lib/components/ui/button';
 import * as Card from '$lib/components/ui/card';
 import { editUserSchema } from '$lib/config/zod-schemas';
-import { superForm } from 'sveltekit-superforms';
+import { superForm, type FormResult } from 'sveltekit-superforms';
 import { zodClient } from 'sveltekit-superforms/adapters';
 import type { PageData } from './$types';
 import SimpleForm from '$lib/components/forms/SimpleForm.svelte';
@@ -11,9 +11,9 @@ import SimpleSubmit from '$lib/components/forms/SimpleSubmit.svelte';
 
 export let data: PageData;
 
-//TODO: on submit form not changes visualy, only after reload
 const form = superForm(data.form, {
-	validators: zodClient(editUserSchema)
+	validators: zodClient(editUserSchema),
+	resetForm: false,
 });
 
 const inputs = [
@@ -30,7 +30,6 @@ const inputs = [
 		label: 'Email'
 	}
 ];
-const { form: formData, enhance, submitting, errors } = form;
 </script>
 
 <div class="mx-auto flex max-w-2xl items-center justify-center">
