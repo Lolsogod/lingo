@@ -1,18 +1,19 @@
 <script lang="ts">
 import { Button } from '$lib/components/ui/button';
-import * as Form from '$lib/components/ui/form';
 import { superForm } from 'sveltekit-superforms';
 import { zodClient } from 'sveltekit-superforms/adapters';
 import { startStudySchema } from '$lib/config/zod-schemas';
-import { Loader2, Check } from 'lucide-svelte';
 import type { LayoutData } from './$types';
-
+import ActionButton from '$lib/components/forms/ActionButton.svelte';
+import CardItem from '$lib/components/items/CardItem.svelte';
+import ItemGrid from '$lib/components/items/ItemGrid.svelte';
+import { page } from '$app/stores';
 export let data: LayoutData;
 
 const form = superForm(data.startStudyForm, {
 	validators: zodClient(startStudySchema)
 });
-const { form: formData, enhance, submitting } = form;
+const deck_url = `/decks/${data.deck.id}`;
 </script>
 
 <section class="container grid items-center gap-6">
@@ -20,41 +21,43 @@ const { form: formData, enhance, submitting } = form;
 		<h1 class="flex-1 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
 			Колода {data.deck.name}
 		</h1>
-		<form action="?/addToUser" method="POST" use:enhance>
-			<Form.Field form={form} name="addToStudy">
-				<Form.Control let:attrs>
-					<input name={attrs.name} value={$formData.addToStudy} hidden />
-				</Form.Control>
-			</Form.Field>
-			<Form.Button class="w-full" disabled={data.alredyStudying ||$submitting}>
-				{#if $submitting}
-					<Loader2 class="mr-2 h-4 w-4 animate-spin" />
-					Please wait
-				{:else if data.alredyStudying}
-					<Check class="mr-2 h-4 w-4" />
-					В изучении
-				{:else}
-					Добавить в изучение
-				{/if}
-			</Form.Button>
-		</form>
+		<ActionButton
+			form={form}
+			action={`${deck_url}?/startStudy`}
+			name="startStudy"
+			condition={!!data.alredyStudying}
+			conditionText={'В изучении'}
+		>
+			Добавить в изучение
+		</ActionButton>
 	</div>
 	<p>
-		{data.deck.description}
+		{data.deck.description||''}
 	</p>
 	<h2
 		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
 	>
 		Список карт <!---доделать-->
 	</h2>
-	{#each data.cards as card}
-		{card.topic.name}
-		<br />
-	{/each}
-	<!--на этих страницах ломаются формы лейаута и кнопки красивее сделать-->
+	<ItemGrid>
+		{#each data.cards as card}
+			<CardItem CardInfo={card} />
+		{/each}
+	</ItemGrid>
 	<div class="flex gap-2">
-		<Button href={`create-card`}>Создать карту</Button>
-		<Button href={`add-card`}>Добавить существующюю</Button>
+		<Button
+			href={`${deck_url}/create-card`}
+			variant={$page.url.pathname===`${deck_url}/create-card`?'default':'secondary'}
+			>Создать карту</Button
+		>
+		<Button
+			href={`${deck_url}/add-card`}
+			variant={$page.url.pathname===`${deck_url}/add-card`?'default':'secondary'}
+			>Добавить существующюю</Button
+		>
+		{#if $page.url.pathname!=deck_url}
+			<Button href={deck_url} variant='secondary'>✕</Button>
+		{/if}
 	</div>
 	<slot />
 </section>

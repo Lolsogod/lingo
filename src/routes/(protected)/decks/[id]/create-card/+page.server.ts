@@ -5,6 +5,13 @@ import {  fail } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
+import type { LayoutServerLoad } from '../$types';
+
+export const load = (async (event) => {
+	const form = await superValidate(event, zod(createCardSchema));
+	return { form };
+
+}) satisfies LayoutServerLoad;
 
 export const actions = {
     addCard: async (event) => {

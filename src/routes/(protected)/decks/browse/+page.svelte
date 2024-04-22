@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { PageData } from './$types';
-import Deck from './Deck.svelte';
+import DeckItem from '$lib/components/items/DeckItem.svelte';
+import ItemGrid from '$lib/components/items/ItemGrid.svelte';
 export let data: PageData;
 </script>
 
@@ -13,11 +14,11 @@ export let data: PageData;
 	</h2>
 
 	{#if data.userCreatedDecks}
-		<div class="grid grid-cols-3 gap-5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8">
+		<ItemGrid>
 			{#each data.userCreatedDecks as deck}
-				<Deck deckInfo={deck} />
+				<DeckItem deckInfo={deck} />
 			{/each}
-		</div>
+		</ItemGrid>
 	{:else}
 		<span class="text-xl text-muted-foreground">нет колод</span>
 	{/if}
@@ -27,11 +28,11 @@ export let data: PageData;
 		Общие колоды
 	</h2>
 	{#if data.publicDecks}
-		<div class="grid grid-cols-3 gap-5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8">
+		<ItemGrid>
 			{#each data.publicDecks as deck}
-				<Deck deckInfo={deck} />
+				<DeckItem deckInfo={deck} />
 			{/each}
-		</div>
+		</ItemGrid>
 	{:else}
 		<span class="text-xl text-muted-foreground">нет колод</span>
 	{/if}

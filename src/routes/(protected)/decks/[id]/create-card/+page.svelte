@@ -5,4 +5,4 @@
     export let data: PageData;
 </script>
 
-<CreateCardForm data={data.addCardForm} action="?/addCard" />
+<CreateCardForm data={data.form} action="?/addCard" />

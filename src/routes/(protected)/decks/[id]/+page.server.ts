@@ -9,7 +9,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 // код повторяется пофиксить
 export const actions = {
 	//нужна ли тут суперформа?
-	addToUser: async (event) => {
+	startStudy: async (event) => {
 		const startStudyForm = await superValidate(event, zod(startStudySchema));
 		if (!startStudyForm.valid) {
 			return fail(400, {
