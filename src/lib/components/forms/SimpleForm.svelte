@@ -1,29 +1,29 @@
 <script lang="ts">
 import * as Card from '$lib/components/ui/card';
-import * as Form from '$lib/components/ui/form';
-import { Input } from '$lib/components/ui/input/index.js';
-import { signInSchema } from '$lib/config/zod-schemas';
-import { Loader2 } from 'lucide-svelte';
-import { superForm, type SuperForm } from 'sveltekit-superforms';
-import { zodClient } from 'sveltekit-superforms/adapters';
+import { type SuperForm } from 'sveltekit-superforms';
 import SimpleInput from './SimpleInput.svelte';
 import DisplayErrors from './DisplayErrors.svelte';
+import SimpleCheckbox from './SimpleCheckbox.svelte';
 
 export let inputs: { name: string; label: string; type?: string }[] = [];
 
 export let form: SuperForm<any, any>;
-const { form: formData, enhance, submitting, errors } = form;
+const { enhance, errors } = form;
+//todo: вернуть как нибудь прикольную рамку у чекбоксов
 </script>
-
 <form method="POST" use:enhance>
-	<Card.Root class="w-96">
+	<Card.Root>
 		<Card.Header class="space-y-1">
 			<slot name="header" />
 		</Card.Header>
 		<Card.Content class="grid gap-4">
 			<DisplayErrors errors={errors} />
 			{#each inputs as input}
-				<SimpleInput form={form} {...input} />
+				{#if input.type === 'checkbox'}
+					<SimpleCheckbox form={form} {...input} />
+				{:else}
+					<SimpleInput form={form} {...input} />
+				{/if}
 			{/each}
 			<slot name="custom-fields" />
 		</Card.Content>

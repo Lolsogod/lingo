@@ -50,7 +50,7 @@ export const actions = {
 		} catch (e) {
 			console.error(e);
 			setFlash({ type: 'error', message: 'Не удалось создать колоду' }, event);
-			return setError(form, 'name', 'Потом наптшу сообщение об ошибке');
+			return setError(form, 'name', 'Не удалось создать колоду');
 		}
 		if (newDeck) {
 			redirect(302, '/decks/' + newDeck.id);

@@ -1,8 +1,5 @@
 <script lang="ts">
-import type { PageData } from './$types';
 import { Button } from '$lib/components/ui/button';
-import * as Dialog from '$lib/components/ui/dialog';
-import CreateCardForm from '../../cards/create/CreateCardForm.svelte';
 import * as Form from '$lib/components/ui/form';
 import { superForm } from 'sveltekit-superforms';
 import { zodClient } from 'sveltekit-superforms/adapters';
@@ -54,16 +51,10 @@ const { form: formData, enhance, submitting } = form;
 		{card.topic.name}
 		<br />
 	{/each}
-	<!--кнопка багано появляется перенести на другую страницу?-->
-	<Dialog.Root>
-		<Dialog.Trigger>
-			<Button>Добавить карту</Button>
-		</Dialog.Trigger>
-		<Dialog.Content>
-			<CreateCardForm data={data.addCardForm} action="?/addCard" />
-		</Dialog.Content>
-	</Dialog.Root>
-	<!--на этой странице ломаются формы лейаута-->
-	<Button href={`${data.deck.id}/add-ex-card`}>Добавить существующюю</Button>
+	<!--на этих страницах ломаются формы лейаута и кнопки красивее сделать-->
+	<div class="flex gap-2">
+		<Button href={`create-card`}>Создать карту</Button>
+		<Button href={`add-card`}>Добавить существующюю</Button>
+	</div>
 	<slot />
 </section>

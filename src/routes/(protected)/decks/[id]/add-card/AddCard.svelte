@@ -7,6 +7,7 @@ import { superForm, type SuperValidated } from 'sveltekit-superforms';
 import { zodClient } from 'sveltekit-superforms/adapters';
 import { Check, Loader2 } from 'lucide-svelte';
 import { addCardToDeckSchema } from '$lib/config/zod-schemas';
+//TODO: унифицированный компонент для картоколодо образных вещей
 export let data: {
 	form: SuperValidated<
 		{

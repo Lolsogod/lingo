@@ -12,7 +12,7 @@ export const load = async (event) => {
 	const user = event.locals.user;
 	if (!user) {
 		error(401, {
-			message: 'You must be signed in to view this page.'
+			message: 'Вы должны быть авторизованы, чтобы просмотреть эту страницу.'
 		});
 	}
 	form.data = {
@@ -46,7 +46,7 @@ export const actions = {
 					lastName: form.data.lastName,
 					email: form.data.email
 				});
-				setFlash({ type: 'success', message: 'Profile update successful.' }, event);
+				setFlash({ type: 'success', message: 'Профиль успешно обновлён' }, event);
 			}
 
 			if (user?.email !== form.data.email) {
@@ -59,10 +59,10 @@ export const actions = {
 			}
 		} catch (e) {
 			console.error(e);
-			return setError(form, 'There was a problem updating your profile.');
+			return setError(form, 'Не удалось обновить профиль');
 		}
 		console.log('profile updated successfully');
 		console.log(form.data);
-		return message(form, 'Profile updated successfully.');
+		return message(form, 'Профиль успешно обновлён');
 	}
 };

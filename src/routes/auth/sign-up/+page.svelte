@@ -6,7 +6,6 @@ import { signUpSchema } from '$lib/config/zod-schemas';
 import { superForm } from 'sveltekit-superforms';
 import { zodClient } from 'sveltekit-superforms/adapters';
 import type { PageData } from './$types';
-import SuperDebug from 'sveltekit-superforms';
 import SimpleForm from '$lib/components/forms/SimpleForm.svelte';
 import SimpleSubmit from '$lib/components/forms/SimpleSubmit.svelte';
 export let data: PageData;
@@ -34,11 +33,10 @@ const inputs = [
 		name: 'password',
 		label: 'Пароль',
 		type: 'password'
-	}
+	},
 ];
 </script>
 
-<SuperDebug data={formData} />
 <div class="mx-auto flex max-w-2xl items-center justify-center">
 	<SimpleForm form={form} inputs={inputs}>
 		<div slot="header">

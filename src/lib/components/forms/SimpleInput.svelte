@@ -2,6 +2,8 @@
 import * as Form from '$lib/components/ui/form';
 import type { SuperForm } from 'sveltekit-superforms';
 import { Input } from '$lib/components/ui/input/';
+import { Textarea } from '../ui/textarea';
+
 export let form: SuperForm<any, any>;
 export let label: string;
 export let name: string;
@@ -13,7 +15,11 @@ const { form: formData } = form;
 <Form.Field form={form} name={name}>
 	<Form.Control let:attrs>
 		<Form.Label>{label}</Form.Label>
-		<Input {...attrs} bind:value={$formData[name]} type={type} />
+		{#if type === 'textarea'}
+			<Textarea {...attrs} bind:value={$formData[name]} />
+		{:else}
+			<Input {...attrs} bind:value={$formData[name]} type={type} />
+		{/if}
 	</Form.Control>
 	<Form.FieldErrors />
 </Form.Field>

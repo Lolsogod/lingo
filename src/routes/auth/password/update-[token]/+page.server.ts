@@ -23,6 +23,7 @@ export const actions = {
 
 		try {
 			const token = event.params.token as string;
+			
 			console.log('update user password');
 			const newToken = crypto.randomUUID();
 			//get email from token
@@ -37,14 +38,14 @@ export const actions = {
 			} else {
 				return setError(
 					form,
-					'Email address not found for this token. Please contact support if you need further help.'
+					'Адрес электронной почты не найден для данного токена. Если вам нужна дополнительная помощь, пожалуйста, свяжитесь с поддержкой.'
 				);
 			}
 		} catch (e) {
 			console.error(e);
 			return setError(
 				form,
-				'The was a problem resetting your password. Please contact support if you need further help.'
+				'Произошла проблема с сбросом вашего пароля. Если вам нужна дополнительная помощь, пожалуйста, свяжитесь с поддержкой.'
 			);
 		}
 		const token = event.params.token as string;

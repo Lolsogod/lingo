@@ -25,7 +25,7 @@ export const actions = {
 		try {
 			const user = await getUserByEmail(form.data.email);
 			if (!user) {
-				return setError(form, 'The email address does not have an account.');
+				return setError(form, 'Указанный адрес электронной почты не связан с аккаунтом.');
 			}
 			console.log('reset user password');
 			const token = crypto.randomUUID();
@@ -35,7 +35,7 @@ export const actions = {
 			console.error(e);
 			return setError(
 				form,
-				'The was a problem resetting your password. Please contact support if you need further help.'
+				'Произошла ошибка при сбросе пароля. Если вам требуется дополнительная помощь, пожалуйста, обратитесь в службу поддержки.'
 			);
 		}
 		redirect(302, '/auth/password/reset/success');

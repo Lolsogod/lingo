@@ -5,7 +5,7 @@ import AddCard from './AddCard.svelte';
 export let data: PageData;
 </script>
 
-<section class="container grid items-center gap-6">
+
 	<h2
 		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
 	>
@@ -35,4 +35,4 @@ export let data: PageData;
 	{:else}
 		<span class="text-xl text-muted-foreground">нет карт</span>
 	{/if}
-</section>
+
