@@ -7,7 +7,8 @@ import { superForm, type SuperValidated } from 'sveltekit-superforms';
 import { zodClient } from 'sveltekit-superforms/adapters';
 import { Check, Loader2 } from 'lucide-svelte';
 import { addCardToDeckSchema } from '$lib/config/zod-schemas';
-//TODO: унифицированный компонент для картоколодо образных вещей
+import ActionButton from '$lib/components/forms/ActionButton.svelte';
+//TODO: самнительнаа....
 export let data: {
 	form: SuperValidated<
 		{
@@ -18,39 +19,24 @@ export let data: {
 			cardId: string;
 		}
 	>;
-	added: boolean;
 };
+
 export let cardInfo: CardWithTopic;
-// ааааа формы упростить
 const form = superForm(data.form, {
-	validators: zodClient(addCardToDeckSchema)
+	validators: zodClient(addCardToDeckSchema),
+	resetForm: false
 });
-const { form: formData, enhance, submitting } = form;
+const { form: formData } = form;
 $formData.cardId = cardInfo.id!;
 </script>
 
-<Card class="flex h-52 w-36 cursor-pointer flex-col">
-	<CardContent class="flex h-12 flex-1 items-center justify-center p-0">
-		<span class="text-3xl">{cardInfo.topic.name}</span>
-	</CardContent>
-	<CardFooter>
-		<form method="POST" use:enhance>
-			<Form.Field form={form} name="cardId">
-				<Form.Control let:attrs>
-					<input name={attrs.name} value={$formData.cardId} hidden />
-				</Form.Control>
-			</Form.Field>
-			<Form.Button class="w-full" disabled={data.added ||$submitting}>
-				{#if $submitting}
-					<Loader2 class="mr-2 h-4 w-4 animate-spin" />
-					Please wait
-				{:else if data.added}
-					<Check class="mr-2 h-4 w-4" />
-					В изучении
-				{:else}
-					Добавить
-				{/if}
-			</Form.Button>
-		</form>
-	</CardFooter>
-</Card>
+<CardFooter>
+	<ActionButton
+		form={form}
+		name="cardId"
+		value={cardInfo.id}
+		condition={cardInfo.isAdded}
+		conditionText={'Добавлено'}
+		class="w-full">+</ActionButton
+	></CardFooter
+>

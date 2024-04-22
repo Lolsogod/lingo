@@ -1,6 +1,6 @@
 import { relations } from 'drizzle-orm';
 import { pgTable, primaryKey, text, uuid, varchar, boolean } from 'drizzle-orm/pg-core';
-import { cardDeckTable } from './deck';
+import { cardDeckTable, type CardDeck } from './deck';
 import { userTable } from './user';
 
 export const topicTable = pgTable('topic', {
@@ -43,7 +43,7 @@ export const cardBlockTable = pgTable(
 
 //types
 export type Card = typeof cardTable.$inferInsert;
-export type CardWithTopic = Card & { topic: Topic };
+export type CardWithTopic = Card & { topic: Topic, isAdded?: boolean, deck?: CardDeck[]};
 export type Block = typeof blockTable.$inferInsert;
 export type Topic = typeof topicTable.$inferInsert;
 

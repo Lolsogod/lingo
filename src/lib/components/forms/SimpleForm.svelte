@@ -6,12 +6,12 @@ import DisplayErrors from './DisplayErrors.svelte';
 import SimpleCheckbox from './SimpleCheckbox.svelte';
 
 export let inputs: { name: string; label: string; type?: string }[] = [];
-
+export let action: string = '';
 export let form: SuperForm<any, any>;
 const { enhance, errors } = form;
 //todo: вернуть как нибудь прикольную рамку у чекбоксов
 </script>
-<form method="POST" use:enhance>
+<form method="POST" use:enhance action={action}>
 	<Card.Root>
 		<Card.Header class="space-y-1">
 			<slot name="header" />

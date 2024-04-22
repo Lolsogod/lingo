@@ -1,38 +1,44 @@
 <script lang="ts">
 //просто отвратительнешее повторение кода
+import CardItem from '$lib/components/items/CardItem.svelte';
 import type { PageData } from './$types';
+import ItemGrid from '$lib/components/items/ItemGrid.svelte';
+import { superForm } from 'sveltekit-superforms';
+import { zodClient } from 'sveltekit-superforms/adapters';
+import { addCardToDeckSchema } from '$lib/config/zod-schemas';
 import AddCard from './AddCard.svelte';
 export let data: PageData;
 </script>
 
-
-	<h2
-		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
-	>
-		Мои карты
-	</h2>
-
-	{#if data.userCreatedCards}
-		<div class="grid grid-cols-3 gap-5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8">
-			{#each data.userCreatedCards as card}
+<h2
+	class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
+>
+	Мои карты
+</h2>
+{#if data.userCreatedCards}
+	<ItemGrid>
+		{#each data.userCreatedCards as card}
+			<CardItem cardInfo={card}>
 				<AddCard cardInfo={card} data={data} />
-			{/each}
-		</div>
-	{:else}
-		<span class="text-xl text-muted-foreground">нет карт</span>
-	{/if}
-	<h2
-		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
-	>
-		Общие карты
-	</h2>
-	{#if data.publicCards}
-		<div class="grid grid-cols-3 gap-5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8">
-			{#each data.publicCards as card}
+			</CardItem>
+		{/each}
+	</ItemGrid>
+{:else}
+	<span class="text-xl text-muted-foreground">нет карт</span>
+{/if}
+<h2
+	class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
+>
+	Общие карты
+</h2>
+{#if data.publicCards}
+	<ItemGrid>
+		{#each data.publicCards as card}
+			<CardItem cardInfo={card}>
 				<AddCard cardInfo={card} data={data} />
-			{/each}
-		</div>
-	{:else}
-		<span class="text-xl text-muted-foreground">нет карт</span>
-	{/if}
-
+			</CardItem>
+		{/each}
+	</ItemGrid>
+{:else}
+	<span class="text-xl text-muted-foreground">нет карт</span>
+{/if}

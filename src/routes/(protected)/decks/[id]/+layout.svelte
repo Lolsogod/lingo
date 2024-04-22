@@ -41,7 +41,7 @@ const deck_url = `/decks/${data.deck.id}`;
 	</h2>
 	<ItemGrid>
 		{#each data.cards as card}
-			<CardItem CardInfo={card} />
+			<CardItem cardInfo={card} />
 		{/each}
 	</ItemGrid>
 	<div class="flex gap-2">

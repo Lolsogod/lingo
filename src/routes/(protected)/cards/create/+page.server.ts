@@ -16,6 +16,7 @@ export const actions = {
 		const userId = event.locals.user?.id;
 		const form = await superValidate(event, zod(createCardSchema));
 		if (!form.valid || !userId) {
+			setFlash({ type: 'error', message: 'Не удалось создать карту' }, event);
 			return fail(400, {
 				form
 			});

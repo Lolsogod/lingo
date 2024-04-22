@@ -8,6 +8,8 @@ import { Input } from '$lib/components/ui/input';
 import { Loader2 } from 'lucide-svelte';
 import { Button } from '$lib/components/ui/button';
 import DisplayErrors from '$lib/components/forms/DisplayErrors.svelte';
+import SimpleForm from '$lib/components/forms/SimpleForm.svelte';
+import SimpleSubmit from '$lib/components/forms/SimpleSubmit.svelte';
 //TODO: вынести компонент в lib
 export let data: any; //подумать super validated
 export let action: string = '';
@@ -19,47 +21,39 @@ const form = superForm(data, {
 
 const { form: formData, enhance, submitting, errors } = form;
 
+const inputs = [
+	{
+		name: 'topicName',
+		label: 'Топик'
+	}
+];
 const addBlock = () => {
 	$formData.blocks = [...$formData.blocks, { content: '' }];
 };
 </script>
 
-<form method="POST" use:enhance action={action}>
-	<Card.Root>
-		<Card.Header class="space-y-1">
-			<Card.Title class="text-2xl">Create card</Card.Title>
-		</Card.Header>
-		<Card.Content class="grid gap-4">
-			<DisplayErrors errors={errors} />
-			<Form.Field form={form} name="topicName">
+<SimpleForm form={form} inputs={inputs} action={action}>
+	<div slot="header">
+		<Card.Title class="text-2xl">Создание карты</Card.Title>
+	</div>
+	<div slot="custom-fields">
+		<!---нет ошибки на пустые блоки-->
+		{#each $formData.blocks as _, i}
+			<Form.Field form={form} name="blocks">
 				<Form.Control let:attrs>
-					<Form.Label>Топик</Form.Label>
-					<Input {...attrs} bind:value={$formData.topicName} />
+					<Form.Label>Блок {i + 1}</Form.Label>
+					<Input {...attrs} bind:value={$formData.blocks[i].content} />
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
-			{#each $formData.blocks as _, i}
-				<Form.Field form={form} name="blocks">
-					<Form.Control let:attrs>
-						<Form.Label>Блок {i + 1}</Form.Label>
-						<Input {...attrs} bind:value={$formData.blocks[i].content} />
-					</Form.Control>
-					<Form.FieldErrors />
-				</Form.Field>
-			{/each}
-			<Button variant="secondary" on:click={addBlock}>Добавить блок</Button>
-		</Card.Content>
-		<Card.Footer>
-			<div class="block w-full">
-				<Form.Button class="w-full" disabled={$submitting}>
-					{#if $submitting}
-						<Loader2 class="mr-2 h-4 w-4 animate-spin" />
-						Please wait
-					{:else}
-						Submit
-					{/if}
-				</Form.Button>
-			</div>
-		</Card.Footer>
-	</Card.Root>
-</form>
+		{/each}
+		
+	</div>
+	<div slot="submit" class="block w-full">
+		<Form.Field form={form} name="blocks">
+			<Button variant="secondary" on:click={addBlock} class="block w-full">Добавить блок</Button>
+			<Form.FieldErrors />
+		</Form.Field>
+		<SimpleSubmit form={form}>Создать</SimpleSubmit>
+	</div>
+</SimpleForm>
