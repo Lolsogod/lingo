@@ -23,7 +23,7 @@ export const actions = {
 
 		try {
 			const token = event.params.token as string;
-			
+
 			console.log('update user password');
 			const newToken = crypto.randomUUID();
 			//get email from token

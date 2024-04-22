@@ -10,5 +10,5 @@ export let cardInfo: CardWithTopic;
 		<span class="truncate text-2xl">{cardInfo.topic.name}</span>
 		<!--в слот мб-->
 	</CardContent>
-	<slot/>
+	<slot />
 </Card>

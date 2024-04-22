@@ -56,7 +56,7 @@ const deck_url = `/decks/${data.deck.id}`;
 			>Добавить существующюю</Button
 		>
 		{#if $page.url.pathname!=deck_url}
-			<Button href={deck_url} variant='secondary'>✕</Button>
+			<Button href={deck_url} variant="secondary">✕</Button>
 		{/if}
 	</div>
 	<slot />

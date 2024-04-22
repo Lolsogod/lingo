@@ -43,7 +43,7 @@ export const cardBlockTable = pgTable(
 
 //types
 export type Card = typeof cardTable.$inferInsert;
-export type CardWithTopic = Card & { topic: Topic, isAdded?: boolean, deck?: CardDeck[]};
+export type CardWithTopic = Card & { topic: Topic; isAdded?: boolean; deck?: CardDeck[] };
 export type Block = typeof blockTable.$inferInsert;
 export type Topic = typeof topicTable.$inferInsert;
 

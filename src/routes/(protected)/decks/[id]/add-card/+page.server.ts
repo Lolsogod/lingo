@@ -9,17 +9,17 @@ import type { CardWithTopic } from '$lib/server/database/schema';
 const addedCheck = (cards: CardWithTopic[] | null, deckId: string) => {
 	if (cards) {
 		cards.forEach((card) => {
-			card.isAdded = card.deck!.some(deck => deck.deckId === deckId);
+			card.isAdded = card.deck!.some((deck) => deck.deckId === deckId);
 		});
 	}
-}
+};
 
 export const load = (async (event) => {
 	const user = event.locals.user;
 	const deckId = event.params.id;
-	
+
 	const publicCards: CardWithTopic[] | null = await getPublicCards(user?.id);
-	const userCreatedCards: CardWithTopic[]| null = await getCardsByAuthor(user?.id);
+	const userCreatedCards: CardWithTopic[] | null = await getCardsByAuthor(user?.id);
 
 	const form = await superValidate(event, zod(addCardToDeckSchema));
 

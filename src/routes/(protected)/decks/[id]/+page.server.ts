@@ -1,7 +1,7 @@
 import { isUUID } from '$lib/_helpers/isUIID';
 import { startStudySchema } from '$lib/config/zod-schemas';
 import { addDeckToUser } from '$lib/server/database/models/deck';
-import {  fail } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';

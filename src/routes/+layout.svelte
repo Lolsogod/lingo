@@ -24,8 +24,9 @@ $: if ($flash) {
 	}
 }
 </script>
+
 <svelte:head>
-    <title>LinGo</title> 
+	<title>LinGo</title>
 </svelte:head>
 <ModeWatcher />
 <Toaster richColors />

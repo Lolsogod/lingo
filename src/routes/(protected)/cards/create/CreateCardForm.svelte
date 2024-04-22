@@ -47,7 +47,6 @@ const addBlock = () => {
 				<Form.FieldErrors />
 			</Form.Field>
 		{/each}
-		
 	</div>
 	<div slot="submit" class="block w-full">
 		<Form.Field form={form} name="blocks">

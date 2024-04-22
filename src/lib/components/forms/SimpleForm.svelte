@@ -11,6 +11,7 @@ export let form: SuperForm<any, any>;
 const { enhance, errors } = form;
 //todo: вернуть как нибудь прикольную рамку у чекбоксов
 </script>
+
 <form method="POST" use:enhance action={action}>
 	<Card.Root>
 		<Card.Header class="space-y-1">

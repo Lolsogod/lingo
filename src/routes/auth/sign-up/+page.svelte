@@ -33,7 +33,7 @@ const inputs = [
 		name: 'password',
 		label: 'Пароль',
 		type: 'password'
-	},
+	}
 ];
 </script>
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 import * as Form from '$lib/components/ui/form';
 import type { SuperForm } from 'sveltekit-superforms';
-	import { Checkbox } from '../ui/checkbox';
+import { Checkbox } from '../ui/checkbox';
 
 export let form: SuperForm<any, any>;
 export let label: string;

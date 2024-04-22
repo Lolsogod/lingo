@@ -13,7 +13,7 @@ export let data: PageData;
 
 const form = superForm(data.form, {
 	validators: zodClient(editUserSchema),
-	resetForm: false,
+	resetForm: false
 });
 
 const inputs = [

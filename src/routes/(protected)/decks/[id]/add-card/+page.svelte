@@ -3,9 +3,6 @@
 import CardItem from '$lib/components/items/CardItem.svelte';
 import type { PageData } from './$types';
 import ItemGrid from '$lib/components/items/ItemGrid.svelte';
-import { superForm } from 'sveltekit-superforms';
-import { zodClient } from 'sveltekit-superforms/adapters';
-import { addCardToDeckSchema } from '$lib/config/zod-schemas';
 import AddCard from './AddCard.svelte';
 export let data: PageData;
 </script>

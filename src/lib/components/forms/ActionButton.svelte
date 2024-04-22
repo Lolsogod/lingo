@@ -8,7 +8,7 @@ export let action: string = '';
 export let name: string = '';
 export let condition: boolean = false;
 export let conditionText: string = '';
-let _class: string =''
+let _class: string = '';
 export { _class as class };
 export let value: any = null;
 const { enhance, form: formData, submitting } = form;

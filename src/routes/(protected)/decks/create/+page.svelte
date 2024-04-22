@@ -34,7 +34,6 @@ const inputs = [
 		type: 'checkbox'
 	}
 ];
-
 </script>
 
 <section class="container grid items-center gap-6">
