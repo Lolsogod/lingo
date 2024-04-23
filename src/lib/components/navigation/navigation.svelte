@@ -36,16 +36,27 @@ $: {
 			<a class="flex items-center space-x-2" href="/"
 				><Logo size="24"></Logo><span class="inline-block font-bold">{APP_NAME}</span></a
 			>
+			<!---роуты поменять, сейчас это как то тупо-->
 			<nav class="flex gap-6">
 				<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
-					href="/"
-					class:active={'/' === currentPage}>Главная</a
+					href="/dashboard"
+					class:active={'/dashboard' === currentPage}>Главная</a
 				>
 				<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
-					href="/dashboard"
-					class:active={'/dashboard' === currentPage}>Тест</a
+					href="/decks/browse"
+					class:active={'/decks/browse' === currentPage}>Колоды</a
+				>
+				<a
+					class="flex items-center text-sm font-medium text-muted-foreground"
+					href="/cards/browse"
+					class:active={'/cards/browse' === currentPage}>Карты</a
+				>
+				<a
+					class="flex items-center text-sm font-medium text-muted-foreground"
+					href="/"
+					class:active={'/' === currentPage}>Инфо</a
 				>
 			</nav>
 		</div>

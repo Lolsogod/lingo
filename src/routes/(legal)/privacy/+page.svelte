@@ -10,96 +10,105 @@ import {
 <section class="container grid items-center gap-6">
 	<div class="flex max-w-[980px] flex-col items-start gap-2">
 		<h1 class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
-			Privacy Policy for {TERMS_PRIVACY_WEBSITE}
+			Политика конфиденциальности для {TERMS_PRIVACY_WEBSITE}
 		</h1>
 
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Effective Date: {TERMS_PRIVACY_EFFECTIVE_DATE}
+			Дата вступления в силу: {TERMS_PRIVACY_EFFECTIVE_DATE}
 		</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			This privacy policy (the “Policy”) sets out the privacy policies and practices for {TERMS_PRIVACY_COMPANY}
-			and its subsidiaries and affiliates (collectively, “we”, “us”, “our”) with respect to how we collect
-			personal information. It also describes how we maintain, use, and disclose personal information.
+			Настоящая политика конфиденциальности («Политика») определяет политику и практику
+			конфиденциальности для {TERMS_PRIVACY_COMPANY}
+			и его дочерних и аффилированных компаний (вместе «мы», «наша») в отношении сбора, использования
+			и раскрытия персональной информации.
 		</p>
 
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Information We Collect
+			Собираемая информация
 		</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			We collect and store information that you voluntarily provide to us as well as data related to
-			your website visit and usage.
+			Мы собираем и храним информацию, которую вы добровольно предоставляете нам, а также данные,
+			связанные с вашим посещением и использованием веб-сайта.
 		</p>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			We collect personally identifiable information (including, but not limited to, name, address
-			and phone number) that is voluntarily provided to us by you. For example, you voluntarily
-			provide personally identifiable information when you send us an email, use certain features of
-			the website like the contact us form, or register with our site.
+			Мы собираем лично идентифицируемую информацию (включая, но не ограничиваясь, имя, адрес и
+			номер телефона), которую вы добровольно предоставляете нам. Например, вы добровольно
+			предоставляете лично идентифицируемую информацию, когда отправляете нам электронное письмо,
+			используете определенные функции веб-сайта, такие как форма обратной связи, или
+			регистрируетесь на нашем сайте.
 		</p>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			In addition, during your visit we automatically collect certain aggregate information related
-			to your website visit. Aggregate information is non-personally identifiable or anonymous
-			information about you, including the date and time of your visit, your IP address, your
-			computer browser information, the Internet address that you visited prior to and after
-			reaching our site, the name of the domain and host you used to access the Internet, and the
-			features of our site which you accessed.
+			Кроме того, во время вашего посещения мы автоматически собираем определенную агрегированную
+			информацию, связанную с вашим посещением веб-сайта. Агрегированная информация - это не
+			идентифицируемая лично или анонимная информация о вас, включая дату и время вашего посещения,
+			ваш IP-адрес, информацию о вашем компьютере и браузере, интернет-адрес, который вы посетили до
+			и после посещения нашего сайта, имя домена и хоста, которые вы использовали для доступа к
+			Интернету, и функции нашего сайта, к которым вы получили доступ.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Use of Information
+			Использование информации
 		</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			We use this information in order to serve the needs of our customers. We may use your
-			information to meet your requests for our products, programs, and services, to respond to your
-			inquiries about our offerings, to offer you other products or services that we believe may be
-			of interest to you, to enforce the legal terms that govern your use of our site, and/or for
-			the purposes for which you provided the information.
+			Мы используем эту информацию для удовлетворения потребностей наших клиентов. Мы можем
+			использовать вашу информацию для удовлетворения ваших запросов на наши продукты, программы и
+			услуги, для ответа на ваши запросы о наших предложениях, для предложения вам других продуктов
+			или услуг, которые, по нашему мнению, могут быть вас заинтересовать, для обеспечения
+			соблюдения юридических условий, регулирующих ваше использование нашего сайта, и/или для целей,
+			для которых вы предоставили информацию.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Information Sharing and Disclosure
+			Раскрытие информации
 		</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			{TERMS_PRIVACY_COMPANY} does not sell or rent your personally identifiable information to anyone.
-			We only disclose personally identifiable information about our users when we believe, in good faith,
-			that either the law requires it, to protect the rights or property of {TERMS_PRIVACY_COMPANY},
-			or we must to provide you with the services or products you requested.
+			{TERMS_PRIVACY_COMPANY} не продает и не сдает в аренду вашу лично идентифицируемую информацию никому.
+			Мы раскрываем лично идентифицируемую информацию о наших пользователях только в случаях, когда мы
+			верим, что это требует закон, для защиты прав или собственности {TERMS_PRIVACY_COMPANY}, или
+			мы должны предоставить вам услуги или продукты, которые вы запросили.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">Cookies</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			We may use cookies to manage our users’ sessions and to store preferences, tracking
-			information, and language selection. Cookies may be used whether you register with us or not.
-		</p>
-		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">Security</h4>
-
-		<p class="max-w-[700px] text-lg text-muted-foreground">
-			We employ reasonable and current security methods to prevent unauthorized access, maintain
-			data accuracy, and ensure correct use of information.
+			Мы можем использовать файлы cookie для управления сеансами наших пользователей и хранения
+			предпочтений, отслеживания информации и выбора языка. Файлы cookie могут использоваться,
+			независимо от того, зарегистрированы ли вы у нас или нет.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Your Ability to Edit and Delete Your Account Information and Preferences
+			Безопасность
 		</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			You may request deletion of your email address by sending an e-mail to {TERMS_PRIVACY_CONTACT_EMAIL}.
-			However, please note that your identification, billing and contact information will remain on
-			our records for some period.
+			Мы применяем разумные и современные методы безопасности для предотвращения
+			несанкционированного доступа, поддержания точности данных и обеспечения правильного
+			использования информации.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Privacy Policy Updates
+			Возможность редактирования и удаления информации об учетной записи и настроек
 		</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			We may update this policy from time to time. If we make significant changes, we will notify
-			you of the changes through our website or through others means, such as email.
+			Вы можете запросить удаление своего адреса электронной почты, отправив письмо на адрес {TERMS_PRIVACY_CONTACT_EMAIL}.
+			Однако, пожалуйста, обратите внимание, что ваша идентификация, платежные и контактные данные
+			будут сохранены в наших записях на некоторое время.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			How to Contact Us
+			Обновления политики конфиденциальности
+		</h4>
+
+		<p class="max-w-[700px] text-lg text-muted-foreground">
+			Мы можем время от времени обновлять эту политику. Если мы вносим существенные изменения, мы
+			уведомим вас об изменениях через наш веб-сайт или другими способами, такими как электронная
+			почта.
+		</p>
+		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
+			Как с нами связаться
 		</h4>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			If you have any questions about this privacy policy, please contact us at {TERMS_PRIVACY_CONTACT_EMAIL}.
+			Если у вас есть вопросы по поводу настоящей политики конфиденциальности, пожалуйста, свяжитесь
+			с нами по адресу {TERMS_PRIVACY_CONTACT_EMAIL}.
 		</p>
 	</div>
 </section>

@@ -1,11 +1,16 @@
 <script lang="ts">
 import type { PageData } from './$types';
-import Card from './Card.svelte';
+import CardItem from '$lib/components/items/CardItem.svelte';
 export let data: PageData;
+import ItemGrid from '$lib/components/items/ItemGrid.svelte';
+import { Button } from '$lib/components/ui/button';
 </script>
 
 <section class="container grid items-center gap-6">
-	<h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Все карты</h1>
+	<div class="flex justify-between">
+		<h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Все карты</h1>
+		<Button href="create">Создать карту</Button>
+	</div>
 	<h2
 		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
 	>
@@ -13,11 +18,11 @@ export let data: PageData;
 	</h2>
 
 	{#if data.userCreatedCards}
-		<div class="grid grid-cols-3 gap-5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8">
+		<ItemGrid>
 			{#each data.userCreatedCards as card}
-				<Card cardInfo={card} />
+				<CardItem cardInfo={card} />
 			{/each}
-		</div>
+		</ItemGrid>
 	{:else}
 		<span class="text-xl text-muted-foreground">нет карт</span>
 	{/if}
@@ -27,11 +32,11 @@ export let data: PageData;
 		Общие карты
 	</h2>
 	{#if data.publicCards}
-		<div class="grid grid-cols-3 gap-5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8">
+		<ItemGrid>
 			{#each data.publicCards as card}
-				<Card cardInfo={card} />
+				<CardItem cardInfo={card} />
 			{/each}
-		</div>
+		</ItemGrid>
 	{:else}
 		<span class="text-xl text-muted-foreground">нет карт</span>
 	{/if}

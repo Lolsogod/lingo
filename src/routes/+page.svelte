@@ -14,15 +14,16 @@ export let data: PageData;
 				{APP_NAME}
 			</h1>
 			<p class="max-w-[700px] text-lg text-muted-foreground">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt dui sit amet libero
-				commodo elementum. Aliquam elementum vehicula libero in aliquam. Sed laoreet nulla sit amet
-				tortor tincidunt, quis viverra augue aliquet. Mauris laoreet nisl in ornare lobortis.
-				Maecenas at ex in sapien luctus accumsan nec eget sem. Donec tempor non turpis non rhoncus.
-				Vestibulum id dignissim enim. Pellentesque in porta leo, sit amet tincidunt tellus. Sed
-				dapibus dignissim sapien sed sollicitudin. Quisque volutpat velit nec semper faucibus.
-				Aliquam nibh turpis, condimentum id est et, posuere pellentesque lorem. Proin orci est,
-				faucibus eget ligula in, congue bibendum nisl. Phasellus purus neque, pharetra pretium
-				euismod ac, ullamcorper nec justo. Fusce eget ante at libero auctor egestas eget nec mi.
+				Мы вынуждены отталкиваться от того, что начало повседневной работы по формированию позиции
+				играет важную роль в формировании поставленных обществом задач. Таким образом, существующая
+				теория в значительной степени обусловливает важность своевременного выполнения сверхзадачи.
+				Как принято считать, ключевые особенности структуры проекта объявлены нарушающими
+				общечеловеческие нормы этики и морали. А ещё явные признаки победы институционализации
+				представлены в исключительно положительном свете. Ясность нашей позиции очевидна: реализация
+				намеченных плановых заданий не оставляет шанса для позиций, занимаемых участниками в
+				отношении поставленных задач. Ясность нашей позиции очевидна: повышение уровня гражданского
+				сознания однозначно определяет каждого участника как способного принимать собственные
+				решения касаемо первоочередных требований.
 			</p>
 		</div>
 		<div class="flex gap-4">

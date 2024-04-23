@@ -14,7 +14,7 @@ export let data: {
 		{
 			cardId: string;
 		},
-		any, //я хочу умереть
+		any,
 		{
 			cardId: string;
 		}
@@ -26,8 +26,7 @@ const form = superForm(data.form, {
 	validators: zodClient(addCardToDeckSchema),
 	resetForm: false
 });
-const { form: formData } = form;
-$formData.cardId = cardInfo.id!;
+//мб не через валуе а через адрес акшена
 </script>
 
 <CardFooter>

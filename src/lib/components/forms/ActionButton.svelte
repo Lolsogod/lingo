@@ -3,14 +3,14 @@ import * as Form from '$lib/components/ui/form';
 import { type SuperForm } from 'sveltekit-superforms';
 import { Loader2, Check } from 'lucide-svelte';
 
-export let form: SuperForm<any, any>;
+export let form: SuperForm<any>;
 export let action: string = '';
 export let name: string = '';
 export let condition: boolean = false;
 export let conditionText: string = '';
 let _class: string = '';
 export { _class as class };
-export let value: any = null;
+export let value: unknown = null;
 const { enhance, form: formData, submitting } = form;
 //Костыльная вещь получилась, нужна ли суперформа для таких кнопок?, ну пока пускай будет
 </script>

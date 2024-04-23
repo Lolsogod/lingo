@@ -50,6 +50,7 @@ export const userDeckTable = pgTable(
 //types
 export type Deck = typeof deckTable.$inferInsert;
 export type CardDeck = typeof cardDeckTable.$inferInsert;
+export type StudyDeck = typeof userDeckTable.$inferInsert & { deck: Deck };
 
 //relations
 export const deckRelations = relations(deckTable, ({ many, one }) => {

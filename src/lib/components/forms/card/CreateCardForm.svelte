@@ -5,12 +5,10 @@ import { createCardSchema } from '$lib/config/zod-schemas';
 import * as Card from '$lib/components/ui/card';
 import * as Form from '$lib/components/ui/form';
 import { Input } from '$lib/components/ui/input';
-import { Loader2 } from 'lucide-svelte';
 import { Button } from '$lib/components/ui/button';
-import DisplayErrors from '$lib/components/forms/DisplayErrors.svelte';
-import SimpleForm from '$lib/components/forms/SimpleForm.svelte';
-import SimpleSubmit from '$lib/components/forms/SimpleSubmit.svelte';
-//TODO: вынести компонент в lib
+import SimpleForm from '../SimpleForm.svelte';
+import SimpleSubmit from '../SimpleSubmit.svelte';
+
 export let data: any; //подумать super validated
 export let action: string = '';
 

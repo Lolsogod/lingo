@@ -12,88 +12,88 @@ import {
 <section class="container grid items-center gap-6">
 	<div class="flex max-w-[980px] flex-col items-start gap-2">
 		<h1 class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
-			Terms and Conditions for {TERMS_PRIVACY_APP_NAME}
+			Условия и положения для {TERMS_PRIVACY_APP_NAME}
 		</h1>
 
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Effective Date: {TERMS_PRIVACY_EFFECTIVE_DATE}
+			Дата вступления в силу: {TERMS_PRIVACY_EFFECTIVE_DATE}
 		</h4>
 
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Acceptance of Terms
+			Принятие условий
 		</h4>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			By accessing and using {TERMS_PRIVACY_APP_NAME} ("Service"), you accept and agree to be bound by
-			the terms and provision of this agreement.
+			Пользуясь сервисом {TERMS_PRIVACY_APP_NAME}, вы принимаете и соглашаетесь с условиями и
+			положениями данного соглашения.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Changes to Terms
+			Изменение условий
 		</h4>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			We reserve the right, at our sole discretion, to amend these Terms of Service at any time and
-			will update these Terms of Service in the event of any such amendments.
+			Мы оставляем за собой право по своему усмотрению вносить изменения в настоящие Условия
+			обслуживания в любое время и будем обновлять их в случае таких изменений.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Account and Access
+			Аккаунт и доступ
 		</h4>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			To access and use our Service, you may need to register with us and set up an account with
-			your email address and a password. You are solely responsible for maintaining the
-			confidentiality of your account and password and for all activities associated with or
-			occurring under your account.
+			Для доступа и использования нашего сервиса вам может потребоваться зарегистрироваться у нас и
+			создать аккаунт с использованием вашего адреса электронной почты и пароля. Вы полностью несете
+			ответственность за сохранение конфиденциальности вашего аккаунта и пароля, а также за все
+			действия, связанные с вашим аккаунтом.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Your Responsibilities
+			Ваши обязанности
 		</h4>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			You are responsible for all content you upload, post, email or otherwise transmit via the
-			Service. You agree to comply with all laws and regulations applicable to your use of the
-			Service.
+			Вы несете ответственность за все содержимое, которое вы загружаете, публикуете, отправляете по
+			электронной почте или иным образом передаете через сервис. Вы соглашаетесь соблюдать все
+			применимые законы и правила, касающиеся использования сервиса.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Payment and Fees
+			Оплата и сборы
 		</h4>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
 			{TERMS_PRIVACY_APP_PRICING_AND_SUBSCRIPTIONS}
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Intellectual Property
+			Интеллектуальная собственность
 		</h4>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			The Service and its original content, features and functionality are and will remain the
-			exclusive property of {TERMS_PRIVACY_COMPANY}. The Service is protected by copyright,
-			trademark, and other laws of both the {TERMS_PRIVACY_COUNTRY} and foreign countries.
+			Сервис и его оригинальное содержимое, функции и функциональность являются и останутся
+			исключительной собственностью {TERMS_PRIVACY_COMPANY}. Сервис защищен авторским правом,
+			товарными знаками и другими законами как {TERMS_PRIVACY_COUNTRY}, так и иностранных стран.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Termination
+			Прекращение
 		</h4>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			We may terminate or suspend your access to the Service immediately, without prior notice or
-			liability, under our sole discretion, for any reason whatsoever and without limitation,
-			including but not limited to a breach of the Terms.
+			Мы можем немедленно прекратить или приостановить ваш доступ к сервису без предварительного
+			уведомления или ответственности по нашему собственному усмотрению по любой причине и без
+			ограничений, включая, но не ограничиваясь, нарушение условий.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Limitation Of Liability
+			Ограничение ответственности
 		</h4>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			In no event shall {TERMS_PRIVACY_COMPANY}, nor its directors, employees, partners, agents,
-			suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or
-			punitive damages, including without limitation, loss of profits, data, use, goodwill, or other
-			intangible losses, resulting from your access to or use of or inability to access or use the
-			Service.
+			В никаком случае {TERMS_PRIVACY_COMPANY}, а также его директоры, сотрудники, партнеры, агенты,
+			поставщики или аффилированные лица не несут ответственности за косвенные, случайные,
+			специальные, косвенные или карательные убытки, включая, но не ограничиваясь, упущенную выгоду,
+			потерю данных, использование, добро или другие нематериальные потери, возникающие из доступа к
+			сервису или его использования или невозможности доступа или использования сервиса.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Governing Law
+			Применимое право
 		</h4>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			These Terms shall be governed and construed in accordance with the laws of {TERMS_PRIVACY_COUNTRY},
-			without regard to its conflict of law provisions.
+			Настоящие Условия регулируются и толкуются в соответствии с законами {TERMS_PRIVACY_COUNTRY},
+			без применения принципов коллизии законов.
 		</p>
 		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Contact Us
+			Свяжитесь с нами
 		</h4>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
-			If you have any questions about these Terms, please contact us at {TERMS_PRIVACY_CONTACT_EMAIL}.
+			Если у вас есть вопросы по поводу настоящих Условий, пожалуйста, свяжитесь с нами по адресу {TERMS_PRIVACY_CONTACT_EMAIL}.
 		</p>
 	</div>
 </section>

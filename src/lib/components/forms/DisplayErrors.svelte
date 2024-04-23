@@ -3,7 +3,7 @@ import * as Alert from '$lib/components/ui/alert';
 import { AlertCircle } from 'lucide-svelte';
 import type { SuperForm } from 'sveltekit-superforms';
 
-export let errors: SuperForm<any, any>['errors'];
+export let errors: SuperForm<any>['errors'];
 </script>
 
 {#if $errors._errors?.length}
