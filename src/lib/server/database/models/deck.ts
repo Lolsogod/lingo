@@ -1,8 +1,9 @@
 import { isUUID } from '$lib/_helpers/isUIID';
 import db from '$lib/server/database/drizzle';
-import { deckTable, userDeckTable } from '$lib/server/database/schema';
+import { cardDeckTable, deckTable, userDeckTable } from '$lib/server/database/schema';
 import type { Deck } from '$lib/server/database/schema';
 import { and, eq, ne, or } from 'drizzle-orm';
+import { createStudyCard } from './study';
 
 export const createDeck = async (data: Deck) => {
 	const result = await db.insert(deckTable).values(data).onConflictDoNothing().returning();
@@ -49,12 +50,20 @@ export const getDeckById = async (id: string, userId = '') => {
 };
 
 export const addDeckToUser = async (userId: string, deckId: string) => {
-	const result = await db
-		.insert(userDeckTable)
-		.values({ userId, deckId })
-		.onConflictDoNothing()
-		.returning();
-	return result;
+	await db.transaction(async (tx) => {
+		const result = await tx
+			.insert(userDeckTable)
+			.values({ userId, deckId })
+			.onConflictDoNothing()
+			.returning();
+		const cards = await tx.query.cardDeckTable.findMany({
+			where: eq(cardDeckTable.deckId, deckId)
+		});
+		cards.forEach(async (cardDeck) => {
+			await createStudyCard(cardDeck.cardId, result[0].id, tx);
+		});
+	});
+	return true; // временно
 };
 
 export const getStudyDecks = async (userId: string) => {

@@ -1,7 +1,7 @@
 import { relations } from 'drizzle-orm';
 import { boolean, pgTable, primaryKey, text, uuid, varchar } from 'drizzle-orm/pg-core';
 import { userTable } from './user';
-import { cardTable } from './card';
+import { cardTable, studyCardTable } from './card';
 
 export const deckTable = pgTable('deck', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
@@ -33,18 +33,14 @@ export const cardDeckTable = pgTable(
 export const userDeckTable = pgTable(
 	'user_deck',
 	{
+		id: uuid('id').notNull().primaryKey().defaultRandom(),
 		userId: text('user_id')
 			.notNull()
 			.references(() => userTable.id),
 		deckId: uuid('deck_id')
 			.notNull()
-			.references(() => deckTable.id)
+			.references(() => deckTable.id),
 	},
-	(table) => {
-		return {
-			pk: primaryKey({ columns: [table.userId, table.deckId] })
-		};
-	}
 );
 
 //types
@@ -77,7 +73,7 @@ export const cardDeckRelations = relations(cardDeckTable, ({ one }) => {
 	};
 });
 
-export const userDeckRelations = relations(userDeckTable, ({ one }) => {
+export const userDeckRelations = relations(userDeckTable, ({ one, many }) => {
 	return {
 		user: one(userTable, {
 			fields: [userDeckTable.userId],
@@ -86,6 +82,7 @@ export const userDeckRelations = relations(userDeckTable, ({ one }) => {
 		deck: one(deckTable, {
 			fields: [userDeckTable.deckId],
 			references: [deckTable.id]
-		})
+		}),
+		studyCards: many(studyCardTable)
 	};
 });

@@ -1,6 +1,16 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, primaryKey, text, uuid, varchar, boolean } from 'drizzle-orm/pg-core';
-import { cardDeckTable, type CardDeck } from './deck';
+import {
+	pgTable,
+	primaryKey,
+	text,
+	uuid,
+	varchar,
+	boolean,
+	timestamp,
+	real,
+	integer
+} from 'drizzle-orm/pg-core';
+import { cardDeckTable, userDeckTable, type CardDeck } from './deck';
 import { userTable } from './user';
 
 export const topicTable = pgTable('topic', {
@@ -41,11 +51,35 @@ export const cardBlockTable = pgTable(
 	}
 );
 
+//TODO: user deck rename to study deck
+export const studyCardTable = pgTable('study_card', {
+	id: uuid('id').notNull().primaryKey().defaultRandom(),
+	userDeckId: uuid('user_deck_id')
+		.notNull()
+		.references(() => userDeckTable.id),
+	baseCardId: uuid('card_id')
+		.notNull()
+		.references(() => cardTable.id),
+	due: timestamp('due').notNull().defaultNow(),
+	stability: real('stability').notNull(),
+	difficulty: real('difficulty').notNull(),
+	elapsed_days: integer('elapsed_days').notNull(),
+	scheduled_days: integer('scheduled_days').notNull(),
+	reps: integer('reps').notNull(),
+	lapses: integer('lapses').notNull(),
+	state: text('state').notNull(), //ограничение енамовское бы сюда
+	last_review: timestamp('last_review'),
+	suspended: timestamp('suspended').notNull().defaultNow(),
+	deleted: boolean('deleted').notNull().default(false),
+	createdAt: timestamp('created_at').notNull().defaultNow()
+});
+
 //types
 export type Card = typeof cardTable.$inferInsert;
 export type CardWithTopic = Card & { topic: Topic; isAdded?: boolean; deck?: CardDeck[] };
 export type Block = typeof blockTable.$inferInsert;
 export type Topic = typeof topicTable.$inferInsert;
+export type StudyCard = typeof studyCardTable.$inferInsert;
 
 //relations
 export const cardRelations = relations(cardTable, ({ one, many }) => {
@@ -59,7 +93,8 @@ export const cardRelations = relations(cardTable, ({ one, many }) => {
 		author: one(userTable, {
 			fields: [cardTable.authorId],
 			references: [userTable.id]
-		})
+		}),
+		studyCard: many(studyCardTable)
 	};
 });
 export const topicRelations = relations(topicTable, ({ many }) => {
@@ -81,6 +116,19 @@ export const cardBlockRelations = relations(cardBlockTable, ({ one }) => {
 		block: one(blockTable, {
 			fields: [cardBlockTable.blockId],
 			references: [blockTable.id]
+		})
+	};
+});
+
+export const studyCardRelations = relations(studyCardTable, ({ one }) => {
+	return {
+		baseCard: one(cardTable, {
+			fields: [studyCardTable.baseCardId],
+			references: [cardTable.id]
+		}),
+		userDeck: one(userDeckTable, {
+			fields: [studyCardTable.userDeckId],
+			references: [userDeckTable.id]
 		})
 	};
 });
