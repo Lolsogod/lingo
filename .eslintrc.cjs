@@ -29,7 +29,7 @@ module.exports = {
 			rules: {
 				'no-unused-vars': 'off',
 				'@typescript-eslint/no-unused-vars': 'off',
-				"@typescript-eslint/ban-ts-comment": "error"
+				'@typescript-eslint/ban-ts-comment': 'error'
 			}
 		}
 	]

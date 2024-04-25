@@ -9,7 +9,6 @@ export let form: SuperForm<any>;
 
 let revealed = false;
 const reveal = () => (revealed = true);
-console.log(studyCard);
 </script>
 
 <Card.Root class="w-40 p-10">

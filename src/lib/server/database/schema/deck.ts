@@ -30,18 +30,15 @@ export const cardDeckTable = pgTable(
 	}
 );
 
-export const userDeckTable = pgTable(
-	'user_deck',
-	{
-		id: uuid('id').notNull().primaryKey().defaultRandom(),
-		userId: text('user_id')
-			.notNull()
-			.references(() => userTable.id),
-		deckId: uuid('deck_id')
-			.notNull()
-			.references(() => deckTable.id),
-	},
-);
+export const userDeckTable = pgTable('user_deck', {
+	id: uuid('id').notNull().primaryKey().defaultRandom(),
+	userId: text('user_id')
+		.notNull()
+		.references(() => userTable.id),
+	deckId: uuid('deck_id')
+		.notNull()
+		.references(() => deckTable.id)
+});
 
 //types
 export type Deck = typeof deckTable.$inferInsert;

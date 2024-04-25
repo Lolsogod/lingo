@@ -98,7 +98,7 @@ export const gradeStudyCard = async (studyCardId: string, rating: Rating) => {
 	}
 
 	const { nextCard, reviewLog } = grade(studyCard, rating);
-	console.log(nextCard);
+	//console.log(nextCard);
 	await db.transaction(async (tx) => {
 		await tx.update(studyCardTable).set(nextCard).where(eq(studyCardTable.id, studyCardId));
 		await tx.insert(reviewLogTable).values(reviewLog);
@@ -140,21 +140,43 @@ export const getTodayCount = async (studyDeckId: string) => {
 		);
 	return todayCount[0].count;
 };
-
-export const getQueue = async (studyDeckId: string, limit: number) => {
-	const todayCount = await getTodayCount(studyDeckId);
+//дубликат...
+export const getTodayNewCount = async (studyDeckId: string) => {
 	const startOfDay = getStartOfDay();
-	const queuePromises = states.map(async (state) =>
-		db.query.studyCardTable.findMany({
-			limit: state === 'New' ? Math.max(0, limit - todayCount) : undefined,
+	const nextDay = date_scheduler(startOfDay, 1, true);
+	const todayCount = await db
+		.select({ count: count() })
+		.from(reviewLogTable)
+		.innerJoin(studyCardTable, eq(reviewLogTable.cardId, studyCardTable.id))
+		.where(
+			and(
+				eq(studyCardTable.userDeckId, studyDeckId),
+				lte(reviewLogTable.review, nextDay),
+				gte(reviewLogTable.review, startOfDay),
+				eq(reviewLogTable.state, 'New')
+			)
+		);
+	return todayCount[0].count;
+};
+export const getQueue = async (studyDeckId: string, limit: number) => {
+	const todayNewCount = await getTodayNewCount(studyDeckId);
+	const startOfDay = getStartOfDay();
+	const queuePromises = states.map(async (state) => {
+		if (state === 'New' && limit - todayNewCount <= 0) {
+			return [];
+		}
+		return db.query.studyCardTable.findMany({
+			limit: state === 'New' ? Math.max(1, limit - todayNewCount) : undefined,
 			where: and(
 				eq(studyCardTable.userDeckId, studyDeckId),
 				eq(studyCardTable.state, state),
 				state === 'Review' ? lte(studyCardTable.due, startOfDay) : undefined
 			),
 			with: { baseCard: { with: { topic: true, blocks: { with: { block: true } } } } }
-		})
-	);
+		});
+	});
 	const queue = await Promise.all(queuePromises);
-	return queue;
+	const shuffledQueue = queue.flat().sort(() => Math.random() - Math.random()); //мб как то лучше можно
+	console.log(shuffledQueue.length, limit - todayNewCount);
+	return shuffledQueue;
 };

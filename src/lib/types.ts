@@ -1,6 +1,6 @@
 type Count = {
-    New: number;
-    Learning: number;
-    Review: number;
-    Relearning: number;
-}
+	New: number;
+	Learning: number;
+	Review: number;
+	Relearning: number;
+};

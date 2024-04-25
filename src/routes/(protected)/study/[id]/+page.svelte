@@ -12,13 +12,18 @@ const form = superForm(data.form, {
 	resetForm: false
 });
 
+//testing... maybe remove isfinished
 </script>
 
 <CardCounter count={data.stateCount} />
 <br />
 {data.todayCount}
-<!---флэт временный хз пока-->
-{#each data.queue.flat() as studyCard}
-	<SrsCard studyCard={studyCard} form={form} />
-	<br />
-{/each}
+
+{#if data.queue.length === 0}
+	На сегодня всё...
+{:else}
+	{#key data.queue[0].id + data.queue[0].reps}
+		<SrsCard studyCard={data.queue[0]} form={form} />
+		<br />
+	{/key}
+{/if}

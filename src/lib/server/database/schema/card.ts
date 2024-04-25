@@ -75,31 +75,35 @@ export const studyCardTable = pgTable('study_card', {
 	createdAt: timestamp('created_at').notNull().defaultNow()
 });
 export const reviewLogTable = pgTable('review_log', {
-	id: text("id").primaryKey(),
+	id: text('id').primaryKey(),
 	//нехватает рефов
-	cardId: uuid("card_id").notNull().references(() => studyCardTable.id),
+	cardId: uuid('card_id')
+		.notNull()
+		.references(() => studyCardTable.id),
 	grade: pgRatings('ratings').notNull(),
 	state: pgStates('states').notNull(),
-	due: timestamp("due").notNull(),
-	stability: real("stability").notNull(),
-	difficulty: real("difficulty").notNull(),
-	elapsed_days: integer("elapsed_days").notNull(),
-	last_elapsed_days: integer("last_elapsed_days").notNull(),
-	scheduled_days: integer("scheduled_days").notNull(),
-	review: timestamp("review").notNull(),
-	duration: integer("duration").notNull().default(0),
-	deleted: boolean("deleted").notNull().default(false),
-	createdAt: timestamp("created_at").notNull().defaultNow()
-  });
+	due: timestamp('due').notNull(),
+	stability: real('stability').notNull(),
+	difficulty: real('difficulty').notNull(),
+	elapsed_days: integer('elapsed_days').notNull(),
+	last_elapsed_days: integer('last_elapsed_days').notNull(),
+	scheduled_days: integer('scheduled_days').notNull(),
+	review: timestamp('review').notNull(),
+	duration: integer('duration').notNull().default(0),
+	deleted: boolean('deleted').notNull().default(false),
+	createdAt: timestamp('created_at').notNull().defaultNow()
+});
 //types (почти вся херня с тайпами изза того что ты напутал инсерты с селектами TODO: поправить)
 export type Card = typeof cardTable.$inferInsert;
 export type CardWithTopic = Card & { topic: Topic; isAdded?: boolean; deck?: CardDeck[] };
 export type Block = typeof blockTable.$inferInsert;
 export type Topic = typeof topicTable.$inferInsert;
-export type NewStudyCard = typeof studyCardTable.$inferInsert
-export type StudyCard = typeof studyCardTable.$inferInsert & { due: Date, id: string}; //undef fix?
-export type CardBlock = typeof cardBlockTable.$inferInsert & { block: Block }
-export type StudyCardExtended = StudyCard & { baseCard: Card & { topic: Topic; blocks: CardBlock[] } };
+export type NewStudyCard = typeof studyCardTable.$inferInsert;
+export type StudyCard = typeof studyCardTable.$inferInsert & { due: Date; id: string }; //undef fix?
+export type CardBlock = typeof cardBlockTable.$inferInsert & { block: Block };
+export type StudyCardExtended = StudyCard & {
+	baseCard: Card & { topic: Topic; blocks: CardBlock[] };
+};
 
 export type NewReviewLog = typeof reviewLogTable.$inferInsert;
 
