@@ -80,7 +80,9 @@ export type Card = typeof cardTable.$inferInsert;
 export type CardWithTopic = Card & { topic: Topic; isAdded?: boolean; deck?: CardDeck[] };
 export type Block = typeof blockTable.$inferInsert;
 export type Topic = typeof topicTable.$inferInsert;
-export type StudyCard = typeof studyCardTable.$inferInsert & { due: Date }; //undef fix?
+export type StudyCard = typeof studyCardTable.$inferInsert & { due: Date, id: string}; //undef fix?
+export type CardBlock = typeof cardBlockTable.$inferInsert & { block: Block }
+export type StudyCardExtended = StudyCard & { baseCard: Card & { topic: Topic; blocks: CardBlock[] } };
 
 //relations
 export const cardRelations = relations(cardTable, ({ one, many }) => {

@@ -8,7 +8,7 @@ import { Lock } from 'lucide-svelte';
 export let deckInfo: StudyDeck;
 </script>
 
-<a href="/study/{deckInfo.deckId}">
+<a href="/study/{deckInfo.id}">
 	<Card class="flex h-52 w-36 cursor-pointer flex-col ">
 		<CardContent class="flex h-12 flex-1 items-center justify-center p-2">
 			<span class="truncate text-2xl">{deckInfo.deck.name}</span>

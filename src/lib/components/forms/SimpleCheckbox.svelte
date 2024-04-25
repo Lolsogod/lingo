@@ -6,7 +6,6 @@ import { Checkbox } from '../ui/checkbox';
 export let form: SuperForm<any, any>;
 export let label: string;
 export let name: string;
-export let type: string = '';
 
 const { form: formData } = form;
 </script>
