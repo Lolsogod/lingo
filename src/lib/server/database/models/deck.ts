@@ -1,6 +1,6 @@
 import { isUUID } from '$lib/_helpers/isUIID';
 import db from '$lib/server/database/drizzle';
-import { cardDeckTable, deckTable, userDeckTable } from '$lib/server/database/schema';
+import { cardDeckTable, deckTable, studyCardTable, userDeckTable } from '$lib/server/database/schema';
 import type { Deck } from '$lib/server/database/schema';
 import { and, eq, ne, or } from 'drizzle-orm';
 import { createStudyCard } from './study';
@@ -60,7 +60,8 @@ export const addDeckToUser = async (userId: string, deckId: string) => {
 			where: eq(cardDeckTable.deckId, deckId)
 		});
 		cards.forEach(async (cardDeck) => {
-			await createStudyCard(cardDeck.cardId, result[0].id, tx);
+			const newCard = createStudyCard(cardDeck.cardId, result[0].id);
+			await tx.insert(studyCardTable).values(newCard).returning();
 		});
 	});
 	return true; // временно

@@ -12,6 +12,7 @@ import {
 } from 'drizzle-orm/pg-core';
 import { cardDeckTable, userDeckTable, type CardDeck } from './deck';
 import { userTable } from './user';
+import { pgStates } from './other';
 
 export const topicTable = pgTable('topic', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
@@ -67,7 +68,7 @@ export const studyCardTable = pgTable('study_card', {
 	scheduled_days: integer('scheduled_days').notNull(),
 	reps: integer('reps').notNull(),
 	lapses: integer('lapses').notNull(),
-	state: text('state').notNull(), //ограничение енамовское бы сюда
+	state: pgStates('state').notNull(), //ограничение енамовское бы сюда?
 	last_review: timestamp('last_review'),
 	suspended: timestamp('suspended').notNull().defaultNow(),
 	deleted: boolean('deleted').notNull().default(false),
@@ -79,7 +80,7 @@ export type Card = typeof cardTable.$inferInsert;
 export type CardWithTopic = Card & { topic: Topic; isAdded?: boolean; deck?: CardDeck[] };
 export type Block = typeof blockTable.$inferInsert;
 export type Topic = typeof topicTable.$inferInsert;
-export type StudyCard = typeof studyCardTable.$inferInsert;
+export type StudyCard = typeof studyCardTable.$inferInsert & { due: Date }; //undef fix?
 
 //relations
 export const cardRelations = relations(cardTable, ({ one, many }) => {
