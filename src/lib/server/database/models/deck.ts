@@ -75,7 +75,7 @@ export const addDeckToUser = async (userId: string, deckId: string) => {
 export const getStudyDecks = async (userId: string) => {
 	const decks = await db.query.userDeckTable.findMany({
 		where: eq(userDeckTable.userId, userId),
-		with: { deck: true }
+		with: { deck: true, studyCards: true }
 	});
 	return decks;
 };

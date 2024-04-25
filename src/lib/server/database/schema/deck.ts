@@ -1,7 +1,7 @@
 import { relations } from 'drizzle-orm';
 import { boolean, pgTable, primaryKey, text, uuid, varchar } from 'drizzle-orm/pg-core';
 import { userTable } from './user';
-import { cardTable, studyCardTable } from './card';
+import { cardTable, studyCardTable, type StudyCard } from './card';
 
 export const deckTable = pgTable('deck', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
@@ -43,7 +43,7 @@ export const userDeckTable = pgTable('user_deck', {
 //types
 export type Deck = typeof deckTable.$inferInsert;
 export type CardDeck = typeof cardDeckTable.$inferInsert;
-export type StudyDeck = typeof userDeckTable.$inferInsert & { deck: Deck };
+export type StudyDeck = typeof userDeckTable.$inferInsert & { deck: Deck; studyCards: StudyCard[] };
 
 //relations
 export const deckRelations = relations(deckTable, ({ many, one }) => {

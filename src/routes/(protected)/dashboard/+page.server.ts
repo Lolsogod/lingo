@@ -1,4 +1,5 @@
 import { getStudyDecks } from '$lib/server/database/models/deck';
+import { getTodayNewCount } from '$lib/server/database/models/study.js';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async (event) => {
@@ -8,6 +9,12 @@ export const load = async (event) => {
 		redirect(302, '/auth/sign-in');
 	}
 	const studyDecks = await getStudyDecks(user.id);
+	const decksWithNewCounts = await Promise.all(
+		studyDecks.map(async (deck) => {
+			const newCount = await getTodayNewCount(deck.id);
+			return { ...deck, newCount };
+		})
+	);
 
-	return { studyDecks };
+	return { decksWithNewCounts };
 };

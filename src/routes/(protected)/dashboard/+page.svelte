@@ -11,8 +11,8 @@ export let data: PageData;
 		Колоды для повторения
 	</h1>
 	<ItemGrid>
-		{#each data.studyDecks as studyDeck}
-			<StudyDeckItem deckInfo={studyDeck} />
+		{#each data.decksWithNewCounts as studyDeck}
+			<StudyDeckItem deckInfo={studyDeck} newCount={studyDeck.newCount} />
 		{/each}
 		<AddDeck />
 	</ItemGrid>

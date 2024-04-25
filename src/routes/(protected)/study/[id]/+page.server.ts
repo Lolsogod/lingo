@@ -7,7 +7,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { gradeCardSchema } from '$lib/config/zod-schemas';
 import { getTodayCount } from '$lib/server/database/models/study';
 
-//ограничить для очереди
+//ограничить для очереди дублируем опять
 const countCardsByState = (cards: StudyCard[]): Count => {
 	const initialState: Count = {
 		New: 0,
@@ -40,7 +40,7 @@ export const load = (async (event) => {
 	const stateCount = countCardsByState(studyDeck.studyCards);
 	const form = await superValidate(event, zod(gradeCardSchema));
 	const todayCount = await getTodayCount(studyDeckId);
-	const queue = (await getQueue(studyDeckId, 3)).sort(() => Math.random() - Math.random());
+	const queue = (await getQueue(studyDeckId, 3)).sort(() => Math.random() - Math.random()); //TODO: limit not unified
 
 	return { stateCount, form, todayCount, queue };
 }) satisfies PageServerLoad;
