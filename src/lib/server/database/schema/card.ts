@@ -12,7 +12,7 @@ import {
 } from 'drizzle-orm/pg-core';
 import { cardDeckTable, userDeckTable, type CardDeck } from './deck';
 import { userTable } from './user';
-import { pgStates } from './other';
+import { pgRatings, pgStates } from './other';
 
 export const topicTable = pgTable('topic', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
@@ -68,14 +68,29 @@ export const studyCardTable = pgTable('study_card', {
 	scheduled_days: integer('scheduled_days').notNull(),
 	reps: integer('reps').notNull(),
 	lapses: integer('lapses').notNull(),
-	state: pgStates('state').notNull(), //ограничение енамовское бы сюда?
+	state: pgStates('states').notNull(), //ограничение енамовское бы сюда?
 	last_review: timestamp('last_review'),
 	suspended: timestamp('suspended').notNull().defaultNow(),
 	deleted: boolean('deleted').notNull().default(false),
 	createdAt: timestamp('created_at').notNull().defaultNow()
 });
-
-//types
+export const reviewLogTable = pgTable('review_log', {
+	id: text("id").primaryKey(),
+	cardId: text("card_id").notNull(),
+	grade: pgRatings('ratings').notNull(),
+	state: pgStates('states').notNull(),
+	due: timestamp("due").notNull(),
+	stability: real("stability").notNull(),
+	difficulty: real("difficulty").notNull(),
+	elapsed_days: integer("elapsed_days").notNull(),
+	last_elapsed_days: integer("last_elapsed_days").notNull(),
+	scheduled_days: integer("scheduled_days").notNull(),
+	review: timestamp("review").notNull(),
+	duration: integer("duration").notNull().default(0),
+	deleted: boolean("deleted").notNull().default(false),
+	createdAt: timestamp("created_at").notNull().defaultNow()
+  });
+//types (почти вся херня с тайпами изза того что ты напутал инсерты с селектами TODO: поправить)
 export type Card = typeof cardTable.$inferInsert;
 export type CardWithTopic = Card & { topic: Topic; isAdded?: boolean; deck?: CardDeck[] };
 export type Block = typeof blockTable.$inferInsert;
@@ -83,6 +98,8 @@ export type Topic = typeof topicTable.$inferInsert;
 export type StudyCard = typeof studyCardTable.$inferInsert & { due: Date, id: string}; //undef fix?
 export type CardBlock = typeof cardBlockTable.$inferInsert & { block: Block }
 export type StudyCardExtended = StudyCard & { baseCard: Card & { topic: Topic; blocks: CardBlock[] } };
+
+export type NewReviewLog = typeof reviewLogTable.$inferInsert;
 
 //relations
 export const cardRelations = relations(cardTable, ({ one, many }) => {

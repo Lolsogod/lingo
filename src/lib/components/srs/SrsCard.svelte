@@ -21,12 +21,12 @@ console.log(studyCard);
 		{/each}
 		<GradeButton
 			form={form}
-			action={`/study/${studyCard.userDeckId}/?/remember`}
+			action={`/study/${studyCard.userDeckId}/?/good`}
 			studyCardId={studyCard.id}>Помню</GradeButton
 		>
 		<GradeButton
 			form={form}
-			action={`/study/${studyCard.userDeckId}/?/forget`}
+			action={`/study/${studyCard.userDeckId}/?/again`}
 			studyCardId={studyCard.id}>Непомню</GradeButton
 		>
 	{:else}

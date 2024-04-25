@@ -14,7 +14,9 @@ import {
 	type Rating,
 	type State,
 	type StudyCard,
-	ratings
+	ratings,
+	type NewReviewLog,
+	reviewLogTable
 } from '../schema';
 import { eq } from 'drizzle-orm';
 import db from '../drizzle';
@@ -69,9 +71,16 @@ export const grade = (card: StudyCard, rating: Rating, now = new Date()) => {
 		const grade = ratingToFSRSGrade(rating);
 		const recordLogItem = recordLog[grade];
 		const nextCard = mergeFsrsCard(recordLogItem.card, card);
+		const reviewLog: NewReviewLog = {
+			...recordLogItem.log,
+			id: crypto.randomUUID(),
+			cardId: card.id,
+			grade: rating,
+			state: fsrsStateToState(recordLogItem.log.state),
+		};
 		return {
-			nextCard
-			/*reviewLog, неуверн пока надо ли*/
+			nextCard,
+			reviewLog
 		};
 	});
 	return recordLog;
@@ -86,20 +95,28 @@ export const gradeStudyCard = async (studyCardId: string, rating: Rating) => {
 		return null; //or better throw an error?
 	}
 
-	const { nextCard } = grade(studyCard, rating);
+	const { nextCard, reviewLog } = grade(studyCard, rating);
 	console.log(nextCard);
-	//TODO: finish up grading
-	await db.update(studyCardTable).set(nextCard).where(eq(studyCardTable.id, studyCardId));
+	await db.transaction(async (tx) => {
+		await tx.update(studyCardTable).set(nextCard).where(eq(studyCardTable.id, studyCardId));
+		await tx.insert(reviewLogTable).values(reviewLog);
+	})
 
-	console.log('graded?');
 };
 
 //deck and stuff
 export const getStudyDeck = async (deckId: string) => {
 	const studyDeck = await db.query.userDeckTable.findFirst({
 		where: eq(studyCardTable.id, deckId),
-		with: { studyCards: { with: { baseCard: { with: { topic: true, blocks: {with: {block: true}} } } } } } //to separate call(cause this is too large kind of)
+		with: {
+			studyCards: {
+				with: { baseCard: { with: { topic: true, blocks: { with: { block: true } } } } }
+			}
+		} //to separate call(cause this is too large kind of)
 	});
 
 	return studyDeck;
+};
+export const getQueue = async (studyDeckId: string) => {
+
 };

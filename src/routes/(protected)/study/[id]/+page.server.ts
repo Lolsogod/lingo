@@ -1,4 +1,4 @@
-import { getStudyDeck } from '$lib/server/database/models/study';
+import { getStudyDeck, gradeStudyCard } from '$lib/server/database/models/study';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { StudyCard } from '$lib/server/database/schema';
@@ -22,8 +22,10 @@ const countCardsByState = (cards: StudyCard[]): Count => {
   };
 
 //test queue
-
-
+/*
+const now = new Date();
+const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 4, 0, 0, 0); //for calculating how many we learned today
+*/
 
 export const load = (async (event) => {
     //const user = event.locals.user;
@@ -41,10 +43,14 @@ export const load = (async (event) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-  remember: async (event) => {
+  good: async (event) => {
+    const form = await superValidate(event, zod(gradeCardSchema));
+    await gradeStudyCard(form.data.studyCardId, 'Good');
     console.log('remembe)');
   },
-  forget: async (event) => {
+  again: async (event) => {
+    const form = await superValidate(event, zod(gradeCardSchema));
+    await gradeStudyCard(form.data.studyCardId, 'Again');
     console.log('forget(');
   }
 }
