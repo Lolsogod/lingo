@@ -5,7 +5,8 @@ import {
 	generatorParameters,
 	type State as FSRSState,
 	type Grade as FSRSGrade,
-	type Card as FSRSCard
+	type Card as FSRSCard,
+	date_scheduler
 } from 'ts-fsrs';
 
 import {
@@ -16,9 +17,10 @@ import {
 	type StudyCard,
 	ratings,
 	type NewReviewLog,
-	reviewLogTable
+	reviewLogTable,
+	type NewStudyCard
 } from '../schema';
-import { eq } from 'drizzle-orm';
+import { and, count, eq, gte, lte } from 'drizzle-orm';
 import db from '../drizzle';
 //todo kind of mess not realy a model, but also kind of is idk
 const params = generatorParameters({
@@ -31,7 +33,7 @@ const fsrsStateToState = (state: FSRSState): State => {
 	return states[state];
 };
 
-export const newStudyCard = (baseCardId: string, userDeckId: string): StudyCard => {
+export const newStudyCard = (baseCardId: string, userDeckId: string): NewStudyCard => {
 	const emptyCard = createEmptyCard();
 	return {
 		...emptyCard,
@@ -76,7 +78,7 @@ export const grade = (card: StudyCard, rating: Rating, now = new Date()) => {
 			id: crypto.randomUUID(),
 			cardId: card.id,
 			grade: rating,
-			state: fsrsStateToState(recordLogItem.log.state),
+			state: fsrsStateToState(recordLogItem.log.state)
 		};
 		return {
 			nextCard,
@@ -100,8 +102,7 @@ export const gradeStudyCard = async (studyCardId: string, rating: Rating) => {
 	await db.transaction(async (tx) => {
 		await tx.update(studyCardTable).set(nextCard).where(eq(studyCardTable.id, studyCardId));
 		await tx.insert(reviewLogTable).values(reviewLog);
-	})
-
+	});
 };
 
 //deck and stuff
@@ -117,6 +118,43 @@ export const getStudyDeck = async (deckId: string) => {
 
 	return studyDeck;
 };
-export const getQueue = async (studyDeckId: string) => {
+export const getStartOfDay = () => {
+	const now = new Date();
+	const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 4, 0, 0, 0);
+	return startOfDay;
+};
 
+export const getTodayCount = async (studyDeckId: string) => {
+	const startOfDay = getStartOfDay();
+	const nextDay = date_scheduler(startOfDay, 1, true);
+	const todayCount = await db
+		.select({ count: count() })
+		.from(reviewLogTable)
+		.innerJoin(studyCardTable, eq(reviewLogTable.cardId, studyCardTable.id))
+		.where(
+			and(
+				eq(studyCardTable.userDeckId, studyDeckId),
+				lte(reviewLogTable.review, nextDay),
+				gte(reviewLogTable.review, startOfDay)
+			)
+		);
+	return todayCount[0].count;
+};
+
+export const getQueue = async (studyDeckId: string, limit: number) => {
+	const todayCount = await getTodayCount(studyDeckId);
+	const startOfDay = getStartOfDay();
+	const queuePromises = states.map(async (state) =>
+		db.query.studyCardTable.findMany({
+			limit: state === 'New' ? Math.max(0, limit - todayCount) : undefined,
+			where: and(
+				eq(studyCardTable.userDeckId, studyDeckId),
+				eq(studyCardTable.state, state),
+				state === 'Review' ? lte(studyCardTable.due, startOfDay) : undefined
+			),
+			with: { baseCard: { with: { topic: true, blocks: { with: { block: true } } } } }
+		})
+	);
+	const queue = await Promise.all(queuePromises);
+	return queue;
 };

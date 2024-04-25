@@ -76,7 +76,8 @@ export const studyCardTable = pgTable('study_card', {
 });
 export const reviewLogTable = pgTable('review_log', {
 	id: text("id").primaryKey(),
-	cardId: text("card_id").notNull(),
+	//нехватает рефов
+	cardId: uuid("card_id").notNull().references(() => studyCardTable.id),
 	grade: pgRatings('ratings').notNull(),
 	state: pgStates('states').notNull(),
 	due: timestamp("due").notNull(),
@@ -95,6 +96,7 @@ export type Card = typeof cardTable.$inferInsert;
 export type CardWithTopic = Card & { topic: Topic; isAdded?: boolean; deck?: CardDeck[] };
 export type Block = typeof blockTable.$inferInsert;
 export type Topic = typeof topicTable.$inferInsert;
+export type NewStudyCard = typeof studyCardTable.$inferInsert
 export type StudyCard = typeof studyCardTable.$inferInsert & { due: Date, id: string}; //undef fix?
 export type CardBlock = typeof cardBlockTable.$inferInsert & { block: Block }
 export type StudyCardExtended = StudyCard & { baseCard: Card & { topic: Topic; blocks: CardBlock[] } };

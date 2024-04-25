@@ -1,12 +1,13 @@
-import { getStudyDeck, gradeStudyCard } from '$lib/server/database/models/study';
+import { getQueue, getStudyDeck, gradeStudyCard } from '$lib/server/database/models/study';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { StudyCard } from '$lib/server/database/schema';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { gradeCardSchema } from '$lib/config/zod-schemas';
+import { getTodayCount } from '$lib/server/database/models/study';
 
-
+//ограничить для очереди
 const countCardsByState = (cards: StudyCard[]): Count => {
     const initialState: Count = {
       New: 0,
@@ -38,8 +39,9 @@ export const load = (async (event) => {
 
     const stateCount = countCardsByState(studyDeck.studyCards);
     const form = await superValidate(event, zod(gradeCardSchema));
-    
-    return {studyDeck, stateCount, form};
+    const todayCount = await getTodayCount(studyDeckId);
+    const queue = await getQueue(studyDeckId, 3);
+    return { stateCount, form, todayCount, queue};
 }) satisfies PageServerLoad;
 
 export const actions = {

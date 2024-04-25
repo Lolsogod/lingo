@@ -11,11 +11,14 @@ const form = superForm(data.form, {
 	validators: zodClient(gradeCardSchema),
 	resetForm: false
 });
+
 </script>
 
 <CardCounter count={data.stateCount} />
 <br />
-{#each data.studyDeck.studyCards as studyCard}
+{data.todayCount}
+<!---флэт временный хз пока-->
+{#each data.queue.flat() as studyCard}
 	<SrsCard studyCard={studyCard} form={form} />
 	<br />
 {/each}

@@ -1,0 +1,1 @@
+ALTER TABLE "review_log" ALTER COLUMN "card_id" SET DATA TYPE uuid;
