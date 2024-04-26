@@ -1,6 +1,6 @@
 import { createDeckSchema } from '$lib/config/zod-schemas';
 import { addDeckToUser, createDeck } from '$lib/server/database/models/deck';
-import type { Deck } from '$lib/server/database/schema';
+import type { NewDeck } from '$lib/server/database/schema';
 import { fail, redirect } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';
@@ -17,7 +17,7 @@ export const load = (async (event) => {
 export const actions = {
 	default: async (event) => {
 		const user = await event.locals.user;
-		let newDeck: Deck | null;
+		let newDeck: NewDeck | null;
 		console.log(user);
 		const form = await superValidate(event, zod(createDeckSchema));
 		if (!form.valid) {
@@ -41,8 +41,8 @@ export const actions = {
 			if (newDeck?.id) {
 				setFlash({ type: 'success', message: 'Колода создана' }, event);
 				if (form.data.addToStudy) {
-					const newUserDeck = await addDeckToUser(user.id, newDeck.id);
-					if (newUserDeck) {
+					const newStudyDeck = await addDeckToUser(user.id, newDeck.id);
+					if (newStudyDeck) {
 						setFlash({ type: 'success', message: 'Колода добавлена в обучение' }, event);
 					}
 				}

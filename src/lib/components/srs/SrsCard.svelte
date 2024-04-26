@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { StudyCardExtended } from '$lib/server/database/schema';
+	import type { StudyCardExp } from '$lib/server/database/schema';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import GradeButton from './GradeButton.svelte';
 	import type { SuperForm } from 'sveltekit-superforms';
-	export let studyCard: StudyCardExtended;
+	export let studyCard: StudyCardExp;
 	export let form: SuperForm<any>;
 
 	let revealed = false;
@@ -18,10 +18,12 @@
 		{#each studyCard.baseCard.blocks as cardBlock}
 			<div>{cardBlock.block.content}</div>
 		{/each}
-		<GradeButton {form} action={`/study/${studyCard.userDeckId}/?/good`} studyCardId={studyCard.id}
+		<GradeButton {form} action={`/study/${studyCard.studyDeckId}/?/good`} studyCardId={studyCard.id}
 			>Помню</GradeButton>
-		<GradeButton {form} action={`/study/${studyCard.userDeckId}/?/again`} studyCardId={studyCard.id}
-			>Непомню</GradeButton>
+		<GradeButton
+			{form}
+			action={`/study/${studyCard.studyDeckId}/?/again`}
+			studyCardId={studyCard.id}>Непомню</GradeButton>
 	{:else}
 		<Button on:click={reveal}>Открыть</Button>
 	{/if}

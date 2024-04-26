@@ -4,12 +4,12 @@ import { superValidate } from 'sveltekit-superforms';
 import type { PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
 import { isUUID } from '$lib/_helpers/isUIID';
-import type { CardWithTopic } from '$lib/server/database/schema';
+import type { CardExp } from '$lib/server/database/schema';
 //move this to sql... but later... i hate sql..
-const addedCheck = (cards: CardWithTopic[] | null, deckId: string) => {
+const addedCheck = (cards: CardExp[] | null, deckId: string) => {
 	if (cards) {
 		cards.forEach((card) => {
-			card.isAdded = card.deck!.some((deck) => deck.deckId === deckId);
+			card.isAdded = card.cardDeck!.some((deck) => deck.deckId === deckId);
 		});
 	}
 };
@@ -18,8 +18,8 @@ export const load = (async (event) => {
 	const user = event.locals.user;
 	const deckId = event.params.id;
 
-	const publicCards: CardWithTopic[] | null = await getPublicCards(user?.id);
-	const userCreatedCards: CardWithTopic[] | null = await getCardsByAuthor(user?.id);
+	const publicCards: CardExp[] | null = await getPublicCards(user?.id);
+	const userCreatedCards: CardExp[] | null = await getCardsByAuthor(user?.id);
 
 	const form = await superValidate(event, zod(addCardToDeckSchema));
 

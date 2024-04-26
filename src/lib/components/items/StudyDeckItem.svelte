@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Card, CardContent } from '$lib/components/ui/card';
 	import CardFooter from '$lib/components/ui/card/card-footer.svelte';
-	import type { StudyDeck } from '$lib/server/database/schema';
+	import type { StudyDeckExp } from '$lib/server/database/schema';
 	import CardCounterMini from '../srs/CardCounterMini.svelte';
-	export let deckInfo: StudyDeck;
+	export let deckInfo: StudyDeckExp;
 	export let newCount: number;
 </script>
 

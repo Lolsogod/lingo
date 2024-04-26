@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { boolean, pgTable, primaryKey, text, uuid, varchar } from 'drizzle-orm/pg-core';
+import { boolean, integer, pgTable, primaryKey, text, uuid, varchar } from 'drizzle-orm/pg-core';
 import { userTable } from './user';
 import { cardTable, studyCardTable, type StudyCard } from './card';
 
@@ -30,30 +30,26 @@ export const cardDeckTable = pgTable(
 	}
 );
 
-export const userDeckTable = pgTable('user_deck', {
+export const stydyDeckTable = pgTable('study_deck', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
 	userId: text('user_id')
 		.notNull()
 		.references(() => userTable.id),
 	deckId: uuid('deck_id')
 		.notNull()
-		.references(() => deckTable.id)
+		.references(() => deckTable.id),
+	newCardsLimit: integer('new_cards_limit').notNull().default(10) //TODO: check for greater than 0
 });
-
-//types
-export type Deck = typeof deckTable.$inferInsert;
-export type CardDeck = typeof cardDeckTable.$inferInsert;
-export type StudyDeck = typeof userDeckTable.$inferInsert & { deck: Deck; studyCards: StudyCard[] };
 
 //relations
 export const deckRelations = relations(deckTable, ({ many, one }) => {
 	return {
-		cards: many(cardDeckTable),
+		cardDecks: many(cardDeckTable),
 		author: one(userTable, {
 			fields: [deckTable.authorId],
 			references: [userTable.id]
 		}),
-		userDecks: many(userDeckTable)
+		studyDecks: many(stydyDeckTable)
 	};
 });
 
@@ -70,16 +66,27 @@ export const cardDeckRelations = relations(cardDeckTable, ({ one }) => {
 	};
 });
 
-export const userDeckRelations = relations(userDeckTable, ({ one, many }) => {
+export const studyDeckRelations = relations(stydyDeckTable, ({ one, many }) => {
 	return {
 		user: one(userTable, {
-			fields: [userDeckTable.userId],
+			fields: [stydyDeckTable.userId],
 			references: [userTable.id]
 		}),
 		deck: one(deckTable, {
-			fields: [userDeckTable.deckId],
+			fields: [stydyDeckTable.deckId],
 			references: [deckTable.id]
 		}),
 		studyCards: many(studyCardTable)
 	};
 });
+
+//types
+export type Deck = typeof deckTable.$inferSelect;
+export type NewDeck = typeof deckTable.$inferInsert;
+
+export type CardDeck = typeof cardDeckTable.$inferSelect;
+export type NewCardDeck = typeof cardDeckTable.$inferInsert;
+
+export type StudyDeck = typeof stydyDeckTable.$inferSelect;
+export type NewStudyDeck = typeof stydyDeckTable.$inferInsert;
+export type StudyDeckExp = StudyDeck & { deck: NewDeck; studyCards: StudyCard[] };

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { superForm } from 'sveltekit-superforms';
+	import { superForm, type SuperValidated } from 'sveltekit-superforms';
 	import { createCardSchema } from '$lib/config/zod-schemas';
 	import * as Card from '$lib/components/ui/card';
 	import * as Form from '$lib/components/ui/form';
@@ -9,7 +9,7 @@
 	import SimpleForm from '../SimpleForm.svelte';
 	import SimpleSubmit from '../SimpleSubmit.svelte';
 
-	export let data: any; //подумать super validated
+	export let data: SuperValidated<any>; //подумать super validated
 	export let action: string = '';
 
 	const form = superForm(data, {
@@ -36,11 +36,11 @@
 	</div>
 	<div slot="custom-fields">
 		<!---нет ошибки на пустые блоки-->
-		{#each $formData.blocks as _, i}
+		{#each $formData.blocks as block, i}
 			<Form.Field {form} name="blocks">
 				<Form.Control let:attrs>
 					<Form.Label>Блок {i + 1}</Form.Label>
-					<Input {...attrs} bind:value={$formData.blocks[i].content} />
+					<Input {...attrs} bind:value={block.content} />
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>

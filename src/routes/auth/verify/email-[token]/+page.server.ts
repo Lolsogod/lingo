@@ -3,7 +3,7 @@ import type { User } from '$lib/server/database/schema';
 import { getUserByToken, updateUser } from '$lib/server/database/models/user';
 import { fail } from '@sveltejs/kit';
 
-export async function load({ params }) {
+export const load = async ({ params }) => {
 	try {
 		const token = params.token as string;
 		const user: User | null = await getUserByToken(token);
@@ -27,4 +27,4 @@ export async function load({ params }) {
 	} catch (e) {
 		return fail(500, { error: e });
 	}
-}
+};

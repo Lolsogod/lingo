@@ -10,9 +10,9 @@ import {
 	real,
 	integer
 } from 'drizzle-orm/pg-core';
-import { cardDeckTable, userDeckTable, type CardDeck } from './deck';
+import { cardDeckTable, stydyDeckTable, type CardDeck } from './deck';
 import { userTable } from './user';
-import { pgRatings, pgStates } from './other';
+import { pgRatings, pgStates } from './enums';
 
 export const topicTable = pgTable('topic', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
@@ -55,9 +55,9 @@ export const cardBlockTable = pgTable(
 //TODO: user deck rename to study deck
 export const studyCardTable = pgTable('study_card', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
-	userDeckId: uuid('user_deck_id')
+	studyDeckId: uuid('study_deck_id')
 		.notNull()
-		.references(() => userDeckTable.id),
+		.references(() => stydyDeckTable.id),
 	baseCardId: uuid('card_id')
 		.notNull()
 		.references(() => cardTable.id),
@@ -68,7 +68,7 @@ export const studyCardTable = pgTable('study_card', {
 	scheduled_days: integer('scheduled_days').notNull(),
 	reps: integer('reps').notNull(),
 	lapses: integer('lapses').notNull(),
-	state: pgStates('states').notNull(), //ограничение енамовское бы сюда?
+	state: pgStates('states').notNull(),
 	last_review: timestamp('last_review'),
 	suspended: timestamp('suspended').notNull().defaultNow(),
 	deleted: boolean('deleted').notNull().default(false),
@@ -76,7 +76,6 @@ export const studyCardTable = pgTable('study_card', {
 });
 export const reviewLogTable = pgTable('review_log', {
 	id: text('id').primaryKey(),
-	//нехватает рефов
 	cardId: uuid('card_id')
 		.notNull()
 		.references(() => studyCardTable.id),
@@ -93,19 +92,6 @@ export const reviewLogTable = pgTable('review_log', {
 	deleted: boolean('deleted').notNull().default(false),
 	createdAt: timestamp('created_at').notNull().defaultNow()
 });
-//types (почти вся херня с тайпами изза того что ты напутал инсерты с селектами TODO: поправить)
-export type Card = typeof cardTable.$inferInsert;
-export type CardWithTopic = Card & { topic: Topic; isAdded?: boolean; deck?: CardDeck[] };
-export type Block = typeof blockTable.$inferInsert;
-export type Topic = typeof topicTable.$inferInsert;
-export type NewStudyCard = typeof studyCardTable.$inferInsert;
-export type StudyCard = typeof studyCardTable.$inferInsert & { due: Date; id: string }; //undef fix?
-export type CardBlock = typeof cardBlockTable.$inferInsert & { block: Block };
-export type StudyCardExtended = StudyCard & {
-	baseCard: Card & { topic: Topic; blocks: CardBlock[] };
-};
-
-export type NewReviewLog = typeof reviewLogTable.$inferInsert;
 
 //relations
 export const cardRelations = relations(cardTable, ({ one, many }) => {
@@ -114,8 +100,8 @@ export const cardRelations = relations(cardTable, ({ one, many }) => {
 			fields: [cardTable.topicId],
 			references: [topicTable.id]
 		}),
-		deck: many(cardDeckTable),
-		blocks: many(cardBlockTable),
+		cardDeck: many(cardDeckTable),
+		cardBlocks: many(cardBlockTable),
 		author: one(userTable, {
 			fields: [cardTable.authorId],
 			references: [userTable.id]
@@ -152,9 +138,31 @@ export const studyCardRelations = relations(studyCardTable, ({ one }) => {
 			fields: [studyCardTable.baseCardId],
 			references: [cardTable.id]
 		}),
-		userDeck: one(userDeckTable, {
-			fields: [studyCardTable.userDeckId],
-			references: [userDeckTable.id]
+		studyDeck: one(stydyDeckTable, {
+			fields: [studyCardTable.studyDeckId],
+			references: [stydyDeckTable.id]
 		})
 	};
 });
+
+//types
+export type Topic = typeof topicTable.$inferSelect;
+export type NewTopic = typeof topicTable.$inferInsert;
+
+export type Block = typeof blockTable.$inferSelect;
+export type NewBlock = typeof blockTable.$inferInsert;
+
+export type Card = typeof cardTable.$inferSelect;
+export type NewCard = typeof cardTable.$inferInsert;
+export type CardExp = Card & { topic: Topic; isAdded?: boolean; cardDeck?: CardDeck[] };
+
+export type CardBlockExp = typeof cardBlockTable.$inferSelect & { block: NewBlock };
+
+export type StudyCard = typeof studyCardTable.$inferSelect;
+export type NewStudyCard = typeof studyCardTable.$inferInsert;
+export type StudyCardExp = StudyCard & {
+	baseCard: Card & { topic: Topic; blocks: CardBlockExp[] };
+};
+
+export type NewReviewLog = typeof reviewLogTable.$inferInsert;
+export type ReviewLog = typeof reviewLogTable.$inferSelect;

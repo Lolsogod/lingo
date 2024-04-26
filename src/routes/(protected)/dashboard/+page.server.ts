@@ -1,5 +1,5 @@
 import { getStudyDecks } from '$lib/server/database/models/deck';
-import { getTodayNewCount } from '$lib/server/database/models/study.js';
+import { getTodayCount } from '$lib/server/database/models/study';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async (event) => {
@@ -11,7 +11,7 @@ export const load = async (event) => {
 	const studyDecks = await getStudyDecks(user.id);
 	const decksWithNewCounts = await Promise.all(
 		studyDecks.map(async (deck) => {
-			const newCount = await getTodayNewCount(deck.id);
+			const newCount = await getTodayCount(deck.id, 'New');
 			return { ...deck, newCount };
 		})
 	);

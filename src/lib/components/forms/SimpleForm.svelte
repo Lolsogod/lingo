@@ -8,6 +8,7 @@
 	export let inputs: { name: string; label: string; type?: string }[] = [];
 	export let action: string = '';
 	export let form: SuperForm<any, any>;
+
 	const { enhance, errors } = form;
 	//todo: вернуть как нибудь прикольную рамку у чекбоксов
 </script>

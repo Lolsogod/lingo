@@ -4,13 +4,13 @@ import {
 	cardDeckTable,
 	deckTable,
 	studyCardTable,
-	userDeckTable
+	stydyDeckTable
 } from '$lib/server/database/schema';
-import type { Deck } from '$lib/server/database/schema';
+import type { NewDeck } from '$lib/server/database/schema';
 import { and, eq, ne, or } from 'drizzle-orm';
-import { createStudyCard } from './study';
+import { createStudyCard } from '$lib/fsrs';
 
-export const createDeck = async (data: Deck) => {
+export const createDeck = async (data: NewDeck) => {
 	const result = await db.insert(deckTable).values(data).onConflictDoNothing().returning();
 	if (result.length === 0) {
 		return null;
@@ -18,7 +18,7 @@ export const createDeck = async (data: Deck) => {
 	return result[0];
 };
 
-export const getPublicDecks = async (authorId = ''): Promise<Deck[] | null> => {
+export const getPublicDecks = async (authorId = ''): Promise<NewDeck[] | null> => {
 	const decks = await db
 		.select()
 		.from(deckTable)
@@ -49,7 +49,7 @@ export const getDeckById = async (id: string, userId = '') => {
 			eq(deckTable.id, id),
 			or(eq(deckTable.authorId, userId), eq(deckTable.public, true))
 		),
-		with: { userDecks: true }
+		with: { studyDecks: true }
 	});
 	return foundDeck;
 };
@@ -57,7 +57,7 @@ export const getDeckById = async (id: string, userId = '') => {
 export const addDeckToUser = async (userId: string, deckId: string) => {
 	await db.transaction(async (tx) => {
 		const result = await tx
-			.insert(userDeckTable)
+			.insert(stydyDeckTable)
 			.values({ userId, deckId })
 			.onConflictDoNothing()
 			.returning();
@@ -73,8 +73,8 @@ export const addDeckToUser = async (userId: string, deckId: string) => {
 };
 
 export const getStudyDecks = async (userId: string) => {
-	const decks = await db.query.userDeckTable.findMany({
-		where: eq(userDeckTable.userId, userId),
+	const decks = await db.query.stydyDeckTable.findMany({
+		where: eq(stydyDeckTable.userId, userId),
 		with: { deck: true, studyCards: true }
 	});
 	return decks;

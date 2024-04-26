@@ -4,7 +4,7 @@ export const handleError: HandleClientError = ({ error }) => {
 	const errorId = crypto.randomUUID();
 	console.error(error);
 	return {
-		message: 'An unexpected error occurred.',
+		message: 'Произошла непредвиденая ошибка',
 		errorId
 	};
 };

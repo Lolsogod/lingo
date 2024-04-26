@@ -2,7 +2,7 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Form from '$lib/components/ui/form';
 	import { Card, CardContent, CardFooter } from '$lib/components/ui/card';
-	import type { CardWithTopic } from '$lib/server/database/schema';
+	import type { CardExp } from '$lib/server/database/schema';
 	import { superForm, type SuperValidated } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { Check, Loader2 } from 'lucide-svelte';
@@ -21,7 +21,7 @@
 		>;
 	};
 
-	export let cardInfo: CardWithTopic;
+	export let cardInfo: CardExp;
 	const form = superForm(data.form, {
 		validators: zodClient(addCardToDeckSchema),
 		resetForm: false

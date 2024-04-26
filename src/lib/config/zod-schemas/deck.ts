@@ -20,7 +20,7 @@ export const createDeckSchema = deckSchema.pick({
 });
 export type CreateDeckSchema = typeof createDeckSchema;
 
-export const userDeckSchema = z.object({
+export const studyDeckSchema = z.object({
 	deckId: z.string(),
 	userId: z.string()
 });

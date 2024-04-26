@@ -15,7 +15,7 @@
 		count[card.state]++;
 		return count;
 	}, initialState);
-	$: count.New = newCount > 3 ? 0 : 3 - newCount; //TODO: replace with actual limit
+	$: count.New = newCount > 3 ? 0 : 3 - newCount; //TODO: replace with actual limit и вобще не оч тк не учитвыается реальное колво новых
 </script>
 
 <div class="flex gap-3">

@@ -11,6 +11,7 @@
 	let _class: string = '';
 	export { _class as class };
 	export let value: unknown = null;
+
 	const { enhance, form: formData, submitting } = form;
 	//Костыльная вещь получилась, нужна ли суперформа для таких кнопок?, ну пока пускай будет
 </script>
