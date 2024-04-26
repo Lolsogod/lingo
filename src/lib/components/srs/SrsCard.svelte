@@ -4,6 +4,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import GradeButton from './GradeButton.svelte';
 	import type { SuperForm } from 'sveltekit-superforms';
+
 	export let studyCard: StudyCardExp;
 	export let form: SuperForm<any>;
 
@@ -14,8 +15,8 @@
 <Card.Root class="w-40 p-10">
 	<span>{studyCard.baseCard.topic.name} </span>
 	<br />
-	{#if revealed}
-		{#each studyCard.baseCard.blocks as cardBlock}
+	{#if revealed && studyCard.baseCard.cardBlocks}
+		{#each studyCard.baseCard.cardBlocks as cardBlock}
 			<div>{cardBlock.block.content}</div>
 		{/each}
 		<GradeButton {form} action={`/study/${studyCard.studyDeckId}/?/good`} studyCardId={studyCard.id}

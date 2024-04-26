@@ -17,5 +17,8 @@ export const load = (async (event) => {
 	const startStudyForm = await superValidate(event, zod(startStudySchema));
 	const cards = await getCardsByDeckId(deckId);
 	const alredyStudying = deck.studyDecks.some((sd) => sd.userId === user?.id); //кривые структуры как то в порядок преводить на этапе модели например дека
-	return { startStudyForm, deck, cards, alredyStudying };
+
+	const canEdit = deck.authorId === user?.id;
+	
+	return { startStudyForm, deck, cards, alredyStudying, canEdit};
 }) satisfies LayoutServerLoad;

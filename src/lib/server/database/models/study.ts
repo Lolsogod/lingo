@@ -1,6 +1,13 @@
 //think about naming
 import { date_scheduler } from 'ts-fsrs';
-import { states, studyCardTable, type Rating, reviewLogTable, type State } from '../schema';
+import {
+	states,
+	studyCardTable,
+	type Rating,
+	reviewLogTable,
+	type State,
+	studyDeckTable
+} from '../schema';
 import { and, count, eq, gte, lte } from 'drizzle-orm';
 import db from '../drizzle';
 import { getStartOfDay, grade } from '$lib/fsrs';
@@ -21,14 +28,14 @@ export const gradeStudyCard = async (studyCardId: string, rating: Rating) => {
 	});
 };
 
-export const getStudyDeck = async (deckId: string) => {
-	const studyDeck = await db.query.stydyDeckTable.findFirst({
-		where: eq(studyCardTable.id, deckId),
+export const getStudyDeck = async (deckId: string, userId = '') => {
+	const studyDeck = await db.query.studyDeckTable.findFirst({
+		where: and(eq(studyCardTable.id, deckId), eq(studyDeckTable.userId, userId)),
 		with: {
 			studyCards: {
 				with: { baseCard: { with: { topic: true, cardBlocks: { with: { block: true } } } } }
 			}
-		} //to separate call(cause this is too large kind of)
+		} 
 	});
 
 	return studyDeck;

@@ -1,7 +1,8 @@
 import type { CreateCardSchema } from '$lib/config/zod-schemas';
 import db from '$lib/server/database/drizzle';
 import { and, eq, ne } from 'drizzle-orm';
-import { blockTable, cardTable, cardBlockTable, cardDeckTable, topicTable } from '../schema';
+import { blockTable, cardTable, cardBlockTable, cardDeckTable, topicTable, studyDeckTable, studyCardTable } from '../schema';
+import { createStudyCard } from '$lib/fsrs';
 
 export const findTopicByName = async (name: string) => {
 	const foundTopic = await db.query.topicTable.findFirst({
@@ -42,14 +43,23 @@ export const createCard = async (data: CreateCardSchema, authorId: string) => {
 	});
 	return result;
 };
-
+//добавить синхронизацию и чекать публичность
 export const addCardToDeck = async (deckId: string, cardId: string) => {
-	const result = await db
-		.insert(cardDeckTable)
-		.values({ deckId, cardId })
-		.onConflictDoNothing()
-		.returning();
-	return result;
+	await db.transaction(async (tx) => {
+		const result = await tx
+			.insert(cardDeckTable)
+			.values({ deckId, cardId })
+			.onConflictDoNothing()
+			.returning();
+		const studyDecks = await tx.query.studyDeckTable.findMany({
+			where: eq(studyDeckTable.deckId, deckId)
+		});
+		studyDecks.forEach(async (studyDeck) => {
+			const newCard = createStudyCard(result[0].cardId, studyDeck.id);
+			await tx.insert(studyCardTable).values(newCard).returning();
+		});
+		return result;
+	});
 };
 
 export const getCardsByDeckId = async (deckId: string) => {

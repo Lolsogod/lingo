@@ -30,7 +30,7 @@ export const cardDeckTable = pgTable(
 	}
 );
 
-export const stydyDeckTable = pgTable('study_deck', {
+export const studyDeckTable = pgTable('study_deck', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
 	userId: text('user_id')
 		.notNull()
@@ -49,7 +49,7 @@ export const deckRelations = relations(deckTable, ({ many, one }) => {
 			fields: [deckTable.authorId],
 			references: [userTable.id]
 		}),
-		studyDecks: many(stydyDeckTable)
+		studyDecks: many(studyDeckTable)
 	};
 });
 
@@ -66,14 +66,14 @@ export const cardDeckRelations = relations(cardDeckTable, ({ one }) => {
 	};
 });
 
-export const studyDeckRelations = relations(stydyDeckTable, ({ one, many }) => {
+export const studyDeckRelations = relations(studyDeckTable, ({ one, many }) => {
 	return {
 		user: one(userTable, {
-			fields: [stydyDeckTable.userId],
+			fields: [studyDeckTable.userId],
 			references: [userTable.id]
 		}),
 		deck: one(deckTable, {
-			fields: [stydyDeckTable.deckId],
+			fields: [studyDeckTable.deckId],
 			references: [deckTable.id]
 		}),
 		studyCards: many(studyCardTable)
@@ -87,6 +87,6 @@ export type NewDeck = typeof deckTable.$inferInsert;
 export type CardDeck = typeof cardDeckTable.$inferSelect;
 export type NewCardDeck = typeof cardDeckTable.$inferInsert;
 
-export type StudyDeck = typeof stydyDeckTable.$inferSelect;
-export type NewStudyDeck = typeof stydyDeckTable.$inferInsert;
+export type StudyDeck = typeof studyDeckTable.$inferSelect;
+export type NewStudyDeck = typeof studyDeckTable.$inferInsert;
 export type StudyDeckExp = StudyDeck & { deck: NewDeck; studyCards: StudyCard[] };

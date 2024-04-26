@@ -21,7 +21,7 @@
 		document.body.appendChild(form);
 		form.submit();
 	};
-
+	const main_url = user?'/dashboard':'/';
 	let initials = '';
 	$: {
 		if (user) {
@@ -35,12 +35,11 @@
 		<div class="flex gap-6 md:gap-10">
 			<a class="flex items-center space-x-2" href="/"
 				><Logo size="24"></Logo><span class="inline-block font-bold">{APP_NAME}</span></a>
-			<!---роуты поменять, сейчас это как то тупо-->
 			<nav class="flex gap-6">
 				<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
-					href="/dashboard"
-					class:active={'/dashboard' === currentPage}>Главная</a>
+					href={main_url}
+					class:active={main_url === currentPage}>Главная</a>
 				<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
 					href="/decks/browse"
@@ -49,10 +48,6 @@
 					class="flex items-center text-sm font-medium text-muted-foreground"
 					href="/cards/browse"
 					class:active={'/cards/browse' === currentPage}>Карты</a>
-				<a
-					class="flex items-center text-sm font-medium text-muted-foreground"
-					href="/"
-					class:active={'/' === currentPage}>Инфо</a>
 			</nav>
 		</div>
 		<div class="flex flex-1 items-center justify-end space-x-4">

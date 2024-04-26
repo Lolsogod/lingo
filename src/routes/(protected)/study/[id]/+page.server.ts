@@ -22,17 +22,13 @@ const countCardsByState = (cards: StudyCard[]): Count => {
 	}, initialState);
 };
 
-//test queue
-/*
-const now = new Date();
-const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 4, 0, 0, 0); //for calculating how many we learned today
-*/
 
 export const load = (async (event) => {
-	//const user = event.locals.user;
+	const user = event.locals.user;
 	const studyDeckId = event.params.id;
 
-	const studyDeck = await getStudyDeck(studyDeckId);
+	const studyDeck = await getStudyDeck(studyDeckId, user?.id);
+
 	if (!studyDeck) {
 		error(404, 'Deck not found');
 	}

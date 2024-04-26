@@ -42,18 +42,20 @@
 			<CardItem cardInfo={card} />
 		{/each}
 	</ItemGrid>
-	<div class="flex gap-2">
-		<Button
-			href={`${deck_url}/create-card`}
-			variant={$page.url.pathname === `${deck_url}/create-card` ? 'default' : 'secondary'}
-			>Создать карту</Button>
-		<Button
-			href={`${deck_url}/add-card`}
-			variant={$page.url.pathname === `${deck_url}/add-card` ? 'default' : 'secondary'}
-			>Добавить существующюю</Button>
-		{#if $page.url.pathname != deck_url}
-			<Button href={deck_url} variant="secondary">✕</Button>
-		{/if}
-	</div>
-	<slot />
+	{#if data.canEdit}
+		<div class="flex gap-2">
+			<Button
+				href={`${deck_url}/create-card`}
+				variant={$page.url.pathname === `${deck_url}/create-card` ? 'default' : 'secondary'}
+				>Создать карту</Button>
+			<Button
+				href={`${deck_url}/add-card`}
+				variant={$page.url.pathname === `${deck_url}/add-card` ? 'default' : 'secondary'}
+				>Добавить существующюю</Button>
+			{#if $page.url.pathname != deck_url}
+				<Button href={deck_url} variant="secondary">✕</Button>
+			{/if}
+		</div>
+		<slot />
+	{/if}
 </section>

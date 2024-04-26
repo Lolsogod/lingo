@@ -1,6 +1,6 @@
 import { relations } from 'drizzle-orm';
 import { boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
-import { deckTable, stydyDeckTable } from './deck';
+import { deckTable, studyDeckTable } from './deck';
 import { cardTable } from './card';
 
 export const userTable = pgTable('users', {
@@ -44,7 +44,7 @@ export type Session = typeof sessionTable.$inferInsert;
 export const userRelations = relations(userTable, ({ many }) => {
 	return {
 		sessions: many(sessionTable),
-		studyDecks: many(stydyDeckTable),
+		studyDecks: many(studyDeckTable),
 		decks: many(deckTable), //as author
 		cards: many(cardTable) //as author
 	};

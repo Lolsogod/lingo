@@ -10,7 +10,7 @@ import {
 	real,
 	integer
 } from 'drizzle-orm/pg-core';
-import { cardDeckTable, stydyDeckTable, type CardDeck } from './deck';
+import { cardDeckTable, studyDeckTable, type CardDeck } from './deck';
 import { userTable } from './user';
 import { pgRatings, pgStates } from './enums';
 
@@ -57,7 +57,7 @@ export const studyCardTable = pgTable('study_card', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
 	studyDeckId: uuid('study_deck_id')
 		.notNull()
-		.references(() => stydyDeckTable.id),
+		.references(() => studyDeckTable.id),
 	baseCardId: uuid('card_id')
 		.notNull()
 		.references(() => cardTable.id),
@@ -138,9 +138,9 @@ export const studyCardRelations = relations(studyCardTable, ({ one }) => {
 			fields: [studyCardTable.baseCardId],
 			references: [cardTable.id]
 		}),
-		studyDeck: one(stydyDeckTable, {
+		studyDeck: one(studyDeckTable, {
 			fields: [studyCardTable.studyDeckId],
-			references: [stydyDeckTable.id]
+			references: [studyDeckTable.id]
 		})
 	};
 });
@@ -154,14 +154,14 @@ export type NewBlock = typeof blockTable.$inferInsert;
 
 export type Card = typeof cardTable.$inferSelect;
 export type NewCard = typeof cardTable.$inferInsert;
-export type CardExp = Card & { topic: Topic; isAdded?: boolean; cardDeck?: CardDeck[] };
+export type CardExp = Card & { topic: Topic; isAdded?: boolean; cardDeck?: CardDeck[]; cardBlocks?: CardBlockExp[]};
 
 export type CardBlockExp = typeof cardBlockTable.$inferSelect & { block: NewBlock };
 
 export type StudyCard = typeof studyCardTable.$inferSelect;
 export type NewStudyCard = typeof studyCardTable.$inferInsert;
 export type StudyCardExp = StudyCard & {
-	baseCard: Card & { topic: Topic; blocks: CardBlockExp[] };
+	baseCard: CardExp;
 };
 
 export type NewReviewLog = typeof reviewLogTable.$inferInsert;

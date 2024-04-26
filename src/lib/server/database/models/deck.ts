@@ -4,7 +4,7 @@ import {
 	cardDeckTable,
 	deckTable,
 	studyCardTable,
-	stydyDeckTable
+	studyDeckTable
 } from '$lib/server/database/schema';
 import type { NewDeck } from '$lib/server/database/schema';
 import { and, eq, ne, or } from 'drizzle-orm';
@@ -17,7 +17,7 @@ export const createDeck = async (data: NewDeck) => {
 	}
 	return result[0];
 };
-
+//без колод пользователя
 export const getPublicDecks = async (authorId = ''): Promise<NewDeck[] | null> => {
 	const decks = await db
 		.select()
@@ -57,7 +57,7 @@ export const getDeckById = async (id: string, userId = '') => {
 export const addDeckToUser = async (userId: string, deckId: string) => {
 	await db.transaction(async (tx) => {
 		const result = await tx
-			.insert(stydyDeckTable)
+			.insert(studyDeckTable)
 			.values({ userId, deckId })
 			.onConflictDoNothing()
 			.returning();
@@ -73,8 +73,8 @@ export const addDeckToUser = async (userId: string, deckId: string) => {
 };
 
 export const getStudyDecks = async (userId: string) => {
-	const decks = await db.query.stydyDeckTable.findMany({
-		where: eq(stydyDeckTable.userId, userId),
+	const decks = await db.query.studyDeckTable.findMany({
+		where: eq(studyDeckTable.userId, userId),
 		with: { deck: true, studyCards: true }
 	});
 	return decks;
