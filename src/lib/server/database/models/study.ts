@@ -6,7 +6,7 @@ import {
 	type Rating,
 	reviewLogTable,
 	type State,
-	studyDeckTable
+	studyDeckTable,
 } from '../schema';
 import { and, count, eq, gte, lte } from 'drizzle-orm';
 import db from '../drizzle';
@@ -34,7 +34,8 @@ export const getStudyDeck = async (deckId: string, userId = '') => {
 		with: {
 			studyCards: {
 				with: { baseCard: { with: { topic: true, cardBlocks: { with: { block: true } } } } }
-			}
+			}, 
+			deck: true
 		} 
 	});
 
@@ -79,4 +80,8 @@ export const getQueue = async (studyDeckId: string, limit: number) => {
 	const queue = await Promise.all(queuePromises);
 	const shuffledQueue = queue.flat().sort(() => Math.random() - Math.random()); //мб как то лучше можно
 	return shuffledQueue;
+};
+
+export const setNewLimit = async (studyDeckId: string, limit: number) => {
+	await db.update(studyDeckTable).set({ newCardsLimit: limit }).where(eq(studyDeckTable.id, studyDeckId));
 };

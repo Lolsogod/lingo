@@ -1,0 +1,44 @@
+<script lang="ts">
+	import { enhance } from '$app/forms';
+	import SimpleForm from '$lib/components/forms/SimpleForm.svelte';
+	import SimpleSubmit from '$lib/components/forms/SimpleSubmit.svelte';
+	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import * as Dialog from '$lib/components/ui/dialog/index.js';
+	import { studyDeckSchema, studyDeckSettingsSchema } from '$lib/config/zod-schemas';
+	import type { StudyDeckExp } from '$lib/server/database/schema';
+	import { superForm, type SuperValidated } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+
+	export let settingsForm: SuperValidated<any>;
+	export let studyDeck: StudyDeckExp;
+	const form = superForm(settingsForm, {
+		validators: zodClient(studyDeckSettingsSchema),
+		resetForm: false
+	});
+
+	const inputs = [
+		{
+			name: 'limit',
+			label: 'Кол-во новых в день',
+			type: 'number'
+		}
+	];
+	const { form: formData } = form;
+</script>
+
+<Dialog.Root>
+	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Настройки</Dialog.Trigger>
+	<Dialog.Content class="sm:max-w-[425px]">
+		<Dialog.Header>
+			<Dialog.Title>Настройки обучения для {studyDeck.deck.name}</Dialog.Title>
+			<Dialog.Description>
+				Make changes to your profile here. Click save when you're done.
+			</Dialog.Description>
+		</Dialog.Header>
+		<SimpleForm {form} {inputs} action={`/study/${studyDeck.id}/?/settings`}>
+			<div slot="submit">
+				<SimpleSubmit {form}>Сохранить</SimpleSubmit>
+			</div>
+		</SimpleForm>
+	</Dialog.Content>
+</Dialog.Root>

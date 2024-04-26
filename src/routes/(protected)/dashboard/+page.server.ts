@@ -1,5 +1,5 @@
 import { getStudyDecks } from '$lib/server/database/models/deck';
-import { getTodayCount } from '$lib/server/database/models/study';
+import { getQueue } from '$lib/server/database/models/study';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async (event) => {
@@ -9,12 +9,13 @@ export const load = async (event) => {
 		redirect(302, '/auth/sign-in');
 	}
 	const studyDecks = await getStudyDecks(user.id);
-	const decksWithNewCounts = await Promise.all(
+	//TODO: this is horendous 
+	const decksWithQueues = await Promise.all(
 		studyDecks.map(async (deck) => {
-			const newCount = await getTodayCount(deck.id, 'New');
-			return { ...deck, newCount };
+			const queue = await getQueue(deck.id, deck.newCardsLimit);
+			return { ...deck, queue };
 		})
 	);
 
-	return { decksWithNewCounts };
+	return { decksWithQueues};
 };

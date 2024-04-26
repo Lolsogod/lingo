@@ -5,6 +5,7 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { gradeCardSchema } from '$lib/config/zod-schemas';
+	import StudyDeckSettings from '../../dashboard/StudyDeckSettings.svelte';
 	export let data: PageData;
 
 	const form = superForm(data.form, {
@@ -14,7 +15,7 @@
 
 	//testing... maybe remove isfinished
 </script>
-
+<StudyDeckSettings settingsForm={data.settingsForm} studyDeck={data.studyDeck}/>
 <CardCounter count={data.stateCount} />
 <br />
 {data.todayCount}

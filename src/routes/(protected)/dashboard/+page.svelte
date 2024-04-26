@@ -1,5 +1,5 @@
 <script lang="ts">
-	import StudyDeckItem from '$lib/components/items/StudyDeckItem.svelte';
+	import StudyDeckItem from './StudyDeckItem.svelte';
 	import ItemGrid from '$lib/components/items/ItemGrid.svelte';
 	import type { PageData } from './$types';
 	import AddDeck from './AddDeck.svelte';
@@ -11,8 +11,8 @@
 		Колоды для повторения
 	</h1>
 	<ItemGrid>
-		{#each data.decksWithNewCounts as studyDeck}
-			<StudyDeckItem deckInfo={studyDeck} newCount={studyDeck.newCount} />
+		{#each data.decksWithQueues as studyDeck}
+			<StudyDeckItem deckInfo={studyDeck} />
 		{/each}
 		<AddDeck />
 	</ItemGrid>
