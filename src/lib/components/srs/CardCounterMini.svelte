@@ -19,8 +19,8 @@ $: count.New = newCount > 3 ? 0 : 3 - newCount; //TODO: replace with actual limi
 </script>
 
 <div class="flex gap-3">
-	<span class="text-blue-700">{count.New}</span>
-	<span class="text-orange-700">{count.Learning}</span>
-	<span class="text-red-700">{count.Relearning}</span>
-	<span class="text-green-700">{count.Review}</span>
+	<span class="text-blue-600 font-bold">{count.New}</span>
+	<span class="text-orange-600 font-bold">{count.Learning}</span>
+	<span class="text-red-600 font-bold">{count.Relearning}</span>
+	<span class="text-green-600 font-bold">{count.Review}</span>
 </div>
