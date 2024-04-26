@@ -1,11 +1,11 @@
 <script lang="ts">
-import { Button } from '$lib/components/ui/button';
-import { Card, CardContent } from '$lib/components/ui/card';
-import CardFooter from '$lib/components/ui/card/card-footer.svelte';
-import CardHeader from '$lib/components/ui/card/card-header.svelte';
-import type { Deck } from '$lib/server/database/schema';
-import { Lock } from 'lucide-svelte';
-export let deckInfo: Deck;
+	import { Button } from '$lib/components/ui/button';
+	import { Card, CardContent } from '$lib/components/ui/card';
+	import CardFooter from '$lib/components/ui/card/card-footer.svelte';
+	import CardHeader from '$lib/components/ui/card/card-header.svelte';
+	import type { Deck } from '$lib/server/database/schema';
+	import { Lock } from 'lucide-svelte';
+	export let deckInfo: Deck;
 </script>
 
 <a href="/decks/{deckInfo.id}">

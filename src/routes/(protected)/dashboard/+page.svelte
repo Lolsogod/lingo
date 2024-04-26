@@ -1,9 +1,9 @@
 <script lang="ts">
-import StudyDeckItem from '$lib/components/items/StudyDeckItem.svelte';
-import ItemGrid from '$lib/components/items/ItemGrid.svelte';
-import type { PageData } from './$types';
-import AddDeck from './AddDeck.svelte';
-export let data: PageData;
+	import StudyDeckItem from '$lib/components/items/StudyDeckItem.svelte';
+	import ItemGrid from '$lib/components/items/ItemGrid.svelte';
+	import type { PageData } from './$types';
+	import AddDeck from './AddDeck.svelte';
+	export let data: PageData;
 </script>
 
 <section class="container grid items-center gap-6">

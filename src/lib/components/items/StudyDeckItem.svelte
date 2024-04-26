@@ -1,10 +1,10 @@
 <script lang="ts">
-import { Card, CardContent } from '$lib/components/ui/card';
-import CardFooter from '$lib/components/ui/card/card-footer.svelte';
-import type { StudyDeck } from '$lib/server/database/schema';
-import CardCounterMini from '../srs/CardCounterMini.svelte';
-export let deckInfo: StudyDeck;
-export let newCount: number;
+	import { Card, CardContent } from '$lib/components/ui/card';
+	import CardFooter from '$lib/components/ui/card/card-footer.svelte';
+	import type { StudyDeck } from '$lib/server/database/schema';
+	import CardCounterMini from '../srs/CardCounterMini.svelte';
+	export let deckInfo: StudyDeck;
+	export let newCount: number;
 </script>
 
 <a href="/study/{deckInfo.id}">
@@ -13,7 +13,7 @@ export let newCount: number;
 			<span class="truncate text-2xl">{deckInfo.deck.name}</span>
 		</CardContent>
 		<CardFooter class="justify-center">
-			<CardCounterMini studyCards={deckInfo.studyCards} newCount={newCount} />
+			<CardCounterMini studyCards={deckInfo.studyCards} {newCount} />
 		</CardFooter>
 	</Card>
 </a>

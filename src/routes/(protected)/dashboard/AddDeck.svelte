@@ -1,7 +1,7 @@
 <script>
-import { Button } from '$lib/components/ui/button';
-import { Card, CardContent } from '$lib/components/ui/card';
-import * as Dialog from '$lib/components/ui/dialog';
+	import { Button } from '$lib/components/ui/button';
+	import { Card, CardContent } from '$lib/components/ui/card';
+	import * as Dialog from '$lib/components/ui/dialog';
 </script>
 
 <Dialog.Root>

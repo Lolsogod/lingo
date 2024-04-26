@@ -1,29 +1,29 @@
 <script lang="ts">
-import * as Card from '$lib/components/ui/card';
-import { type SuperForm } from 'sveltekit-superforms';
-import SimpleInput from './SimpleInput.svelte';
-import DisplayErrors from './DisplayErrors.svelte';
-import SimpleCheckbox from './SimpleCheckbox.svelte';
+	import * as Card from '$lib/components/ui/card';
+	import { type SuperForm } from 'sveltekit-superforms';
+	import SimpleInput from './SimpleInput.svelte';
+	import DisplayErrors from './DisplayErrors.svelte';
+	import SimpleCheckbox from './SimpleCheckbox.svelte';
 
-export let inputs: { name: string; label: string; type?: string }[] = [];
-export let action: string = '';
-export let form: SuperForm<any, any>;
-const { enhance, errors } = form;
-//todo: вернуть как нибудь прикольную рамку у чекбоксов
+	export let inputs: { name: string; label: string; type?: string }[] = [];
+	export let action: string = '';
+	export let form: SuperForm<any, any>;
+	const { enhance, errors } = form;
+	//todo: вернуть как нибудь прикольную рамку у чекбоксов
 </script>
 
-<form method="POST" use:enhance action={action}>
+<form method="POST" use:enhance {action}>
 	<Card.Root>
 		<Card.Header class="space-y-1">
 			<slot name="header" />
 		</Card.Header>
 		<Card.Content class="grid gap-4">
-			<DisplayErrors errors={errors} />
+			<DisplayErrors {errors} />
 			{#each inputs as input}
 				{#if input.type === 'checkbox'}
-					<SimpleCheckbox form={form} {...input} />
+					<SimpleCheckbox {form} {...input} />
 				{:else}
-					<SimpleInput form={form} {...input} />
+					<SimpleInput {form} {...input} />
 				{/if}
 			{/each}
 			<slot name="custom-fields" />

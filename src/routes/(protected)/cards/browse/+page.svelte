@@ -1,9 +1,9 @@
 <script lang="ts">
-import type { PageData } from './$types';
-import CardItem from '$lib/components/items/CardItem.svelte';
-export let data: PageData;
-import ItemGrid from '$lib/components/items/ItemGrid.svelte';
-import { Button } from '$lib/components/ui/button';
+	import type { PageData } from './$types';
+	import CardItem from '$lib/components/items/CardItem.svelte';
+	export let data: PageData;
+	import ItemGrid from '$lib/components/items/ItemGrid.svelte';
+	import { Button } from '$lib/components/ui/button';
 </script>
 
 <section class="container grid items-center gap-6">
@@ -12,8 +12,7 @@ import { Button } from '$lib/components/ui/button';
 		<Button href="create">Создать карту</Button>
 	</div>
 	<h2
-		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
-	>
+		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
 		Мои карты
 	</h2>
 
@@ -27,8 +26,7 @@ import { Button } from '$lib/components/ui/button';
 		<span class="text-xl text-muted-foreground">нет карт</span>
 	{/if}
 	<h2
-		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
-	>
+		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
 		Общие карты
 	</h2>
 	{#if data.publicCards}

@@ -1,9 +1,9 @@
 <script lang="ts">
-import type { PageData } from './$types';
-import CreateCardForm from '$lib/components/forms/card/CreateCardForm.svelte';
-import Button from '$lib/components/ui/button/button.svelte';
+	import type { PageData } from './$types';
+	import CreateCardForm from '$lib/components/forms/card/CreateCardForm.svelte';
+	import Button from '$lib/components/ui/button/button.svelte';
 
-export let data: PageData;
+	export let data: PageData;
 </script>
 
 <section class="container grid items-center gap-6">

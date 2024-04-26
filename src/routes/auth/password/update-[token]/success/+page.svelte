@@ -5,8 +5,7 @@
 		</h1>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
 			Ваш пароль был успешно обновлен. Теперь вы можете <a href="/auth/sign-in" class="underline"
-				>войти</a
-			> с использованием нового пароля.
+				>войти</a> с использованием нового пароля.
 		</p>
 	</div>
 </section>

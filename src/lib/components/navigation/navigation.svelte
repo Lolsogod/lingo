@@ -1,63 +1,58 @@
 <script lang="ts">
-import { goto } from '$app/navigation';
-import { page } from '$app/stores';
-import convertNameToInitials from '$lib/_helpers/convertNameToInitials';
-import Logo from '$lib/components/logo/logo.svelte';
-import * as Avatar from '$lib/components/ui/avatar';
-import { Button } from '$lib/components/ui/button';
-import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-import { APP_NAME } from '$lib/config/constants';
-import type { User } from 'lucia';
-import { LogOut, Moon, Sun, SunMoon, UserRound } from 'lucide-svelte';
-import { resetMode, setMode } from 'mode-watcher';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import convertNameToInitials from '$lib/_helpers/convertNameToInitials';
+	import Logo from '$lib/components/logo/logo.svelte';
+	import * as Avatar from '$lib/components/ui/avatar';
+	import { Button } from '$lib/components/ui/button';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import { APP_NAME } from '$lib/config/constants';
+	import type { User } from 'lucia';
+	import { LogOut, Moon, Sun, SunMoon, UserRound } from 'lucide-svelte';
+	import { resetMode, setMode } from 'mode-watcher';
 
-export let user: User | null;
-$: currentPage = $page.url.pathname;
+	export let user: User | null;
+	$: currentPage = $page.url.pathname;
 
-const signOut = () => {
-	const form = document.createElement('form');
-	form.method = 'POST';
-	form.action = '/auth/sign-out';
-	document.body.appendChild(form);
-	form.submit();
-};
+	const signOut = () => {
+		const form = document.createElement('form');
+		form.method = 'POST';
+		form.action = '/auth/sign-out';
+		document.body.appendChild(form);
+		form.submit();
+	};
 
-let initials = '';
-$: {
-	if (user) {
-		initials = convertNameToInitials(user.firstName, user.lastName);
+	let initials = '';
+	$: {
+		if (user) {
+			initials = convertNameToInitials(user.firstName, user.lastName);
+		}
 	}
-}
 </script>
 
 <header class="sticky top-0 z-40 w-full border-b bg-background">
 	<div class="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
 		<div class="flex gap-6 md:gap-10">
 			<a class="flex items-center space-x-2" href="/"
-				><Logo size="24"></Logo><span class="inline-block font-bold">{APP_NAME}</span></a
-			>
+				><Logo size="24"></Logo><span class="inline-block font-bold">{APP_NAME}</span></a>
 			<!---роуты поменять, сейчас это как то тупо-->
 			<nav class="flex gap-6">
 				<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
 					href="/dashboard"
-					class:active={'/dashboard' === currentPage}>Главная</a
-				>
+					class:active={'/dashboard' === currentPage}>Главная</a>
 				<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
 					href="/decks/browse"
-					class:active={'/decks/browse' === currentPage}>Колоды</a
-				>
+					class:active={'/decks/browse' === currentPage}>Колоды</a>
 				<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
 					href="/cards/browse"
-					class:active={'/cards/browse' === currentPage}>Карты</a
-				>
+					class:active={'/cards/browse' === currentPage}>Карты</a>
 				<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
 					href="/"
-					class:active={'/' === currentPage}>Инфо</a
-				>
+					class:active={'/' === currentPage}>Инфо</a>
 			</nav>
 		</div>
 		<div class="flex flex-1 items-center justify-end space-x-4">
@@ -68,11 +63,9 @@ $: {
 						<DropdownMenu.Trigger asChild let:builder>
 							<Button builders={[builder]} variant="ghost" size="icon">
 								<Sun
-									class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
-								/>
+									class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
 								<Moon
-									class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
-								/>
+									class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
 								<span class="sr-only">Тема</span>
 							</Button>
 						</DropdownMenu.Trigger>
@@ -110,11 +103,9 @@ $: {
 							<DropdownMenu.Sub>
 								<DropdownMenu.SubTrigger>
 									<Sun
-										class="mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
-									/>
+										class="mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
 									<Moon
-										class="absolute mr-2 h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
-									/>
+										class="absolute mr-2 h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
 									Тема
 								</DropdownMenu.SubTrigger>
 								<DropdownMenu.SubContent>
@@ -144,7 +135,7 @@ $: {
 </header>
 
 <style lang="postcss">
-.active {
-	@apply text-primary;
-}
+	.active {
+		@apply text-primary;
+	}
 </style>

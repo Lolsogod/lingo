@@ -71,12 +71,6 @@ importers:
       pg:
         specifier: ^8.11.5
         version: 8.11.5
-      prettier:
-        specifier: ^3.2.5
-        version: 3.2.5
-      prettier-plugin-svelte:
-        specifier: ^3.2.3
-        version: 3.2.3(prettier@3.2.5)(svelte@4.2.15)
       prettier-plugin-tailwindcss:
         specifier: ^0.5.14
         version: 0.5.14(prettier-plugin-svelte@3.2.3(prettier@3.2.5)(svelte@4.2.15))(prettier@3.2.5)
@@ -126,6 +120,12 @@ importers:
       postcss-load-config:
         specifier: ^5.0.3
         version: 5.0.3(jiti@1.21.0)(postcss@8.4.38)
+      prettier:
+        specifier: ^3.2.5
+        version: 3.2.5
+      prettier-plugin-svelte:
+        specifier: ^3.2.3
+        version: 3.2.3(prettier@3.2.5)(svelte@4.2.15)
       svelte:
         specifier: ^4.2.15
         version: 4.2.15

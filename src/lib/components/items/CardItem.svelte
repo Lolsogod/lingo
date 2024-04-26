@@ -1,8 +1,8 @@
 <script lang="ts">
-import { Card, CardContent } from '$lib/components/ui/card';
-import type { CardWithTopic } from '$lib/server/database/schema';
+	import { Card, CardContent } from '$lib/components/ui/card';
+	import type { CardWithTopic } from '$lib/server/database/schema';
 
-export let cardInfo: CardWithTopic;
+	export let cardInfo: CardWithTopic;
 </script>
 
 <Card class="flex h-52 w-36 cursor-pointer flex-col ">

@@ -1,7 +1,7 @@
 <script lang="ts">
-import { APP_NAME } from '$lib/config/constants';
-import type { PageData } from './$types';
-export let data: PageData;
+	import { APP_NAME } from '$lib/config/constants';
+	import type { PageData } from './$types';
+	export let data: PageData;
 </script>
 
 <section class="container grid items-center gap-6">
@@ -14,8 +14,7 @@ export let data: PageData;
 			you did not receive the email,
 			<a
 				href="/auth/verify/resend-email-{encodeURIComponent(data.user ? data.user.email : '')}"
-				class="underline">click here</a
-			> to resend it.
+				class="underline">click here</a> to resend it.
 		</p>
 	</div>
 </section>
