@@ -30,7 +30,7 @@ export const load = (async (event) => {
 	const studyDeck = await getStudyDeck(studyDeckId, user?.id);
 
 	if (!studyDeck) {
-		error(404, 'Deck not found');
+		error(404, 'Колода не найдена');
 	}
 
 	const stateCount = countCardsByState(studyDeck.studyCards);

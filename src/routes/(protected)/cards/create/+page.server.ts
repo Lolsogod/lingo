@@ -7,7 +7,10 @@ import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 
 export const load = (async (event) => {
+	const topic = event.url.searchParams.get('topic') || '';
+	
 	const form = await superValidate(event, zod(createCardSchema));
+	form.data.topicName = topic;
 	return { form };
 }) satisfies PageServerLoad;
 
@@ -15,6 +18,7 @@ export const actions = {
 	default: async (event) => {
 		const userId = event.locals.user?.id;
 		const form = await superValidate(event, zod(createCardSchema));
+
 		if (!form.valid || !userId) {
 			setFlash({ type: 'error', message: 'Не удалось создать карту' }, event);
 			return fail(400, {

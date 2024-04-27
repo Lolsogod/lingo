@@ -12,7 +12,7 @@
 	const form = superForm(data.form, {
 		validators: zodClient(createDeckSchema)
 	});
-	//TODO: create SimpleCheckbox
+	
 	const inputs = [
 		{
 			name: 'name',
