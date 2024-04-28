@@ -2,16 +2,20 @@
 	import { Button } from '$lib/components/ui/button';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { startStudySchema } from '$lib/config/zod-schemas';
+	import { deleteDeckSchema, startStudySchema } from '$lib/config/zod-schemas';
 	import type { LayoutData } from './$types';
 	import ActionButton from '$lib/components/forms/ActionButton.svelte';
 	import CardItem from '$lib/components/items/CardItem.svelte';
 	import ItemGrid from '$lib/components/items/ItemGrid.svelte';
 	import { page } from '$app/stores';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
 	export let data: LayoutData;
 
-	const form = superForm(data.startStudyForm, {
+	const starStudyForm = superForm(data.startStudyForm, {
 		validators: zodClient(startStudySchema)
+	});
+	const deleteDeckForm = superForm(data.deleteDeckForm, {
+		validators: zodClient(deleteDeckSchema)
 	});
 	const deck_url = `/decks/${data.deck.id}`;
 </script>
@@ -22,13 +26,35 @@
 			Колода {data.deck.name}
 		</h1>
 		<ActionButton
-			{form}
+			form={starStudyForm}
 			action={`${deck_url}?/startStudy`}
-			name="startStudy"
+			values={[{ name: 'startStudy' }]}
 			condition={!!data.alredyStudying}
 			conditionText={'В изучении'}>
 			Добавить в изучение
 		</ActionButton>
+		{#if data.canEdit}
+			<AlertDialog.Root>
+				<AlertDialog.Trigger asChild let:builder>
+					<Button builders={[builder]} variant="destructive">Удалить</Button>
+				</AlertDialog.Trigger>
+				<AlertDialog.Content>
+					<AlertDialog.Header>
+						<AlertDialog.Title>Удалить колоду?</AlertDialog.Title>
+						<AlertDialog.Description>
+							Это действие нельзя отменить. Оно навсегда удалит эту колоду, только пользователи, уже
+							начавшие обучение по ней продолжат иметь доступ к колоде.
+						</AlertDialog.Description>
+					</AlertDialog.Header>
+					<AlertDialog.Footer>
+						<AlertDialog.Cancel>Отмена</AlertDialog.Cancel>
+						<ActionButton form={deleteDeckForm} action={`${deck_url}?/delete`} values={[]}>
+							Удалить
+						</ActionButton>
+					</AlertDialog.Footer>
+				</AlertDialog.Content>
+			</AlertDialog.Root>
+		{/if}
 	</div>
 	<p>
 		{data.deck.description || ''}

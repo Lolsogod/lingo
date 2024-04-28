@@ -1,7 +1,7 @@
 import { isUUID } from '$lib/_helpers/isUIID';
-import { startStudySchema } from '$lib/config/zod-schemas';
-import { addDeckToUser } from '$lib/server/database/models/deck';
-import { fail } from '@sveltejs/kit';
+import { deleteDeckSchema, startStudySchema } from '$lib/config/zod-schemas';
+import { addDeckToUser, softDeleteDeck } from '$lib/server/database/models/deck';
+import { fail, redirect } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
@@ -33,5 +33,17 @@ export const actions = {
 		}
 
 		return { startStudyForm };
+	},
+	delete: async (event) => {
+		const deckId = event.params.id;
+		const deleteDeckForm = await superValidate(event, zod(deleteDeckSchema));
+		const userId = event.locals.user?.id;
+		if (!userId || !isUUID(deckId)) {
+			return fail(400, {});
+		}
+
+		await softDeleteDeck(deckId, userId);
+		
+		redirect(302, '/decks/browse');
 	}
 };

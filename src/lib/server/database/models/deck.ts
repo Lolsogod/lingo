@@ -22,7 +22,7 @@ export const getPublicDecks = async (authorId = ''): Promise<NewDeck[] | null> =
 	const decks = await db
 		.select()
 		.from(deckTable)
-		.where(and(eq(deckTable.public, true), ne(deckTable.authorId, authorId)));
+		.where(and(eq(deckTable.public, true), ne(deckTable.authorId, authorId), ne(deckTable.deleted, true)));
 	if (decks.length === 0) {
 		return null;
 	}
@@ -33,7 +33,7 @@ export const getDecksByAuthor = async (authorId?: string) => {
 	if (!authorId) {
 		return null;
 	}
-	const decks = await db.select().from(deckTable).where(eq(deckTable.authorId, authorId));
+	const decks = await db.select().from(deckTable).where(and(eq(deckTable.authorId, authorId), ne(deckTable.deleted, true)));
 	if (decks.length === 0) {
 		return null;
 	}
@@ -47,7 +47,8 @@ export const getDeckById = async (id: string, userId = '') => {
 	const foundDeck = await db.query.deckTable.findFirst({
 		where: and(
 			eq(deckTable.id, id),
-			or(eq(deckTable.authorId, userId), eq(deckTable.public, true))
+			or(eq(deckTable.authorId, userId), eq(deckTable.public, true)),
+			ne(deckTable.deleted, true)
 		),
 		with: { studyDecks: true }
 	});
@@ -79,3 +80,12 @@ export const getStudyDecks = async (userId: string) => {
 	});
 	return decks;
 };
+//cделать чтоб удалялась полностью при отсутсвии стади деков
+export const softDeleteDeck = async (deckId: string, userId: string) => {
+	const result = await db
+		.update(deckTable)
+		.set({ deleted: true })
+		.where(and(eq(deckTable.id, deckId), eq(deckTable.authorId, userId)))
+		.returning();
+	return result;
+}

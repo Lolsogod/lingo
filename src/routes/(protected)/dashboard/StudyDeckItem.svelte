@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Card, CardContent } from '$lib/components/ui/card';
 	import CardFooter from '$lib/components/ui/card/card-footer.svelte';
-	import type { StudyDeckExp } from '$lib/server/database/schema';
+	import type { StudyCardExp, StudyDeckExp } from '$lib/server/database/schema';
 	import CardCounterMini from '../../../lib/components/srs/CardCounterMini.svelte';
-	export let deckInfo: StudyDeckExp;
+	export let deckInfo: StudyDeckExp & {queue: StudyCardExp[]};
 </script>
 
 <a href="/study/{deckInfo.id}">
@@ -12,7 +12,7 @@
 			<span class="truncate text-2xl">{deckInfo.deck.name}</span>
 		</CardContent>
 		<CardFooter class="justify-center">
-			<CardCounterMini studyCards={deckInfo.studyCards} />
+			<CardCounterMini studyCards={deckInfo.queue} />
 		</CardFooter>
 	</Card>
 </a>

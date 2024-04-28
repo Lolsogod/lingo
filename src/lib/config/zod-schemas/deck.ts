@@ -36,3 +36,5 @@ export const studyDeckSettingsSchema = z.object({
 		.int()
 		.min(0, { message: 'Количество новых карточек должно быть больше или равно 0' })
 });
+
+export const deleteDeckSchema = z.object({});

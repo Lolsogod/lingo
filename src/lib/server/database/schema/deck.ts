@@ -10,7 +10,8 @@ export const deckTable = pgTable('deck', {
 	public: boolean('public').notNull().default(false),
 	authorId: text('author_id')
 		.notNull()
-		.references(() => userTable.id)
+		.references(() => userTable.id),
+	deleted: boolean('deleted').notNull().default(false)
 });
 
 export const cardDeckTable = pgTable(

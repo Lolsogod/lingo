@@ -37,7 +37,7 @@ export const load = (async (event) => {
 		error(404, 'Колода не найдена');
 	}
 
-	const stateCount = countCardsByState(studyDeck.studyCards);
+	
 	const goodForm = await superValidate(event, zod(gradeCardSchema));
 	const againForm = await superValidate(event, zod(gradeCardSchema));
 
@@ -46,6 +46,8 @@ export const load = (async (event) => {
 	const queue = (await getQueue(studyDeckId, studyDeck.newCardsLimit)).sort(
 		() => Math.random() - Math.random()
 	);
+	const stateCount = countCardsByState(queue);
+	console.log(queue)
 
 	const settingsForm = await superValidate(event, zod(studyDeckSettingsSchema));
 	settingsForm.data.limit = studyDeck.newCardsLimit;
