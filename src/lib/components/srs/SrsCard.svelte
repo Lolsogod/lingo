@@ -6,48 +6,73 @@
 	import type { SuperForm } from 'sveltekit-superforms';
 
 	export let studyCard: StudyCardExp;
-	export let form: SuperForm<any>;
-
+	export let goodForm: SuperForm<any>;
+	export let againForm: SuperForm<any>;
 	let revealed = false;
 	const reveal = () => (revealed = true);
 </script>
 
-<Card.Root class='flex min-h-72 w-60 flex-col items-center -z-20'>
-	<Card.Header>
-		<h1 class="scroll-m-20 text-4xl tracking-tight lg:text-5xl">
-			{studyCard.baseCard.topic.name}
-		</h1></Card.Header>
-	<Card.Content class="flex-1">
-		{#if revealed && studyCard.baseCard.cardBlocks}
-			{#each studyCard.baseCard.cardBlocks as cardBlock}
-				<h2 class="scroll-m-20 pb-2 text-3xl tracking-tight transition-colors first:mt-0">
-					{cardBlock.block.content}
-				</h2>
-			{/each}
-		{/if}
-	</Card.Content>
-	<Card.Footer class="flex justify-center gap-3 p-0 pb-6">
-		{#if revealed}
-			<GradeButton
-				{form}
-				action={`/study/${studyCard.studyDeckId}/?/good`}
-				studyCardId={studyCard.id}>Помню</GradeButton>
-			<GradeButton
-				{form}
-				action={`/study/${studyCard.studyDeckId}/?/again`}
-				studyCardId={studyCard.id}>Непомню</GradeButton>
-		{:else}
-			<Button on:click={reveal} class="self-bottom">Открыть</Button>
-		{/if}
-	</Card.Footer>
-</Card.Root>
+<div class={`flip-card w-60 ${revealed ? 'revealed' : ''}`}>
+	<div class="inner relative">
+		<div class="front absolute">
+			<Card.Root class=" -z-20 flex min-h-72 w-60 flex-col items-center">
+				<Card.Header>
+					<h1 class="scroll-m-20 text-4xl tracking-tight lg:text-5xl">
+						{studyCard.baseCard.topic.name}
+					</h1></Card.Header>
+				<Card.Content class="flex-1"></Card.Content>
+				<Card.Footer class="flex justify-center gap-3 p-0 pb-6">
+					<Button on:click={reveal} class="self-bottom">Открыть</Button>
+				</Card.Footer>
+			</Card.Root>
+		</div>
+		<div class="back absolute">
+			<Card.Root class="back back -z-20 flex min-h-72 w-60 flex-col items-center">
+				<Card.Header>
+					<h1 class="scroll-m-20 text-4xl tracking-tight lg:text-5xl">
+						{studyCard.baseCard.topic.name}
+					</h1></Card.Header>
+				<Card.Content class="flex-1">
+					{#if studyCard.baseCard.cardBlocks}
+						{#each studyCard.baseCard.cardBlocks as cardBlock}
+							<h2 class="scroll-m-20 pb-2 text-3xl tracking-tight transition-colors first:mt-0">
+								{cardBlock.block.content}
+							</h2>
+						{/each}
+					{/if}
+				</Card.Content>
+				<Card.Footer class="flex justify-center gap-3 p-0 pb-6">
+					<GradeButton
+						form={againForm}
+						action={`/study/${studyCard.studyDeckId}/?/again`}
+						studyCardId={studyCard.id}>Непомню</GradeButton>
+					<GradeButton
+						form={goodForm}
+						action={`/study/${studyCard.studyDeckId}/?/good`}
+						studyCardId={studyCard.id}>Помню</GradeButton>
+				</Card.Footer>
+			</Card.Root>
+		</div>
+	</div>
+</div>
 
 <style>
-	.test{
-		transform-style: preserve-3d;
-		transition: transform 5s;
+	.flip-card {
+		perspective: 1000px;
 	}
-	.flip{
+
+	.inner {
+		transition: transform 0.8s;
+		transform-style: preserve-3d;
+	}
+
+	.flip-card.revealed .inner,
+	.back {
 		transform: rotateY(180deg);
+	}
+
+	.front,
+	.back {
+		backface-visibility: hidden;
 	}
 </style>

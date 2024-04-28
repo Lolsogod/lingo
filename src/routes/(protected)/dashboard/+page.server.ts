@@ -9,7 +9,7 @@ export const load = async (event) => {
 		redirect(302, '/auth/sign-in');
 	}
 	const studyDecks = await getStudyDecks(user.id);
-	//TODO: this is horendous 
+	//TODO: this is horendous
 	const decksWithQueues = await Promise.all(
 		studyDecks.map(async (deck) => {
 			const queue = await getQueue(deck.id, deck.newCardsLimit);
@@ -17,5 +17,5 @@ export const load = async (event) => {
 		})
 	);
 
-	return { decksWithQueues};
+	return { decksWithQueues };
 };

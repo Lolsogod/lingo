@@ -19,6 +19,6 @@ export const load = (async (event) => {
 	const alredyStudying = deck.studyDecks.some((sd) => sd.userId === user?.id); //кривые структуры как то в порядок преводить на этапе модели например дека
 
 	const canEdit = deck.authorId === user?.id;
-	
-	return { startStudyForm, deck, cards, alredyStudying, canEdit};
+
+	return { startStudyForm, deck, cards, alredyStudying, canEdit };
 }) satisfies LayoutServerLoad;

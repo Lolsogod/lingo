@@ -8,7 +8,7 @@ import type { PageServerLoad } from './$types';
 
 export const load = (async (event) => {
 	const topic = event.url.searchParams.get('topic') || '';
-	
+
 	const form = await superValidate(event, zod(createCardSchema));
 	form.data.topicName = topic;
 	return { form };

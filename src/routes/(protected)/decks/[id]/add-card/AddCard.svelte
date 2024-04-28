@@ -33,7 +33,7 @@
 	<ActionButton
 		{form}
 		name="cardId"
-		value={cardInfo.id}
+		values={[cardInfo.id]}
 		condition={cardInfo.isAdded}
 		conditionText={'Добавлено'}
 		class="w-full">+</ActionButton

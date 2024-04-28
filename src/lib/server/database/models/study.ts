@@ -6,7 +6,7 @@ import {
 	type Rating,
 	reviewLogTable,
 	type State,
-	studyDeckTable,
+	studyDeckTable
 } from '../schema';
 import { and, count, eq, gte, lte } from 'drizzle-orm';
 import db from '../drizzle';
@@ -20,12 +20,17 @@ export const gradeStudyCard = async (studyCardId: string, rating: Rating) => {
 	if (!studyCard) {
 		return null;
 	}
-
 	const { nextCard, reviewLog } = grade(studyCard, rating);
-	await db.transaction(async (tx) => {
-		await tx.update(studyCardTable).set(nextCard).where(eq(studyCardTable.id, studyCardId));
+	const result = await db.transaction(async (tx) => {
+		const updatedCard = await tx
+			.update(studyCardTable)
+			.set(nextCard)
+			.where(eq(studyCardTable.id, studyCardId))
+			.returning();
 		await tx.insert(reviewLogTable).values(reviewLog);
+		return updatedCard;
 	});
+	return result;
 };
 
 export const getStudyDeck = async (deckId: string, userId = '') => {
@@ -34,9 +39,9 @@ export const getStudyDeck = async (deckId: string, userId = '') => {
 		with: {
 			studyCards: {
 				with: { baseCard: { with: { topic: true, cardBlocks: { with: { block: true } } } } }
-			}, 
+			},
 			deck: true
-		} 
+		}
 	});
 
 	return studyDeck;
@@ -83,5 +88,8 @@ export const getQueue = async (studyDeckId: string, limit: number) => {
 };
 
 export const setNewLimit = async (studyDeckId: string, limit: number) => {
-	await db.update(studyDeckTable).set({ newCardsLimit: limit }).where(eq(studyDeckTable.id, studyDeckId));
+	await db
+		.update(studyDeckTable)
+		.set({ newCardsLimit: limit })
+		.where(eq(studyDeckTable.id, studyDeckId));
 };

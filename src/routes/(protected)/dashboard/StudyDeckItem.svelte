@@ -12,7 +12,7 @@
 			<span class="truncate text-2xl">{deckInfo.deck.name}</span>
 		</CardContent>
 		<CardFooter class="justify-center">
-			<CardCounterMini studyCards={deckInfo.studyCards}/>
+			<CardCounterMini studyCards={deckInfo.studyCards} />
 		</CardFooter>
 	</Card>
 </a>

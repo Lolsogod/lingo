@@ -1,7 +1,15 @@
 import type { CreateCardSchema } from '$lib/config/zod-schemas';
 import db from '$lib/server/database/drizzle';
 import { and, eq, ne } from 'drizzle-orm';
-import { blockTable, cardTable, cardBlockTable, cardDeckTable, topicTable, studyDeckTable, studyCardTable } from '../schema';
+import {
+	blockTable,
+	cardTable,
+	cardBlockTable,
+	cardDeckTable,
+	topicTable,
+	studyDeckTable,
+	studyCardTable
+} from '../schema';
 import { createStudyCard } from '$lib/fsrs';
 
 export const findTopicByName = async (name: string) => {

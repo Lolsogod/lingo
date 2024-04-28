@@ -30,7 +30,9 @@ export const startStudySchema = deckSchema.pick({
 });
 //separate study schemas
 
-
 export const studyDeckSettingsSchema = z.object({
-	limit: z.coerce.number().int().min(0, { message: 'Количество новых карточек должно быть больше или равно 0' }),
+	limit: z.coerce
+		.number()
+		.int()
+		.min(0, { message: 'Количество новых карточек должно быть больше или равно 0' })
 });

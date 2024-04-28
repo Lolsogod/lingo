@@ -7,6 +7,6 @@
 	export let action: string;
 </script>
 
-<ActionButton {form} name="studyCardId" value={studyCardId} {action}>
+<ActionButton {form} values={[{ name: 'studyCardId', value: studyCardId }]} {action} hideLoading>
 	<slot />
 </ActionButton>

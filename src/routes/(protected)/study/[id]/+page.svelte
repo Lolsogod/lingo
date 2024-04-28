@@ -6,26 +6,39 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { gradeCardSchema } from '$lib/config/zod-schemas';
 	import StudyDeckSettings from '../../dashboard/StudyDeckSettings.svelte';
-	import { quintIn  } from 'svelte/easing';
+	import { quintInOut } from 'svelte/easing';
 	export let data: PageData;
+	let dir = 0;
 
-	const form = superForm(data.form, {
+	const goodForm = superForm(data.goodForm, {
 		validators: zodClient(gradeCardSchema),
+		id: 'good',
 		resetForm: false
 	});
-	function spin(node: HTMLDivElement, { duration }: { duration: number; }) {
+	const againForm = superForm(data.againForm, {
+		validators: zodClient(gradeCardSchema),
+		id: 'again',
+		resetForm: false
+	});
+	const flyAway = (node: HTMLDivElement, { duration }: { duration: number }) => {
 		return {
 			duration,
-			css: (t) => {
-				const eased = quintIn(t);
-				console.log(eased);
+			css: (t: number) => {
+				const eased = quintInOut(t);
 				return `
 					z-index: 100;
-					transform: translateX(${(1-eased)*150}%);
-					opacity: ${eased};`
+					transform: translateX(${dir * (1 - eased) * 150}%);
+					opacity: ${eased};`;
 			}
 		};
-	}
+	};
+	let optSubmitCounter = 0;
+	const { submitting: subGood, form: goodData } = goodForm;
+	const { submitting: subAgain, form: againData } = againForm;
+
+	$: $subGood === true ? optSubmitCounter++ : undefined;
+	$: $subAgain === true ? optSubmitCounter++ : undefined;
+	$: dir = $subGood ? 1 : $subAgain ? -1 : 0;
 </script>
 
 <section class="container grid items-center gap-6">
@@ -37,10 +50,10 @@
 		На сегодня всё...
 	{:else}
 		<div class="flex items-center justify-center">
-			<div class="relative w-full h-80 overflow-hidden">
-				{#key data.queue[0].id + data.queue[0].reps}
-					<div  out:spin={{duration: 500}} class="absolute -ml-[7.5rem] left-1/2">
-						<SrsCard studyCard={data.queue[0]} {form} />
+			<div class="relative h-80 w-full overflow-hidden">
+				{#key optSubmitCounter}
+					<div out:flyAway={{ duration: 800 }} class="absolute left-1/2 -ml-[7.5rem]">
+						<SrsCard studyCard={data.queue[0]} {goodForm} {againForm} />
 					</div>
 				{/key}
 			</div>

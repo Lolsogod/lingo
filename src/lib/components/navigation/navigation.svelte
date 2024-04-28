@@ -21,7 +21,7 @@
 		document.body.appendChild(form);
 		form.submit();
 	};
-	const main_url = user?'/dashboard':'/';
+	const main_url = user ? '/dashboard' : '/';
 	let initials = '';
 	$: {
 		if (user) {

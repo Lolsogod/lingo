@@ -154,7 +154,12 @@ export type NewBlock = typeof blockTable.$inferInsert;
 
 export type Card = typeof cardTable.$inferSelect;
 export type NewCard = typeof cardTable.$inferInsert;
-export type CardExp = Card & { topic: Topic; isAdded?: boolean; cardDeck?: CardDeck[]; cardBlocks?: CardBlockExp[]};
+export type CardExp = Card & {
+	topic: Topic;
+	isAdded?: boolean;
+	cardDeck?: CardDeck[];
+	cardBlocks?: CardBlockExp[];
+};
 
 export type CardBlockExp = typeof cardBlockTable.$inferSelect & { block: NewBlock };
 
