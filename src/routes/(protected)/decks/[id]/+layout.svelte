@@ -34,6 +34,7 @@
 			Добавить в изучение
 		</ActionButton>
 		{#if data.canEdit}
+			<Button href={`${deck_url}/edit`} variant="secondary">Редактировать</Button>
 			<AlertDialog.Root>
 				<AlertDialog.Trigger asChild let:builder>
 					<Button builders={[builder]} variant="destructive">Удалить</Button>

@@ -6,7 +6,7 @@ import {
 	studyCardTable,
 	studyDeckTable
 } from '$lib/server/database/schema';
-import type { NewDeck } from '$lib/server/database/schema';
+import type { Deck, NewDeck } from '$lib/server/database/schema';
 import { and, eq, ne, or } from 'drizzle-orm';
 import { createStudyCard } from '$lib/fsrs';
 
@@ -17,6 +17,19 @@ export const createDeck = async (data: NewDeck) => {
 	}
 	return result[0];
 };
+
+export const updateDeck = async (data: Partial<Deck>, userId: string) => {
+	const result = await db
+		.update(deckTable)
+		.set(data)
+		.where(and(eq(deckTable.id, data.id!), eq(deckTable.authorId, userId)))
+		.returning();
+	if (result.length === 0) {
+		return null;
+	}
+	return result[0];
+
+}
 //без колод пользователя
 export const getPublicDecks = async (authorId = ''): Promise<NewDeck[] | null> => {
 	const decks = await db

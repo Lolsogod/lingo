@@ -18,6 +18,13 @@ export const createDeckSchema = deckSchema.pick({
 	public: true,
 	addToStudy: true // отдельную схему мб, неуверен
 });
+
+export const editDeckSchema = deckSchema.pick({
+	name: true,
+	description: true,
+	public: true,
+});
+
 export type CreateDeckSchema = typeof createDeckSchema;
 
 export const studyDeckSchema = z.object({
