@@ -1,0 +1,1 @@
+ALTER TABLE "study_deck" ADD COLUMN "deleted" boolean DEFAULT false NOT NULL;

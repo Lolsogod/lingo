@@ -1,16 +1,18 @@
 import {
+	deleteStudyDeck,
 	getQueue,
 	getStudyDeck,
 	gradeStudyCard,
 	setNewLimit
 } from '$lib/server/database/models/study';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { StudyCard } from '$lib/server/database/schema';
-import { superValidate } from 'sveltekit-superforms';
+import { fail, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { gradeCardSchema, studyDeckSettingsSchema } from '$lib/config/zod-schemas';
+import { deleteDeckSchema, gradeCardSchema, studyDeckSettingsSchema } from '$lib/config/zod-schemas';
 import { getTodayCount } from '$lib/server/database/models/study';
+import { isUUID } from '$lib/_helpers/isUIID';
 
 //ограничить для очереди дублируем опять
 const countCardsByState = (cards: StudyCard[]): Count => {
@@ -75,5 +77,17 @@ export const actions = {
 		const form = await superValidate(event, zod(studyDeckSettingsSchema));
 		await setNewLimit(studyDeckId, form.data.limit);
 		return { form };
+	},
+	delete: async (event) => {
+		const studyDeckId = event.params.id;
+		const deletForm = await superValidate(event, zod(deleteDeckSchema));
+		const userId = event.locals.user?.id;
+		if (!userId || !isUUID(studyDeckId)) {
+			return fail(400, {});
+		}
+
+		await deleteStudyDeck(studyDeckId);
+		
+		redirect(302, '/dashboard');
 	}
 };

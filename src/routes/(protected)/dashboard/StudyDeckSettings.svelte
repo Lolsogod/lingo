@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import SimpleForm from '$lib/components/forms/SimpleForm.svelte';
 	import SimpleSubmit from '$lib/components/forms/SimpleSubmit.svelte';
-	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import { buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
-	import { studyDeckSchema, studyDeckSettingsSchema } from '$lib/config/zod-schemas';
+	import { studyDeckSettingsSchema } from '$lib/config/zod-schemas';
 	import type { StudyDeckExp } from '$lib/server/database/schema';
 	import { superForm, type SuperValidated } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
@@ -23,7 +22,6 @@
 			type: 'number'
 		}
 	];
-	const { form: formData } = form;
 </script>
 
 <Dialog.Root>

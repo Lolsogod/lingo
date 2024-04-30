@@ -7,6 +7,7 @@
 	import { gradeCardSchema } from '$lib/config/zod-schemas';
 	import StudyDeckSettings from '../../dashboard/StudyDeckSettings.svelte';
 	import { quintInOut } from 'svelte/easing';
+	import StudyDeckDelete from '../../dashboard/StudyDeckDelete.svelte';
 	export let data: PageData;
 	let dir = 0;
 
@@ -43,6 +44,7 @@
 
 <section class="container grid items-center gap-6">
 	<StudyDeckSettings settingsForm={data.settingsForm} studyDeck={data.studyDeck} />
+	<StudyDeckDelete deleteForm={data.settingsForm} studyDeck={data.studyDeck} />
 	<CardCounter count={data.stateCount} />
 	{data.todayCount}
 

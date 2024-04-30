@@ -57,7 +57,7 @@ export const studyCardTable = pgTable('study_card', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
 	studyDeckId: uuid('study_deck_id')
 		.notNull()
-		.references(() => studyDeckTable.id),
+		.references(() => studyDeckTable.id, {onDelete: 'cascade'}),
 	baseCardId: uuid('card_id')
 		.notNull()
 		.references(() => cardTable.id),
@@ -78,7 +78,7 @@ export const reviewLogTable = pgTable('review_log', {
 	id: text('id').primaryKey(),
 	cardId: uuid('card_id')
 		.notNull()
-		.references(() => studyCardTable.id),
+		.references(() => studyCardTable.id, {onDelete: 'cascade'}),
 	grade: pgRatings('ratings').notNull(),
 	state: pgStates('states').notNull(),
 	due: timestamp('due').notNull(),
@@ -145,6 +145,14 @@ export const studyCardRelations = relations(studyCardTable, ({ one }) => {
 	};
 });
 
+export const reviewLogRelations = relations(reviewLogTable, ({ one }) => {
+	return {
+		studyCard: one(studyCardTable, {
+			fields: [reviewLogTable.cardId],
+			references: [studyCardTable.id]
+		})
+	};
+});
 //types
 export type Topic = typeof topicTable.$inferSelect;
 export type NewTopic = typeof topicTable.$inferInsert;

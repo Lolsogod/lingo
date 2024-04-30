@@ -39,7 +39,9 @@ export const studyDeckTable = pgTable('study_deck', {
 	deckId: uuid('deck_id')
 		.notNull()
 		.references(() => deckTable.id),
-	newCardsLimit: integer('new_cards_limit').notNull().default(10) //TODO: check for greater than 0
+	newCardsLimit: integer('new_cards_limit').notNull().default(10),
+	deleted: boolean('deleted').notNull().default(false), //TODO: add soft delete (to save statistics)
+
 });
 
 //relations

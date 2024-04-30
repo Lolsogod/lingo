@@ -120,6 +120,20 @@
       "when": 1714310698285,
       "tag": "0016_familiar_prodigy",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "5",
+      "when": 1714467080443,
+      "tag": "0017_legal_sue_storm",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1714467533425,
+      "tag": "0018_flippant_blizzard",
+      "breakpoints": true
     }
   ]
 }
