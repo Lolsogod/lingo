@@ -52,7 +52,7 @@
 		На сегодня всё...
 	{:else}
 		<div class="flex items-center justify-center">
-			<div class="relative h-80 w-full overflow-hidden">
+			<div class="relative h-[70vh] w-full overflow-hidden">
 				{#key optSubmitCounter}
 					<div out:flyAway={{ duration: 800 }} class="absolute left-1/2 -ml-[7.5rem]">
 						<SrsCard studyCard={data.queue[0]} {goodForm} {againForm} />

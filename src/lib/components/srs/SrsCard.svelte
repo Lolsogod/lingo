@@ -35,9 +35,15 @@
 				<Card.Content class="flex-1">
 					{#if studyCard.baseCard.cardBlocks}
 						{#each studyCard.baseCard.cardBlocks as cardBlock}
-							<h2 class="scroll-m-20 pb-2 text-3xl tracking-tight transition-colors first:mt-0">
-								{cardBlock.block.content}
-							</h2>
+							{#if cardBlock.block.type === 'text'}
+								<h2 class="scroll-m-20 pb-2 text-3xl tracking-tight transition-colors first:mt-0">
+									{cardBlock.block.content}
+								</h2>
+							{:else if cardBlock.block.type === 'image'}
+								<img src={cardBlock.block.content} alt="" class="h-48 w-full object-cover" />
+							{:else if cardBlock.block.type === 'audio'}
+								<audio controls src={cardBlock.block.content} />
+							{/if}
 						{/each}
 					{/if}
 				</Card.Content>

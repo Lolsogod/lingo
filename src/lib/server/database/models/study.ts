@@ -95,5 +95,5 @@ export const setNewLimit = async (studyDeckId: string, limit: number) => {
 };
 
 export const deleteStudyDeck = async (studyDeckId: string) => {
-	await db.delete(studyDeckTable).where(eq(studyDeckTable.id, studyDeckId)); //user_id check?
+	return await db.delete(studyDeckTable).where(eq(studyDeckTable.id, studyDeckId)); //user_id check?
 };
