@@ -10,14 +10,14 @@
 	import { page } from '$app/stores';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
 	import { goto } from '$app/navigation';
-	import {browser} from "$app/environment"
-	import { Input } from "$lib/components/ui/input"
-	
+	import { browser } from '$app/environment';
+	import { Input } from '$lib/components/ui/input';
+
 	export let data: LayoutData;
 
 	let query = $page.url.searchParams.get('q') || '';
 
-	$:if(browser) {
+	$: if (browser) {
 		const url = new URL($page.url);
 		url.searchParams.set('q', query);
 		goto(url, {

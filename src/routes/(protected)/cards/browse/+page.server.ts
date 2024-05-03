@@ -8,7 +8,7 @@ export const load = (async (event) => {
 	const query = event.url.searchParams.get('q') || null;
 	let publicCards: CardExp[] | null = await getPublicCards(user?.id);
 	let userCreatedCards: CardExp[] | null = await getCardsByAuthor(user?.id);
-	console.log(query)
+	console.log(query);
 	if (query) {
 		if (publicCards) {
 			const index = createCardIndex(publicCards);

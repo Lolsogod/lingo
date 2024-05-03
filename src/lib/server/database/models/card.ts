@@ -69,7 +69,7 @@ export const addCardToDeck = async (deckId: string, cardId: string) => {
 		});
 		return result;
 	});
-	return result
+	return result;
 };
 
 export const getCardsByDeckId = async (deckId: string) => {

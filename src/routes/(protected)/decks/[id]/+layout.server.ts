@@ -18,7 +18,7 @@ export const load = (async (event) => {
 	const startStudyForm = await superValidate(event, zod(startStudySchema));
 	const deleteDeckForm = await superValidate(event, zod(deleteDeckSchema));
 	let cards = await getCardsByDeckId(deckId);
-	
+
 	if (query) {
 		if (cards) {
 			const index = createCardIndex(cards);

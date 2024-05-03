@@ -31,7 +31,7 @@
 	const addBlock = () => {
 		$formData.blocks = [...$formData.blocks, { content: '' }];
 	};
-
+	$formData.topicName = $page.url.searchParams.get('topic') || '';
 	//find related
 	$: if (browser) {
 		const url = new URL($page.url);

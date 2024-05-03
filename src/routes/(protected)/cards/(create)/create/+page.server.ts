@@ -15,7 +15,7 @@ export const load = (async (event) => {
 
 	const publicCards: CardExp[] | null = await getPublicCards(user?.id);
 	const userCreatedCards: CardExp[] | null = await getCardsByAuthor(user?.id);
-	let relatedCards: CardExp[] = []
+	let relatedCards: CardExp[] = [];
 	if (topic) {
 		relatedCards = [...(publicCards || []), ...(userCreatedCards || [])];
 		if (relatedCards) {
@@ -49,6 +49,6 @@ export const actions = {
 			return setError(form, 'blocks._errors', 'ошибка наверное');
 		}
 		console.log(form);
-		return { form };//редирект на пустую форму без топика сделать
+		return { form }; //редирект на пустую форму без топика сделать
 	}
 };

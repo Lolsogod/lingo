@@ -9,6 +9,5 @@
 <section class="container grid items-center gap-6">
 	<Button href="/cards/browse" class="w-14" variant="secondary">Назад</Button>
 	<CreateCardForm data={data.form} />
-	<slot/>
-	
+	<slot />
 </section>

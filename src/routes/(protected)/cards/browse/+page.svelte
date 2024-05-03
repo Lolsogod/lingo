@@ -7,10 +7,10 @@
 	import { Button } from '$lib/components/ui/button';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import {browser} from "$app/environment"
+	import { browser } from '$app/environment';
 	let query = $page.url.searchParams.get('q') || '';
 
-	$:if(browser) {
+	$: if (browser) {
 		const url = new URL($page.url);
 		url.searchParams.set('q', query);
 		goto(url, {
