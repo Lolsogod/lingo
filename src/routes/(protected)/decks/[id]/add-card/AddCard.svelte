@@ -32,7 +32,7 @@
 <CardFooter>
 	<ActionButton
 		{form}
-		values={[{name: "cardId", value: cardInfo.id}]}
+		values={[{ name: 'cardId', value: cardInfo.id }]}
 		condition={cardInfo.isAdded}
 		conditionText={'Добавлено'}
 		class="w-full">+</ActionButton

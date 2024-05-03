@@ -22,7 +22,7 @@ export const createDeckSchema = deckSchema.pick({
 export const editDeckSchema = deckSchema.pick({
 	name: true,
 	description: true,
-	public: true,
+	public: true
 });
 
 export type CreateDeckSchema = typeof createDeckSchema;

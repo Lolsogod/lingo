@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { zodClient } from 'sveltekit-superforms/adapters';
+	import { zodClient } from 'sveltekit-superforms/adapters';
 	import type { PageData } from './$types';
 	import { superForm } from 'sveltekit-superforms';
 	import { editDeckSchema } from '$lib/config/zod-schemas';
@@ -14,7 +14,7 @@
 	const form = superForm(data.form, {
 		validators: zodClient(editDeckSchema),
 
-        resetForm: false
+		resetForm: false
 	});
 
 	const inputs = [
@@ -31,9 +31,10 @@
 			name: 'public',
 			label: 'Публичная колода',
 			type: 'checkbox'
-		},
+		}
 	];
 </script>
+
 <section class="container grid items-center gap-6">
 	<Button href={`${deck_url}/`} variant="secondary">Назад</Button>
 	<SimpleForm {form} {inputs}>

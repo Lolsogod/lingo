@@ -10,7 +10,11 @@ import type { PageServerLoad } from './$types';
 import type { StudyCard } from '$lib/server/database/schema';
 import { fail, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { deleteDeckSchema, gradeCardSchema, studyDeckSettingsSchema } from '$lib/config/zod-schemas';
+import {
+	deleteDeckSchema,
+	gradeCardSchema,
+	studyDeckSettingsSchema
+} from '$lib/config/zod-schemas';
 import { getTodayCount } from '$lib/server/database/models/study';
 import { isUUID } from '$lib/_helpers/isUIID';
 
@@ -39,7 +43,6 @@ export const load = (async (event) => {
 		error(404, 'Колода не найдена');
 	}
 
-	
 	const goodForm = await superValidate(event, zod(gradeCardSchema));
 	const againForm = await superValidate(event, zod(gradeCardSchema));
 
@@ -49,7 +52,7 @@ export const load = (async (event) => {
 		() => Math.random() - Math.random()
 	);
 	const stateCount = countCardsByState(queue);
-	console.log(queue)
+	console.log(queue);
 
 	const settingsForm = await superValidate(event, zod(studyDeckSettingsSchema));
 	settingsForm.data.limit = studyDeck.newCardsLimit;
@@ -87,7 +90,7 @@ export const actions = {
 		}
 
 		await deleteStudyDeck(studyDeckId);
-		
+
 		redirect(302, '/dashboard');
 	}
 };

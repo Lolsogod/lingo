@@ -3,7 +3,7 @@
 	import CardFooter from '$lib/components/ui/card/card-footer.svelte';
 	import type { StudyCardExp, StudyDeckExp } from '$lib/server/database/schema';
 	import CardCounterMini from '../../../lib/components/srs/CardCounterMini.svelte';
-	export let deckInfo: StudyDeckExp & {queue: StudyCardExp[]};
+	export let deckInfo: StudyDeckExp & { queue: StudyCardExp[] };
 </script>
 
 <a href="/study/{deckInfo.id}">

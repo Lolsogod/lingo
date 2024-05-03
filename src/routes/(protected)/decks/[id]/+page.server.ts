@@ -43,7 +43,7 @@ export const actions = {
 		}
 
 		await softDeleteDeck(deckId, userId);
-		
+
 		redirect(302, '/decks/browse');
 	}
 };

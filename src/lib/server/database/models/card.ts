@@ -8,7 +8,8 @@ import {
 	cardDeckTable,
 	topicTable,
 	studyDeckTable,
-	studyCardTable
+	studyCardTable,
+	type CardExp
 } from '../schema';
 import { createStudyCard } from '$lib/fsrs';
 
@@ -80,7 +81,7 @@ export const getCardsByDeckId = async (deckId: string) => {
 	return cardDecks.map((cardDecks) => cardDecks.card);
 };
 
-export const getPublicCards = async (userId = '') => {
+export const getPublicCards = async (userId = ''): Promise<CardExp[] | null> => {
 	const cards = await db.query.cardTable.findMany({
 		where: and(eq(cardTable.public, true), ne(cardTable.authorId, userId)),
 		with: { topic: true, cardDeck: true }

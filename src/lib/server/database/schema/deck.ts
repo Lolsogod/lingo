@@ -40,8 +40,7 @@ export const studyDeckTable = pgTable('study_deck', {
 		.notNull()
 		.references(() => deckTable.id),
 	newCardsLimit: integer('new_cards_limit').notNull().default(10),
-	deleted: boolean('deleted').notNull().default(false), //TODO: add soft delete (to save statistics)
-
+	deleted: boolean('deleted').notNull().default(false) //TODO: add soft delete (to save statistics)
 });
 
 //relations

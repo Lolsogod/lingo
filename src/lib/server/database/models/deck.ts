@@ -28,14 +28,15 @@ export const updateDeck = async (data: Partial<Deck>, userId: string) => {
 		return null;
 	}
 	return result[0];
-
-}
+};
 //без колод пользователя
 export const getPublicDecks = async (authorId = ''): Promise<NewDeck[] | null> => {
 	const decks = await db
 		.select()
 		.from(deckTable)
-		.where(and(eq(deckTable.public, true), ne(deckTable.authorId, authorId), ne(deckTable.deleted, true)));
+		.where(
+			and(eq(deckTable.public, true), ne(deckTable.authorId, authorId), ne(deckTable.deleted, true))
+		);
 	if (decks.length === 0) {
 		return null;
 	}
@@ -46,7 +47,10 @@ export const getDecksByAuthor = async (authorId?: string) => {
 	if (!authorId) {
 		return null;
 	}
-	const decks = await db.select().from(deckTable).where(and(eq(deckTable.authorId, authorId), ne(deckTable.deleted, true)));
+	const decks = await db
+		.select()
+		.from(deckTable)
+		.where(and(eq(deckTable.authorId, authorId), ne(deckTable.deleted, true)));
 	if (decks.length === 0) {
 		return null;
 	}
@@ -101,4 +105,4 @@ export const softDeleteDeck = async (deckId: string, userId: string) => {
 		.where(and(eq(deckTable.id, deckId), eq(deckTable.authorId, userId)))
 		.returning();
 	return result;
-}
+};

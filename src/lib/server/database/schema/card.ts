@@ -57,7 +57,7 @@ export const studyCardTable = pgTable('study_card', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
 	studyDeckId: uuid('study_deck_id')
 		.notNull()
-		.references(() => studyDeckTable.id, {onDelete: 'cascade'}),
+		.references(() => studyDeckTable.id, { onDelete: 'cascade' }),
 	baseCardId: uuid('card_id')
 		.notNull()
 		.references(() => cardTable.id),
@@ -78,7 +78,7 @@ export const reviewLogTable = pgTable('review_log', {
 	id: text('id').primaryKey(),
 	cardId: uuid('card_id')
 		.notNull()
-		.references(() => studyCardTable.id, {onDelete: 'cascade'}),
+		.references(() => studyCardTable.id, { onDelete: 'cascade' }),
 	grade: pgRatings('ratings').notNull(),
 	state: pgStates('states').notNull(),
 	due: timestamp('due').notNull(),

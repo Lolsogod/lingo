@@ -14,7 +14,7 @@
 		name: string;
 		value?: string;
 	};
-	export let values: ActionValue[]
+	export let values: ActionValue[];
 
 	const { enhance, form: formData, submitting } = form;
 	//Костыльная вещь получилась, нужна ли суперформа для таких кнопок?, ну пока пускай будет
