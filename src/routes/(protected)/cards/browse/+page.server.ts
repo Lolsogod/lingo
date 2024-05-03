@@ -11,12 +11,12 @@ export const load = (async (event) => {
 	console.log(query)
 	if (query) {
 		if (publicCards) {
-			createCardIndex(publicCards);
-			publicCards = searchCardsIndex(query);
+			const index = createCardIndex(publicCards);
+			publicCards = searchCardsIndex(query, index, publicCards);
 		}
 		if (userCreatedCards) {
-			createCardIndex(userCreatedCards);
-			userCreatedCards = searchCardsIndex(query);
+			const index = createCardIndex(userCreatedCards);
+			userCreatedCards = searchCardsIndex(query, index, userCreatedCards);
 		}
 	}
 	return { publicCards, userCreatedCards };

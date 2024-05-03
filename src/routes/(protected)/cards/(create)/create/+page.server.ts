@@ -1,17 +1,29 @@
+import type { PageServerLoad } from './$types';
 import { createCardSchema } from '$lib/config/zod-schemas';
 import { createCard } from '$lib/server/database/models/card';
 import { fail } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import type { PageServerLoad } from './$types';
+import { createCardIndex, searchCardsIndex } from '$lib/cardSearch';
+import { getCardsByAuthor, getPublicCards } from '$lib/server/database/models/card';
+import type { CardExp } from '$lib/server/database/schema';
 
 export const load = (async (event) => {
 	const topic = event.url.searchParams.get('topic') || '';
+	const user = event.locals.user;
 
-	const form = await superValidate(event, zod(createCardSchema));
-	form.data.topicName = topic;
-	return { form };
+	const publicCards: CardExp[] | null = await getPublicCards(user?.id);
+	const userCreatedCards: CardExp[] | null = await getCardsByAuthor(user?.id);
+	let relatedCards: CardExp[] = []
+	if (topic) {
+		relatedCards = [...(publicCards || []), ...(userCreatedCards || [])];
+		if (relatedCards) {
+			const index = createCardIndex(relatedCards);
+			relatedCards = searchCardsIndex(topic, index, relatedCards);
+		}
+	}
+	return { relatedCards };
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -37,6 +49,6 @@ export const actions = {
 			return setError(form, 'blocks._errors', 'ошибка наверное');
 		}
 		console.log(form);
-		return { form };
+		return { form };//редирект на пустую форму без топика сделать
 	}
 };

@@ -54,7 +54,7 @@ export const createCard = async (data: CreateCardSchema, authorId: string) => {
 };
 //добавить синхронизацию и чекать публичность
 export const addCardToDeck = async (deckId: string, cardId: string) => {
-	await db.transaction(async (tx) => {
+	const result = await db.transaction(async (tx) => {
 		const result = await tx
 			.insert(cardDeckTable)
 			.values({ deckId, cardId })
@@ -69,6 +69,7 @@ export const addCardToDeck = async (deckId: string, cardId: string) => {
 		});
 		return result;
 	});
+	return result
 };
 
 export const getCardsByDeckId = async (deckId: string) => {

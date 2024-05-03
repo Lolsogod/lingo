@@ -8,6 +8,9 @@
 	import { Button } from '$lib/components/ui/button';
 	import SimpleForm from '../SimpleForm.svelte';
 	import SimpleSubmit from '../SimpleSubmit.svelte';
+	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
 
 	export let data: SuperValidated<any>; //подумать super validated
 	export let action: string = '';
@@ -17,17 +20,26 @@
 		dataType: 'json'
 	});
 
-	const { form: formData, enhance, submitting, errors } = form;
-
+	const { form: formData } = form;
 	const inputs = [
 		{
 			name: 'topicName',
 			label: 'Топик'
 		}
 	];
+
 	const addBlock = () => {
 		$formData.blocks = [...$formData.blocks, { content: '' }];
 	};
+
+	//find related
+	$: if (browser) {
+		const url = new URL($page.url);
+		url.searchParams.set('topic', $formData.topicName);
+		goto(url, {
+			keepFocus: true
+		});
+	}
 </script>
 
 <SimpleForm {form} {inputs} {action}>

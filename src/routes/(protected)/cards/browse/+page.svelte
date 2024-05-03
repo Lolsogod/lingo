@@ -20,11 +20,11 @@
 </script>
 
 <section class="container grid items-center gap-6">
-	<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
 	<div class="flex justify-between">
 		<h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Все карты</h1>
 		<Button href="create">Создать карту</Button>
 	</div>
+	<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
 	<h2
 		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
 		Мои карты

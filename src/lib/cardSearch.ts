@@ -1,18 +1,16 @@
 import FlexSearch from 'flexsearch'
 import type {CardExp } from '$lib/server/database/schema'
-let cardsIndex: FlexSearch.Index
-let cards:  CardExp[] //maybe shit
 
 export const createCardIndex = (data: CardExp[]) => {
-	cardsIndex = new FlexSearch.Index({ tokenize: 'forward' })
+	const cardsIndex: FlexSearch.Index = new FlexSearch.Index({ tokenize: 'forward' })
 	data.forEach((card, i) => {
 		cardsIndex.add(i, card.topic.name)
 	})
 
-	cards = data
+	return cardsIndex
 }
 
-export const searchCardsIndex = (searchTerm: string) =>{
+export const searchCardsIndex = (searchTerm: string, cardsIndex: FlexSearch.Index, cards:  CardExp[]) =>{
 	  const match = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 	  const results = cardsIndex.search(match)
   

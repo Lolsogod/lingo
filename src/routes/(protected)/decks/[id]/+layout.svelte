@@ -9,7 +9,21 @@
 	import ItemGrid from '$lib/components/items/ItemGrid.svelte';
 	import { page } from '$app/stores';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
+	import { goto } from '$app/navigation';
+	import {browser} from "$app/environment"
+	import { Input } from "$lib/components/ui/input"
+	
 	export let data: LayoutData;
+
+	let query = $page.url.searchParams.get('q') || '';
+
+	$:if(browser) {
+		const url = new URL($page.url);
+		url.searchParams.set('q', query);
+		goto(url, {
+			keepFocus: true
+		});
+	}
 
 	const starStudyForm = superForm(data.startStudyForm, {
 		validators: zodClient(startStudySchema)
@@ -64,6 +78,7 @@
 		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
 		Список карт <!---доделать-->
 	</h2>
+	<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
 	<ItemGrid>
 		{#each data.cards as card}
 			<CardItem cardInfo={card} />
@@ -72,15 +87,15 @@
 	{#if data.canEdit}
 		<div class="flex gap-2">
 			<Button
-				href={`${deck_url}/create-card`}
+				href={`${deck_url}/create-card${query ? `?q=${query}` : ''}`}
 				variant={$page.url.pathname === `${deck_url}/create-card` ? 'default' : 'secondary'}
 				>Создать карту</Button>
 			<Button
-				href={`${deck_url}/add-card`}
+				href={`${deck_url}/add-card${query ? `?q=${query}` : ''}`}
 				variant={$page.url.pathname === `${deck_url}/add-card` ? 'default' : 'secondary'}
 				>Добавить существующюю</Button>
 			{#if $page.url.pathname != deck_url}
-				<Button href={deck_url} variant="secondary">✕</Button>
+				<Button href={`${deck_url}${query ? `?q=${query}` : ''}`} variant="secondary">✕</Button>
 			{/if}
 		</div>
 		<slot />
