@@ -6,13 +6,17 @@ export const blockSchema = z.object({
 
 export const cardSchema = z.object({
 	topicName: z.string().min(1, { message: 'Введите название темы карточки' }),
-	blocks: z.array(blockSchema).min(1, { message: 'У карточки должен быть минимум 1 блок' })
+	blocks: z.array(blockSchema).min(1, { message: 'У карточки должен быть минимум 1 блок' }),
+	addToStudy: z.boolean(),
+	studyDeckId: z.string().optional()
 });
 export type CardSchema = typeof cardSchema;
-
+//naming is wrong here but i am lazy
 export const createCardSchema = cardSchema.pick({
 	topicName: true,
-	blocks: true
+	blocks: true,
+	addToStudy: true,
+	studyDeckId: true
 });
 //наверное все так задавать надо бы
 export type CreateCardSchema = z.infer<typeof createCardSchema>;

@@ -52,7 +52,7 @@ export const createCard = async (data: CreateCardSchema, authorId: string) => {
 	});
 	return result;
 };
-//добавить синхронизацию и чекать публичность
+//добавить чекать публичность
 export const addCardToDeck = async (deckId: string, cardId: string) => {
 	const result = await db.transaction(async (tx) => {
 		const result = await tx

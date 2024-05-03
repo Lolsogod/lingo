@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { createCardSchema } from '$lib/config/zod-schemas';
-import { createCard } from '$lib/server/database/models/card';
+import { addCardToDeck, createCard } from '$lib/server/database/models/card';
 import { fail } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';
@@ -42,6 +42,12 @@ export const actions = {
 			const newCard = await createCard(form.data, userId);
 			if (newCard) {
 				setFlash({ type: 'success', message: 'Карта создана' }, event);
+				if (form.data.addToStudy && form.data.studyDeckId){
+					const result = await addCardToDeck(form.data.studyDeckId, newCard.id);
+					if (result) {
+						setFlash({ type: 'success', message: 'Добавленна в колоду' }, event);
+					}
+				}
 			}
 		} catch (e) {
 			console.error(e);

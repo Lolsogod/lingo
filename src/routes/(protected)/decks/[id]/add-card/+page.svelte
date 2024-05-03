@@ -4,9 +4,25 @@
 	import type { PageData } from './$types';
 	import ItemGrid from '$lib/components/items/ItemGrid.svelte';
 	import AddCard from './AddCard.svelte';
+	import {page} from '$app/stores';
+	import { browser } from '$app/environment';
+	import {goto} from '$app/navigation';
+	import { Input } from '$lib/components/ui/input';
+
 	export let data: PageData;
+
+	let query = $page.url.searchParams.get('add') || '';
+
+	$: if (browser) {
+		const url = new URL($page.url);
+		url.searchParams.set('add', query);
+		goto(url, {
+			keepFocus: true
+		});
+	}
 </script>
 
+<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
 <h2
 	class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
 	Мои карты

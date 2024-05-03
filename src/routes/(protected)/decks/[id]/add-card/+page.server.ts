@@ -5,6 +5,7 @@ import type { PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
 import { isUUID } from '$lib/_helpers/isUIID';
 import type { CardExp } from '$lib/server/database/schema';
+import { createCardIndex, searchCardsIndex } from '$lib/cardSearch';
 //move this to sql... but later... i hate sql..
 const addedCheck = (cards: CardExp[] | null, deckId: string) => {
 	if (cards) {
@@ -17,17 +18,28 @@ const addedCheck = (cards: CardExp[] | null, deckId: string) => {
 export const load = (async (event) => {
 	const user = event.locals.user;
 	const deckId = event.params.id;
+	const query = event.url.searchParams.get('add') || null;
 
-	const publicCards: CardExp[] | null = await getPublicCards(user?.id);
-	const userCreatedCards: CardExp[] | null = await getCardsByAuthor(user?.id);
-
+	let publicCards: CardExp[] | null = await getPublicCards(user?.id);
+	let userCreatedCards: CardExp[] | null = await getCardsByAuthor(user?.id);
+	
+	if (query) {
+		if (publicCards) {
+			const index = createCardIndex(publicCards);
+			publicCards = searchCardsIndex(query, index, publicCards);
+		}
+		if (userCreatedCards) {
+			const index = createCardIndex(userCreatedCards);
+			userCreatedCards = searchCardsIndex(query, index, userCreatedCards);
+		}
+	}
 	const form = await superValidate(event, zod(addCardToDeckSchema));
 
 	addedCheck(publicCards, deckId);
 	addedCheck(userCreatedCards, deckId);
 	return { publicCards, userCreatedCards, form };
 }) satisfies PageServerLoad;
-//добавляется только первая, наверное изза ебучих суперформсов
+
 export const actions = {
 	default: async (event) => {
 		const deckId = event.params.id;
