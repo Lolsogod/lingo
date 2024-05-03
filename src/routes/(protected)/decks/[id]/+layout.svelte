@@ -17,7 +17,7 @@
 
 	let query = $page.url.searchParams.get('q') || '';
 
-	$: if (browser) {
+	$: if (browser && query !== $page.url.searchParams.get('q')) {
 		const url = new URL($page.url);
 		url.searchParams.set('q', query);
 		goto(url, {

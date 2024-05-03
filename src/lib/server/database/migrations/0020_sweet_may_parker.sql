@@ -1,0 +1,1 @@
+ALTER TABLE "block" ALTER COLUMN "type" SET DEFAULT 'text';

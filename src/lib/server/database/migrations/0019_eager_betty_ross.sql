@@ -1,0 +1,1 @@
+ALTER TABLE "block" ADD COLUMN "type" varchar NOT NULL;

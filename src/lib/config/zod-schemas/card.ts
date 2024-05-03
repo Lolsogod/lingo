@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const blockSchema = z.object({
+	type: z.string().min(1, { message: 'Выберите тип блока' }),
 	content: z.string().min(1, { message: 'Введите содержание блока' })
 });
 

@@ -14,6 +14,8 @@
 	import * as Select from '$lib/components/ui/select/index.js';
 	import type { Deck } from '$lib/server/database/schema';
 	import SimpleCheckbox from '../SimpleCheckbox.svelte';
+	import { BLOCK_TYPES } from '$lib/config/constants';
+	import { onMount } from 'svelte';
 
 	export let data: SuperValidated<any>; //подумать super validated
 	export let action: string = '';
@@ -31,22 +33,27 @@
 			label: 'Топик'
 		}
 	];
-
+	let blocksTypeBind: { value: string }[] = [];
+	//а ведь ещё удаление нужно...
 	const addBlock = () => {
 		$formData.blocks = [...$formData.blocks, { content: '' }];
+		blocksTypeBind = [...blocksTypeBind, { value: 'text' }];
 	};
 	$formData.topicName = $page.url.searchParams.get('topic') || '';
+
 	//find related
-	$: if (browser) {
+	$: if (browser && $formData.topicName !== $page.url.searchParams.get('topic') ) {
+		console.log('looping');
 		const url = new URL($page.url);
 		url.searchParams.set('topic', $formData.topicName);
 		goto(url, {
 			keepFocus: true
 		});
 	}
-	let chosenDeck = {value: undefined};
+
+	let chosenDeck = { value: undefined };
 	$: if (!$formData.addToStudy) {
-		chosenDeck = {value: undefined};
+		chosenDeck = { value: undefined };
 		$formData.studyDeckId = undefined;
 	}
 </script>
@@ -65,12 +72,39 @@
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
+
+			<Form.Field {form} name="studyDeckId">
+				<Form.Control let:attrs>
+					<Form.Label>Выберите тип блока</Form.Label>
+					<Select.Root
+						selected={blocksTypeBind[i]}
+						onSelectedChange={(v) => {
+							v && (block.type = v.value);
+						}}>
+						<Select.Trigger {...attrs}>
+							<Select.Value placeholder="тип" />
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								{#each BLOCK_TYPES as type}
+									<Select.Item value={type} label={type}>
+										{type}
+									</Select.Item>
+								{/each}
+							</Select.Group>
+						</Select.Content>
+						<Select.Input name={attrs.name} />
+					</Select.Root>
+					<input hidden bind:value={$formData.studyDeckId} name={attrs.name} />
+				</Form.Control>
+				<Form.FieldErrors />
+			</Form.Field>
 		{/each}
 		<Form.Field {form} name="blocks">
 			<Button variant="secondary" on:click={addBlock} class="block w-full">Добавить блок</Button>
 			<Form.FieldErrors />
 		</Form.Field>
-		<br>
+		<br />
 		{#if decks}
 			<SimpleCheckbox {form} name="addToStudy" label="Добавить в изучение" />
 			{#if $formData.addToStudy}

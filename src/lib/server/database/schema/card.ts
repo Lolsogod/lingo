@@ -21,6 +21,7 @@ export const topicTable = pgTable('topic', {
 
 export const blockTable = pgTable('block', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
+	type: varchar('type').notNull().default('text'),
 	content: text('content').notNull()
 });
 

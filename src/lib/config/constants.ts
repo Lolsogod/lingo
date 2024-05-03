@@ -12,3 +12,4 @@ export const TERMS_PRIVACY_APP_NAME = 'LinGo';
 export const TERMS_PRIVACY_APP_PRICING_AND_SUBSCRIPTIONS =
 	'[Details about the pricing, subscription model, refund policy]';
 export const TERMS_PRIVACY_COUNTRY = 'Russia';
+export const BLOCK_TYPES = ['text', 'image', 'audio']

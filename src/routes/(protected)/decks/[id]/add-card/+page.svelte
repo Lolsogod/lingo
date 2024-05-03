@@ -13,7 +13,7 @@
 
 	let query = $page.url.searchParams.get('add') || '';
 
-	$: if (browser) {
+	$: if (browser && query !== $page.url.searchParams.get('add')) {
 		const url = new URL($page.url);
 		url.searchParams.set('add', query);
 		goto(url, {
