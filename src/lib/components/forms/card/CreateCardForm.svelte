@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import SuperDebug, { superForm, type SuperValidated } from 'sveltekit-superforms';
-	import { createCardSchema } from '$lib/config/zod-schemas';
+	import { createCardSchema, type CreateCardSchema } from '$lib/config/zod-schemas';
 	import * as Card from '$lib/components/ui/card';
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
@@ -12,13 +12,13 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import * as Select from '$lib/components/ui/select/index.js';
-	import type { Deck } from '$lib/server/database/schema';
+	import type { Block, Deck } from '$lib/server/database/schema';
 	import SimpleCheckbox from '../SimpleCheckbox.svelte';
 	import { BLOCK_TYPES } from '$lib/config/constants';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import BlockItem from '$lib/components/items/BlockItem.svelte';
 
-	export let data: SuperValidated<any>; //подумать super validated
+	export let data: SuperValidated<CreateCardSchema>; //подумать super validated
 	export let action: string = '';
 	export let decks: Deck[] | null = null;
 	export let blocks;
@@ -38,10 +38,13 @@
 	let blocksTypeBind: { value: string }[] = [];
 	//а ведь ещё удаление нужно...
 	const addBlock = () => {
-		$formData.blocks = [...$formData.blocks, { content: '' }];
+		$formData.blocks = [...$formData.blocks, { content: '', isNew: true, type: 'text'}];
 		blocksTypeBind = [...blocksTypeBind, { value: 'text' }];
 	};
-
+	const addExisting = (block: Block) => {
+		$formData.blocks = [...$formData.blocks, { content: block.content, isNew: false, type: block.type, id: block.id }];
+		blocksTypeBind = [...blocksTypeBind, { value: block.type }];
+	};
 	$formData.topicName = $page.url.searchParams.get('topic') || '';
 
 	//find related
@@ -70,7 +73,7 @@
 			<Form.Field {form} name="blocks">
 				<Form.Control let:attrs>
 					<Form.Label>Блок {i + 1}</Form.Label>
-					<Input {...attrs} bind:value={block.content} />
+					<Input {...attrs} bind:value={block.content} disabled={!block.isNew}/>
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
@@ -83,7 +86,7 @@
 						onSelectedChange={(v) => {
 							v && (block.type = v.value);
 						}}>
-						<Select.Trigger {...attrs}>
+						<Select.Trigger {...attrs} disabled={!block.isNew}>
 							<Select.Value placeholder="тип" />
 						</Select.Trigger>
 						<Select.Content>
@@ -115,7 +118,7 @@
 						<Dialog.Title>Блоки на тему {$formData.topicName}</Dialog.Title>
 						<Dialog.Description>
 							{#each blocks as block}
-								<BlockItem blockInfo={block} />
+								<BlockItem blockInfo={block} on:click={() => addExisting(block)}/>
 							{/each}
 						</Dialog.Description>
 					</Dialog.Header>

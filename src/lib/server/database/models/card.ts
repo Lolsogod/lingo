@@ -26,9 +26,12 @@ export const createCard = async (data: CreateCardSchema, authorId: string) => {
 		if (!existingTopic) {
 			existingTopic = (await tx.insert(topicTable).values({ name: data.topicName }).returning())[0];
 		}
+		const newBlocks = data.blocks.filter(block => block.isNew);
+		const existingBlocks = data.blocks.filter(block => !block.isNew);
+
 		const blocks = await tx
 			.insert(blockTable)
-			.values(data.blocks)
+			.values(newBlocks.map(block => ({ ...block, isNew: undefined, id: undefined})))
 			.onConflictDoNothing()
 			.returning();
 
@@ -46,6 +49,12 @@ export const createCard = async (data: CreateCardSchema, authorId: string) => {
 			blocks.map((block) => ({
 				cardId: newCard.id,
 				blockId: block.id
+			}))
+		);
+		await tx.insert(cardBlockTable).values(
+			existingBlocks.map((block) => ({
+				cardId: newCard.id,
+				blockId: block.id!
 			}))
 		);
 		return newCard;
@@ -108,7 +117,7 @@ export const getCardsByAuthor = async (authorId?: string) => {
 
 export const findBlocks = async (topicName: string) => {
     const blocks = await db
-        .select({ id: blockTable.id, content: blockTable.content, type: blockTable.type})
+        .selectDistinct({ id: blockTable.id, content: blockTable.content, type: blockTable.type})
         .from(blockTable)
         .innerJoin(cardBlockTable, eq(blockTable.id, cardBlockTable.blockId))
         .innerJoin(cardTable, eq(cardBlockTable.cardId, cardTable.id))

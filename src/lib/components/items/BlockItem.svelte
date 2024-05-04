@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Card, CardContent } from '$lib/components/ui/card';
 	import type { Block } from '$lib/server/database/schema';
+	import Button from '../ui/button/button.svelte';
 
 	export let blockInfo: Block;
 </script>
@@ -16,7 +17,6 @@
 		{:else if blockInfo.type === 'audio'}
 			<audio controls src={blockInfo.content} />
 		{/if}
-		<!--в слот мб-->
 	</CardContent>
-	<slot />
+	<Button on:click>+</Button>
 </Card>
