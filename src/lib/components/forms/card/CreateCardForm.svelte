@@ -5,7 +5,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
-	import { Button } from '$lib/components/ui/button';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import SimpleForm from '../SimpleForm.svelte';
 	import SimpleSubmit from '../SimpleSubmit.svelte';
 	import { goto } from '$app/navigation';
@@ -15,11 +15,13 @@
 	import type { Deck } from '$lib/server/database/schema';
 	import SimpleCheckbox from '../SimpleCheckbox.svelte';
 	import { BLOCK_TYPES } from '$lib/config/constants';
-	import { onMount } from 'svelte';
+	import * as Dialog from '$lib/components/ui/dialog';
+	import BlockItem from '$lib/components/items/BlockItem.svelte';
 
 	export let data: SuperValidated<any>; //подумать super validated
 	export let action: string = '';
 	export let decks: Deck[] | null = null;
+	export let blocks;
 
 	const form = superForm(data, {
 		validators: zodClient(createCardSchema),
@@ -39,11 +41,11 @@
 		$formData.blocks = [...$formData.blocks, { content: '' }];
 		blocksTypeBind = [...blocksTypeBind, { value: 'text' }];
 	};
+
 	$formData.topicName = $page.url.searchParams.get('topic') || '';
 
 	//find related
-	$: if (browser && $formData.topicName !== $page.url.searchParams.get('topic') ) {
-		console.log('looping');
+	$: if (browser && $formData.topicName !== $page.url.searchParams.get('topic') && !!$formData.topicName) {
 		const url = new URL($page.url);
 		url.searchParams.set('topic', $formData.topicName);
 		goto(url, {
@@ -52,7 +54,7 @@
 	}
 
 	let chosenDeck = { value: undefined };
-	$: if (!$formData.addToStudy) {
+	$: if (!$formData.addToStudy && $formData.studyDeckId) {
 		chosenDeck = { value: undefined };
 		$formData.studyDeckId = undefined;
 	}
@@ -101,9 +103,28 @@
 			</Form.Field>
 		{/each}
 		<Form.Field {form} name="blocks">
-			<Button variant="secondary" on:click={addBlock} class="block w-full">Добавить блок</Button>
+			<Button variant="secondary" on:click={addBlock} class="block w-full">Создать блок</Button>
 			<Form.FieldErrors />
 		</Form.Field>
+		{#if blocks?.length > 0}
+			<Dialog.Root>
+				<Dialog.Trigger class={buttonVariants({ variant: 'default' })}
+					>Добавить существующий</Dialog.Trigger>
+				<Dialog.Content>
+					<Dialog.Header>
+						<Dialog.Title>Блоки на тему {$formData.topicName}</Dialog.Title>
+						<Dialog.Description>
+							{#each blocks as block}
+								<BlockItem blockInfo={block} />
+							{/each}
+						</Dialog.Description>
+					</Dialog.Header>
+				</Dialog.Content>
+			</Dialog.Root>
+		{:else}
+			существующих блоков на эту тему нет
+		{/if}
+		<br />
 		<br />
 		{#if decks}
 			<SimpleCheckbox {form} name="addToStudy" label="Добавить в изучение" />

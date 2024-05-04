@@ -105,3 +105,16 @@ export const getCardsByAuthor = async (authorId?: string) => {
 	}
 	return cards;
 };
+
+export const findBlocks = async (topicName: string) => {
+    const blocks = await db
+        .select({ id: blockTable.id, content: blockTable.content, type: blockTable.type})
+        .from(blockTable)
+        .innerJoin(cardBlockTable, eq(blockTable.id, cardBlockTable.blockId))
+        .innerJoin(cardTable, eq(cardBlockTable.cardId, cardTable.id))
+        .innerJoin(topicTable, eq(cardTable.topicId, topicTable.id))
+        .where(eq(topicTable.name, topicName))
+        .execute();
+
+    return blocks;
+}

@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { createCardSchema } from '$lib/config/zod-schemas';
-import { addCardToDeck, createCard } from '$lib/server/database/models/card';
-import { fail } from '@sveltejs/kit';
+import { addCardToDeck, createCard, findBlocks } from '$lib/server/database/models/card';
+import { fail, redirect } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
@@ -23,11 +23,13 @@ export const load = (async (event) => {
 			relatedCards = searchCardsIndex(topic, index, relatedCards);
 		}
 	}
-	return { relatedCards };
+	const blocks = await findBlocks(topic);
+	return { relatedCards, blocks };
 }) satisfies PageServerLoad;
 
 export const actions = {
 	default: async (event) => {
+		console.log('called')
 		const userId = event.locals.user?.id;
 		const form = await superValidate(event, zod(createCardSchema));
 
@@ -55,6 +57,8 @@ export const actions = {
 			return setError(form, 'blocks._errors', 'ошибка наверное');
 		}
 		console.log(form);
-		return { form }; //редирект на пустую форму без топика сделать
+		redirect(302, '/cards/browse') //редирект на пустую форму без топика сделать бы
+		//вобще не понимаю что тут проиходит когда пытаешься остаться на странице
+		//поэтому редирект
 	}
 };
