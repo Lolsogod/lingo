@@ -35,20 +35,29 @@
 			label: 'Топик'
 		}
 	];
-	let blocksTypeBind: { value: string }[] = [];
+
 	//а ведь ещё удаление нужно...
 	const addBlock = () => {
-		$formData.blocks = [...$formData.blocks, { content: '', isNew: true, type: 'text'}];
-		blocksTypeBind = [...blocksTypeBind, { value: 'text' }];
+		$formData.blocks = [...$formData.blocks, { content: '', isNew: true, type: 'text' }];
 	};
 	const addExisting = (block: Block) => {
-		$formData.blocks = [...$formData.blocks, { content: block.content, isNew: false, type: block.type, id: block.id }];
-		blocksTypeBind = [...blocksTypeBind, { value: block.type }];
+		$formData.blocks = [
+			...$formData.blocks,
+			{ content: block.content, isNew: false, type: block.type, id: block.id }
+		];
+	};
+
+	const removeBlock = (index: number) => {
+		$formData.blocks = $formData.blocks.filter((_, i) => i !== index);
 	};
 	$formData.topicName = $page.url.searchParams.get('topic') || '';
 
 	//find related
-	$: if (browser && $formData.topicName !== $page.url.searchParams.get('topic') && !!$formData.topicName) {
+	$: if (
+		browser &&
+		$formData.topicName !== $page.url.searchParams.get('topic') &&
+		!!$formData.topicName
+	) {
 		const url = new URL($page.url);
 		url.searchParams.set('topic', $formData.topicName);
 		goto(url, {
@@ -70,40 +79,42 @@
 	<div slot="custom-fields">
 		<!---нет ошибки на пустые блоки-->
 		{#each $formData.blocks as block, i}
-			<Form.Field {form} name="blocks">
-				<Form.Control let:attrs>
-					<Form.Label>Блок {i + 1}</Form.Label>
-					<Input {...attrs} bind:value={block.content} disabled={!block.isNew}/>
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
-
-			<Form.Field {form} name="studyDeckId">
-				<Form.Control let:attrs>
-					<Form.Label>Выберите тип блока</Form.Label>
-					<Select.Root
-						selected={blocksTypeBind[i]}
-						onSelectedChange={(v) => {
-							v && (block.type = v.value);
-						}}>
-						<Select.Trigger {...attrs} disabled={!block.isNew}>
-							<Select.Value placeholder="тип" />
-						</Select.Trigger>
-						<Select.Content>
-							<Select.Group>
-								{#each BLOCK_TYPES as type}
-									<Select.Item value={type} label={type}>
-										{type}
-									</Select.Item>
-								{/each}
-							</Select.Group>
-						</Select.Content>
-						<Select.Input name={attrs.name} />
-					</Select.Root>
-					<input hidden bind:value={$formData.studyDeckId} name={attrs.name} />
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
+			<div class="flex w-full items-end gap-2">
+				<Form.Field {form} name="blocks" class="flex-1">
+					<Form.Control let:attrs>
+						<Form.Label>Блок {i + 1}</Form.Label>
+						<Input {...attrs} bind:value={block.content} disabled={!block.isNew} />
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+				<Form.Field {form} name="studyDeckId" class="w-1/3">
+					<Form.Control let:attrs>
+						<Form.Label>Тип блока</Form.Label>
+						<Select.Root
+							selected={{ value: block.type, label: block.type }}
+							onSelectedChange={(v) => {
+								v && (block.type = v.value);
+							}}>
+							<Select.Trigger {...attrs} disabled={!block.isNew}>
+								<Select.Value placeholder="тип" />
+							</Select.Trigger>
+							<Select.Content>
+								<Select.Group>
+									{#each BLOCK_TYPES as type}
+										<Select.Item value={type} label={type}>
+											{type}
+										</Select.Item>
+									{/each}
+								</Select.Group>
+							</Select.Content>
+							<Select.Input name={attrs.name} />
+						</Select.Root>
+						<input hidden bind:value={$formData.studyDeckId} name={attrs.name} />
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+				<Button variant="destructive" class="mb-2" on:click={()=>removeBlock(i)}>X</Button>
+			</div>
 		{/each}
 		<Form.Field {form} name="blocks">
 			<Button variant="secondary" on:click={addBlock} class="block w-full">Создать блок</Button>
@@ -118,7 +129,7 @@
 						<Dialog.Title>Блоки на тему {$formData.topicName}</Dialog.Title>
 						<Dialog.Description>
 							{#each blocks as block}
-								<BlockItem blockInfo={block} on:click={() => addExisting(block)}/>
+								<BlockItem blockInfo={block} on:click={() => addExisting(block)} />
 							{/each}
 						</Dialog.Description>
 					</Dialog.Header>

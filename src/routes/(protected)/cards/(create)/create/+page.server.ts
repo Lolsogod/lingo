@@ -23,7 +23,9 @@ export const load = (async (event) => {
 			relatedCards = searchCardsIndex(topic, index, relatedCards);
 		}
 	}
+
 	const blocks = await findBlocks(topic);
+	
 	return { relatedCards, blocks };
 }) satisfies PageServerLoad;
 
