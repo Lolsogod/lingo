@@ -15,12 +15,17 @@ export const cardSchema = z.object({
 });
 export type CardSchema = typeof cardSchema;
 //naming is wrong here but i am lazy
-export const createCardSchema = cardSchema.pick({
-	topicName: true,
-	blocks: true,
-	addToStudy: true,
-	studyDeckId: true
-});
+export const createCardSchema = cardSchema
+	.pick({
+		topicName: true,
+		blocks: true,
+		addToStudy: true,
+		studyDeckId: true
+	})
+	.refine((data) => !data.addToStudy || (data.addToStudy && data.studyDeckId), {
+		message: 'Необходимо выбрать колоду для добавления карточки',
+		path: ['studyDeckId']
+	});
 
 //наверное все так задавать надо бы
 export type CreateCardSchema = z.infer<typeof createCardSchema>;

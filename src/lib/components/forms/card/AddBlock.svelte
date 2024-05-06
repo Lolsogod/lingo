@@ -10,7 +10,6 @@
 	import ActionButton from '$lib/components/forms/ActionButton.svelte';
 	//TODO: самнительнаа....
 
-
 	export let blockInfo: blockExp;
 	const form = superForm(data.form, {
 		validators: zodClient(addblockToDeckSchema),
@@ -25,6 +24,5 @@
 		values={[{ name: 'blockId', value: blockInfo.id }]}
 		condition={blockInfo.isAdded}
 		conditionText={'Добавлено'}
-		class="w-full">+</ActionButton
-	>
+		class="w-full">+</ActionButton>
 </CardFooter>

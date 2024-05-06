@@ -9,7 +9,8 @@ import {
 	topicTable,
 	studyDeckTable,
 	studyCardTable,
-	type CardExp
+	type CardExp,
+	type Block
 } from '../schema';
 import { createStudyCard } from '$lib/fsrs';
 
@@ -26,15 +27,17 @@ export const createCard = async (data: CreateCardSchema, authorId: string) => {
 		if (!existingTopic) {
 			existingTopic = (await tx.insert(topicTable).values({ name: data.topicName }).returning())[0];
 		}
-		const newBlocks = data.blocks.filter(block => block.isNew);
-		const existingBlocks = data.blocks.filter(block => !block.isNew);
+		const newBlocks = data.blocks.filter((block) => block.isNew);
+		const existingBlocks = data.blocks.filter((block) => !block.isNew);
 
-		const blocks = await tx
-			.insert(blockTable)
-			.values(newBlocks.map(block => ({ ...block, isNew: undefined, id: undefined})))
-			.onConflictDoNothing()
-			.returning();
-
+		let blocks: Block[] = [];
+		if (newBlocks.length > 0) {
+			blocks = await tx
+				.insert(blockTable)
+				.values(newBlocks.map((block) => ({ ...block, isNew: undefined, id: undefined })))
+				.onConflictDoNothing()
+				.returning();
+		}
 		const newCard = (
 			await tx
 				.insert(cardTable)
@@ -44,19 +47,22 @@ export const createCard = async (data: CreateCardSchema, authorId: string) => {
 				})
 				.returning()
 		)[0];
-
-		await tx.insert(cardBlockTable).values(
-			blocks.map((block) => ({
-				cardId: newCard.id,
-				blockId: block.id
-			}))
-		);
-		await tx.insert(cardBlockTable).values(
-			existingBlocks.map((block) => ({
-				cardId: newCard.id,
-				blockId: block.id!
-			}))
-		);
+		if (blocks.length > 0) {
+			await tx.insert(cardBlockTable).values(
+				blocks.map((block) => ({
+					cardId: newCard.id,
+					blockId: block.id
+				}))
+			);
+		}
+		if (existingBlocks.length > 0) {
+			await tx.insert(cardBlockTable).values(
+				existingBlocks.map((block) => ({
+					cardId: newCard.id,
+					blockId: block.id!
+				}))
+			);
+		}
 		return newCard;
 	});
 	return result;
@@ -116,14 +122,14 @@ export const getCardsByAuthor = async (authorId?: string) => {
 };
 
 export const findBlocks = async (topicName: string) => {
-    const blocks = await db
-        .selectDistinct({ id: blockTable.id, content: blockTable.content, type: blockTable.type})
-        .from(blockTable)
-        .innerJoin(cardBlockTable, eq(blockTable.id, cardBlockTable.blockId))
-        .innerJoin(cardTable, eq(cardBlockTable.cardId, cardTable.id))
-        .innerJoin(topicTable, eq(cardTable.topicId, topicTable.id))
-        .where(eq(topicTable.name, topicName))
-        .execute();
+	const blocks = await db
+		.selectDistinct({ id: blockTable.id, content: blockTable.content, type: blockTable.type })
+		.from(blockTable)
+		.innerJoin(cardBlockTable, eq(blockTable.id, cardBlockTable.blockId))
+		.innerJoin(cardTable, eq(cardBlockTable.cardId, cardTable.id))
+		.innerJoin(topicTable, eq(cardTable.topicId, topicTable.id))
+		.where(eq(topicTable.name, topicName))
+		.execute();
 
-    return blocks;
-}
+	return blocks;
+};

@@ -6,9 +6,10 @@
 
 	export let data: PageData;
 </script>
-<CreateCardForm data={data.form} decks={data.decks} blocks={data.blocks}/>
+
+<CreateCardForm data={data.form} decks={data.decks} blocks={data.blocks} />
 {#if data.relatedCards.length > 0}
-	<h2>Другие карты на эту тему</h2>
+	<h2 class="border-b">Другие карты на эту тему</h2>
 	<ItemGrid>
 		{#each data.relatedCards as card}
 			<CardItem cardInfo={card}>

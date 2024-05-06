@@ -21,14 +21,11 @@
 
 <section class="container grid items-center gap-6">
 	<div class="flex justify-between">
-		<h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Все карты</h1>
+		<h1>Все карты</h1>
 		<Button href="create">Создать карту</Button>
 	</div>
 	<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
-	<h2
-		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
-		Мои карты
-	</h2>
+	<h2 class="border-b">Мои карты</h2>
 
 	{#if data.userCreatedCards}
 		<ItemGrid>
@@ -39,10 +36,7 @@
 	{:else}
 		<span class="text-xl text-muted-foreground">нет карт</span>
 	{/if}
-	<h2
-		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
-		Общие карты
-	</h2>
+	<h2 class="border-b">Общие карты</h2>
 	{#if data.publicCards}
 		<ItemGrid>
 			{#each data.publicCards as card}

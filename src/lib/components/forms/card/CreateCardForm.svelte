@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import SuperDebug, { superForm, type SuperValidated } from 'sveltekit-superforms';
+	import { superForm, type SuperValidated } from 'sveltekit-superforms';
 	import { createCardSchema, type CreateCardSchema } from '$lib/config/zod-schemas';
 	import * as Card from '$lib/components/ui/card';
 	import * as Form from '$lib/components/ui/form';
@@ -53,11 +53,7 @@
 	$formData.topicName = $page.url.searchParams.get('topic') || '';
 
 	//find related
-	$: if (
-		browser &&
-		$formData.topicName !== $page.url.searchParams.get('topic') &&
-		!!$formData.topicName
-	) {
+	$: if (browser && $formData.topicName !== $page.url.searchParams.get('topic')) {
 		const url = new URL($page.url);
 		url.searchParams.set('topic', $formData.topicName);
 		goto(url, {
@@ -113,17 +109,22 @@
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
-				<Button variant="destructive" class="mb-2" on:click={()=>removeBlock(i)}>X</Button>
+				<Button variant="destructive" class="mb-2" on:click={() => removeBlock(i)}>X</Button>
 			</div>
 		{/each}
-		<Form.Field {form} name="blocks">
-			<Button variant="secondary" on:click={addBlock} class="block w-full">Создать блок</Button>
-			<Form.FieldErrors />
-		</Form.Field>
-		{#if blocks?.length > 0}
+		<div class="flex gap-2">
+			<Form.Field {form} name="blocks" class="flex-1">
+				<Button variant="secondary" on:click={addBlock} class="block w-full">Создать блок</Button>
+				<Form.FieldErrors />
+			</Form.Field>
+
 			<Dialog.Root>
-				<Dialog.Trigger class={buttonVariants({ variant: 'default' })}
-					>Добавить существующий</Dialog.Trigger>
+				<Dialog.Trigger
+					class={`${buttonVariants({ variant: 'default' })} flex flex-1 flex-col items-center justify-center`}
+					disabled={blocks?.length <= 0}>
+					Добавить существующий
+					<div class="text-xs">Найдено {blocks?.length}</div>
+				</Dialog.Trigger>
 				<Dialog.Content>
 					<Dialog.Header>
 						<Dialog.Title>Блоки на тему {$formData.topicName}</Dialog.Title>
@@ -135,11 +136,7 @@
 					</Dialog.Header>
 				</Dialog.Content>
 			</Dialog.Root>
-		{:else}
-			существующих блоков на эту тему нет
-		{/if}
-		<br />
-		<br />
+		</div>
 		{#if decks}
 			<SimpleCheckbox {form} name="addToStudy" label="Добавить в изучение" />
 			{#if $formData.addToStudy}

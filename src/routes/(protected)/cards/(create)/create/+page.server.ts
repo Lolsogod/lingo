@@ -25,13 +25,13 @@ export const load = (async (event) => {
 	}
 
 	const blocks = await findBlocks(topic);
-	
+
 	return { relatedCards, blocks };
 }) satisfies PageServerLoad;
 
 export const actions = {
 	default: async (event) => {
-		console.log('called')
+		console.log('called');
 		const userId = event.locals.user?.id;
 		const form = await superValidate(event, zod(createCardSchema));
 
@@ -46,7 +46,7 @@ export const actions = {
 			const newCard = await createCard(form.data, userId);
 			if (newCard) {
 				setFlash({ type: 'success', message: 'Карта создана' }, event);
-				if (form.data.addToStudy && form.data.studyDeckId){
+				if (form.data.addToStudy && form.data.studyDeckId) {
 					const result = await addCardToDeck(form.data.studyDeckId, newCard.id);
 					if (result) {
 						setFlash({ type: 'success', message: 'Добавленна в колоду' }, event);
@@ -59,7 +59,7 @@ export const actions = {
 			return setError(form, 'blocks._errors', 'ошибка наверное');
 		}
 		console.log(form);
-		redirect(302, '/cards/browse') //редирект на пустую форму без топика сделать бы
+		redirect(302, '/cards/browse'); //редирект на пустую форму без топика сделать бы
 		//вобще не понимаю что тут проиходит когда пытаешься остаться на странице
 		//поэтому редирект
 	}

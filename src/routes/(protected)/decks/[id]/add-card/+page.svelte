@@ -4,9 +4,9 @@
 	import type { PageData } from './$types';
 	import ItemGrid from '$lib/components/items/ItemGrid.svelte';
 	import AddCard from './AddCard.svelte';
-	import {page} from '$app/stores';
+	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
-	import {goto} from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import { Input } from '$lib/components/ui/input';
 
 	export let data: PageData;
@@ -23,10 +23,7 @@
 </script>
 
 <Input placeholder="поиск" class="max-w-xs" bind:value={query} />
-<h2
-	class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
-	Мои карты
-</h2>
+<h2 class="border-b">Мои карты</h2>
 {#if data.userCreatedCards}
 	<ItemGrid>
 		{#each data.userCreatedCards as card}
@@ -38,10 +35,7 @@
 {:else}
 	<span class="text-xl text-muted-foreground">нет карт</span>
 {/if}
-<h2
-	class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
-	Общие карты
-</h2>
+<h2 class="border-b">Общие карты</h2>
 {#if data.publicCards}
 	<ItemGrid>
 		{#each data.publicCards as card}

@@ -22,7 +22,7 @@ export const load = (async (event) => {
 
 	let publicCards: CardExp[] | null = await getPublicCards(user?.id);
 	let userCreatedCards: CardExp[] | null = await getCardsByAuthor(user?.id);
-	
+
 	if (query) {
 		if (publicCards) {
 			const index = createCardIndex(publicCards);

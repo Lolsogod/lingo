@@ -65,58 +65,58 @@ export const actions = {
 	good: async (event) => {
 		const goodForm = await superValidate(event, zod(gradeCardSchema));
 		if (!goodForm.valid) {
-            setFlash({type: 'error', message: 'Ошибка валидации формы'}, event);
-            return { goodForm };
-        }
-        const res = await gradeStudyCard(goodForm.data.studyCardId, 'Good');
-        if (res) {
-            setFlash({type: 'success', message: 'Карточка успешно оценена как хорошая'}, event); //TODO: время следующего повторения
-        } else {
-            setFlash({type: 'error', message: 'Не удалось оценить карточку как хорошую'}, event);
-        }
-        return { goodForm };
+			setFlash({ type: 'error', message: 'Ошибка валидации формы' }, event);
+			return { goodForm };
+		}
+		const res = await gradeStudyCard(goodForm.data.studyCardId, 'Good');
+		if (res) {
+			setFlash({ type: 'success', message: 'Карточка успешно оценена как хорошая' }, event); //TODO: время следующего повторения
+		} else {
+			setFlash({ type: 'error', message: 'Не удалось оценить карточку как хорошую' }, event);
+		}
+		return { goodForm };
 	},
 	again: async (event) => {
 		const againForm = await superValidate(event, zod(gradeCardSchema));
 		if (!againForm.valid) {
-            setFlash({type: 'error', message: 'Ошибка валидации формы'}, event);
-            return { againForm };
-        }
-        const res = await gradeStudyCard(againForm.data.studyCardId, 'Again');
-        if (res) {
-            setFlash({type: 'success', message: 'Карточка успешно оценена как "снова"'}, event);
-        } else {
-            setFlash({type: 'error', message: 'Не удалось оценить карточку как "снова"'}, event);
-        }
-        return { againForm };
+			setFlash({ type: 'error', message: 'Ошибка валидации формы' }, event);
+			return { againForm };
+		}
+		const res = await gradeStudyCard(againForm.data.studyCardId, 'Again');
+		if (res) {
+			setFlash({ type: 'success', message: 'Карточка успешно оценена как "снова"' }, event);
+		} else {
+			setFlash({ type: 'error', message: 'Не удалось оценить карточку как "снова"' }, event);
+		}
+		return { againForm };
 	},
 	settings: async (event) => {
 		const studyDeckId = event.params.id;
 		const form = await superValidate(event, zod(studyDeckSettingsSchema));
 		if (!form.valid) {
-            setFlash({type: 'error', message: 'Ошибка валидации формы'}, event);
-            return { form };
-        }
-        await setNewLimit(studyDeckId, form.data.limit);
-        setFlash({type: 'success', message: 'Новый лимит успешно установлен'}, event);
-        return { form };
+			setFlash({ type: 'error', message: 'Ошибка валидации формы' }, event);
+			return { form };
+		}
+		await setNewLimit(studyDeckId, form.data.limit);
+		setFlash({ type: 'success', message: 'Новый лимит успешно установлен' }, event);
+		return { form };
 	},
 	delete: async (event) => {
 		const studyDeckId = event.params.id;
 		const deletForm = await superValidate(event, zod(deleteDeckSchema));
 		const userId = event.locals.user?.id;
 		if (!userId || !isUUID(studyDeckId) || !deletForm.valid) {
-            setFlash({type: 'error', message: 'Ошибка валидации формы или неверный ID колоды'}, event);
-            return fail(400, {});
-        }
+			setFlash({ type: 'error', message: 'Ошибка валидации формы или неверный ID колоды' }, event);
+			return fail(400, {});
+		}
 
-        const result = await deleteStudyDeck(studyDeckId);
-        if (result){
-            setFlash({type: 'success', message: 'Колода успешно удалена'}, event);
-        } else {
-            setFlash({type: 'error', message: 'Не удалось удалить колоду'}, event);
-        }
+		const result = await deleteStudyDeck(studyDeckId);
+		if (result) {
+			setFlash({ type: 'success', message: 'Колода успешно удалена' }, event);
+		} else {
+			setFlash({ type: 'error', message: 'Не удалось удалить колоду' }, event);
+		}
 
-        redirect(302, '/dashboard');
+		redirect(302, '/dashboard');
 	}
 };

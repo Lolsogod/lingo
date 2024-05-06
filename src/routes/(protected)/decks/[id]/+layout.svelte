@@ -36,7 +36,7 @@
 
 <section class="container grid items-center gap-6">
 	<div class="flex gap-5">
-		<h1 class="flex-1 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+		<h1 class="flex-1">
 			Колода {data.deck.name}
 		</h1>
 		<ActionButton
@@ -74,8 +74,7 @@
 	<p>
 		{data.deck.description || ''}
 	</p>
-	<h2
-		class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+	<h2 class="border-b">
 		Список карт <!---доделать-->
 	</h2>
 	<Input placeholder="поиск" class="max-w-xs" bind:value={query} />

@@ -17,7 +17,7 @@
 		<div class="front absolute">
 			<Card.Root class=" -z-20 flex min-h-72 w-60 flex-col items-center">
 				<Card.Header>
-					<h1 class="scroll-m-20 text-4xl tracking-tight lg:text-5xl">
+					<h1>
 						{studyCard.baseCard.topic.name}
 					</h1></Card.Header>
 				<Card.Content class="flex-1"></Card.Content>
@@ -29,14 +29,14 @@
 		<div class="back absolute">
 			<Card.Root class="back back -z-20 flex min-h-72 w-60 flex-col items-center">
 				<Card.Header>
-					<h1 class="scroll-m-20 text-4xl tracking-tight lg:text-5xl">
+					<h1>
 						{studyCard.baseCard.topic.name}
 					</h1></Card.Header>
 				<Card.Content class="flex-1">
 					{#if studyCard.baseCard.cardBlocks}
 						{#each studyCard.baseCard.cardBlocks as cardBlock}
 							{#if cardBlock.block.type === 'text'}
-								<h2 class="scroll-m-20 pb-2 text-3xl tracking-tight transition-colors first:mt-0">
+								<h2>
 									{cardBlock.block.content}
 								</h2>
 							{:else if cardBlock.block.type === 'image'}

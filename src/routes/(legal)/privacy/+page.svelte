@@ -9,11 +9,11 @@
 
 <section class="container grid items-center gap-6">
 	<div class="flex max-w-[980px] flex-col items-start gap-2">
-		<h1 class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
+		<h1>
 			Политика конфиденциальности для {TERMS_PRIVACY_WEBSITE}
 		</h1>
 
-		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
+		<h4>
 			Дата вступления в силу: {TERMS_PRIVACY_EFFECTIVE_DATE}
 		</h4>
 
@@ -24,9 +24,7 @@
 			и раскрытия персональной информации.
 		</p>
 
-		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Собираемая информация
-		</h4>
+		<h4>Собираемая информация</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
 			Мы собираем и храним информацию, которую вы добровольно предоставляете нам, а также данные,
@@ -47,9 +45,7 @@
 			и после посещения нашего сайта, имя домена и хоста, которые вы использовали для доступа к
 			Интернету, и функции нашего сайта, к которым вы получили доступ.
 		</p>
-		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Использование информации
-		</h4>
+		<h4>Использование информации</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
 			Мы используем эту информацию для удовлетворения потребностей наших клиентов. Мы можем
@@ -59,9 +55,7 @@
 			соблюдения юридических условий, регулирующих ваше использование нашего сайта, и/или для целей,
 			для которых вы предоставили информацию.
 		</p>
-		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Раскрытие информации
-		</h4>
+		<h4>Раскрытие информации</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
 			{TERMS_PRIVACY_COMPANY} не продает и не сдает в аренду вашу лично идентифицируемую информацию никому.
@@ -69,43 +63,35 @@
 			верим, что это требует закон, для защиты прав или собственности {TERMS_PRIVACY_COMPANY}, или
 			мы должны предоставить вам услуги или продукты, которые вы запросили.
 		</p>
-		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">Cookies</h4>
+		<h4>Cookies</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
 			Мы можем использовать файлы cookie для управления сеансами наших пользователей и хранения
 			предпочтений, отслеживания информации и выбора языка. Файлы cookie могут использоваться,
 			независимо от того, зарегистрированы ли вы у нас или нет.
 		</p>
-		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Безопасность
-		</h4>
+		<h4>Безопасность</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
 			Мы применяем разумные и современные методы безопасности для предотвращения
 			несанкционированного доступа, поддержания точности данных и обеспечения правильного
 			использования информации.
 		</p>
-		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Возможность редактирования и удаления информации об учетной записи и настроек
-		</h4>
+		<h4>Возможность редактирования и удаления информации об учетной записи и настроек</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
 			Вы можете запросить удаление своего адреса электронной почты, отправив письмо на адрес {TERMS_PRIVACY_CONTACT_EMAIL}.
 			Однако, пожалуйста, обратите внимание, что ваша идентификация, платежные и контактные данные
 			будут сохранены в наших записях на некоторое время.
 		</p>
-		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Обновления политики конфиденциальности
-		</h4>
+		<h4>Обновления политики конфиденциальности</h4>
 
 		<p class="max-w-[700px] text-lg text-muted-foreground">
 			Мы можем время от времени обновлять эту политику. Если мы вносим существенные изменения, мы
 			уведомим вас об изменениях через наш веб-сайт или другими способами, такими как электронная
 			почта.
 		</p>
-		<h4 class="mt-3 text-xl font-extrabold leading-tight tracking-tighter md:text-2xl">
-			Как с нами связаться
-		</h4>
+		<h4>Как с нами связаться</h4>
 		<p class="max-w-[700px] text-lg text-muted-foreground">
 			Если у вас есть вопросы по поводу настоящей политики конфиденциальности, пожалуйста, свяжитесь
 			с нами по адресу {TERMS_PRIVACY_CONTACT_EMAIL}.

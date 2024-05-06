@@ -7,9 +7,7 @@
 </script>
 
 <section class="container grid items-center gap-6">
-	<h1 class="mb-5 text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
-		Колоды для повторения
-	</h1>
+	<h1>Колоды для повторения</h1>
 	<ItemGrid>
 		{#each data.decksWithQueues as studyDeck}
 			<StudyDeckItem deckInfo={studyDeck} />
