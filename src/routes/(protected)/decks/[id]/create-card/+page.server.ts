@@ -11,8 +11,7 @@ export const load = (async (event) => {
 	const form = await superValidate(event, zod(createCardSchema));
 	return { form };
 }) satisfies LayoutServerLoad;
-//сделать единай экшн для добавления карты
-//сейчас единственное различие это наличие добовления в колоду
+//сделать единай экшн для добавления карты? хотя и так норм
 export const actions = {
 	addCard: async (event) => {
 		const deckId = event.params.id;
@@ -23,8 +22,6 @@ export const actions = {
 				addCardform
 			});
 		}
-		//add card to db
-		//add better error mesages
 		try {
 			//транзакцией?
 			const newCard = await createCard(addCardform.data, userId);

@@ -4,4 +4,4 @@
 	export let data: PageData;
 </script>
 
-<CreateCardForm data={data.form} action="?/addCard" />
+<CreateCardForm data={data.form} action="?/addCard" blocks={data.blocks} />

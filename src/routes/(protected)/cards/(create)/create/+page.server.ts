@@ -31,7 +31,6 @@ export const load = (async (event) => {
 
 export const actions = {
 	default: async (event) => {
-		console.log('called');
 		const userId = event.locals.user?.id;
 		const form = await superValidate(event, zod(createCardSchema));
 
