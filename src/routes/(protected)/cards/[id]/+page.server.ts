@@ -8,6 +8,8 @@ export const load = (async (event) => {
 	if (!card) {
 		error(404, 'Card not found');
 	}
-	const avgDiff = (card.studyCard.reduce((acc, card) => acc + card.difficulty, 0) / card.studyCard.length).toFixed(1);
+	const avgDiff = (
+		card.studyCard.reduce((acc, card) => acc + card.difficulty, 0) / card.studyCard.length
+	).toFixed(1);
 	return { card, avgDiff };
 }) satisfies PageServerLoad;

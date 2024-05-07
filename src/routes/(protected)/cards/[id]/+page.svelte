@@ -14,7 +14,8 @@
 			<Card.Title>
 				<h1>{data.card?.topic.name}</h1>
 			</Card.Title>
-			<Card.Description><a href={`/dictionary/?q=${data.card?.topic.name}`}>Открыть словарь</a></Card.Description>
+			<Card.Description
+				><a href={`/dictionary/?q=${data.card?.topic.name}`}>Открыть словарь</a></Card.Description>
 		</Card.Header>
 		<Card.Content class="flex flex-col gap-2">
 			{#each data.card.cardBlocks as cb}
@@ -22,15 +23,15 @@
 			{/each}
 		</Card.Content>
 		<Card.Footer class="flex flex-col items-start">
-			<p class="text-muted-foreground text-sm">
+			<p class="text-sm text-muted-foreground">
 				Добавленна в {data.card.cardDeck.length}
 				{declOfNum(data.card.cardDeck.length, ['колоду', 'колоды', 'колод'])}
 			</p>
-			<p class="text-muted-foreground text-sm">
+			<p class="text-sm text-muted-foreground">
 				Изучает {data.card.studyCard.length}
 				{declOfNum(data.card.studyCard.length, ['пользователь', 'пользователя', 'пользователей'])}
 			</p>
-			<p class="text-muted-foreground text-sm">
+			<p class="text-sm text-muted-foreground">
 				Cложность {data.avgDiff}
 			</p>
 		</Card.Footer>

@@ -58,7 +58,8 @@
 		</Card.Content>
 		{#if detailed}
 			<Card.Footer class="flex justify-between">
-				<Button href="/cards/create?base={encodeURIComponent(JSON.stringify(word))}&topic={word.title}"
+				<Button
+					href="/cards/create?base={encodeURIComponent(JSON.stringify(word))}&topic={word.title}"
 					>Создать карту на основе слова</Button>
 			</Card.Footer>
 		{/if}

@@ -1,15 +1,14 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import SearchResult from '../SearchResult.svelte';
-    import { Button } from "$lib/components/ui/button"
-    
-	export let data: PageData;
+	import { Button } from '$lib/components/ui/button';
 
+	export let data: PageData;
 </script>
 
 <section class="mx-auto flex max-w-3xl flex-col items-start justify-center gap-4">
-    <Button href="/dictionary" variant="secondary">Назад</Button>
+	<Button href="/dictionary" variant="secondary">Назад</Button>
 	<div class="w-full">
-        <SearchResult rawWord={data.word} detailed />
-    </div>
+		<SearchResult rawWord={data.word} detailed />
+	</div>
 </section>

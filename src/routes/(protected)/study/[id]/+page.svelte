@@ -43,8 +43,8 @@
 </script>
 
 <section class="container grid items-center gap-6">
-	<div class="flex justify-end gap-2 items-center">
-		<CardCounter count={data.stateCount} class="flex-1"/>
+	<div class="flex items-center justify-end gap-2">
+		<CardCounter count={data.stateCount} class="flex-1" />
 		<StudyDeckSettings settingsForm={data.settingsForm} studyDeck={data.studyDeck} />
 		<StudyDeckDelete deleteForm={data.settingsForm} studyDeck={data.studyDeck} />
 	</div>

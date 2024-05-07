@@ -10,11 +10,11 @@
 	import { goto } from '$app/navigation';
 
 	let search: 'loading' | 'ready' = 'loading';
-	let query = $page.url.searchParams.get('q') || '';;
+	let query = $page.url.searchParams.get('q') || '';
 	let results: Word[] = [];
 
 	onMount(async () => {
-		await initIndex()
+		await initIndex();
 		search = 'ready';
 	});
 
@@ -38,11 +38,11 @@
 		</div>
 
 		{#if results}
-		<div class="flex flex-col gap-2 w-full mt-2">
-			{#each results as word (word.id)}
-				<SearchResult rawWord={word} />
-			{/each}
-		</div>
+			<div class="mt-2 flex w-full flex-col gap-2">
+				{#each results as word (word.id)}
+					<SearchResult rawWord={word} />
+				{/each}
+			</div>
 		{/if}
 	{:else}
 		<Loader2 size="48" class="animate-spin" />
