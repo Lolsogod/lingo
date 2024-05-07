@@ -1,50 +1,9 @@
-interface Kanji {
-	common: boolean;
-	text: string;
-	tags: string[];
-}
-
-interface Kana {
-	common: boolean;
-	text: string;
-	tags: string[];
-	appliesToKanji: string[];
-}
-
-interface Gloss {
-	lang: string;
-	gender: null | string;
-	type: null | string;
-	text: string;
-}
-
-interface Sense {
-	partOfSpeech: string[];
-	appliesToKanji: string[];
-	appliesToKana: string[];
-	related: any[];
-	antonym: any[];
-	field: any[];
-	dialect: any[];
-	misc: any[];
-	info: any[];
-	languageSource: any[];
-	gloss: Gloss[];
-}
-
-export interface Word {
-	id: string;
-	kanji: Kanji[];
-	kana: Kana[];
-	sense: Sense[];
-}
-
-
+import type {Word} from './types'
 import FlexSearch from 'flexsearch';
 
 let index: FlexSearch.Index;
 let words: Word[];
-//move to server?
+
 export const createIndex = (data: Word[]) => {
 	index = new FlexSearch.Index({ tokenize: 'forward' });
 
@@ -60,7 +19,14 @@ export const searchIndex = (
 	searchTerm: string,
 ) => {
 	const match = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-	const results = index.search(match);
+	const results = index.search(match, {limit: 20});
 
 	return results.map((index) => words[index as number]);
 };
+
+export const initIndex = async () => {
+	if(!index || !words) {
+		const words = await fetch('/dictionary.json').then((r) => r.json());
+		createIndex(words);
+	}
+}

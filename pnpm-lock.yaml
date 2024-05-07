@@ -59,6 +59,9 @@ importers:
       formsnap:
         specifier: ^1.0.0
         version: 1.0.0(svelte@4.2.15)(sveltekit-superforms@2.13.0(@sveltejs/kit@2.5.7(@sveltejs/vite-plugin-svelte@3.1.0(svelte@4.2.15)(vite@5.2.11(@types/node@20.12.8)))(svelte@4.2.15)(vite@5.2.11(@types/node@20.12.8)))(@types/json-schema@7.0.15)(esbuild-runner@2.2.2(esbuild@0.19.12))(esbuild@0.19.12)(svelte@4.2.15))
+      json-stream-stringify:
+        specifier: ^3.1.4
+        version: 3.1.4
       lucia:
         specifier: ^3.2.0
         version: 3.2.0
@@ -1902,6 +1905,10 @@ packages:
 
   json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
+
+  json-stream-stringify@3.1.4:
+    resolution: {integrity: sha512-oGoz05ft577LolnXFQHD2CjnXDxXVA5b8lHwfEZgRXQUZeCMo6sObQQRq+NXuHQ3oTeMZHHmmPY2rjVwyqR62A==}
+    engines: {node: '>=7.10.1'}
 
   just-clone@6.2.0:
     resolution: {integrity: sha512-1IynUYEc/HAwxhi3WDpIpxJbZpMCvvrrmZVqvj9EhpvbH8lls7HhdhiByjL7DkAaWlLIzpC0Xc/VPvy/UxLNjA==}
@@ -4476,6 +4483,8 @@ snapshots:
   json-schema-traverse@0.4.1: {}
 
   json-stable-stringify-without-jsonify@1.0.1: {}
+
+  json-stream-stringify@3.1.4: {}
 
   just-clone@6.2.0: {}
 

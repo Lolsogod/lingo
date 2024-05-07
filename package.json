@@ -55,6 +55,7 @@
 		"eslint-plugin-svelte": "^2.38.0",
 		"flexsearch": "^0.7.43",
 		"formsnap": "^1.0.0",
+		"json-stream-stringify": "^3.1.4",
 		"lucia": "^3.2.0",
 		"lucide-svelte": "^0.373.0",
 		"mode-watcher": "^0.3.0",
