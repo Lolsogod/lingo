@@ -8,11 +8,11 @@
 </script>
 
 <Card class="flex cursor-pointer flex-col ">
-	<CardContent class="flex flex-1 items-center justify-center p-2">
+	<CardContent class="flex flex-1  p-2">
 		{#if blockInfo.type === 'text'}
-			<h2>
+			<h4>
 				{blockInfo.content}
-			</h2>
+			</h4>
 		{:else if blockInfo.type === 'image'}
 			<img src={blockInfo.content} alt="" class=" w-full rounded-lg object-cover" />
 		{:else if blockInfo.type === 'audio'}

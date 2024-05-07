@@ -5,9 +5,12 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Loader2 } from 'lucide-svelte';
 	import SearchResult from './SearchResult.svelte';
+	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 
 	let search: 'loading' | 'ready' = 'loading';
-	let query = '';
+	let query = $page.url.searchParams.get('q') || '';;
 	let results: Word[] = [];
 
 	onMount(async () => {
@@ -17,6 +20,14 @@
 
 	$: if (search === 'ready') {
 		results = searchIndex(query);
+	}
+
+	$: if (browser && query !== $page.url.searchParams.get('q')) {
+		const url = new URL($page.url);
+		url.searchParams.set('q', query);
+		goto(url, {
+			keepFocus: true
+		});
 	}
 </script>
 

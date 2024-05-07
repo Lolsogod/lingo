@@ -9,5 +9,7 @@
 
 <section class="mx-auto flex max-w-3xl flex-col items-start justify-center gap-4">
     <Button href="/dictionary" variant="secondary">Назад</Button>
-	{#if data.word}<SearchResult rawWord={data.word} />{/if}
+	<div class="w-full">
+        <SearchResult rawWord={data.word} detailed />
+    </div>
 </section>

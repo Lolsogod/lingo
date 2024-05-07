@@ -43,10 +43,11 @@
 </script>
 
 <section class="container grid items-center gap-6">
-	<StudyDeckSettings settingsForm={data.settingsForm} studyDeck={data.studyDeck} />
-	<StudyDeckDelete deleteForm={data.settingsForm} studyDeck={data.studyDeck} />
-	<CardCounter count={data.stateCount} />
-	{data.todayCount}
+	<div class="flex justify-end gap-2 items-center">
+		<CardCounter count={data.stateCount} class="flex-1"/>
+		<StudyDeckSettings settingsForm={data.settingsForm} studyDeck={data.studyDeck} />
+		<StudyDeckDelete deleteForm={data.settingsForm} studyDeck={data.studyDeck} />
+	</div>
 
 	{#if data.queue.length === 0}
 		На сегодня всё...
@@ -61,4 +62,5 @@
 			</div>
 		</div>
 	{/if}
+	<!--{data.todayCount}-->
 </section>

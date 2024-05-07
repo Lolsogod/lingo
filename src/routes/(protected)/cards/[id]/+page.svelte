@@ -14,7 +14,7 @@
 			<Card.Title>
 				<h1>{data.card?.topic.name}</h1>
 			</Card.Title>
-			<Card.Description>Ссылка на словарь?</Card.Description>
+			<Card.Description><a href={`/dictionary/?q=${data.card?.topic.name}`}>Открыть словарь</a></Card.Description>
 		</Card.Header>
 		<Card.Content class="flex flex-col gap-2">
 			{#each data.card.cardBlocks as cb}

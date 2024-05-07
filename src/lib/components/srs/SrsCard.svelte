@@ -12,10 +12,10 @@
 	const reveal = () => (revealed = true);
 </script>
 
-<div class={`flip-card w-60 ${revealed ? 'revealed' : ''}`}>
+<div class={`flip-card w-80 ${revealed ? 'revealed' : ''}`}>
 	<div class="inner relative">
 		<div class="front absolute">
-			<Card.Root class=" -z-20 flex min-h-72 w-60 flex-col items-center">
+			<Card.Root class=" -z-20 flex min-h-[30rem] w-80 flex-col items-center">
 				<Card.Header>
 					<h1>
 						{studyCard.baseCard.topic.name}
@@ -27,7 +27,7 @@
 			</Card.Root>
 		</div>
 		<div class="back absolute">
-			<Card.Root class="back back -z-20 flex min-h-72 w-60 flex-col items-center">
+			<Card.Root class="back back -z-20 flex min-h-[30rem] w-80 flex-col items-center">
 				<Card.Header>
 					<h1>
 						{studyCard.baseCard.topic.name}
@@ -36,11 +36,11 @@
 					{#if studyCard.baseCard.cardBlocks}
 						{#each studyCard.baseCard.cardBlocks as cardBlock}
 							{#if cardBlock.block.type === 'text'}
-								<h2>
+								<h4>
 									{cardBlock.block.content}
-								</h2>
+								</h4>
 							{:else if cardBlock.block.type === 'image'}
-								<img src={cardBlock.block.content} alt="" class="h-48 w-full object-cover" />
+								<img src={cardBlock.block.content} alt="" class="w-full object-cover" />
 							{:else if cardBlock.block.type === 'audio'}
 								<audio controls src={cardBlock.block.content} />
 							{/if}

@@ -22,10 +22,6 @@ export const searchIndex = (searchTerm: string) => {
 	return results.map((index) => words[index as number]);
 };
 
-export const getById = (id: string) => {
-	return words.find((word) => word.id === id);
-};
-
 export const initIndex = async () => {
 	if (!index || !words) {
 		const words = await fetch('/dictionary.json').then((r) => r.json());
