@@ -38,6 +38,9 @@ export const cardDeckSchema = z.object({
 export const addCardToDeckSchema = cardDeckSchema.pick({
 	cardId: true
 });
+export const addCardToDeckSchema2 = cardDeckSchema.pick({
+	deckId: true
+});
 //better validation for this one
 export const gradeCardSchema = z.object({
 	studyCardId: z.string(),
