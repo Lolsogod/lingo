@@ -3,7 +3,6 @@ import { createCardSchema } from '$lib/config/zod-schemas';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { getDecksByAuthor } from '$lib/server/database/models/deck';
-import { findBlocks } from '$lib/server/database/models/card';
 
 interface Base {
 	//дублируется
@@ -16,7 +15,7 @@ interface Base {
 export const load = (async (event) => {
 	const user = event.locals.user;
 	const baseParam = event.url.searchParams.get('base');
-	const base: Base = JSON.parse(decodeURIComponent(baseParam ?? ''));
+	const base: Base = baseParam?JSON.parse(decodeURIComponent(baseParam)):null;
 
 	const form = await superValidate(event, zod(createCardSchema));
 	const decks = await getDecksByAuthor(user?.id);
