@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
-	import {declOfNum} from '$lib/_helpers/declOfNum';
+	import { declOfNum } from '$lib/_helpers/declOfNum';
 	import BlockItem from '$lib/components/items/BlockItem.svelte';
 	export let data: PageData;
 	console.log(data.card);
@@ -18,12 +18,18 @@
 		</Card.Header>
 		<Card.Content class="flex flex-col gap-2">
 			{#each data.card.cardBlocks as cb}
-				<BlockItem blockInfo={cb.block}/>
+				<BlockItem blockInfo={cb.block} />
 			{/each}
 		</Card.Content>
 		<Card.Footer class="flex justify-between">
-			<p>Добавленна в {data.card.cardDeck.length} {declOfNum(data.card.cardDeck.length, ['колоду', 'колоды', 'колод'])}</p>
-			<p>Изучается {data.card.studyCard.length} {declOfNum(data.card.studyCard.length, ['пользователем', 'пльзователями', 'пльзователями'])}</p>
+			<p>
+				Добавленна в {data.card.cardDeck.length}
+				{declOfNum(data.card.cardDeck.length, ['колоду', 'колоды', 'колод'])}
+			</p>
+			<p>
+				Изучается {data.card.studyCard.length}
+				{declOfNum(data.card.studyCard.length, ['пользователем', 'пльзователями', 'пльзователями'])}
+			</p>
 		</Card.Footer>
 	</Card.Root>
 </section>

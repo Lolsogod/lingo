@@ -130,7 +130,7 @@
 						<Dialog.Title>Блоки на тему {$formData.topicName}</Dialog.Title>
 						<Dialog.Description>
 							{#each blocks as block}
-								<BlockItem blockInfo={block} on:click={() => addExisting(block)} add/>
+								<BlockItem blockInfo={block} on:click={() => addExisting(block)} add />
 							{/each}
 						</Dialog.Description>
 					</Dialog.Header>
