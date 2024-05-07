@@ -36,6 +36,7 @@
 	console.log(rawWord);
 </script>
 
+<a href={`/dictionary/${rawWord.id}`}>
 <Card.Root class="w-full">
 	<Card.Header class="pb-2">
 		<Card.Title>
@@ -54,3 +55,4 @@
 		{/each}
 	</Card.Content>
 </Card.Root>
+</a>
