@@ -21,14 +21,17 @@
 				<BlockItem blockInfo={cb.block} />
 			{/each}
 		</Card.Content>
-		<Card.Footer class="flex justify-between">
-			<p>
+		<Card.Footer class="flex flex-col items-start">
+			<p class="text-muted-foreground text-sm">
 				Добавленна в {data.card.cardDeck.length}
 				{declOfNum(data.card.cardDeck.length, ['колоду', 'колоды', 'колод'])}
 			</p>
-			<p>
-				Изучается {data.card.studyCard.length}
-				{declOfNum(data.card.studyCard.length, ['пользователем', 'пльзователями', 'пльзователями'])}
+			<p class="text-muted-foreground text-sm">
+				Изучает {data.card.studyCard.length}
+				{declOfNum(data.card.studyCard.length, ['пользователь', 'пользователя', 'пользователей'])}
+			</p>
+			<p class="text-muted-foreground text-sm">
+				Cложность {data.avgDiff}
 			</p>
 		</Card.Footer>
 	</Card.Root>

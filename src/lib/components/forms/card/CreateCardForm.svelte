@@ -128,7 +128,7 @@
 				<Dialog.Content>
 					<Dialog.Header>
 						<Dialog.Title>Блоки на тему {$formData.topicName}</Dialog.Title>
-						<Dialog.Description>
+						<Dialog.Description class="flex flex-col gap-2">
 							{#each blocks as block}
 								<BlockItem blockInfo={block} on:click={() => addExisting(block)} add />
 							{/each}
