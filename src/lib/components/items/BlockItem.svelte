@@ -4,6 +4,7 @@
 	import Button from '../ui/button/button.svelte';
 
 	export let blockInfo: Block;
+	export let add: boolean = false
 </script>
 
 <Card class="flex cursor-pointer flex-col ">
@@ -13,10 +14,12 @@
 				{blockInfo.content}
 			</h2>
 		{:else if blockInfo.type === 'image'}
-			<img src={blockInfo.content} alt="" class="h-48 w-full object-cover" />
+			<img src={blockInfo.content} alt="" class="h-48 w-full object-cover rounded-lg" />
 		{:else if blockInfo.type === 'audio'}
 			<audio controls src={blockInfo.content} />
 		{/if}
 	</CardContent>
-	<Button on:click>+</Button>
+	{#if add}
+		<Button on:click>+</Button>
+	{/if}
 </Card>

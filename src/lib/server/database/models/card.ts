@@ -133,3 +133,12 @@ export const findBlocks = async (topicName: string) => {
 
 	return blocks;
 };
+
+export const getCardById = async (cardId: string) => {
+	const card = await db.query.cardTable.findFirst({
+		where: eq(cardTable.id, cardId),
+		with: { topic: true, cardDeck: true, cardBlocks: { with: { block: true } }, studyCard: true}
+	});
+
+	return card;
+};

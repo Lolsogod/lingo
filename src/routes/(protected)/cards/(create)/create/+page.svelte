@@ -9,11 +9,11 @@
 
 <CreateCardForm data={data.form} decks={data.decks} blocks={data.blocks} />
 {#if data.relatedCards.length > 0}
-	<h2 class="border-b">Другие карты на эту тему</h2>
+	<h4>Другие карты на эту тему</h4>
 	<ItemGrid>
 		{#each data.relatedCards as card}
 			<CardItem cardInfo={card}>
-				<!--добавление добавить-->
+				<!--TODO:добавление добавить-->
 			</CardItem>
 		{/each}
 	</ItemGrid>

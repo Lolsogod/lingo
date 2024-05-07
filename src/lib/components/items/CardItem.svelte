@@ -5,10 +5,12 @@
 	export let cardInfo: CardExp;
 </script>
 
-<Card class="flex h-52 w-36 cursor-pointer flex-col ">
-	<CardContent class="flex h-12 flex-1 items-center justify-center p-2">
-		<span class="truncate text-2xl">{cardInfo.topic.name}</span>
-		<!--в слот мб-->
-	</CardContent>
-	<slot />
-</Card>
+<a href={`/cards/${cardInfo.id}`}>
+	<Card class="flex h-52 w-36 cursor-pointer flex-col ">
+		<CardContent class="flex h-12 flex-1 items-center justify-center p-2">
+			<span class="truncate text-2xl">{cardInfo.topic.name}</span>
+			<!--в слот мб-->
+		</CardContent>
+		<slot />
+	</Card>
+</a>
