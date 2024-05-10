@@ -109,7 +109,6 @@ const parseContainer = (containerFileContent: string): string => {
 export const parseEpub = async (epub: File): Promise<{ meta: Metadata; book: Book }> => {
 	try {
 		const { entries } = await unzip(epub);
-
 		const container = await entries['META-INF/container.xml'].text();
 		const opfPath = parseContainer(container);
 		const opf = await entries[opfPath].text();

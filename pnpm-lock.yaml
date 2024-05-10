@@ -95,6 +95,9 @@ importers:
       tailwind-variants:
         specifier: ^0.2.1
         version: 0.2.1(tailwindcss@3.4.3)
+      tiny-segmenter:
+        specifier: ^0.2.0
+        version: 0.2.0
       ts-fsrs:
         specifier: ^3.5.7
         version: 3.5.7
@@ -117,6 +120,9 @@ importers:
       '@types/pg':
         specifier: ^8.11.6
         version: 8.11.6
+      '@types/tiny-segmenter':
+        specifier: ^0.2.0
+        version: 0.2.0
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -1075,6 +1081,9 @@ packages:
 
   '@types/semver@7.5.8':
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
+
+  '@types/tiny-segmenter@0.2.0':
+    resolution: {integrity: sha512-OB8ybmyWznBTmXI2XiM5IgQFYrFsLp4ToGVJGOd49osZRB/ENFMUgqUyOfeXGdczMBny1qzCj8PG/SJPmMybCA==}
 
   '@types/validator@13.11.9':
     resolution: {integrity: sha512-FCTsikRozryfayPuiI46QzH3fnrOoctTjvOYZkho9BTFLCOZ2rgZJHMOVgCOfttjPJcgOx52EpkY0CMfy87MIw==}
@@ -2701,6 +2710,9 @@ packages:
   tiny-glob@0.2.9:
     resolution: {integrity: sha512-g/55ssRPUjShh+xkfx9UPDXqhckHEsHr4Vd9zX55oSdGZc/MD0m3sferOkwWtp98bv+kcVfEHtRJgBVJzelrzg==}
 
+  tiny-segmenter@0.2.0:
+    resolution: {integrity: sha512-m+aTJQ/CUBKurLaJRpLmJiwcL+Gpkzft5ZYnRU9AkuO45Y/k/2iJmuLEbN1XLrq6N3kDVyIUCCeqRzQx0feBag==}
+
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
@@ -3570,6 +3582,8 @@ snapshots:
   '@types/pug@2.0.10': {}
 
   '@types/semver@7.5.8': {}
+
+  '@types/tiny-segmenter@0.2.0': {}
 
   '@types/validator@13.11.9':
     optional: true
@@ -5228,6 +5242,8 @@ snapshots:
     dependencies:
       globalyzer: 0.1.0
       globrex: 0.1.2
+
+  tiny-segmenter@0.2.0: {}
 
   to-regex-range@5.0.1:
     dependencies:

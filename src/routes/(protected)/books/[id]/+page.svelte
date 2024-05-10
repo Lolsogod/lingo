@@ -4,7 +4,6 @@
 	import { onMount, tick } from 'svelte';
 	import { unzip, type ZipInfo } from 'unzipit';
 	import { assembleChapter } from './reader';
-	import { fade } from 'svelte/transition';
 	import TableOfContents from './TableOfContents.svelte';
 	import Config from './Config.svelte';
 	import { Button } from '$lib/components/ui/button';
@@ -167,7 +166,7 @@
 </script>
 
 <div
-	class="fixed bottom-0 left-1/2 z-10 ml-10 flex -translate-x-3/4 items-start gap-5 bg-background lg:flex-col lg:left-20 lg:top-24 p-5 rounded">
+	class="fixed bottom-0 left-1/2 z-10 ml-10 flex -translate-x-3/4 items-start gap-5 rounded bg-background p-5 lg:left-20 lg:top-24 lg:flex-col">
 	<Button href="/books" variant="outline" class="hidden lg:block">назад</Button>
 	<p>{section}/{meta.length}</p>
 

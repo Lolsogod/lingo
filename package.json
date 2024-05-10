@@ -19,6 +19,7 @@
 		"@sveltejs/kit": "^2.5.7",
 		"@sveltejs/vite-plugin-svelte": "^3.1.0",
 		"@types/pg": "^8.11.6",
+		"@types/tiny-segmenter": "^0.2.0",
 		"autoprefixer": "^10.4.19",
 		"dotenv": "^16.4.5",
 		"drizzle-kit": "^0.20.18",
@@ -67,6 +68,7 @@
 		"svelte-sonner": "^0.3.24",
 		"tailwind-merge": "^2.3.0",
 		"tailwind-variants": "^0.2.1",
+		"tiny-segmenter": "^0.2.0",
 		"ts-fsrs": "^3.5.7",
 		"unzipit": "^1.4.3",
 		"vaul-svelte": "^0.3.0"
