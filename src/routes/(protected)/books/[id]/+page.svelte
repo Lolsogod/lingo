@@ -8,7 +8,31 @@
 	import Config from './Config.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { ChevronLeft, ChevronRight } from 'lucide-svelte';
+	import Popup from './Popup.svelte';
+	import type { Word } from '../../dictionary/types';
+	import { initIndex, searchIndex } from '../../dictionary/search';
+	import { fade } from 'svelte/transition';
+	let offset: number;
+	let showPopup = false;
+	let popupText = '';
+	let popupX = 0;
+	let popupY = 0;
+	$:console.log(offset)
+	let search: 'loading' | 'ready' = 'loading';
+	let results: Word[] = [];
 
+	onMount(async () => {
+		await initIndex();
+		search = 'ready';
+	});
+
+	$: if (search === 'ready') {
+		results = searchIndex(popupText);
+	}
+
+	function closePopup() {
+		showPopup = false;
+	}
 	export let data: PageData;
 
 	let book: Book = data.book;
@@ -56,6 +80,12 @@
 				(await openBookDB).put('metas', meta);
 			}
 			container.replaceChildren(await assembleChapter(book.spine[section], entries, jumpTo));
+			const words = container.querySelectorAll('.word');
+			words.forEach((word) => {
+				if (word.textContent) {
+					highlightWord(word);
+				}
+			});
 		}
 	};
 
@@ -163,6 +193,44 @@
 				break;
 		}
 	};
+
+	const handleWordClick = async (event: { target: any }) => {
+        const word = event.target;
+        const rect = word.getBoundingClientRect();
+        popupText = word.textContent;
+        popupX = rect.left + window.scrollX;
+        showPopup = true;
+
+        await tick(); // Wait for the next microtask to ensure the DOM is updated
+
+        const popupHeight = offset + 10; // Dynamically get the popup's height
+        const viewportHeight = window.innerHeight;
+        const spaceBelow = viewportHeight - (rect.top + window.scrollY);
+
+        if (spaceBelow < popupHeight) {
+            popupY = rect.top + window.scrollY - popupHeight;
+        } else {
+            popupY = rect.top + window.scrollY - 40;
+        }
+    };
+
+	const highlightWord = (node: Element) =>{
+		const handleMouseOver = () => {
+			console.log('Mouse over', node.textContent);
+		};
+
+		const handleMouseOut = () => {
+		};
+
+		node.addEventListener('click', handleWordClick);
+
+		return {
+			destroy() {
+				node.removeEventListener('mouseover', handleMouseOver);
+				node.removeEventListener('mouseout', handleMouseOut);
+			}
+		};
+	}
 </script>
 
 <div
@@ -191,9 +259,17 @@
 		data-sveltekit-preload-data="off"
 		bind:this={container} />
 </div>
+
+{#if showPopup}
+<div in:fade={{ duration: 200 }} 
+out:fade={{ duration: 200 }}>
+  <Popup text={popupText} x={popupX} y={popupY} {results} on:click={closePopup} isVisible={showPopup} bind:ref={offset} />
+</div>
+{/if}
+
 <svelte:window bind:scrollY={scrolled} on:resize={handleResize} on:keydown={handleKeydown} />
 
-<style scoped>
+<style>
 	#container {
 		transform-origin: top;
 		margin: auto;

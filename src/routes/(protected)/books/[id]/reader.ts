@@ -83,34 +83,25 @@ export const assembleChapter = async (
 	return newHTML.body;
 };
 const segmenter = new TinySegmenter();
-function changeElementText(node: Node) {
+
+const changeElementText = (node: Node) => {
 	if (node.nodeType === Node.TEXT_NODE && node.textContent) {
 		const words = segmenter.segment(node.textContent);
 		const spans = words.map((word) => {
 			const span = document.createElement('span');
 			span.textContent = word;
-
-			// Add an event listener to the span
-			span.addEventListener('mouseover', (event) => {
-				// Only alert the word if the ctrl key is pressed
-				if (event.ctrlKey) {
-					console.log(word);
-				}
-			});
+			span.className = 'word'
 
 			return span;
 		});
 
-		// Create a new node to replace the original text node
 		const newNode = document.createElement('span');
 		for (const span of spans) {
 			newNode.appendChild(span);
 		}
 
-		// Replace the original text node with the new node
 		node.parentNode?.replaceChild(newNode, node);
 	} else if (node.nodeType === Node.ELEMENT_NODE) {
-		// If the node is an element node, recursively call this function on each child node
 		for (const child of node.childNodes) {
 			changeElementText(child);
 		}
