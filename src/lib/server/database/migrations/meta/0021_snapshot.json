@@ -1,4 +1,6 @@
 {
+  "id": "278d699e-19be-4b0b-a5ba-faff3178480c",
+  "prevId": "ad6c0f0e-9518-442d-84ab-d808424644f2",
   "version": "6",
   "dialect": "postgresql",
   "tables": {
@@ -12,6 +14,13 @@
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'text'"
         },
         "content": {
           "name": "content",
@@ -47,28 +56,28 @@
         "card_block_card_id_card_id_fk": {
           "name": "card_block_card_id_card_id_fk",
           "tableFrom": "card_block",
+          "tableTo": "card",
           "columnsFrom": [
             "card_id"
           ],
-          "tableTo": "card",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         },
         "card_block_block_id_block_id_fk": {
           "name": "card_block_block_id_block_id_fk",
           "tableFrom": "card_block",
+          "tableTo": "block",
           "columnsFrom": [
             "block_id"
           ],
-          "tableTo": "block",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
@@ -118,28 +127,28 @@
         "card_topic_id_topic_id_fk": {
           "name": "card_topic_id_topic_id_fk",
           "tableFrom": "card",
+          "tableTo": "topic",
           "columnsFrom": [
             "topic_id"
           ],
-          "tableTo": "topic",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         },
         "card_author_id_users_id_fk": {
           "name": "card_author_id_users_id_fk",
           "tableFrom": "card",
+          "tableTo": "users",
           "columnsFrom": [
             "author_id"
           ],
-          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -164,12 +173,14 @@
         "ratings": {
           "name": "ratings",
           "type": "ratings",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         },
         "states": {
           "name": "states",
           "type": "states",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         },
@@ -242,15 +253,15 @@
         "review_log_card_id_study_card_id_fk": {
           "name": "review_log_card_id_study_card_id_fk",
           "tableFrom": "review_log",
+          "tableTo": "study_card",
           "columnsFrom": [
             "card_id"
           ],
-          "tableTo": "study_card",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -325,6 +336,7 @@
         "states": {
           "name": "states",
           "type": "states",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         },
@@ -361,28 +373,28 @@
         "study_card_study_deck_id_study_deck_id_fk": {
           "name": "study_card_study_deck_id_study_deck_id_fk",
           "tableFrom": "study_card",
+          "tableTo": "study_deck",
           "columnsFrom": [
             "study_deck_id"
           ],
-          "tableTo": "study_deck",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "study_card_card_id_card_id_fk": {
           "name": "study_card_card_id_card_id_fk",
           "tableFrom": "study_card",
+          "tableTo": "card",
           "columnsFrom": [
             "card_id"
           ],
-          "tableTo": "card",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -412,10 +424,10 @@
       "uniqueConstraints": {
         "topic_name_unique": {
           "name": "topic_name_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "name"
-          ],
-          "nullsNotDistinct": false
+          ]
         }
       }
     },
@@ -441,28 +453,28 @@
         "card_deck_card_id_card_id_fk": {
           "name": "card_deck_card_id_card_id_fk",
           "tableFrom": "card_deck",
+          "tableTo": "card",
           "columnsFrom": [
             "card_id"
           ],
-          "tableTo": "card",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         },
         "card_deck_deck_id_deck_id_fk": {
           "name": "card_deck_deck_id_deck_id_fk",
           "tableFrom": "card_deck",
+          "tableTo": "deck",
           "columnsFrom": [
             "deck_id"
           ],
-          "tableTo": "deck",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
@@ -525,15 +537,15 @@
         "deck_author_id_users_id_fk": {
           "name": "deck_author_id_users_id_fk",
           "tableFrom": "deck",
+          "tableTo": "users",
           "columnsFrom": [
             "author_id"
           ],
-          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -569,6 +581,13 @@
           "notNull": true,
           "default": 10
         },
+        "timer": {
+          "name": "timer",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 60
+        },
         "deleted": {
           "name": "deleted",
           "type": "boolean",
@@ -582,28 +601,28 @@
         "study_deck_user_id_users_id_fk": {
           "name": "study_deck_user_id_users_id_fk",
           "tableFrom": "study_deck",
+          "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         },
         "study_deck_deck_id_deck_id_fk": {
           "name": "study_deck_deck_id_deck_id_fk",
           "tableFrom": "study_deck",
+          "tableTo": "deck",
           "columnsFrom": [
             "deck_id"
           ],
-          "tableTo": "deck",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -637,15 +656,15 @@
         "sessions_user_id_users_id_fk": {
           "name": "sessions_user_id_users_id_fk",
           "tableFrom": "sessions",
+          "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -745,17 +764,17 @@
       "uniqueConstraints": {
         "users_email_unique": {
           "name": "users_email_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "email"
-          ],
-          "nullsNotDistinct": false
+          ]
         },
         "users_token_unique": {
           "name": "users_token_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "token"
-          ],
-          "nullsNotDistinct": false
+          ]
         }
       }
     }
@@ -785,10 +804,8 @@
   },
   "schemas": {},
   "_meta": {
+    "columns": {},
     "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "id": "b1a8df0f-a945-4840-9762-d9d96402b7a2",
-  "prevId": "da250d75-8ef6-49ca-9962-25966880224f"
+    "tables": {}
+  }
 }

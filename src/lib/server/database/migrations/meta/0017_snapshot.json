@@ -1,728 +1,794 @@
 {
-	"id": "da250d75-8ef6-49ca-9962-25966880224f",
-	"prevId": "fb97b0aa-8f84-49d8-866c-d159ac426f91",
-	"version": "5",
-	"dialect": "pg",
-	"tables": {
-		"block": {
-			"name": "block",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "uuid",
-					"primaryKey": true,
-					"notNull": true,
-					"default": "gen_random_uuid()"
-				},
-				"content": {
-					"name": "content",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {}
-		},
-		"card_block": {
-			"name": "card_block",
-			"schema": "",
-			"columns": {
-				"card_id": {
-					"name": "card_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"block_id": {
-					"name": "block_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"card_block_card_id_card_id_fk": {
-					"name": "card_block_card_id_card_id_fk",
-					"tableFrom": "card_block",
-					"tableTo": "card",
-					"columnsFrom": ["card_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				},
-				"card_block_block_id_block_id_fk": {
-					"name": "card_block_block_id_block_id_fk",
-					"tableFrom": "card_block",
-					"tableTo": "block",
-					"columnsFrom": ["block_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {
-				"card_block_card_id_block_id_pk": {
-					"name": "card_block_card_id_block_id_pk",
-					"columns": ["card_id", "block_id"]
-				}
-			},
-			"uniqueConstraints": {}
-		},
-		"card": {
-			"name": "card",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "uuid",
-					"primaryKey": true,
-					"notNull": true,
-					"default": "gen_random_uuid()"
-				},
-				"topic_id": {
-					"name": "topic_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"public": {
-					"name": "public",
-					"type": "boolean",
-					"primaryKey": false,
-					"notNull": true,
-					"default": true
-				},
-				"author_id": {
-					"name": "author_id",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"card_topic_id_topic_id_fk": {
-					"name": "card_topic_id_topic_id_fk",
-					"tableFrom": "card",
-					"tableTo": "topic",
-					"columnsFrom": ["topic_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				},
-				"card_author_id_users_id_fk": {
-					"name": "card_author_id_users_id_fk",
-					"tableFrom": "card",
-					"tableTo": "users",
-					"columnsFrom": ["author_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {}
-		},
-		"review_log": {
-			"name": "review_log",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "text",
-					"primaryKey": true,
-					"notNull": true
-				},
-				"card_id": {
-					"name": "card_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"ratings": {
-					"name": "ratings",
-					"type": "ratings",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"states": {
-					"name": "states",
-					"type": "states",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"due": {
-					"name": "due",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"stability": {
-					"name": "stability",
-					"type": "real",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"difficulty": {
-					"name": "difficulty",
-					"type": "real",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"elapsed_days": {
-					"name": "elapsed_days",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"last_elapsed_days": {
-					"name": "last_elapsed_days",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"scheduled_days": {
-					"name": "scheduled_days",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"review": {
-					"name": "review",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"duration": {
-					"name": "duration",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true,
-					"default": 0
-				},
-				"deleted": {
-					"name": "deleted",
-					"type": "boolean",
-					"primaryKey": false,
-					"notNull": true,
-					"default": false
-				},
-				"created_at": {
-					"name": "created_at",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": true,
-					"default": "now()"
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"review_log_card_id_study_card_id_fk": {
-					"name": "review_log_card_id_study_card_id_fk",
-					"tableFrom": "review_log",
-					"tableTo": "study_card",
-					"columnsFrom": ["card_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {}
-		},
-		"study_card": {
-			"name": "study_card",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "uuid",
-					"primaryKey": true,
-					"notNull": true,
-					"default": "gen_random_uuid()"
-				},
-				"study_deck_id": {
-					"name": "study_deck_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"card_id": {
-					"name": "card_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"due": {
-					"name": "due",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": true,
-					"default": "now()"
-				},
-				"stability": {
-					"name": "stability",
-					"type": "real",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"difficulty": {
-					"name": "difficulty",
-					"type": "real",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"elapsed_days": {
-					"name": "elapsed_days",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"scheduled_days": {
-					"name": "scheduled_days",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"reps": {
-					"name": "reps",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"lapses": {
-					"name": "lapses",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"states": {
-					"name": "states",
-					"type": "states",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"last_review": {
-					"name": "last_review",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"suspended": {
-					"name": "suspended",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": true,
-					"default": "now()"
-				},
-				"deleted": {
-					"name": "deleted",
-					"type": "boolean",
-					"primaryKey": false,
-					"notNull": true,
-					"default": false
-				},
-				"created_at": {
-					"name": "created_at",
-					"type": "timestamp",
-					"primaryKey": false,
-					"notNull": true,
-					"default": "now()"
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"study_card_study_deck_id_study_deck_id_fk": {
-					"name": "study_card_study_deck_id_study_deck_id_fk",
-					"tableFrom": "study_card",
-					"tableTo": "study_deck",
-					"columnsFrom": ["study_deck_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				},
-				"study_card_card_id_card_id_fk": {
-					"name": "study_card_card_id_card_id_fk",
-					"tableFrom": "study_card",
-					"tableTo": "card",
-					"columnsFrom": ["card_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {}
-		},
-		"topic": {
-			"name": "topic",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "uuid",
-					"primaryKey": true,
-					"notNull": true,
-					"default": "gen_random_uuid()"
-				},
-				"name": {
-					"name": "name",
-					"type": "varchar",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {
-				"topic_name_unique": {
-					"name": "topic_name_unique",
-					"nullsNotDistinct": false,
-					"columns": ["name"]
-				}
-			}
-		},
-		"card_deck": {
-			"name": "card_deck",
-			"schema": "",
-			"columns": {
-				"card_id": {
-					"name": "card_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"deck_id": {
-					"name": "deck_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"card_deck_card_id_card_id_fk": {
-					"name": "card_deck_card_id_card_id_fk",
-					"tableFrom": "card_deck",
-					"tableTo": "card",
-					"columnsFrom": ["card_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				},
-				"card_deck_deck_id_deck_id_fk": {
-					"name": "card_deck_deck_id_deck_id_fk",
-					"tableFrom": "card_deck",
-					"tableTo": "deck",
-					"columnsFrom": ["deck_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {
-				"card_deck_card_id_deck_id_pk": {
-					"name": "card_deck_card_id_deck_id_pk",
-					"columns": ["card_id", "deck_id"]
-				}
-			},
-			"uniqueConstraints": {}
-		},
-		"deck": {
-			"name": "deck",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "uuid",
-					"primaryKey": true,
-					"notNull": true,
-					"default": "gen_random_uuid()"
-				},
-				"name": {
-					"name": "name",
-					"type": "varchar",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"description": {
-					"name": "description",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"public": {
-					"name": "public",
-					"type": "boolean",
-					"primaryKey": false,
-					"notNull": true,
-					"default": false
-				},
-				"author_id": {
-					"name": "author_id",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"deleted": {
-					"name": "deleted",
-					"type": "boolean",
-					"primaryKey": false,
-					"notNull": true,
-					"default": false
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"deck_author_id_users_id_fk": {
-					"name": "deck_author_id_users_id_fk",
-					"tableFrom": "deck",
-					"tableTo": "users",
-					"columnsFrom": ["author_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {}
-		},
-		"study_deck": {
-			"name": "study_deck",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "uuid",
-					"primaryKey": true,
-					"notNull": true,
-					"default": "gen_random_uuid()"
-				},
-				"user_id": {
-					"name": "user_id",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"deck_id": {
-					"name": "deck_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"new_cards_limit": {
-					"name": "new_cards_limit",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true,
-					"default": 10
-				},
-				"deleted": {
-					"name": "deleted",
-					"type": "boolean",
-					"primaryKey": false,
-					"notNull": true,
-					"default": false
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"study_deck_user_id_users_id_fk": {
-					"name": "study_deck_user_id_users_id_fk",
-					"tableFrom": "study_deck",
-					"tableTo": "users",
-					"columnsFrom": ["user_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				},
-				"study_deck_deck_id_deck_id_fk": {
-					"name": "study_deck_deck_id_deck_id_fk",
-					"tableFrom": "study_deck",
-					"tableTo": "deck",
-					"columnsFrom": ["deck_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {}
-		},
-		"sessions": {
-			"name": "sessions",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "text",
-					"primaryKey": true,
-					"notNull": true
-				},
-				"user_id": {
-					"name": "user_id",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"expires_at": {
-					"name": "expires_at",
-					"type": "timestamp with time zone",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"sessions_user_id_users_id_fk": {
-					"name": "sessions_user_id_users_id_fk",
-					"tableFrom": "sessions",
-					"tableTo": "users",
-					"columnsFrom": ["user_id"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {}
-		},
-		"users": {
-			"name": "users",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "text",
-					"primaryKey": true,
-					"notNull": true
-				},
-				"provider": {
-					"name": "provider",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true,
-					"default": "'email'"
-				},
-				"provider_id": {
-					"name": "provider_id",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true,
-					"default": "''"
-				},
-				"email": {
-					"name": "email",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"first_name": {
-					"name": "first_name",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"last_name": {
-					"name": "last_name",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"role": {
-					"name": "role",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true,
-					"default": "'USER'"
-				},
-				"verified": {
-					"name": "verified",
-					"type": "boolean",
-					"primaryKey": false,
-					"notNull": true,
-					"default": false
-				},
-				"receive_email": {
-					"name": "receive_email",
-					"type": "boolean",
-					"primaryKey": false,
-					"notNull": true,
-					"default": true
-				},
-				"password": {
-					"name": "password",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"token": {
-					"name": "token",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"created_at": {
-					"name": "created_at",
-					"type": "timestamp with time zone",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"updated_at": {
-					"name": "updated_at",
-					"type": "timestamp with time zone",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {
-				"users_email_unique": {
-					"name": "users_email_unique",
-					"nullsNotDistinct": false,
-					"columns": ["email"]
-				},
-				"users_token_unique": {
-					"name": "users_token_unique",
-					"nullsNotDistinct": false,
-					"columns": ["token"]
-				}
-			}
-		}
-	},
-	"enums": {
-		"ratings": {
-			"name": "ratings",
-			"values": {
-				"Manual": "Manual",
-				"Again": "Again",
-				"Hard": "Hard",
-				"Good": "Good",
-				"Easy": "Easy"
-			}
-		},
-		"states": {
-			"name": "states",
-			"values": {
-				"New": "New",
-				"Learning": "Learning",
-				"Review": "Review",
-				"Relearning": "Relearning"
-			}
-		}
-	},
-	"schemas": {},
-	"_meta": {
-		"columns": {},
-		"schemas": {},
-		"tables": {}
-	}
+  "version": "6",
+  "dialect": "postgresql",
+  "tables": {
+    "public.block": {
+      "name": "block",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.card_block": {
+      "name": "card_block",
+      "schema": "",
+      "columns": {
+        "card_id": {
+          "name": "card_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_id": {
+          "name": "block_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "card_block_card_id_card_id_fk": {
+          "name": "card_block_card_id_card_id_fk",
+          "tableFrom": "card_block",
+          "columnsFrom": [
+            "card_id"
+          ],
+          "tableTo": "card",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        "card_block_block_id_block_id_fk": {
+          "name": "card_block_block_id_block_id_fk",
+          "tableFrom": "card_block",
+          "columnsFrom": [
+            "block_id"
+          ],
+          "tableTo": "block",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "card_block_card_id_block_id_pk": {
+          "name": "card_block_card_id_block_id_pk",
+          "columns": [
+            "card_id",
+            "block_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "public.card": {
+      "name": "card",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "topic_id": {
+          "name": "topic_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "public": {
+          "name": "public",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "author_id": {
+          "name": "author_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "card_topic_id_topic_id_fk": {
+          "name": "card_topic_id_topic_id_fk",
+          "tableFrom": "card",
+          "columnsFrom": [
+            "topic_id"
+          ],
+          "tableTo": "topic",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        "card_author_id_users_id_fk": {
+          "name": "card_author_id_users_id_fk",
+          "tableFrom": "card",
+          "columnsFrom": [
+            "author_id"
+          ],
+          "tableTo": "users",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.review_log": {
+      "name": "review_log",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "card_id": {
+          "name": "card_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ratings": {
+          "name": "ratings",
+          "type": "ratings",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "states": {
+          "name": "states",
+          "type": "states",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "due": {
+          "name": "due",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "stability": {
+          "name": "stability",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "difficulty": {
+          "name": "difficulty",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "elapsed_days": {
+          "name": "elapsed_days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_elapsed_days": {
+          "name": "last_elapsed_days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "scheduled_days": {
+          "name": "scheduled_days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "review": {
+          "name": "review",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "duration": {
+          "name": "duration",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "deleted": {
+          "name": "deleted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "review_log_card_id_study_card_id_fk": {
+          "name": "review_log_card_id_study_card_id_fk",
+          "tableFrom": "review_log",
+          "columnsFrom": [
+            "card_id"
+          ],
+          "tableTo": "study_card",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.study_card": {
+      "name": "study_card",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "study_deck_id": {
+          "name": "study_deck_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "card_id": {
+          "name": "card_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "due": {
+          "name": "due",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "stability": {
+          "name": "stability",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "difficulty": {
+          "name": "difficulty",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "elapsed_days": {
+          "name": "elapsed_days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "scheduled_days": {
+          "name": "scheduled_days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reps": {
+          "name": "reps",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lapses": {
+          "name": "lapses",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "states": {
+          "name": "states",
+          "type": "states",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_review": {
+          "name": "last_review",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "suspended": {
+          "name": "suspended",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted": {
+          "name": "deleted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "study_card_study_deck_id_study_deck_id_fk": {
+          "name": "study_card_study_deck_id_study_deck_id_fk",
+          "tableFrom": "study_card",
+          "columnsFrom": [
+            "study_deck_id"
+          ],
+          "tableTo": "study_deck",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        "study_card_card_id_card_id_fk": {
+          "name": "study_card_card_id_card_id_fk",
+          "tableFrom": "study_card",
+          "columnsFrom": [
+            "card_id"
+          ],
+          "tableTo": "card",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.topic": {
+      "name": "topic",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "topic_name_unique": {
+          "name": "topic_name_unique",
+          "columns": [
+            "name"
+          ],
+          "nullsNotDistinct": false
+        }
+      }
+    },
+    "public.card_deck": {
+      "name": "card_deck",
+      "schema": "",
+      "columns": {
+        "card_id": {
+          "name": "card_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "deck_id": {
+          "name": "deck_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "card_deck_card_id_card_id_fk": {
+          "name": "card_deck_card_id_card_id_fk",
+          "tableFrom": "card_deck",
+          "columnsFrom": [
+            "card_id"
+          ],
+          "tableTo": "card",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        "card_deck_deck_id_deck_id_fk": {
+          "name": "card_deck_deck_id_deck_id_fk",
+          "tableFrom": "card_deck",
+          "columnsFrom": [
+            "deck_id"
+          ],
+          "tableTo": "deck",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "card_deck_card_id_deck_id_pk": {
+          "name": "card_deck_card_id_deck_id_pk",
+          "columns": [
+            "card_id",
+            "deck_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "public.deck": {
+      "name": "deck",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "public": {
+          "name": "public",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "author_id": {
+          "name": "author_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "deleted": {
+          "name": "deleted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "deck_author_id_users_id_fk": {
+          "name": "deck_author_id_users_id_fk",
+          "tableFrom": "deck",
+          "columnsFrom": [
+            "author_id"
+          ],
+          "tableTo": "users",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.study_deck": {
+      "name": "study_deck",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "deck_id": {
+          "name": "deck_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "new_cards_limit": {
+          "name": "new_cards_limit",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 10
+        },
+        "deleted": {
+          "name": "deleted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "study_deck_user_id_users_id_fk": {
+          "name": "study_deck_user_id_users_id_fk",
+          "tableFrom": "study_deck",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "tableTo": "users",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        "study_deck_deck_id_deck_id_fk": {
+          "name": "study_deck_deck_id_deck_id_fk",
+          "tableFrom": "study_deck",
+          "columnsFrom": [
+            "deck_id"
+          ],
+          "tableTo": "deck",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.sessions": {
+      "name": "sessions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sessions_user_id_users_id_fk": {
+          "name": "sessions_user_id_users_id_fk",
+          "tableFrom": "sessions",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "tableTo": "users",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'email'"
+        },
+        "provider_id": {
+          "name": "provider_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'USER'"
+        },
+        "verified": {
+          "name": "verified",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "receive_email": {
+          "name": "receive_email",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "columns": [
+            "email"
+          ],
+          "nullsNotDistinct": false
+        },
+        "users_token_unique": {
+          "name": "users_token_unique",
+          "columns": [
+            "token"
+          ],
+          "nullsNotDistinct": false
+        }
+      }
+    }
+  },
+  "enums": {
+    "public.ratings": {
+      "name": "ratings",
+      "schema": "public",
+      "values": [
+        "Manual",
+        "Again",
+        "Hard",
+        "Good",
+        "Easy"
+      ]
+    },
+    "public.states": {
+      "name": "states",
+      "schema": "public",
+      "values": [
+        "New",
+        "Learning",
+        "Review",
+        "Relearning"
+      ]
+    }
+  },
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "id": "da250d75-8ef6-49ca-9962-25966880224f",
+  "prevId": "fb97b0aa-8f84-49d8-866c-d159ac426f91"
 }

@@ -7,13 +7,13 @@
 	export let data: PageData;
 </script>
 
-<div class="flex-1">
-	<section class="container grid items-center gap-6">
-		<div class="flex max-w-[980px] flex-col items-start gap-2">
-			<h1>
+<div class="flex  flex-col justify-center">
+	<section class="container mx-auto p-6">
+		<div class="mx-auto max-w-4xl text-center">
+			<h1 class="mb-4 text-6xl font-bold">
 				{APP_NAME}
 			</h1>
-			<p class="max-w-[700px] text-lg text-muted-foreground">
+			<p class="mb-8 text-lg">
 				Мы вынуждены отталкиваться от того, что начало повседневной работы по формированию позиции
 				играет важную роль в формировании поставленных обществом задач. Таким образом, существующая
 				теория в значительной степени обусловливает важность своевременного выполнения сверхзадачи.
@@ -25,12 +25,12 @@
 				сознания однозначно определяет каждого участника как способного принимать собственные
 				решения касаемо первоочередных требований.
 			</p>
-		</div>
-		<div class="flex gap-4">
-			{#if !data.user}
-				<Button on:click={() => goto('/auth/sign-in')}>Войти</Button>
-				<Button on:click={() => goto('/auth/sign-up')} variant="outline">Создать аккаунт</Button>
-			{/if}
+			<div class="flex justify-center gap-4">
+				{#if !data.user}
+					<Button href='/auth/sign-in'>Войти</Button>
+					<Button href='/auth/sign-up' variant="secondary">Создать аккаунт</Button>
+				{/if}
+			</div>
 		</div>
 	</section>
 </div>

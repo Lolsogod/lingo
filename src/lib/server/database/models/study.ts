@@ -93,7 +93,12 @@ export const setNewLimit = async (studyDeckId: string, limit: number) => {
 		.set({ newCardsLimit: limit })
 		.where(eq(studyDeckTable.id, studyDeckId));
 };
-
+export const setTimer = async (studyDeckId: string, timer: number) => {
+	await db
+		.update(studyDeckTable)
+		.set({ timer: timer })
+		.where(eq(studyDeckTable.id, studyDeckId));
+};
 export const deleteStudyDeck = async (studyDeckId: string) => {
 	return await db.delete(studyDeckTable).where(eq(studyDeckTable.id, studyDeckId)); //user_id check?
 };

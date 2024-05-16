@@ -1,0 +1,1 @@
+ALTER TABLE "study_deck" ADD COLUMN "timer" integer DEFAULT 60 NOT NULL;

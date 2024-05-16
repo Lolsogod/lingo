@@ -3,7 +3,8 @@ import {
 	getQueue,
 	getStudyDeck,
 	gradeStudyCard,
-	setNewLimit
+	setNewLimit,
+	setTimer
 } from '$lib/server/database/models/study';
 import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
@@ -57,6 +58,7 @@ export const load = (async (event) => {
 
 	const settingsForm = await superValidate(event, zod(studyDeckSettingsSchema));
 	settingsForm.data.limit = studyDeck.newCardsLimit;
+	settingsForm.data.timer = studyDeck.timer;
 
 	return { stateCount, goodForm, againForm, todayCount, queue, settingsForm, studyDeck };
 }) satisfies PageServerLoad;
@@ -98,6 +100,7 @@ export const actions = {
 			return { form };
 		}
 		await setNewLimit(studyDeckId, form.data.limit);
+		await setTimer(studyDeckId, form.data.timer);
 		setFlash({ type: 'success', message: 'Новый лимит успешно установлен' }, event);
 		return { form };
 	},

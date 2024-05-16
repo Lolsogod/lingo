@@ -5,20 +5,21 @@
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { studyDeckSettingsSchema } from '$lib/config/zod-schemas';
 	import type { StudyDeckExp } from '$lib/server/database/schema';
-	import { superForm, type SuperValidated } from 'sveltekit-superforms';
+	import { superForm, type SuperForm, type SuperValidated } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	export let settingsForm: SuperValidated<any>;
+	export let form: SuperForm<any>;
 	export let studyDeck: StudyDeckExp;
-	const form = superForm(settingsForm, {
-		validators: zodClient(studyDeckSettingsSchema),
-		resetForm: false
-	});
 
 	const inputs = [
 		{
 			name: 'limit',
 			label: 'Кол-во новых в день',
+			type: 'number'
+		},
+		{
+			name: 'timer',
+			label: 'Время для одной карты с.',
 			type: 'number'
 		}
 	];
