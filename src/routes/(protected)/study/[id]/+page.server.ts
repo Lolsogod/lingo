@@ -19,6 +19,31 @@ import {
 import { getTodayCount } from '$lib/server/database/models/study';
 import { isUUID } from '$lib/_helpers/isUIID';
 import { setFlash } from 'sveltekit-flash-message/server';
+import { declOfNum } from '$lib/_helpers/declOfNum';
+
+const getTimeToDue = (dueDate: Date): string => {
+	const now = new Date();
+	const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+	const timeUntilDue = dueDate.getTime() - startOfToday.getTime();
+
+	const days = Math.floor(timeUntilDue / (1000 * 60 * 60 * 24));
+	const months = Math.floor(days / 30);
+	const years = Math.floor(days / 365);
+
+	if (days < 0) {
+		return "Дата уже прошла";
+	} else if (days === 0) {
+		return "Сегодня";
+	} else if (days === 1) {
+		return "Завтра";
+	} else if (days < 30) {
+		return `Через ${days} ${declOfNum(days, ['день', 'дня', 'дней'])}`;
+	} else if (months < 12) {
+		return `Через ${months} ${declOfNum(months, ['месяц', 'месяца', 'месяцев'])}`;
+	} else {
+		return `Через ${years} ${declOfNum(years, ['год', 'года', 'лет'])}`;
+	}
+};
 
 //ограничить для очереди дублируем опять
 const countCardsByState = (cards: StudyCard[]): Count => {
@@ -54,7 +79,7 @@ export const load = (async (event) => {
 		() => Math.random() - Math.random()
 	);
 	const stateCount = countCardsByState(queue);
-	console.log(queue);
+	//console.log(queue);
 
 	const settingsForm = await superValidate(event, zod(studyDeckSettingsSchema));
 	settingsForm.data.limit = studyDeck.newCardsLimit;
@@ -72,7 +97,8 @@ export const actions = {
 		}
 		const res = await gradeStudyCard(goodForm.data.studyCardId, 'Good');
 		if (res) {
-			setFlash({ type: 'success', message: 'Карточка успешно оценена как хорошая' }, event); //TODO: время следующего повторения
+			const time = getTimeToDue(res[0].due);
+			setFlash({ type: 'success', message: `Следующее повторение ${time}`  }, event);
 		} else {
 			setFlash({ type: 'error', message: 'Не удалось оценить карточку как хорошую' }, event);
 		}
@@ -86,7 +112,8 @@ export const actions = {
 		}
 		const res = await gradeStudyCard(againForm.data.studyCardId, 'Again');
 		if (res) {
-			setFlash({ type: 'success', message: 'Карточка успешно оценена как "снова"' }, event);
+			const time = getTimeToDue(res[0].due);
+			setFlash({ type: 'success', message: `Следующее повторение ${time}` }, event);
 		} else {
 			setFlash({ type: 'error', message: 'Не удалось оценить карточку как "снова"' }, event);
 		}

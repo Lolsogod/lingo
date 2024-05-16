@@ -45,7 +45,6 @@
 	$: $subGood === true ? optSubmitCounter++ : undefined;
 	$: $subAgain === true ? optSubmitCounter++ : undefined;
 	$: dir = $subGood ? 1 : $subAgain ? -1 : 0;
-	$: console.log($subSettings)
 </script>
 
 <section class="container grid items-center gap-6">
@@ -56,7 +55,8 @@
 	</div>
 
 	{#if data.queue.length === 0}
-		На сегодня всё...
+		На сегодня всё!
+		Было изучено {data.todayCount} карт
 	{:else if $subSettings}
 		<span></span>
 	{:else}
@@ -70,5 +70,4 @@
 			</div>
 		</div>
 	{/if}
-	<!--{data.todayCount}-->
 </section>
