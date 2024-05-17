@@ -1,4 +1,10 @@
-<div class="auto-grid">
+<!-- Start of Selection -->
+<script lang="ts">
+	 let className: string = '';
+	 export {className as class}
+</script>
+
+<div class="auto-grid {className}">
 	<slot />
 </div>
 

@@ -55,7 +55,7 @@
 					<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
 					href="/books"
-					class:active={'/books' === currentPage}>читать</a>
+					class:active={'/books' === currentPage}>Читать</a>
 			</nav>
 		</div>
 		<div class="flex flex-1 items-center justify-end space-x-4">

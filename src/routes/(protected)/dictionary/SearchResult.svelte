@@ -35,7 +35,6 @@
 		return word;
 	};
 	const word = process(rawWord);
-	console.log(rawWord);
 </script>
 
 <a href={`/dictionary/${rawWord.id}`}>
