@@ -1,6 +1,6 @@
 import { relations } from 'drizzle-orm';
 import { boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
-import { deckTable, studyDeckTable } from './deck';
+import { deckLikeTable, deckTable, studyDeckTable } from './deck';
 import { cardTable } from './card';
 
 export const userTable = pgTable('users', {
@@ -46,7 +46,8 @@ export const userRelations = relations(userTable, ({ many }) => {
 		sessions: many(sessionTable),
 		studyDecks: many(studyDeckTable),
 		decks: many(deckTable), //as author
-		cards: many(cardTable) //as author
+		cards: many(cardTable), //as author
+		deckLikes: many(deckLikeTable)
 	};
 });
 

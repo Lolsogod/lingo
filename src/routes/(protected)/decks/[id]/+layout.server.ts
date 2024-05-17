@@ -1,8 +1,8 @@
-import { getDeckById } from '$lib/server/database/models/deck';
+import { getDeckById, getLikesDislikes, getUsersLikeStatusForDeck } from '$lib/server/database/models/deck';
 import { superValidate } from 'sveltekit-superforms';
 import { createCardIndex, searchCardsIndex } from '$lib/cardSearch';
 import type { LayoutServerLoad } from './$types';
-import { deleteDeckSchema, startStudySchema } from '$lib/config/zod-schemas';
+import { deleteDeckSchema, dislikeSchema, likeSchema, startStudySchema } from '$lib/config/zod-schemas';
 import { findBlocks, getCardsByDeckId } from '$lib/server/database/models/card';
 import { error } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
@@ -14,7 +14,7 @@ export const load = (async (event) => {
 	const topic = event.url.searchParams.get('topic') || '';
 
 	const deck = await getDeckById(deckId, user?.id);
-	if (!deck) {
+	if (!deck || !user) {
 		return error(404, 'Deck not found');
 	}
 	const startStudyForm = await superValidate(event, zod(startStudySchema));
@@ -33,6 +33,12 @@ export const load = (async (event) => {
 	const canEdit = deck.authorId === user?.id;
 
 	const blocks = await findBlocks(topic);
+	
+	const likeForm = await superValidate(event, zod(likeSchema));
+	const dislikeForm = await superValidate(event, zod(dislikeSchema));
+	const { likes, dislikes, rating } = await getLikesDislikes(deckId);
 
-	return { startStudyForm, deck, cards, alredyStudying, canEdit, deleteDeckForm, blocks };
+	const likeStatus = await getUsersLikeStatusForDeck(deckId, user.id);
+
+	return { startStudyForm, deck, cards, alredyStudying, canEdit, deleteDeckForm, blocks, likeForm, dislikeForm, likes, dislikes, rating, likeStatus };
 }) satisfies LayoutServerLoad;

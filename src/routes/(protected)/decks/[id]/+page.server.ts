@@ -1,6 +1,6 @@
 import { isUUID } from '$lib/_helpers/isUIID';
-import { deleteDeckSchema, startStudySchema } from '$lib/config/zod-schemas';
-import { addDeckToUser, softDeleteDeck } from '$lib/server/database/models/deck';
+import { deleteDeckSchema, likeSchema, startStudySchema } from '$lib/config/zod-schemas';
+import { addDeckToUser, addDislike, addLike, removeLike, softDeleteDeck } from '$lib/server/database/models/deck';
 import { fail, redirect } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';
@@ -45,5 +45,30 @@ export const actions = {
 		await softDeleteDeck(deckId, userId);
 
 		redirect(302, '/decks/browse');
+	},
+	rate: async (event) => {
+		const userId = event.locals.user?.id;
+		const deckId = event.params.id;
+		const likeForm = await superValidate(event, zod(likeSchema));
+		if (!likeForm.valid || !userId || !deckId) {
+			return fail(400, {
+				likeForm
+			});
+		}
+		const { liked } = likeForm.data;
+		if (liked) {
+			await addLike(userId, deckId);
+		} else {
+			await addDislike(userId, deckId);
+		}
+	},//handle change from like to dislike and vice versa
+	unrate: async (event) => {
+		const userId = event.locals.user?.id;
+		const deckId = event.params.id;
+		
+		if ( !userId || !deckId) {
+			return fail(400);
+		}
+		await removeLike(userId, deckId);
 	}
 };

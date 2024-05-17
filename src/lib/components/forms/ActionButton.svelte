@@ -10,9 +10,10 @@
 	let _class: string = '';
 	export { _class as class };
 	export let hideLoading: boolean = false;
+	export let variant: 'link' | 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' = 'default';
 	type ActionValue = {
 		name: string;
-		value?: string;
+		value?: any;
 	};
 	export let values: ActionValue[];
 
@@ -29,6 +30,7 @@
 		</Form.Field>
 	{/each}
 	<Form.Button
+		{variant}
 		class="w-full"
 		on:click={(e) => e.stopPropagation()}
 		disabled={(condition || $submitting) && !hideLoading}>

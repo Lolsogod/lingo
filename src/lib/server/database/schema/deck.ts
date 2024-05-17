@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { boolean, integer, pgTable, primaryKey, text, uuid, varchar } from 'drizzle-orm/pg-core';
+import { boolean, integer, pgTable, primaryKey, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 import { userTable } from './user';
 import { cardTable, studyCardTable, type StudyCard } from './card';
 
@@ -44,6 +44,21 @@ export const studyDeckTable = pgTable('study_deck', {
 	deleted: boolean('deleted').notNull().default(false) //TODO: add soft delete (to save statistics)
 });
 
+export const deckLikeTable = pgTable('deck_like', {
+	userId: text('user_id')
+		.notNull()
+		.references(() => userTable.id),
+	deckId: uuid('deck_id')
+		.notNull()
+		.references(() => deckTable.id),
+	liked: boolean('liked').notNull(),
+	createdAt: timestamp('created_at').notNull().defaultNow()
+},(table) => {
+	return {
+		pk: primaryKey({ columns: [table.userId, table.deckId] })
+	};
+});
+
 //relations
 export const deckRelations = relations(deckTable, ({ many, one }) => {
 	return {
@@ -52,7 +67,8 @@ export const deckRelations = relations(deckTable, ({ many, one }) => {
 			fields: [deckTable.authorId],
 			references: [userTable.id]
 		}),
-		studyDecks: many(studyDeckTable)
+		studyDecks: many(studyDeckTable),
+		deckLikes: many(deckLikeTable)
 	};
 });
 
@@ -83,6 +99,19 @@ export const studyDeckRelations = relations(studyDeckTable, ({ one, many }) => {
 	};
 });
 
+export const deckLikeRelations = relations(deckLikeTable, ({ one }) => {
+	return {
+		user: one(userTable, {
+			fields: [deckLikeTable.userId],
+			references: [userTable.id]
+		}),
+		deck: one(deckTable, {
+			fields: [deckLikeTable.deckId],
+			references: [deckTable.id]
+		})
+	};
+});
+
 //types
 export type Deck = typeof deckTable.$inferSelect;
 export type NewDeck = typeof deckTable.$inferInsert;
@@ -93,3 +122,5 @@ export type NewCardDeck = typeof cardDeckTable.$inferInsert;
 export type StudyDeck = typeof studyDeckTable.$inferSelect;
 export type NewStudyDeck = typeof studyDeckTable.$inferInsert;
 export type StudyDeckExp = StudyDeck & { deck: NewDeck; studyCards: StudyCard[] };
+export type DeckLike = typeof deckLikeTable.$inferSelect;
+export type NewDeckLike = typeof deckLikeTable.$inferInsert;

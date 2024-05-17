@@ -2,6 +2,7 @@ import { isUUID } from '$lib/_helpers/isUIID';
 import db from '$lib/server/database/drizzle';
 import {
 	cardDeckTable,
+	deckLikeTable,
 	deckTable,
 	studyCardTable,
 	studyDeckTable
@@ -106,3 +107,69 @@ export const softDeleteDeck = async (deckId: string, userId: string) => {
 		.returning();
 	return result;
 };
+
+//likes 
+export const addLike = async (userId: string, deckId: string) => {
+	const existingLike = await db.query.deckLikeTable.findFirst({
+		where: and(eq(deckLikeTable.userId, userId), eq(deckLikeTable.deckId, deckId))
+	});
+
+	let result;
+	if (existingLike) {
+		result = await db
+			.update(deckLikeTable)
+			.set({ liked: !existingLike.liked })
+			.where(and(eq(deckLikeTable.userId, userId), eq(deckLikeTable.deckId, deckId)))
+			.returning();
+	} else {
+		result = await db.insert(deckLikeTable).values({ userId, deckId, liked: true }).returning();
+	}
+
+	return result;
+};
+
+export const addDislike = async (userId: string, deckId: string) => {
+	const existingDislike = await db.query.deckLikeTable.findFirst({
+		where: and(eq(deckLikeTable.userId, userId), eq(deckLikeTable.deckId, deckId))
+	});
+
+	let result;
+	if (existingDislike) {
+		result = await db
+			.update(deckLikeTable)
+			.set({ liked: !existingDislike.liked })
+			.where(and(eq(deckLikeTable.userId, userId), eq(deckLikeTable.deckId, deckId)))
+			.returning();
+	} else {
+		result = await db.insert(deckLikeTable).values({ userId, deckId, liked: false }).returning();
+	}
+
+	return result;
+};
+
+export const removeLike = async (userId: string, deckId: string) => {
+	const result = await db
+		.delete(deckLikeTable)
+		.where(and(eq(deckLikeTable.userId, userId), eq(deckLikeTable.deckId, deckId)))
+		.returning();
+	return result;
+};
+
+export const getLikesDislikes = async (deckId: string) => {
+	const likes = await db.query.deckLikeTable.findMany({
+		where: and(eq(deckLikeTable.deckId, deckId), eq(deckLikeTable.liked, true))
+	});
+	const dislikes = await db.query.deckLikeTable.findMany({
+		where: and(eq(deckLikeTable.deckId, deckId), eq(deckLikeTable.liked, false))
+	});
+	const rating = likes.length - dislikes.length;
+	return { likes, dislikes, rating };
+};
+
+export const getUsersLikeStatusForDeck = async (deckId: string, userId: string) => {
+	const likeStatus = await db.query.deckLikeTable.findFirst({
+		where: and(eq(deckLikeTable.deckId, deckId), eq(deckLikeTable.userId, userId))
+	});
+	return likeStatus;
+};
+

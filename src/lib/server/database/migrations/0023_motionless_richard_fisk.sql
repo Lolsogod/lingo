@@ -1,0 +1,1 @@
+ALTER TABLE "deck_like" DROP COLUMN IF EXISTS "id";

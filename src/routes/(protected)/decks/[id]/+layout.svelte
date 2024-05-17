@@ -2,7 +2,12 @@
 	import { Button } from '$lib/components/ui/button';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { deleteDeckSchema, startStudySchema } from '$lib/config/zod-schemas';
+	import {
+		deleteDeckSchema,
+		dislikeSchema,
+		likeSchema,
+		startStudySchema
+	} from '$lib/config/zod-schemas';
 	import type { LayoutData } from './$types';
 	import ActionButton from '$lib/components/forms/ActionButton.svelte';
 	import CardItem from '$lib/components/items/CardItem.svelte';
@@ -12,6 +17,7 @@
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import { Input } from '$lib/components/ui/input';
+	import { ThumbsUp, ThumbsDown } from 'lucide-svelte';
 
 	export let data: LayoutData;
 
@@ -31,7 +37,19 @@
 	const deleteDeckForm = superForm(data.deleteDeckForm, {
 		validators: zodClient(deleteDeckSchema)
 	});
+
+	const likeForm = superForm(data.likeForm, {
+		validators: zodClient(likeSchema)
+	});
+	const dislikeForm = superForm(data.dislikeForm, {
+		validators: zodClient(dislikeSchema)
+	});
+
 	const deck_url = `/decks/${data.deck.id}`;
+
+	$: likeStatus = data.likeStatus ? (data.likeStatus.liked ? 'liked' : 'disliked') : 'unrated';
+	$: liked = likeStatus === 'liked';
+	$: disliked = likeStatus === 'disliked';
 </script>
 
 <section class="container grid items-center gap-6">
@@ -77,6 +95,25 @@
 	<h2 class="border-b">
 		Список карт <!---доделать-->
 	</h2>
+	<div class="flex gap-4">
+		<ActionButton
+			form={likeForm}
+			action="{deck_url}?/{liked ? 'unrate' : 'rate'}"
+			values={[{ name: 'liked', value: true }]}
+			variant={liked ? 'default' : 'secondary'}>
+			<span class="flex gap-1 items-center text-xl"><ThumbsUp />
+			{data.likes.length}</span>
+		</ActionButton>
+		<ActionButton
+			form={dislikeForm}
+			action="{deck_url}?/{disliked ? 'unrate' : 'rate'}"
+			values={[{ name: 'liked', value: false }]}
+			variant={disliked ? 'default' : 'secondary'}>
+			<span class="flex gap-1 items-center text-xl"><ThumbsDown />
+			{data.dislikes.length}</span>
+		</ActionButton>
+	</div>
+	<span class="text-lg text-muted-foreground">Рейтинг колоды: {data.rating}</span>
 	<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
 	<ItemGrid>
 		{#each data.cards as card}

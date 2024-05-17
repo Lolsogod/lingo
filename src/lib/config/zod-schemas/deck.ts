@@ -46,3 +46,12 @@ export const studyDeckSettingsSchema = z.object({
 });
 
 export const deleteDeckSchema = z.object({});
+
+export const likeSchema = z.object({
+	deckId: z.string().optional(),
+	userId: z.string().optional(),
+	liked: z.boolean()
+});
+
+export const dislikeSchema = likeSchema;
+
