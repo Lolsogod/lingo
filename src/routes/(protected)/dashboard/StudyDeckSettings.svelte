@@ -31,7 +31,7 @@
 		<Dialog.Header>
 			<Dialog.Title>Настройки обучения для {studyDeck.deck.name}</Dialog.Title>
 			<Dialog.Description>
-				Make changes to your profile here. Click save when you're done.
+				выставте 0 - чтобы отключить таймер
 			</Dialog.Description>
 		</Dialog.Header>
 		<SimpleForm {form} {inputs} action={`/study/${studyDeck.id}/?/settings`}>

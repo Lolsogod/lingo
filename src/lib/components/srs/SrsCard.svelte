@@ -9,8 +9,8 @@
 	export let studyCard: StudyCardExp;
 	export let goodForm: SuperForm<any>;
 	export let againForm: SuperForm<any>;
-	export let timerLength: number
-	
+	export let timerLength: number;
+
 	let revealed = false;
 	const stateMap = {
 		New: { label: 'Новая', color: 'bg-blue-500' },
@@ -18,12 +18,12 @@
 		Relearning: { label: 'Забыта', color: 'bg-red-500' },
 		Review: { label: 'Повторяется', color: 'bg-green-500' }
 	};
-	
+
 	const reveal = () => (revealed = true);
 
 	let timer: NodeJS.Timeout;
-	let remainingTime = timerLength
-	const revealAfterTimeout = (timeout: number) => {
+	let remainingTime = timerLength;
+	const revealAfterTimeout = () => {
 		timer = setInterval(() => {
 			if (remainingTime > 0) {
 				remainingTime -= 1;
@@ -33,23 +33,29 @@
 			}
 		}, 1000);
 	};
-
-	revealAfterTimeout(60000);
+	if (timerLength > 0) {
+		revealAfterTimeout();
+	}
 </script>
 
 <div class={`flip-card w-80 ${revealed ? 'revealed' : ''}`}>
 	<div class="inner relative">
 		<div class="front absolute">
 			<Card.Root class=" -z-20 flex min-h-[30rem] w-80 flex-col items-center">
-				<Badge variant="outline" class="{stateMap[studyCard.state].color} bg-opacity-60 absolute top-3 left-3">
+				<Badge
+					variant="outline"
+					class="{stateMap[studyCard.state].color} absolute left-3 top-3 bg-opacity-60">
 					{stateMap[studyCard.state].label}
 				</Badge>
 				<Card.Header>
 					<h1>
 						{studyCard.baseCard.topic.name}
 					</h1></Card.Header>
-				<Card.Content class="flex-1 flex items-center">
-					<span class="text-5xl text-muted-foreground">{remainingTime}</span></Card.Content>
+				<Card.Content class="flex flex-1 items-center">
+					{#if timerLength > 0}
+						<span class="text-5xl text-muted-foreground">{remainingTime}</span>
+					{/if}
+				</Card.Content>
 				<Card.Footer class="flex justify-center gap-3 p-0 pb-6">
 					<Button on:click={reveal} class="self-bottom">Открыть</Button>
 				</Card.Footer>
@@ -58,7 +64,9 @@
 		<div class="back absolute">
 			<Card.Root class="back back -z-20 flex min-h-[30rem] w-80 flex-col items-center">
 				<Card.Header>
-					<Badge variant="outline" class="{stateMap[studyCard.state].color} bg-opacity-60 absolute top-3 left-3">
+					<Badge
+						variant="outline"
+						class="{stateMap[studyCard.state].color} absolute left-3 top-3 bg-opacity-60">
 						{stateMap[studyCard.state].label}
 					</Badge>
 					<h1>

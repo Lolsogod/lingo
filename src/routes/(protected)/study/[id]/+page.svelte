@@ -8,6 +8,7 @@
 	import StudyDeckSettings from '../../dashboard/StudyDeckSettings.svelte';
 	import { quintInOut } from 'svelte/easing';
 	import StudyDeckDelete from '../../dashboard/StudyDeckDelete.svelte';
+	import { Button } from '$lib/components/ui/button';
 	export let data: PageData;
 	let dir = 0;
 
@@ -50,6 +51,7 @@
 <section class="container grid items-center gap-6">
 	<div class="flex items-center justify-end gap-2">
 		<CardCounter count={data.stateCount} class="flex-1" />
+		<Button href="/study/{data.studyDeck.id}/stats" variant="outline">Статистика</Button>
 		<StudyDeckSettings form={settingsForm} studyDeck={data.studyDeck} />
 		<StudyDeckDelete deleteForm={data.settingsForm} studyDeck={data.studyDeck} />
 	</div>
