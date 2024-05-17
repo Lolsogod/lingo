@@ -16,7 +16,7 @@ export const addBook = async (meta: Metadata, book: Book) => {
 		const metasStore = tx.objectStore('metas');
 
 		const foundBook = (await metasStore.getAll()).find((b) => b.title === meta.title);
-		if (foundBook) return foundBook.id; 
+		if (foundBook) return foundBook.id;
 
 		const bookID = await booksStore.add(book);
 

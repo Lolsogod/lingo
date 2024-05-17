@@ -128,7 +128,7 @@
 		</CardHeader>
 		<CardContent class="overflow-auto">
 			<div id="cal-heatmap" bind:this={mapCont}></div>
-			<div class="text-muted-foreground h-4 mt-2">{info}</div>
+			<div class="mt-2 h-4 text-muted-foreground">{info}</div>
 		</CardContent>
 	</Card>
 

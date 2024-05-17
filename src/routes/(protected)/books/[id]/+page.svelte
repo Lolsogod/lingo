@@ -17,7 +17,7 @@
 	let popupText = '';
 	let popupX = 0;
 	let popupY = 0;
-	$:console.log(offset)
+	$: console.log(offset);
 	let search: 'loading' | 'ready' = 'loading';
 	let results: Word[] = [];
 
@@ -195,32 +195,31 @@
 	};
 
 	const handleWordClick = async (event: { target: any }) => {
-        const word = event.target;
-        const rect = word.getBoundingClientRect();
-        popupText = word.textContent;
-        popupX = rect.left + window.scrollX;
-        showPopup = true;
+		const word = event.target;
+		const rect = word.getBoundingClientRect();
+		popupText = word.textContent;
+		popupX = rect.left + window.scrollX;
+		showPopup = true;
 
-        await tick(); // Wait for the next microtask to ensure the DOM is updated
+		await tick(); // Wait for the next microtask to ensure the DOM is updated
 
-        const popupHeight = offset + 10; // Dynamically get the popup's height
-        const viewportHeight = window.innerHeight;
-        const spaceBelow = viewportHeight - (rect.top + window.scrollY);
+		const popupHeight = offset + 10; // Dynamically get the popup's height
+		const viewportHeight = window.innerHeight;
+		const spaceBelow = viewportHeight - (rect.top + window.scrollY);
 
-        if (spaceBelow < popupHeight) {
-            popupY = rect.top + window.scrollY - popupHeight;
-        } else {
-            popupY = rect.top + window.scrollY - 40;
-        }
-    };
+		if (spaceBelow < popupHeight) {
+			popupY = rect.top + window.scrollY - popupHeight;
+		} else {
+			popupY = rect.top + window.scrollY - 40;
+		}
+	};
 
-	const highlightWord = (node: Element) =>{
+	const highlightWord = (node: Element) => {
 		const handleMouseOver = () => {
 			console.log('Mouse over', node.textContent);
 		};
 
-		const handleMouseOut = () => {
-		};
+		const handleMouseOut = () => {};
 
 		node.addEventListener('click', handleWordClick);
 
@@ -230,7 +229,7 @@
 				node.removeEventListener('mouseout', handleMouseOut);
 			}
 		};
-	}
+	};
 </script>
 
 <div
@@ -261,10 +260,16 @@
 </div>
 
 {#if showPopup}
-<div in:fade={{ duration: 200 }} 
-out:fade={{ duration: 200 }}>
-  <Popup text={popupText} x={popupX} y={popupY} {results} on:click={closePopup} isVisible={showPopup} bind:ref={offset} />
-</div>
+	<div in:fade={{ duration: 200 }} out:fade={{ duration: 200 }}>
+		<Popup
+			text={popupText}
+			x={popupX}
+			y={popupY}
+			{results}
+			on:click={closePopup}
+			isVisible={showPopup}
+			bind:ref={offset} />
+	</div>
 {/if}
 
 <svelte:window bind:scrollY={scrolled} on:resize={handleResize} on:keydown={handleKeydown} />

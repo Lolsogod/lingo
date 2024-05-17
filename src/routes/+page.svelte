@@ -7,7 +7,7 @@
 	export let data: PageData;
 </script>
 
-<div class="flex  flex-col justify-center">
+<div class="flex flex-col justify-center">
 	<section class="container mx-auto p-6">
 		<div class="mx-auto max-w-4xl text-center">
 			<h1 class="mb-4 text-6xl font-bold">
@@ -27,8 +27,8 @@
 			</p>
 			<div class="flex justify-center gap-4">
 				{#if !data.user}
-					<Button href='/auth/sign-in'>Войти</Button>
-					<Button href='/auth/sign-up' variant="secondary">Создать аккаунт</Button>
+					<Button href="/auth/sign-in">Войти</Button>
+					<Button href="/auth/sign-up" variant="secondary">Создать аккаунт</Button>
 				{/if}
 			</div>
 		</div>

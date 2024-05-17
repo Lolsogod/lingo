@@ -18,12 +18,15 @@ export const searchCardsIndex = (
 	const match = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 	const results = cardsIndex.search(match);
 
-	return results.map((index) => cards[index as number]).sort((a, b) => {
-		if (a.topic.name === searchTerm && b.topic.name !== searchTerm) {
-		  return -1; 
-		} else if (a.topic.name !== searchTerm && b.topic.name === searchTerm) {
-		  return 1; 
-		} else {
-		  return 0;
-		}});
+	return results
+		.map((index) => cards[index as number])
+		.sort((a, b) => {
+			if (a.topic.name === searchTerm && b.topic.name !== searchTerm) {
+				return -1;
+			} else if (a.topic.name !== searchTerm && b.topic.name === searchTerm) {
+				return 1;
+			} else {
+				return 0;
+			}
+		});
 };

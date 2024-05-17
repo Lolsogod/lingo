@@ -2,9 +2,9 @@
 	import { onMount } from 'svelte';
 	import BookItem from './BookItem.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import type {BookDb} from '$lib/book/bookDb';
+	import type { BookDb } from '$lib/book/bookDb';
 
-	let bookDb: BookDb
+	let bookDb: BookDb;
 	let bookList: Metadata[] = [];
 
 	const addBook = async () => {
@@ -36,7 +36,7 @@
 	const init = async () => {
 		const libdb = await import('$lib/book/bookDb');
 		bookDb = libdb.openBookDB;
-		bookList = await libdb.getAllMetas()
+		bookList = await libdb.getAllMetas();
 	};
 
 	onMount(async () => {

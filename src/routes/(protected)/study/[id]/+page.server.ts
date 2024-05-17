@@ -31,11 +31,11 @@ const getTimeToDue = (dueDate: Date): string => {
 	const years = Math.floor(days / 365);
 
 	if (days < 0) {
-		return "Дата уже прошла";
+		return 'Дата уже прошла';
 	} else if (days === 0) {
-		return "Сегодня";
+		return 'Сегодня';
 	} else if (days === 1) {
-		return "Завтра";
+		return 'Завтра';
 	} else if (days < 30) {
 		return `Через ${days} ${declOfNum(days, ['день', 'дня', 'дней'])}`;
 	} else if (months < 12) {
@@ -98,7 +98,7 @@ export const actions = {
 		const res = await gradeStudyCard(goodForm.data.studyCardId, 'Good');
 		if (res) {
 			const time = getTimeToDue(res[0].due);
-			setFlash({ type: 'success', message: `Следующее повторение ${time}`  }, event);
+			setFlash({ type: 'success', message: `Следующее повторение ${time}` }, event);
 		} else {
 			setFlash({ type: 'error', message: 'Не удалось оценить карточку как хорошую' }, event);
 		}

@@ -28,7 +28,10 @@
 			</Form.Control>
 		</Form.Field>
 	{/each}
-	<Form.Button class="w-full" on:click={(e) => e.stopPropagation()} disabled={(condition || $submitting) && !hideLoading}>
+	<Form.Button
+		class="w-full"
+		on:click={(e) => e.stopPropagation()}
+		disabled={(condition || $submitting) && !hideLoading}>
 		{#if $submitting && !hideLoading}
 			<Loader2 class="mr-2 h-4 w-4 animate-spin" />
 		{:else if condition}

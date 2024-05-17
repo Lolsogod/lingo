@@ -48,7 +48,7 @@
 			<Button
 				on:click={() => (settings.paginated = true)}
 				variant={settings.paginated ? 'secondary' : 'outline'}
-				class="rounded-r-none border ml-2"><Book /></Button>
+				class="ml-2 rounded-r-none border"><Book /></Button>
 			<Button
 				on:click={() => (settings.paginated = false)}
 				variant={!settings.paginated ? 'secondary' : 'outline'}

@@ -15,7 +15,7 @@ interface Base {
 export const load = (async (event) => {
 	const user = event.locals.user;
 	const baseParam = event.url.searchParams.get('base');
-	const base: Base = baseParam?JSON.parse(decodeURIComponent(baseParam)):null;
+	const base: Base = baseParam ? JSON.parse(decodeURIComponent(baseParam)) : null;
 
 	const form = await superValidate(event, zod(createCardSchema));
 	const decks = await getDecksByAuthor(user?.id);

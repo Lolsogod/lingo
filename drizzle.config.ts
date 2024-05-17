@@ -8,12 +8,12 @@ if (!DATABASE_URL) {
 export default {
 	schema: './src/lib/server/database/schema',
 	out: './src/lib/server/database/migrations',
-	dialect: "postgresql",
+	dialect: 'postgresql',
 	dbCredentials: {
 		url: DATABASE_URL
 	},
 	migrations: {
-        table: "migrations",
-        schema: "public"
-    }
+		table: 'migrations',
+		schema: 'public'
+	}
 } satisfies Config;

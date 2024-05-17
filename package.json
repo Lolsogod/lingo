@@ -50,7 +50,7 @@
 		"arctic": "^1.8.1",
 		"bits-ui": "^0.21.7",
 		"cal-heatmap": "^4.2.4",
-		"chart.js": "^4.4.2",
+		"chart.js": "^4.4.3",
 		"clsx": "^2.1.1",
 		"cmdk-sv": "^0.0.17",
 		"drizzle-orm": "^0.30.10",

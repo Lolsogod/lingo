@@ -90,7 +90,7 @@ const changeElementText = (node: Node) => {
 		const spans = words.map((word) => {
 			const span = document.createElement('span');
 			span.textContent = word;
-			span.className = 'word'
+			span.className = 'word';
 
 			return span;
 		});
@@ -106,4 +106,4 @@ const changeElementText = (node: Node) => {
 			changeElementText(child);
 		}
 	}
-}
+};

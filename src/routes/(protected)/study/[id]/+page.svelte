@@ -57,8 +57,7 @@
 	</div>
 
 	{#if data.queue.length === 0}
-		На сегодня всё!
-		Было изучено {data.todayCount} карт
+		На сегодня всё! Было изучено {data.todayCount} карт
 	{:else if $subSettings}
 		<span></span>
 	{:else}
@@ -66,7 +65,11 @@
 			<div class="relative h-[70vh] w-full overflow-hidden">
 				{#key optSubmitCounter}
 					<div out:flyAway={{ duration: 800 }} class="absolute left-1/2 -ml-[7.5rem]">
-						<SrsCard studyCard={data.queue[0]} {goodForm} {againForm} timerLength={data.studyDeck.timer} />
+						<SrsCard
+							studyCard={data.queue[0]}
+							{goodForm}
+							{againForm}
+							timerLength={data.studyDeck.timer} />
 					</div>
 				{/key}
 			</div>

@@ -30,9 +30,7 @@
 	<Dialog.Content class="sm:max-w-[425px]">
 		<Dialog.Header>
 			<Dialog.Title>Настройки обучения для {studyDeck.deck.name}</Dialog.Title>
-			<Dialog.Description>
-				выставте 0 - чтобы отключить таймер
-			</Dialog.Description>
+			<Dialog.Description>выставте 0 - чтобы отключить таймер</Dialog.Description>
 		</Dialog.Header>
 		<SimpleForm {form} {inputs} action={`/study/${studyDeck.id}/?/settings`}>
 			<div slot="submit">

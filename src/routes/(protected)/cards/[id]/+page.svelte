@@ -18,7 +18,7 @@
 	const form = superForm(data.addToDeckForm, {
 		validators: zodClient(addCardToDeckSchema2)
 	});
-	const {form: formData} = form;
+	const { form: formData } = form;
 	let chosenDeck = { value: '' };
 </script>
 
@@ -51,52 +51,52 @@
 		</Card.Footer>
 	</Card.Root>
 	{#if data.decks}
-	<Dialog.Root>
-		<Dialog.Trigger
-			class={`${buttonVariants({ variant: 'default' })} flex flex-1 flex-col items-center justify-center`}
-			disabled={ data.decks.length <= 0}>
-			Добавить в колоду
-		</Dialog.Trigger>
-		<Dialog.Content>
-			<Dialog.Header>
-				<Dialog.Title>Добавить в колоду</Dialog.Title>
-				<Dialog.Description class="flex flex-col gap-2">
-					<SimpleForm {form}>
-						<div slot="custom-fields">
-							<Form.Field {form} name="deckId">
-								<Form.Control let:attrs>
-									<Form.Label>Выберите колоду</Form.Label>
-									<Select.Root
-										selected={chosenDeck}
-										onSelectedChange={(v) => {
-											v && ($formData.deckId = v.value);
-										}}>
-										<Select.Trigger {...attrs}>
-											<Select.Value placeholder="Колода" />
-										</Select.Trigger>
-										<Select.Content>
-											<Select.Group>
-												{#each data.decks as deck}
-													<Select.Item value={deck.id} label={deck.name}>
-														{deck.name}
-													</Select.Item>
-												{/each}
-											</Select.Group>
-										</Select.Content>
-										<Select.Input name={attrs.name} />
-									</Select.Root>
-									<input hidden bind:value={$formData.deckId} name={attrs.name} />
-								</Form.Control>
-								<Form.FieldErrors />
-							</Form.Field>
-						</div>
-						<div slot="submit">
-							<SimpleSubmit {form}>Добавить</SimpleSubmit>
-						</div>
-					</SimpleForm>
-				</Dialog.Description>
-			</Dialog.Header>
-		</Dialog.Content>
-	</Dialog.Root>
+		<Dialog.Root>
+			<Dialog.Trigger
+				class={`${buttonVariants({ variant: 'default' })} flex flex-1 flex-col items-center justify-center`}
+				disabled={data.decks.length <= 0}>
+				Добавить в колоду
+			</Dialog.Trigger>
+			<Dialog.Content>
+				<Dialog.Header>
+					<Dialog.Title>Добавить в колоду</Dialog.Title>
+					<Dialog.Description class="flex flex-col gap-2">
+						<SimpleForm {form}>
+							<div slot="custom-fields">
+								<Form.Field {form} name="deckId">
+									<Form.Control let:attrs>
+										<Form.Label>Выберите колоду</Form.Label>
+										<Select.Root
+											selected={chosenDeck}
+											onSelectedChange={(v) => {
+												v && ($formData.deckId = v.value);
+											}}>
+											<Select.Trigger {...attrs}>
+												<Select.Value placeholder="Колода" />
+											</Select.Trigger>
+											<Select.Content>
+												<Select.Group>
+													{#each data.decks as deck}
+														<Select.Item value={deck.id} label={deck.name}>
+															{deck.name}
+														</Select.Item>
+													{/each}
+												</Select.Group>
+											</Select.Content>
+											<Select.Input name={attrs.name} />
+										</Select.Root>
+										<input hidden bind:value={$formData.deckId} name={attrs.name} />
+									</Form.Control>
+									<Form.FieldErrors />
+								</Form.Field>
+							</div>
+							<div slot="submit">
+								<SimpleSubmit {form}>Добавить</SimpleSubmit>
+							</div>
+						</SimpleForm>
+					</Dialog.Description>
+				</Dialog.Header>
+			</Dialog.Content>
+		</Dialog.Root>
 	{/if}
 </section>
