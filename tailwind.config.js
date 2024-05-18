@@ -4,6 +4,14 @@ import { fontFamily } from 'tailwindcss/defaultTheme';
 const config = {
 	darkMode: ['class'],
 	content: ['./src/**/*.{html,js,svelte,ts}'],
+	plugins: [
+		require('tailwindcss-animate'),
+		require('vidstack/tailwind.cjs')({
+		  prefix: 'media',
+		  webComponents: true,
+		}),
+		customVariants,
+	  ],
 	safelist: ['dark'],
 	theme: {
 		container: {
@@ -15,6 +23,8 @@ const config = {
 		},
 		extend: {
 			colors: {
+				'media-brand': 'rgb(var(--media-brand) / <alpha-value>)',
+        		'media-focus': 'rgb(var(--media-focus) / <alpha-value>)',
 				border: 'hsl(var(--border) / <alpha-value>)',
 				input: 'hsl(var(--input) / <alpha-value>)',
 				ring: 'hsl(var(--ring) / <alpha-value>)',
@@ -60,5 +70,12 @@ const config = {
 		}
 	}
 };
-
+function customVariants({ addVariant, matchVariant }) {
+	// Strict version of `.group` to help with nesting.
+	matchVariant('parent-data', (value) => `.parent[data-${value}] > &`);
+  
+	addVariant('hocus', ['&:hover', '&:focus-visible']);
+	addVariant('group-hocus', ['.group:hover &', '.group:focus-visible &']);
+  }
+  
 export default config;

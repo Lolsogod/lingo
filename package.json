@@ -65,6 +65,8 @@
 		"json-stream-stringify": "^3.1.4",
 		"lucia": "^3.2.0",
 		"lucide-svelte": "^0.378.0",
+		"media-captions": "^0.0.18",
+		"media-icons": "^1.1.4",
 		"mode-watcher": "^0.3.0",
 		"oslo": "^1.2.0",
 		"pg": "^8.11.5",
@@ -75,8 +77,12 @@
 		"svelte-sonner": "^0.3.24",
 		"tailwind-merge": "^2.3.0",
 		"tailwind-variants": "^0.2.1",
+		"tailwindcss-animate": "^1.0.7",
 		"tiny-segmenter": "^0.2.0",
 		"unzipit": "^1.4.3",
-		"vaul-svelte": "^0.3.0"
+		"vaul-svelte": "^0.3.0",
+		"vidstack": "^1.11.21",
+		"youtube-captions-scraper": "^2.0.3",
+		"youtube-transcript": "^1.2.1"
 	}
 }
