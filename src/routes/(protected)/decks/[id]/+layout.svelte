@@ -101,16 +101,18 @@
 			action="{deck_url}?/{liked ? 'unrate' : 'rate'}"
 			values={[{ name: 'liked', value: true }]}
 			variant={liked ? 'default' : 'secondary'}>
-			<span class="flex gap-1 items-center text-xl"><ThumbsUp />
-			{data.likes.length}</span>
+			<span class="flex items-center gap-1 text-xl"
+				><ThumbsUp />
+				{data.likes.length}</span>
 		</ActionButton>
 		<ActionButton
 			form={dislikeForm}
 			action="{deck_url}?/{disliked ? 'unrate' : 'rate'}"
 			values={[{ name: 'liked', value: false }]}
 			variant={disliked ? 'default' : 'secondary'}>
-			<span class="flex gap-1 items-center text-xl"><ThumbsDown />
-			{data.dislikes.length}</span>
+			<span class="flex items-center gap-1 text-xl"
+				><ThumbsDown />
+				{data.dislikes.length}</span>
 		</ActionButton>
 	</div>
 	<span class="text-lg text-muted-foreground">Рейтинг колоды: {data.rating}</span>

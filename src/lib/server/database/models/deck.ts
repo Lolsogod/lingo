@@ -9,7 +9,7 @@ import {
 } from '$lib/server/database/schema';
 import type { Deck, NewDeck } from '$lib/server/database/schema';
 import { and, eq, ne, or } from 'drizzle-orm';
-import { createStudyCard } from '$lib/fsrs';
+import { createStudyCard } from '$lib/srs';
 
 export const createDeck = async (data: NewDeck) => {
 	const result = await db.insert(deckTable).values(data).onConflictDoNothing().returning();
@@ -108,7 +108,7 @@ export const softDeleteDeck = async (deckId: string, userId: string) => {
 	return result;
 };
 
-//likes 
+//likes
 export const addLike = async (userId: string, deckId: string) => {
 	const existingLike = await db.query.deckLikeTable.findFirst({
 		where: and(eq(deckLikeTable.userId, userId), eq(deckLikeTable.deckId, deckId))
@@ -172,4 +172,3 @@ export const getUsersLikeStatusForDeck = async (deckId: string, userId: string) 
 	});
 	return likeStatus;
 };
-

@@ -52,7 +52,7 @@
 					class="flex items-center text-sm font-medium text-muted-foreground"
 					href="/dictionary"
 					class:active={'/dictionary' === currentPage}>Словарь</a>
-					<a
+				<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
 					href="/books"
 					class:active={'/books' === currentPage}>Читать</a>

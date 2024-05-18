@@ -23,6 +23,9 @@ importers:
       '@types/eslint':
         specifier: ^8.56.10
         version: 8.56.10
+      '@types/seedrandom':
+        specifier: ^3.0.8
+        version: 3.0.8
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.9.0
         version: 7.9.0(@typescript-eslint/parser@7.9.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
@@ -95,6 +98,9 @@ importers:
       resend:
         specifier: ^3.2.0
         version: 3.2.0
+      seedrandom:
+        specifier: ^3.0.5
+        version: 3.0.5
       svelte-chartjs:
         specifier: ^3.1.5
         version: 3.1.5(chart.js@4.4.3)(svelte@4.2.17)
@@ -110,9 +116,6 @@ importers:
       tiny-segmenter:
         specifier: ^0.2.0
         version: 0.2.0
-      ts-fsrs:
-        specifier: ^3.5.7
-        version: 3.5.7
       unzipit:
         specifier: ^1.4.3
         version: 1.4.3
@@ -1096,6 +1099,9 @@ packages:
 
   '@types/pug@2.0.10':
     resolution: {integrity: sha512-Sk/uYFOBAB7mb74XcpizmH0KOR2Pv3D2Hmrh1Dmy5BmK3MpdSa5kqZcg6EKBdklU0bFXX9gCfzvpnyUehrPIuA==}
+
+  '@types/seedrandom@3.0.8':
+    resolution: {integrity: sha512-TY1eezMU2zH2ozQoAFAQFOPpvP15g+ZgSfTZt31AUUH/Rxtnz3H+A/Sv1Snw2/amp//omibc+AEkTaA8KUeOLQ==}
 
   '@types/tiny-segmenter@0.2.0':
     resolution: {integrity: sha512-OB8ybmyWznBTmXI2XiM5IgQFYrFsLp4ToGVJGOd49osZRB/ENFMUgqUyOfeXGdczMBny1qzCj8PG/SJPmMybCA==}
@@ -2899,10 +2905,6 @@ packages:
     resolution: {integrity: sha512-WZ/iAJrKDhdINv1WG6KZIGHrZDar6VfhftG1QJFpVbOYZMYJLJOvZOo1amictRXVdBXZIgBHKswMTXzElngprA==}
     engines: {node: '>=14.13.1'}
 
-  ts-fsrs@3.5.7:
-    resolution: {integrity: sha512-xA18Igi1adkuCNgNjKkorjYgZq842+HdgRjatQPDERcrAWMlzM+3BwIbrF/Q0ijYEyw3NcTp3yJIMSO7agBLKQ==}
-    engines: {node: '>=16.0.0'}
-
   ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
@@ -3748,6 +3750,8 @@ snapshots:
       pg-types: 4.0.2
 
   '@types/pug@2.0.10': {}
+
+  '@types/seedrandom@3.0.8': {}
 
   '@types/tiny-segmenter@0.2.0': {}
 
@@ -5591,10 +5595,6 @@ snapshots:
       typescript: 5.4.5
 
   ts-deepmerge@7.0.0: {}
-
-  ts-fsrs@3.5.7:
-    dependencies:
-      seedrandom: 3.0.5
 
   ts-interface-checker@0.1.13: {}
 

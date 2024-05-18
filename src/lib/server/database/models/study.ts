@@ -1,5 +1,5 @@
 //think about naming
-import { date_scheduler } from 'ts-fsrs';
+import { dateScheduler } from '$lib/srs';
 import {
 	states,
 	studyCardTable,
@@ -10,7 +10,7 @@ import {
 } from '../schema';
 import { and, count, eq, gte, lte } from 'drizzle-orm';
 import db from '../drizzle';
-import { getStartOfDay, grade } from '$lib/fsrs';
+import { getStartOfDay, grade } from '$lib/srs';
 
 export const gradeStudyCard = async (studyCardId: string, rating: Rating) => {
 	const studyCard = await db.query.studyCardTable.findFirst({
@@ -49,7 +49,7 @@ export const getStudyDeck = async (deckId: string, userId = '') => {
 
 export const getTodayCount = async (studyDeckId: string, state?: State) => {
 	const startOfDay = getStartOfDay();
-	const nextDay = date_scheduler(startOfDay, 1, true);
+	const nextDay = dateScheduler(startOfDay, 1, true);
 	const todayCount = await db
 		.select({ count: count() })
 		.from(reviewLogTable)

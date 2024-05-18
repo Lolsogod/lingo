@@ -12,7 +12,7 @@ import {
 	type CardExp,
 	type Block
 } from '../schema';
-import { createStudyCard } from '$lib/fsrs';
+import { createStudyCard } from '$lib/srs';
 
 export const findTopicByName = async (name: string) => {
 	const foundTopic = await db.query.topicTable.findFirst({

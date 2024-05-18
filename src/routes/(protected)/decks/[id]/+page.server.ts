@@ -1,6 +1,12 @@
 import { isUUID } from '$lib/_helpers/isUIID';
 import { deleteDeckSchema, likeSchema, startStudySchema } from '$lib/config/zod-schemas';
-import { addDeckToUser, addDislike, addLike, removeLike, softDeleteDeck } from '$lib/server/database/models/deck';
+import {
+	addDeckToUser,
+	addDislike,
+	addLike,
+	removeLike,
+	softDeleteDeck
+} from '$lib/server/database/models/deck';
 import { fail, redirect } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';
@@ -61,12 +67,12 @@ export const actions = {
 		} else {
 			await addDislike(userId, deckId);
 		}
-	},//handle change from like to dislike and vice versa
+	}, //handle change from like to dislike and vice versa
 	unrate: async (event) => {
 		const userId = event.locals.user?.id;
 		const deckId = event.params.id;
-		
-		if ( !userId || !deckId) {
+
+		if (!userId || !deckId) {
 			return fail(400);
 		}
 		await removeLike(userId, deckId);

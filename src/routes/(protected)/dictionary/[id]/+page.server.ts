@@ -23,14 +23,14 @@ export const load = (async (event) => {
 	const allCards = [...publicCards, ...userCreatedCards];
 
 	const uniqueCardsMap = new Map<string, CardExp>();
-	const searchTerms = [...(word.kanji || []), ...(word.kana || [])].flatMap(k => k.text);
-	const searchSymbols = searchTerms.flatMap(k => k.split(''));
+	const searchTerms = [...(word.kanji || []), ...(word.kana || [])].flatMap((k) => k.text);
+	const searchSymbols = searchTerms.flatMap((k) => k.split(''));
 	const index = createCardIndex(allCards);
 
 	for (const term of searchSymbols) {
 		if (allCards.length > 0) {
 			const foundCards = searchCardsIndex(term, index, allCards);
-			foundCards.forEach(card => {
+			foundCards.forEach((card) => {
 				if (card) {
 					uniqueCardsMap.set(card.id, card);
 				}
@@ -40,10 +40,10 @@ export const load = (async (event) => {
 
 	const filteredCardsMap = new Map<string, CardExp>();
 	for (const [id, card] of uniqueCardsMap) {
-		const cardText = card.topic.name; 
-		const isPartOfWord = searchTerms.some(term => cardText.includes(term));
-		const isWordPartOfCard = searchTerms.some(term => term.includes(cardText));
-		console.log(cardText, isPartOfWord, isWordPartOfCard)
+		const cardText = card.topic.name;
+		const isPartOfWord = searchTerms.some((term) => cardText.includes(term));
+		const isWordPartOfCard = searchTerms.some((term) => term.includes(cardText));
+		console.log(cardText, isPartOfWord, isWordPartOfCard);
 		if (isPartOfWord || isWordPartOfCard) {
 			filteredCardsMap.set(id, card);
 		}

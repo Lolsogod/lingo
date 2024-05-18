@@ -1,5 +1,14 @@
 import { relations } from 'drizzle-orm';
-import { boolean, integer, pgTable, primaryKey, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import {
+	boolean,
+	integer,
+	pgTable,
+	primaryKey,
+	text,
+	timestamp,
+	uuid,
+	varchar
+} from 'drizzle-orm/pg-core';
 import { userTable } from './user';
 import { cardTable, studyCardTable, type StudyCard } from './card';
 
@@ -44,20 +53,24 @@ export const studyDeckTable = pgTable('study_deck', {
 	deleted: boolean('deleted').notNull().default(false) //TODO: add soft delete (to save statistics)
 });
 
-export const deckLikeTable = pgTable('deck_like', {
-	userId: text('user_id')
-		.notNull()
-		.references(() => userTable.id),
-	deckId: uuid('deck_id')
-		.notNull()
-		.references(() => deckTable.id),
-	liked: boolean('liked').notNull(),
-	createdAt: timestamp('created_at').notNull().defaultNow()
-},(table) => {
-	return {
-		pk: primaryKey({ columns: [table.userId, table.deckId] })
-	};
-});
+export const deckLikeTable = pgTable(
+	'deck_like',
+	{
+		userId: text('user_id')
+			.notNull()
+			.references(() => userTable.id),
+		deckId: uuid('deck_id')
+			.notNull()
+			.references(() => deckTable.id),
+		liked: boolean('liked').notNull(),
+		createdAt: timestamp('created_at').notNull().defaultNow()
+	},
+	(table) => {
+		return {
+			pk: primaryKey({ columns: [table.userId, table.deckId] })
+		};
+	}
+);
 
 //relations
 export const deckRelations = relations(deckTable, ({ many, one }) => {
