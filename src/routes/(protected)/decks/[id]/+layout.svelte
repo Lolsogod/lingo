@@ -27,7 +27,8 @@
 		const url = new URL($page.url);
 		url.searchParams.set('q', query);
 		goto(url, {
-			keepFocus: true
+			keepFocus: true,
+			noScroll: true
 		});
 	}
 

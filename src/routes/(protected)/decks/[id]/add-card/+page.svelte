@@ -17,7 +17,8 @@
 		const url = new URL($page.url);
 		url.searchParams.set('add', query);
 		goto(url, {
-			keepFocus: true
+			keepFocus: true,
+			noScroll: true
 		});
 	}
 </script>

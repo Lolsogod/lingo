@@ -57,7 +57,8 @@
 		const url = new URL($page.url);
 		url.searchParams.set('topic', $formData.topicName);
 		goto(url, {
-			keepFocus: true
+			keepFocus: true,
+			noScroll: true
 		});
 	}
 

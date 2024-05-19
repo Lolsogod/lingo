@@ -4,5 +4,5 @@ import { defineConfig } from 'vite';
 
 //vidstack({ include: /player\// });
 export default defineConfig({
-	plugins: [vidstack(),sveltekit()]
+	plugins: [vidstack(), sveltekit()]
 });
