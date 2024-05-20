@@ -5,6 +5,8 @@
 	const subToSpan = () => {
 		if (test?.textContent) {
 			$content = test.textContent;
+		} else {
+			$content = '';
 		}
 	};
 
@@ -27,6 +29,7 @@
 
 <style>
 	media-captions {
+		opacity: 0;
 		z-index: 10000;
 		bottom: 0;
 		transition: bottom 0.15s linear;

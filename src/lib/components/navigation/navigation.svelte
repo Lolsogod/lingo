@@ -55,7 +55,11 @@
 				<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
 					href="/books"
-					class:active={'/books' === currentPage}>Читать</a>
+					class:active={'/books' === currentPage}>Книги</a>
+				<a
+					class="flex items-center text-sm font-medium text-muted-foreground"
+					href="/video"
+					class:active={'/video' === currentPage}>Видео</a>
 			</nav>
 		</div>
 		<div class="flex flex-1 items-center justify-end space-x-4">

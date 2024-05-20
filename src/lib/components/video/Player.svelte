@@ -6,6 +6,7 @@
 	import 'vidstack/player/ui';
 	import 'vidstack/icons';
 	import { ParseErrorCode, parseResponse } from 'media-captions';
+	import { MediaRemoteControl } from 'vidstack';
 	import { Input } from '$lib/components/ui/input';
 	import { onMount, tick } from 'svelte';
 	import {
@@ -42,8 +43,11 @@
 	let popupText = '';
 	let popupX = 0;
 	let popupY = 0;
+	const remote = new MediaRemoteControl();
 
 	const handleWordClick = async (event: { target: any }) => {
+		remote.setTarget(player);
+		remote.pause();
 		const word = event.target;
 		const rect = word.getBoundingClientRect();
 		popupText = word.textContent;
@@ -63,6 +67,8 @@
 		}
 	};
 	function closePopup() {
+		remote.setTarget(player);
+		remote.play();
 		showPopup = false;
 	}
 	let words = [];
@@ -73,24 +79,7 @@
 		src = '',
 		viewType: MediaViewType = 'unknown';
 
-	// Initialize src.
-	changeSource('youtube');
-
 	onMount(() => {
-		/**
-		 * You can add these tracks using HTML as well.
-		 *
-		 * @example
-		 * ```html
-		 * <media-provider>
-		 *   <track label="..." src="..." kind="..." srclang="..." default />
-		 *   <track label="..." src="..." kind="..." srclang="..." />
-		 * </media-provider>
-		 * ```
-		 */
-		//for (const track of textTracks) player.textTracks.add(track);
-
-		// Subscribe to state updates.
 		return player.subscribe((state) => {
 			viewType = state.viewType;
 		});
@@ -108,75 +97,39 @@
 	function onCanPlay(event: MediaCanPlayEvent) {
 		// ...
 	}
-	/*const fuck = parseResponse(fetch('/sub.proxy'), { type: 'srt' }).then((res) => {
-    console.log(res);
-  });*/
-	function changeSource(type: string) {
-		switch (type) {
-			case 'audio':
-				src = 'https://files.vidstack.io/sprite-fight/audio.mp3';
-				break;
-			case 'video':
-				src = 'https://files.vidstack.io/sprite-fight/720p.mp4';
-				break;
-			case 'hls':
-				src = 'https://files.vidstack.io/sprite-fight/hls/stream.m3u8';
-				break;
-			case 'youtube':
-				src = 'https://www.youtube.com/watch?v=EmFp-TVZ_WI';
-				break;
-			case 'vimeo':
-				src = 'vimeo/640499893';
-				break;
-		}
-	}
 </script>
 
-<Input bind:value={src} />
-{#key src}
-	<media-player
-		class="player"
-		title="Sprite Fight"
-		{src}
-		crossOrigin
-		playsInline
-		on:provider-change={onProviderChange}
-		on:can-play={onCanPlay}
-		bind:this={player}>
-		<media-provider>
-			{#if src}
-				<track src="/sub.proxy?v={src}" data-type="srt" kind="captions" srclang="jp" />
-			{/if}
-			{#if viewType === 'video'}
-				<media-poster
-					class="vds-poster"
-					src="https://files.vidstack.io/sprite-fight/poster.webp"
-					alt="Girl walks into campfire with gnomes surrounding her friend ready for their next meal!" />
-			{/if}
-		</media-provider>
-		<!-- Layouts -->
-		{#if viewType === 'audio'}
-			<AudioLayout />
-		{:else if viewType === 'video'}
-			<VideoLayout thumbnails="https://files.vidstack.io/sprite-fight/thumbnails.vtt" />
-		{/if}
-	</media-player>
-{/key}
-<div class="src-buttons">
-	<button on:click={() => changeSource('audio')}>Audio</button>
-	<button on:click={() => changeSource('video')}>Video</button>
-	<button on:click={() => changeSource('hls')}>HLS</button>
-	<button on:click={() => changeSource('youtube')}>YouTube</button>
-	<button on:click={() => changeSource('vimeo')}>Vimeo</button>
-</div>
+<h1 class="mb-5">Видео плеер</h1>
+<Input bind:value={src} class="mb-5" placeholder="Ссылка на youtube видео" />
+{#if src}
+	{#key src}<div class="relative">
+			<media-player
+				class="player"
+				title="Sprite Fight"
+				{src}
+				crossOrigin
+				playsInline
+				on:provider-change={onProviderChange}
+				on:can-play={onCanPlay}
+				bind:this={player}>
+				<media-provider>
+					<track src="/sub.proxy?v={src}" data-type="srt" kind="captions" srclang="jp" />
+				</media-provider>
+				<VideoLayout />
+			</media-player>
 
-<div>
-	{#each words as word}
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<span on:click={handleWordClick}>{word}</span>
-	{/each}
-</div>
+			<div class="absolute bottom-20 flex justify-center  w-full">
+				<div class="bg-black">
+					{#each words as word}
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<span class="text-2xl" on:click={handleWordClick}>{word}</span>
+					{/each}
+				</div>
+			</div>
+		</div>
+	{/key}
+{/if}
 {#if showPopup}
 	<div in:fade={{ duration: 200 }} out:fade={{ duration: 200 }}>
 		<Popup
