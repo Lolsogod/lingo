@@ -173,7 +173,8 @@ export const getCardById = async (cardId: string) => {
 export const createComment = async (
 	topicId: string,
 	content: string,
-	potentialTopicName: string
+	potentialTopicName: string,
+	type: 'markdown' | 'text' = 'text'
 ) => {
 	let topic: Topic | undefined;
 	try {
@@ -189,7 +190,7 @@ export const createComment = async (
 	const result = await db.transaction(async (tx) => {
 		const newComment = await tx
 			.insert(blockTable)
-			.values({ content, type: 'text', topicId: topic!.id })	
+			.values({ content, type, topicId: topic!.id })	//TODO: маркдаун приколы
 			.returning();
 		return newComment;
 	});

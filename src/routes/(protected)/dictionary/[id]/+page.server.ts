@@ -119,7 +119,7 @@ export const load = (async (event) => {
 	} else {
 		matchedTopic = await findTopicByName(process(word).title);
 	}
-	
+
 	const commentForm = await superValidate(event, zod(commentSchema));
 
 	if (matchedTopic && user) {
@@ -138,12 +138,13 @@ export const load = (async (event) => {
 export const actions = {
 	comment: async (event) => {
 		const commentForm = await superValidate(event, zod(commentSchema));
+		console.log(commentForm.data)
 		if (!commentForm.valid) {
 			return fail(400, { commentForm });
 		}
 		try {
 			console.log(commentForm.data)
-			const newCommnet = await createComment(commentForm.data.topicId, commentForm.data.comment, commentForm.data.potentialTopicName);
+			const newCommnet = await createComment(commentForm.data.topicId, commentForm.data.comment, commentForm.data.potentialTopicName, commentForm.data.type);
 			if (newCommnet) {
 				setFlash({ type: 'success', message: 'Коментарий успешно создан' }, event);
 			}
@@ -185,5 +186,3 @@ export const actions = {
 		return {commentForm}
 	}
 };
-
-

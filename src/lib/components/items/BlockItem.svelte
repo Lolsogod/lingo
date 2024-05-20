@@ -2,6 +2,13 @@
 	import { Card, CardContent } from '$lib/components/ui/card';
 	import type { Block } from '$lib/server/database/schema';
 	import Button from '../ui/button/button.svelte';
+	import { Carta, Markdown } from 'carta-md';
+	import 'carta-md/default.css'; /* Default theme */
+	import DOMPurify from 'isomorphic-dompurify'
+	import { mode } from 'mode-watcher';
+	const carta = new Carta({
+		sanitizer: DOMPurify.sanitize
+	});
 
 	export let blockInfo: Block & {
 		liked: boolean;
@@ -23,6 +30,8 @@
 			<img src={blockInfo.content} alt="" class="w-48 rounded-lg object-cover" />
 		{:else if blockInfo.type === 'audio'}
 			<audio controls src={blockInfo.content} />
+		{:else if blockInfo.type === 'markdown'}
+			<Markdown {carta} value={blockInfo.content} />
 		{/if}
 	</CardContent>
 	{#if add}

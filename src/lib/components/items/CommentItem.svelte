@@ -7,6 +7,15 @@
 	import ActionButton from '../forms/ActionButton.svelte';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { blockLikeSchema } from '$lib/config/zod-schemas';
+	import { Carta, Markdown } from 'carta-md';
+	import 'carta-md/default.css'; /* Default theme */
+	import DOMPurify from 'isomorphic-dompurify'
+	import { mode } from 'mode-watcher';
+
+	const carta = new Carta({
+		sanitizer: DOMPurify.sanitize
+	});
+
 
 	export let data: {
 		comment: Block;
@@ -44,6 +53,8 @@
 			<img src={data.comment.content} alt="" class="w-48 rounded-lg object-cover" />
 		{:else if data.comment.type === 'audio'}
 			<audio controls src={data.comment.content} />
+		{:else if data.comment.type === 'markdown'}
+			<Markdown {carta} value={data.comment.content}/>
 		{/if}
 	</CardContent>
 	<CardFooter class="flex justify-between">
