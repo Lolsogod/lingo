@@ -5,7 +5,7 @@
 	import { Textarea } from '../ui/textarea';
 
 	export let form: SuperForm<any, any>;
-	export let label: string;
+	export let label: string | undefined = undefined;
 	export let name: string;
 	export let type: string = '';
 
@@ -14,7 +14,7 @@
 
 <Form.Field {form} {name}>
 	<Form.Control let:attrs>
-		<Form.Label>{label}</Form.Label>
+		{#if label}<Form.Label>{label}</Form.Label>{/if}
 		{#if type === 'textarea'}
 			<Textarea {...attrs} bind:value={$formData[name]} />
 		{:else}

@@ -4,8 +4,11 @@
 	import SimpleInput from './SimpleInput.svelte';
 	import DisplayErrors from './DisplayErrors.svelte';
 	import SimpleCheckbox from './SimpleCheckbox.svelte';
-
-	export let inputs: { name: string; label: string; type?: string }[] = [];
+	
+	let className = '';
+	export let innerClass = '';
+	export { className as class }
+	export let inputs: { name: string; label?: string; type?: string }[] = [];
 	export let action: string = '';
 	export let form: SuperForm<any, any>;
 
@@ -14,11 +17,11 @@
 </script>
 
 <form method="POST" use:enhance {action}>
-	<Card.Root>
-		<Card.Header class="space-y-1">
+	<Card.Root class={className}>
+		<Card.Header class="space-y-1 {innerClass}">
 			<slot name="header" />
 		</Card.Header>
-		<Card.Content class="grid gap-4">
+		<Card.Content class="grid gap-4 {innerClass}">
 			<DisplayErrors {errors} />
 			{#each inputs as input}
 				{#if input.type === 'checkbox'}
@@ -29,7 +32,7 @@
 			{/each}
 			<slot name="custom-fields" />
 		</Card.Content>
-		<Card.Footer>
+		<Card.Footer class={innerClass}>
 			<slot name="submit" />
 		</Card.Footer>
 	</Card.Root>

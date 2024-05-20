@@ -22,8 +22,32 @@ export const topicTable = pgTable('topic', {
 export const blockTable = pgTable('block', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
 	type: varchar('type').notNull().default('text'),
-	content: text('content').notNull()
+	content: text('content').notNull(),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	topicId: uuid('topic_id')
+		//.notNull() //TODO: on next reset change to .notNull()
+		.references(() => topicTable.id)
 });
+
+export const blockLikeTable = pgTable(
+	'block_like',
+	{
+		userId: text('user_id')
+			.notNull()
+			.references(() => userTable.id),
+		blockId: uuid('block_id')
+			.notNull()
+			.references(() => blockTable.id),
+		liked: boolean('liked').notNull(),
+		createdAt: timestamp('created_at').notNull().defaultNow()
+	},
+	(table) => {
+		return {
+			pk: primaryKey({ columns: [table.userId, table.blockId] })
+		};
+	}
+);
+
 
 export const cardTable = pgTable('card', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),

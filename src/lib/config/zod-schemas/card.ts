@@ -2,11 +2,20 @@ import { z } from 'zod';
 
 export const blockSchema = z.object({
 	id: z.string().optional(),
-	type: z.string().min(1, { message: 'Выберите тип блока' }),
+	type: z.string().min(1, { message: 'Укажите тип блока' }),
 	content: z.string().min(1, { message: 'Введите содержание блока' }),
 	isNew: z.boolean()
 });
 
+export const commentSchema = z.object({
+	topicId: z.string(),
+	comment: z.string().min(1, { message: 'Введите комментарий' })
+});
+export const blockLikeSchema = z.object({
+	blockId: z.string(),
+	userId: z.string().optional(),
+	liked: z.boolean()
+});
 export const cardSchema = z.object({
 	topicName: z.string().min(1, { message: 'Введите название темы карточки' }),
 	blocks: z.array(blockSchema).min(1, { message: 'У карточки должен быть минимум 1 блок' }),

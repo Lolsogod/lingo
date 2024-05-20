@@ -4,7 +4,7 @@
 	import { Checkbox } from '../ui/checkbox';
 
 	export let form: SuperForm<any, any>;
-	export let label: string;
+	export let label: string | undefined = undefined;
 	export let name: string;
 
 	const { form: formData } = form;
@@ -14,7 +14,7 @@
 	<Form.Control let:attrs>
 		<Checkbox {...attrs} bind:checked={$formData[name]} />
 		<div class="space-y-1 leading-none">
-			<Form.Label>{label}</Form.Label>
+			{#if label}<Form.Label>{label}</Form.Label>{/if}
 		</div>
 		<input name={attrs.name} value={$formData[name]} hidden />
 	</Form.Control>

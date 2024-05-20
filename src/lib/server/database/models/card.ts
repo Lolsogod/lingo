@@ -10,7 +10,8 @@ import {
 	studyDeckTable,
 	studyCardTable,
 	type CardExp,
-	type Block
+	type Block,
+	blockLikeTable
 } from '../schema';
 import { createStudyCard } from '$lib/srs';
 
@@ -26,6 +27,9 @@ export const createCard = async (data: CreateCardSchema, authorId: string) => {
 	const result = await db.transaction(async (tx) => {
 		if (!existingTopic) {
 			existingTopic = (await tx.insert(topicTable).values({ name: data.topicName }).returning())[0];
+			if (!existingTopic) {
+				throw new Error('Topic not found');
+			}
 		}
 		const newBlocks = data.blocks.filter((block) => block.isNew);
 		const existingBlocks = data.blocks.filter((block) => !block.isNew);
@@ -34,7 +38,7 @@ export const createCard = async (data: CreateCardSchema, authorId: string) => {
 		if (newBlocks.length > 0) {
 			blocks = await tx
 				.insert(blockTable)
-				.values(newBlocks.map((block) => ({ ...block, isNew: undefined, id: undefined })))
+				.values(newBlocks.map((block) => ({ ...block, isNew: undefined, id: undefined, topicId: existingTopic!.id })))
 				.onConflictDoNothing()
 				.returning();
 		}
@@ -141,4 +145,85 @@ export const getCardById = async (cardId: string) => {
 	});
 
 	return card;
+};
+
+export const createComment = async (topicId: string, content: string) => {
+	const result = await db.transaction(async (tx) => {
+		const newComment = await tx.insert(blockTable).values({ content, type: 'text', topicId }).returning();
+		return newComment;
+	});
+	return result;
+};
+
+export const getComentsForTopic = async (topicId: string) => {
+	const comments = await db.query.blockTable.findMany({
+		where: eq(blockTable.topicId, topicId),
+		orderBy: (comments, { desc }) => [desc(comments.createdAt)]
+	});
+	return comments;
+};
+
+// block likes
+export const addBlockLike = async (userId: string, blockId: string) => {
+	const existingLike = await db.query.blockLikeTable.findFirst({
+		where: and(eq(blockLikeTable.userId, userId), eq(blockLikeTable.blockId, blockId))
+	});
+
+	let result;
+	if (existingLike) {
+		result = await db
+			.update(blockLikeTable)
+			.set({ liked: !existingLike.liked })
+			.where(and(eq(blockLikeTable.userId, userId), eq(blockLikeTable.blockId, blockId)))
+			.returning();
+	} else {
+		result = await db.insert(blockLikeTable).values({ userId, blockId, liked: true }).returning();
+	}
+
+	return result;
+};
+
+export const addBlockDislike = async (userId: string, blockId: string) => {
+	const existingDislike = await db.query.blockLikeTable.findFirst({
+		where: and(eq(blockLikeTable.userId, userId), eq(blockLikeTable.blockId, blockId))
+	});
+
+	let result;
+	if (existingDislike) {
+		result = await db
+			.update(blockLikeTable)
+			.set({ liked: !existingDislike.liked })
+			.where(and(eq(blockLikeTable.userId, userId), eq(blockLikeTable.blockId, blockId)))
+			.returning();
+	} else {
+		result = await db.insert(blockLikeTable).values({ userId, blockId, liked: false }).returning();
+	}
+
+	return result;
+};
+
+export const removeBlockLike = async (userId: string, blockId: string) => {
+	const result = await db
+		.delete(blockLikeTable)
+		.where(and(eq(blockLikeTable.userId, userId), eq(blockLikeTable.blockId, blockId)))
+		.returning();
+	return result;
+};
+
+export const getBlockLikesDislikes = async (blockId: string) => {
+	const likes = await db.query.blockLikeTable.findMany({
+		where: and(eq(blockLikeTable.blockId, blockId), eq(blockLikeTable.liked, true))
+	});
+	const dislikes = await db.query.blockLikeTable.findMany({
+		where: and(eq(blockLikeTable.blockId, blockId), eq(blockLikeTable.liked, false))
+	});
+	const rating = likes.length - dislikes.length;
+	return { likes, dislikes, rating };
+};
+
+export const getUsersLikeStatusForBlock = async (blockId: string, userId: string) => {
+	const likeStatus = await db.query.blockLikeTable.findFirst({
+		where: and(eq(blockLikeTable.blockId, blockId), eq(blockLikeTable.userId, userId))
+	});
+	return likeStatus;
 };
