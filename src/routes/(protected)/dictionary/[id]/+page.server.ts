@@ -1,6 +1,7 @@
 import type { PageServerLoad, PageServerLoadEvent } from './$types';
 import { error } from '@sveltejs/kit';
 import { createCardIndex, searchCardsIndex } from '$lib/cardSearch';
+import {process} from '../processWord';
 import {
 	createComment,
 	findBlocks,
@@ -11,7 +12,8 @@ import {
 	addBlockDislike,
 	removeBlockLike,
 	getUsersLikeStatusForBlock,
-	getBlockLikesDislikes
+	getBlockLikesDislikes,
+	findTopicByName
 } from '$lib/server/database/models/card';
 import type { Block, CardExp, Topic, User } from '$lib/server/database/schema';
 import { fail, superValidate, type SuperValidated } from 'sveltekit-superforms';
@@ -49,7 +51,7 @@ const getCommentData = async (event: PageServerLoadEvent, comments: Block[], use
 
 	return likesData;
 };
-
+ 
 export const load = (async (event) => {
 	const user = event.locals.user;
 	const wordId = event.params.id;
@@ -114,8 +116,10 @@ export const load = (async (event) => {
 	const relatedCards = Array.from(relatedCardsMap.values());
 	if (exactMatchedCards.length > 0) {
 		matchedTopic = exactMatchedCards[0].topic;
+	} else {
+		matchedTopic = await findTopicByName(process(word).title);
 	}
-
+	
 	const commentForm = await superValidate(event, zod(commentSchema));
 
 	if (matchedTopic && user) {
@@ -124,6 +128,8 @@ export const load = (async (event) => {
 		comments = await getComentsForTopic(matchedTopic.id);
 		commentsData = await getCommentData(event, comments, user);
 		commentsData.sort((a, b) => b.rating - a.rating);
+	} else {
+		commentForm.data.potentialTopicName =  process(word).title;
 	}
 
 	return { word, exactMatchedCards, relatedCards, matchedTopic, commentForm, commentsData };
@@ -136,14 +142,15 @@ export const actions = {
 			return fail(400, { commentForm });
 		}
 		try {
-			const newCommnet = await createComment(commentForm.data.topicId, commentForm.data.comment);
+			console.log(commentForm.data)
+			const newCommnet = await createComment(commentForm.data.topicId, commentForm.data.comment, commentForm.data.potentialTopicName);
 			if (newCommnet) {
-				setFlash({ type: 'success', message: 'Comment created successfully' }, event);
+				setFlash({ type: 'success', message: 'Коментарий успешно создан' }, event);
 			}
 			return { commentForm };
 		} catch (error) {
 			console.error(error);
-			setFlash({ type: 'error', message: 'Коментарий успешно создан' }, event);
+			setFlash({ type: 'error', message: 'Произошла ошибка при создании коментария' }, event);
 			return fail(500, { commentForm });
 		}
 	},

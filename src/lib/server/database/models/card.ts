@@ -11,7 +11,8 @@ import {
 	studyCardTable,
 	type CardExp,
 	type Block,
-	blockLikeTable
+	blockLikeTable,
+	type Topic
 } from '../schema';
 import { createStudyCard } from '$lib/srs';
 
@@ -19,6 +20,9 @@ export const findTopicByName = async (name: string) => {
 	const foundTopic = await db.query.topicTable.findFirst({
 		where: eq(topicTable.name, name)
 	});
+	if (!foundTopic) {
+		return null;
+	}
 	return foundTopic;
 };
 
@@ -38,7 +42,14 @@ export const createCard = async (data: CreateCardSchema, authorId: string) => {
 		if (newBlocks.length > 0) {
 			blocks = await tx
 				.insert(blockTable)
-				.values(newBlocks.map((block) => ({ ...block, isNew: undefined, id: undefined, topicId: existingTopic!.id })))
+				.values(
+					newBlocks.map((block) => ({
+						...block,
+						isNew: undefined,
+						id: undefined,
+						topicId: existingTopic!.id
+					}))
+				)
 				.onConflictDoNothing()
 				.returning();
 		}
@@ -159,9 +170,27 @@ export const getCardById = async (cardId: string) => {
 	return card;
 };
 
-export const createComment = async (topicId: string, content: string) => {
+export const createComment = async (
+	topicId: string,
+	content: string,
+	potentialTopicName: string
+) => {
+	let topic: Topic | undefined;
+	try {
+		topic = await db.query.topicTable.findFirst({
+			where: eq(topicTable.id, topicId)
+		});
+	} catch (error) {
+		topic = (await db.insert(topicTable).values({ name: potentialTopicName }).returning())[0];
+	}
+	if(!topic) {
+		return null;
+	}
 	const result = await db.transaction(async (tx) => {
-		const newComment = await tx.insert(blockTable).values({ content, type: 'text', topicId }).returning();
+		const newComment = await tx
+			.insert(blockTable)
+			.values({ content, type: 'text', topicId: topic!.id })	
+			.returning();
 		return newComment;
 	});
 	return result;

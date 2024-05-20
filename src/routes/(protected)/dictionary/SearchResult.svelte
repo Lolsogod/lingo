@@ -1,39 +1,11 @@
 <script lang="ts">
 	import type { Word } from './types';
+	import { process } from './processWord';
 	import * as Card from '$lib/components/ui/card';
 	import Button from '$lib/components/ui/button/button.svelte';
 
 	export let rawWord: Word;
 	export let detailed = false;
-	interface ProcessedWord {
-		title: string;
-		subTitle: string;
-		alt: { text: string }[];
-		meanings: any[];
-	}
-	const process = (rawWord: Word) => {
-		const word: ProcessedWord = {
-			title: '',
-			subTitle: '',
-			alt: [],
-			meanings: []
-		};
-		if (rawWord.kanji.length > 0) {
-			word.title = rawWord.kanji[0].text;
-			word.alt = rawWord.kanji.slice(1);
-			if (rawWord.kana.length > 0) {
-				word.subTitle = rawWord.kana[0].text;
-			}
-		} else {
-			word.title = rawWord.kana[0].text;
-			word.alt = rawWord.kana.slice(1);
-		}
-		if (rawWord.sense.length > 0) {
-			word.meanings = rawWord.sense.flatMap((sense) => sense.gloss.map((gloss) => gloss.text));
-		}
-
-		return word;
-	};
 	const word = process(rawWord);
 </script>
 

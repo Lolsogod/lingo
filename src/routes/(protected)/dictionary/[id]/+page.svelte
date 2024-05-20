@@ -26,6 +26,10 @@
 			name: 'comment',
 			label: 'Оставить комментарий',
 			type: 'textarea'
+		},
+		{
+			name: 'potentialTopicName',
+			type: 'hidden'
 		}
 	];
 </script>

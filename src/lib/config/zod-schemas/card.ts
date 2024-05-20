@@ -9,7 +9,8 @@ export const blockSchema = z.object({
 
 export const commentSchema = z.object({
 	topicId: z.string(),
-	comment: z.string().min(1, { message: 'Введите комментарий' })
+	comment: z.string().min(1, { message: 'Введите комментарий' }),
+	potentialTopicName: z.string()
 });
 export const blockLikeSchema = z.object({
 	blockId: z.string(),
