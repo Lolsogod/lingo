@@ -61,11 +61,9 @@
 			<SimpleSubmit form={commentForm}>Отправить</SimpleSubmit>
 		</div>
 	</SimpleForm>
-	{#if data.comments}
-		{#each data.comments as comment, i (comment.id)}
-			{#if data.likesData[i]}
-				<CommentItem blockInfo={comment} data={data.likesData[i]} url={word_url} />
-			{/if}
+	{#if data.commentsData}
+		{#each data.commentsData as commentData (commentData.comment.id)}
+			<CommentItem data={commentData} url={word_url} />
 		{/each}
 	{/if}
 	</div>	

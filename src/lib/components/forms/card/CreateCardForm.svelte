@@ -126,19 +126,19 @@
 					Добавить существующий
 					<div class="text-xs">Найдено {blocks?.length}</div>
 				</Dialog.Trigger>
-				<Dialog.Content>
-					<Dialog.Header>
+				<Dialog.Content >
+					<Dialog.Header >
 						<Dialog.Title>Блоки на тему {$formData.topicName}</Dialog.Title>
-						<Dialog.Description class="flex flex-col gap-2">
+						<Dialog.Description class="flex flex-col gap-2  h-[500px] overflow-y-auto">
 							{#each blocks as block}
-								<BlockItem blockInfo={block} on:click={() => addExisting(block)} add />
+								<BlockItem blockInfo={block} on:click={() => addExisting(block)} add added={$formData.blocks.some(b => b.id === block.id)} />
 							{/each}
 						</Dialog.Description>
 					</Dialog.Header>
 				</Dialog.Content>
 			</Dialog.Root>
 		</div>
-		{#if decks}
+		{#if decks}	
 			<SimpleCheckbox {form} name="addToStudy" label="Добавить в изучение" />
 			{#if $formData.addToStudy}
 				<br />

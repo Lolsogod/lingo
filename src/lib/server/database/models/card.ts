@@ -138,6 +138,18 @@ export const findBlocks = async (topicName: string) => {
 	return blocks;
 };
 
+export const findBlockByTopic = async (topicName: string) => {
+	const topic = await db.query.topicTable.findFirst({
+		where: eq(topicTable.name, topicName)
+	});
+	if (!topic) {
+		return [];
+	}
+	const blocks = await db.query.blockTable.findMany({
+		where: eq(blockTable.topicId, topic.id)
+	});
+	return blocks;
+};
 export const getCardById = async (cardId: string) => {
 	const card = await db.query.cardTable.findFirst({
 		where: eq(cardTable.id, cardId),

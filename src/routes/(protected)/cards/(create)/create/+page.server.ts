@@ -1,18 +1,21 @@
 import type { PageServerLoad } from './$types';
 import { createCardSchema } from '$lib/config/zod-schemas';
-import { addCardToDeck, createCard, findBlocks } from '$lib/server/database/models/card';
-import { fail, redirect } from '@sveltejs/kit';
+import { addCardToDeck, createCard, findBlockByTopic, findBlocks } from '$lib/server/database/models/card';
+import { error, fail, redirect } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { createCardIndex, searchCardsIndex } from '$lib/cardSearch';
 import { getCardsByAuthor, getPublicCards } from '$lib/server/database/models/card';
 import type { CardExp } from '$lib/server/database/schema';
+import { getUsersLikeStatusForBlock, getBlockLikesDislikes } from '$lib/server/database/models/card';
 
 export const load = (async (event) => {
 	const topic = event.url.searchParams.get('topic') || '';
 	const user = event.locals.user;
-
+	if(!user){
+		error(401, 'Unauthorized');
+	}
 	const publicCards: CardExp[] | null = await getPublicCards(user?.id);
 	const userCreatedCards: CardExp[] | null = await getCardsByAuthor(user?.id);
 	let relatedCards: CardExp[] = [];
@@ -24,9 +27,24 @@ export const load = (async (event) => {
 		}
 	}
 
-	const blocks = await findBlocks(topic);
+	const blocksBytitle = await findBlocks(topic);
+	const blockByTopicId = await findBlockByTopic(topic);
+	
+	const blocks = Array.from(new Set([...blocksBytitle, ...blockByTopicId]));
 
-	return { relatedCards, blocks };
+	const blocksWithLikes = await Promise.all(blocks.map(async (block) => {
+		const likeStatus = await getUsersLikeStatusForBlock(block.id, user.id);
+		const { likes, dislikes, rating } = await getBlockLikesDislikes(block.id);
+		return { ...block, liked: likeStatus?.liked || false, likes, dislikes, rating };
+	}));
+
+	blocksWithLikes.sort((a, b) => {
+		if (a.liked && !b.liked) return -1;
+		if (!a.liked && b.liked) return 1;
+		return b.rating - a.rating;
+	});
+
+	return { relatedCards, blocks: blocksWithLikes };
 }) satisfies PageServerLoad;
 
 export const actions = {

@@ -20,8 +20,9 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { blockLikeSchema, commentSchema, likeSchema } from '$lib/config/zod-schemas';
 import { setFlash } from 'sveltekit-flash-message/server';
 
-const getLikesData = async (event: PageServerLoadEvent, comments: Block[], user: any) => {
+const getCommentData = async (event: PageServerLoadEvent, comments: Block[], user: any) => {
 	const likesData: {
+		comment: Block;
 		likeForm: SuperValidated<any>;
 		dislikeForm: SuperValidated<any>;
 		likeStatus: 'liked' | 'disliked' | 'unrated';
@@ -43,7 +44,7 @@ const getLikesData = async (event: PageServerLoadEvent, comments: Block[], user:
 		const likeStatus = serverlikeStatus ? (serverlikeStatus.liked ? 'liked' : 'disliked') : 'unrated';
 		const { likes, dislikes, rating } = await getBlockLikesDislikes(comment.id);
 		console.log('puching.... for', comment.content);
-		likesData.push({ likeForm, dislikeForm, likeStatus, likes, dislikes, rating });
+		likesData.push({ comment, likeForm, dislikeForm, likeStatus, likes, dislikes, rating });
 	}
 
 	return likesData;
@@ -99,7 +100,8 @@ export const load = (async (event) => {
 	}
 	let matchedTopic: Topic | null = null;
 	let comments: Block[] | null = null;
-	let likesData: {
+	let commentsData: {
+		comment: Block;
 		likeForm: SuperValidated<any>;
 		dislikeForm: SuperValidated<any>;
 		likeStatus: 'liked' | 'disliked' | 'unrated';
@@ -120,10 +122,11 @@ export const load = (async (event) => {
 		console.log('what ')
 		commentForm.data.topicId = matchedTopic.id;
 		comments = await getComentsForTopic(matchedTopic.id);
-		likesData = await getLikesData(event, comments, user);
+		commentsData = await getCommentData(event, comments, user);
+		commentsData.sort((a, b) => b.rating - a.rating);
 	}
 
-	return { word, exactMatchedCards, relatedCards, matchedTopic, commentForm, comments, likesData };
+	return { word, exactMatchedCards, relatedCards, matchedTopic, commentForm, commentsData };
 }) satisfies PageServerLoad;
 
 export const actions = {

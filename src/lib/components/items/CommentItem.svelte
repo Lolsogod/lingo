@@ -8,9 +8,8 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { blockLikeSchema } from '$lib/config/zod-schemas';
 
-
-	export let blockInfo: Block;
 	export let data: {
+		comment: Block;
 		likeForm: SuperValidated<any>;
 		dislikeForm: SuperValidated<any>;
 		likeStatus: 'liked' | 'disliked' | 'unrated';
@@ -37,23 +36,23 @@
 		<span>Рейтинг: {data.rating}</span>
 	</CardHeader>
 	<CardContent class="flex flex-1">
-		{#if blockInfo.type === 'text'}
+		{#if data.comment.type === 'text'}
 			<h4>
-				{blockInfo.content}
+				{data.comment.content}
 			</h4>
-		{:else if blockInfo.type === 'image'}
-			<img src={blockInfo.content} alt="" class="w-48 rounded-lg object-cover" />
-		{:else if blockInfo.type === 'audio'}
-			<audio controls src={blockInfo.content} />
+		{:else if data.comment.type === 'image'}
+			<img src={data.comment.content} alt="" class="w-48 rounded-lg object-cover" />
+		{:else if data.comment.type === 'audio'}
+			<audio controls src={data.comment.content} />
 		{/if}
 	</CardContent>
 	<CardFooter class="flex justify-between">
-		<span class="text-muted-foreground">{blockInfo.createdAt.toLocaleString()}</span>
+		<span class="text-muted-foreground">{data.comment.createdAt.toLocaleString()}</span>
 		<div class="flex gap-4">
 			<ActionButton
 			form={likeForm}
 			action="{url}?/{liked ? 'unrate' : 'rate'}"
-			values={[{ name: 'liked', value: true }, {name: 'blockId', value: blockInfo.id}]}
+			values={[{ name: 'liked', value: true }, {name: 'blockId', value: data.comment.id}]}
 			variant={liked ? 'default' : 'secondary'}>
 			<span class="flex items-center gap-1 text-xl"
 				><ThumbsUp />
@@ -62,7 +61,7 @@
 		<ActionButton
 			form={dislikeForm}
 			action="{url}?/{disliked ? 'unrate' : 'rate'}"
-			values={[{ name: 'liked', value: false }, {name: 'blockId', value: blockInfo.id}]}
+			values={[{ name: 'liked', value: false }, {name: 'blockId', value: data.comment.id}]}
 			variant={disliked ? 'default' : 'secondary'}>
 			<span class="flex items-center gap-1 text-xl"
 				><ThumbsDown />

@@ -12,7 +12,7 @@ import {
 	likeSchema,
 	startStudySchema
 } from '$lib/config/zod-schemas';
-import { findBlocks, getCardsByDeckId } from '$lib/server/database/models/card';
+import { findBlockByTopic, findBlocks, getCardsByDeckId, getBlockLikesDislikes, getUsersLikeStatusForBlock } from '$lib/server/database/models/card';
 import { error } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
 
@@ -41,7 +41,22 @@ export const load = (async (event) => {
 
 	const canEdit = deck.authorId === user?.id;
 
-	const blocks = await findBlocks(topic);
+	const blocksBytitle = await findBlocks(topic);
+	const blockByTopicId = await findBlockByTopic(topic);
+	
+	const blocks = Array.from(new Set([...blocksBytitle, ...blockByTopicId]));
+
+	const blocksWithLikes = await Promise.all(blocks.map(async (block) => {
+		const likeStatus = await getUsersLikeStatusForBlock(block.id, user.id);
+		const { likes, dislikes, rating } = await getBlockLikesDislikes(block.id);
+		return { ...block, liked: likeStatus?.liked || false, likes, dislikes, rating };
+	}));
+
+	blocksWithLikes.sort((a, b) => {
+		if (a.liked && !b.liked) return -1;
+		if (!a.liked && b.liked) return 1;
+		return b.rating - a.rating;
+	});
 
 	const likeForm = await superValidate(event, zod(likeSchema));
 	const dislikeForm = await superValidate(event, zod(dislikeSchema));
@@ -56,7 +71,7 @@ export const load = (async (event) => {
 		alredyStudying,
 		canEdit,
 		deleteDeckForm,
-		blocks,
+		blocks: blocksWithLikes,
 		likeForm,
 		dislikeForm,
 		likes,

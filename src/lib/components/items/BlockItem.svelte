@@ -3,11 +3,17 @@
 	import type { Block } from '$lib/server/database/schema';
 	import Button from '../ui/button/button.svelte';
 
-	export let blockInfo: Block;
+	export let blockInfo: Block & {
+		liked: boolean;
+		likes: number;
+		dislikes: number;
+		rating: number;
+	};
 	export let add: boolean = false;
+	export let added: boolean = false;
 </script>
 
-<Card class="flex cursor-pointer">
+<Card class="flex cursor-pointer p-4 {blockInfo.liked ? 'border-2 border-green-500' : ''}">
 	<CardContent class="flex flex-1  p-2">
 		{#if blockInfo.type === 'text'}
 			<h4>
@@ -20,6 +26,13 @@
 		{/if}
 	</CardContent>
 	{#if add}
-		<Button on:click class="m-2">+</Button>
+	<div class="flex flex-col gap-2">
+		{#if !added}
+			<Button on:click class="m-2">+</Button>
+		{:else}
+			<Button class="m-2" disabled>✔</Button>
+		{/if}
+		<span>рейтинг: {blockInfo.rating}</span>
+	</div>
 	{/if}
 </Card>
