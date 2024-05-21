@@ -22,9 +22,9 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { blockLikeSchema, commentSchema, likeSchema } from '$lib/config/zod-schemas';
 import { setFlash } from 'sveltekit-flash-message/server';
 
-const getCommentData = async (event: PageServerLoadEvent, comments: Block[], user: any) => {
+const getCommentData = async (event: PageServerLoadEvent, comments: (Block & { author: User })[], user: any) => {
 	const likesData: {
-		comment: Block;
+		comment: Block & { author: User };
 		likeForm: SuperValidated<any>;
 		dislikeForm: SuperValidated<any>;
 		likeStatus: 'liked' | 'disliked' | 'unrated';
@@ -101,9 +101,9 @@ export const load = (async (event) => {
 		}
 	}
 	let matchedTopic: Topic | null = null;
-	let comments: Block[] | null = null;
+	let comments: (Block & { author: User })[] | null = null;
 	let commentsData: {
-		comment: Block;
+		comment: Block & { author?: User };
 		likeForm: SuperValidated<any>;
 		dislikeForm: SuperValidated<any>;
 		likeStatus: 'liked' | 'disliked' | 'unrated';
@@ -125,7 +125,7 @@ export const load = (async (event) => {
 	if (matchedTopic && user) {
 		console.log('what ')
 		commentForm.data.topicId = matchedTopic.id;
-		comments = await getComentsForTopic(matchedTopic.id);
+		comments = await getComentsForTopic(matchedTopic.id) as (Block & { author: User })[];
 		commentsData = await getCommentData(event, comments, user);
 		commentsData.sort((a, b) => b.rating - a.rating);
 	} else {
@@ -137,6 +137,7 @@ export const load = (async (event) => {
 
 export const actions = {
 	comment: async (event) => {
+		const user = event.locals.user
 		const commentForm = await superValidate(event, zod(commentSchema));
 		console.log(commentForm.data)
 		if (!commentForm.valid) {
@@ -144,7 +145,7 @@ export const actions = {
 		}
 		try {
 			console.log(commentForm.data)
-			const newCommnet = await createComment(commentForm.data.topicId, commentForm.data.comment, commentForm.data.potentialTopicName, commentForm.data.type);
+			const newCommnet = await createComment(commentForm.data.topicId, commentForm.data.comment, commentForm.data.potentialTopicName, user!.id, commentForm.data.type);
 			if (newCommnet) {
 				setFlash({ type: 'success', message: 'Коментарий успешно создан' }, event);
 			}

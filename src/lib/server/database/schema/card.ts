@@ -26,7 +26,10 @@ export const blockTable = pgTable('block', {
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	topicId: uuid('topic_id')
 		//.notNull() //TODO: on next reset change to .notNull()
-		.references(() => topicTable.id)
+		.references(() => topicTable.id),
+	authorId: text('author_id')
+		//.notNull() //TODO: on next reset change to .notNull()
+		.references(() => userTable.id)
 });
 
 export const blockLikeTable = pgTable(
@@ -139,9 +142,13 @@ export const topicRelations = relations(topicTable, ({ many }) => {
 		cards: many(cardTable)
 	};
 });
-export const blockRelations = relations(blockTable, ({ many }) => {
+export const blockRelations = relations(blockTable, ({ many, one }) => {
 	return {
-		cards: many(cardBlockTable)
+		cards: many(cardBlockTable),
+		author: one(userTable, {
+			fields: [blockTable.authorId],
+			references: [userTable.id]
+		})
 	};
 });
 export const cardBlockRelations = relations(cardBlockTable, ({ one }) => {

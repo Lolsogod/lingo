@@ -42,7 +42,7 @@
 		}
 	];
 </script>
-<SuperDebug data={formData} />
+
 <section class="mx-auto flex max-w-3xl flex-col items-start justify-center gap-4">
 	<Button href="/dictionary" variant="secondary">Назад</Button>
 	<div class="w-full">

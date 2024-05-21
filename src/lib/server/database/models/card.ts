@@ -174,6 +174,7 @@ export const createComment = async (
 	topicId: string,
 	content: string,
 	potentialTopicName: string,
+	authorId: string,
 	type: 'markdown' | 'text' = 'text'
 ) => {
 	let topic: Topic | undefined;
@@ -190,7 +191,7 @@ export const createComment = async (
 	const result = await db.transaction(async (tx) => {
 		const newComment = await tx
 			.insert(blockTable)
-			.values({ content, type, topicId: topic!.id })	//TODO: маркдаун приколы
+			.values({ content, type, topicId: topic!.id, authorId })
 			.returning();
 		return newComment;
 	});
@@ -200,6 +201,7 @@ export const createComment = async (
 export const getComentsForTopic = async (topicId: string) => {
 	const comments = await db.query.blockTable.findMany({
 		where: eq(blockTable.topicId, topicId),
+		with: { author: true }, //бесопасно ли это...
 		orderBy: (comments, { desc }) => [desc(comments.createdAt)]
 	});
 	return comments;
