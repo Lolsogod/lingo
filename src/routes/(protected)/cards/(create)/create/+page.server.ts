@@ -30,7 +30,9 @@ export const load = (async (event) => {
 	const blocksBytitle = await findBlocks(topic);
 	const blockByTopicId = await findBlockByTopic(topic);
 	
-	const blocks = Array.from(new Set([...blocksBytitle, ...blockByTopicId]));
+	const blocks = [...blocksBytitle, ...blockByTopicId].filter((block, index, self) =>
+		index === self.findIndex((b) => b.id === block.id)
+	);
 
 	const blocksWithLikes = await Promise.all(blocks.map(async (block) => {
 		const likeStatus = await getUsersLikeStatusForBlock(block.id, user.id);

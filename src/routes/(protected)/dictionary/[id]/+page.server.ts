@@ -90,7 +90,7 @@ export const load = (async (event) => {
 
 	for (const [id, card] of uniqueCardsMap) {
 		const cardText = card.topic.name;
-		const isExactMatch = searchTerms.some((term) => cardText === term);
+		const isExactMatch = searchTerms.some((term) => cardText === term && cardText === process(word).title);
 		const isPartOfWord = searchTerms.some((term) => cardText.includes(term));
 		const isWordPartOfCard = searchTerms.some((term) => term.includes(cardText));
 
