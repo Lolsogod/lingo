@@ -49,7 +49,7 @@
 </script>
 
 <section class="container grid items-center gap-6">
-	<div class="flex items-center justify-end gap-2">
+	<div class="flex flex-col sm:flex-row items-center justify-end gap-2 ">
 		<CardCounter count={data.stateCount} class="flex-1" />
 		<Button href="/study/{data.studyDeck.id}/stats" variant="outline">Статистика</Button>
 		<StudyDeckSettings form={settingsForm} studyDeck={data.studyDeck} />
@@ -62,7 +62,7 @@
 		<span></span>
 	{:else}
 		<div class="flex items-center justify-center">
-			<div class="relative h-[70vh] w-full overflow-hidden">
+			<div class="relative h-[70vh] w-full overflow-hidden ">
 				{#key optSubmitCounter}
 					<div out:flyAway={{ duration: 800 }} class="absolute left-1/2 -ml-[7.5rem]">
 						<SrsCard

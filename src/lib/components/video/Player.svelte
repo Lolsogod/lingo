@@ -123,7 +123,7 @@
 					{#each words as word}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<!-- svelte-ignore a11y-no-static-element-interactions -->
-						<span class="text-2xl" on:click={handleWordClick}>{word}</span>
+						<span class="text-2xl text-white" on:click={handleWordClick}>{word}</span>
 					{/each}
 				</div>
 			</div>
