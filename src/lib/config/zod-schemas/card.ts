@@ -22,6 +22,7 @@ export const blockLikeSchema = z.object({
 export const cardSchema = z.object({
 	topicName: z.string().min(1, { message: 'Введите название темы карточки' }),
 	blocks: z.array(blockSchema).min(1, { message: 'У карточки должен быть минимум 1 блок' }),
+	tags: z.string().optional(),
 	addToStudy: z.boolean(),
 	studyDeckId: z.string().optional()
 });
@@ -32,7 +33,8 @@ export const createCardSchema = cardSchema
 		topicName: true,
 		blocks: true,
 		addToStudy: true,
-		studyDeckId: true
+		studyDeckId: true,
+		tags: true
 	})
 	.refine((data) => !data.addToStudy || (data.addToStudy && data.studyDeckId), {
 		message: 'Необходимо выбрать колоду для добавления карточки',

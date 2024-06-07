@@ -58,7 +58,8 @@ export const createCard = async (data: CreateCardSchema, authorId: string) => {
 				.insert(cardTable)
 				.values({
 					topicId: existingTopic.id,
-					authorId
+					authorId,
+					tags: data.tags?.split(',').map((tag) => tag.trim())
 				})
 				.returning()
 		)[0];
@@ -271,3 +272,24 @@ export const getUsersLikeStatusForBlock = async (blockId: string, userId: string
 	});
 	return likeStatus;
 };
+
+//tags
+export const addTagToCard = async (cardId: string, tag: string) => {
+	const card = await db.query.cardTable.findFirst({
+		where: eq(cardTable.id, cardId)
+	});
+
+	if (!card) {
+		throw new Error('Card not found');
+	}
+
+	const updatedTags = [...card.tags, tag];
+
+	const result = await db.update(cardTable)
+		.set({ tags: updatedTags })
+		.where(eq(cardTable.id, cardId))
+		.returning();
+
+	return result;
+};
+

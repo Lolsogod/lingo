@@ -6,6 +6,8 @@
 	import * as HoverCard from '$lib/components/ui/hover-card/index.js';
 	import BlockItem from './BlockItem.svelte';
 	import { declOfNum } from '$lib/_helpers/declOfNum';
+	import { Badge } from '../ui/badge';
+	import { Search } from 'lucide-svelte';
 	export let cardInfo: CardExp;
 </script>
 
@@ -22,6 +24,16 @@
 	<HoverCard.Content class="w-[380px]">
 		<Card.Root class="w-[350px]">
 			<Card.Header>
+				<div class="flex flex-wrap gap-2">
+				{#if cardInfo.tags?.length > 0}
+					{#each cardInfo.tags as tag}
+						<Badge href="/cards/browse?tag={tag}">{tag}</Badge>
+					{/each}
+					<Badge
+						href="/cards/browse?tag={cardInfo.tags}"
+						variant="outline"
+						title="Поиск по всем тегам"><Search class="h-4 w-4" /></Badge>
+				{/if}</div>
 				<Card.Title>
 					<h1>{cardInfo.topic.name}</h1>
 				</Card.Title>
@@ -40,7 +52,6 @@
 						{declOfNum(cardInfo.cardDeck.length, ['колоду', 'колоды', 'колод'])}
 					</p>
 				{/if}
-			
 			</Card.Footer>
 		</Card.Root>
 	</HoverCard.Content>

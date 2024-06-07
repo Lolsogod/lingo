@@ -12,7 +12,8 @@
 	export let data: PageData;
 
 	let query = $page.url.searchParams.get('add') || '';
-
+	let tagQuery = $page.url.searchParams.get('add-tag') || '';
+	
 	$: if (browser && query !== $page.url.searchParams.get('add')) {
 		const url = new URL($page.url);
 		url.searchParams.set('add', query);
@@ -21,9 +22,20 @@
 			noScroll: true
 		});
 	}
+	$: if (browser && tagQuery !== $page.url.searchParams.get('add-tag')) {
+		const url = new URL($page.url);
+		url.searchParams.set('add-tag', tagQuery);
+		goto(url, {
+			keepFocus: true,
+			noScroll: true
+		});
+	}
 </script>
 
-<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
+<div class="flex gap-2">
+	<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
+	<Input placeholder="теги (через запятую)" class="max-w-xs" bind:value={tagQuery} />
+</div>
 <h2 class="border-b">Мои карты</h2>
 {#if data.userCreatedCards}
 	<ItemGrid>

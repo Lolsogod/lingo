@@ -17,7 +17,7 @@
 			{/if}
 		</CardHeader>
 		<CardContent class="flex h-12 flex-1 items-center justify-center p-2">
-			<span class="truncate text-2xl">{deckInfo.name}</span>
+			<span class="truncate text-2xl" title={deckInfo.name}>{deckInfo.name}</span>
 		</CardContent>
 		<CardFooter>
 			<!--just demo modify after making buttonform-->

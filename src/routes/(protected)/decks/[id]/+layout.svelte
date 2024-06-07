@@ -18,14 +18,24 @@
 	import { browser } from '$app/environment';
 	import { Input } from '$lib/components/ui/input';
 	import { ThumbsUp, ThumbsDown } from 'lucide-svelte';
+	import { Badge } from '$lib/components/ui/badge';
+	import { Search } from 'lucide-svelte';
 
 	export let data: LayoutData;
 
 	let query = $page.url.searchParams.get('q') || '';
-
+	let tagQuery = $page.url.searchParams.get('tag') || '';
 	$: if (browser && query !== $page.url.searchParams.get('q')) {
 		const url = new URL($page.url);
 		url.searchParams.set('q', query);
+		goto(url, {
+			keepFocus: true,
+			noScroll: true
+		});
+	}
+	$: if (browser && tagQuery !== $page.url.searchParams.get('tag')) {
+		const url = new URL($page.url);
+		url.searchParams.set('tag', tagQuery);
 		goto(url, {
 			keepFocus: true,
 			noScroll: true
@@ -93,7 +103,18 @@
 	<p>
 		{data.deck.description || ''}
 	</p>
-	
+	<div class="flex flex-wrap gap-2">
+		{#if data.deckTags?.length > 0}
+			{#each data.deckTags as tag}
+				<Badge href="/decks/browse?tag={tag}">{tag}</Badge>
+			{/each}
+			<Badge
+				href="/decks/browse?tag={data.deckTags}"
+				variant="outline"
+				title="Поиск по всем тегам"><Search class="h-4 w-4" /></Badge>
+		{/if}
+	</div>
+
 	<div class="flex gap-4">
 		<ActionButton
 			form={likeForm}
@@ -118,7 +139,10 @@
 	<h2 class="border-b">
 		Список карт <!---доделать-->
 	</h2>
-	<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
+	<div class="flex gap-2">
+		<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
+		<Input placeholder="теги (через запятую)" class="max-w-xs" bind:value={tagQuery} />
+	</div>
 	<ItemGrid>
 		{#each data.cards as card}
 			<CardItem cardInfo={card} />

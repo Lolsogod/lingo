@@ -9,10 +9,19 @@
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 	let query = $page.url.searchParams.get('q') || '';
+	let tagQuery = $page.url.searchParams.get('tag') || '';
 
 	$: if (browser && query !== $page.url.searchParams.get('q')) {
 		const url = new URL($page.url);
 		url.searchParams.set('q', query);
+		goto(url, {
+			keepFocus: true,
+			noScroll: true
+		});
+	}
+	$: if (browser && tagQuery !== $page.url.searchParams.get('tag')) {
+		const url = new URL($page.url);
+		url.searchParams.set('tag', tagQuery);
 		goto(url, {
 			keepFocus: true,
 			noScroll: true
@@ -25,7 +34,10 @@
 		<h1>Все карты</h1>
 		<Button href="create">Создать карту</Button>
 	</div>
-	<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
+	<div class="flex gap-2">
+		<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
+		<Input placeholder="теги (через запятую)" class="max-w-xs" bind:value={tagQuery} />
+	</div>
 	<h2 class="border-b">Мои карты</h2>
 
 	{#if data.userCreatedCards}

@@ -172,3 +172,14 @@ export const getUsersLikeStatusForDeck = async (deckId: string, userId: string) 
 	});
 	return likeStatus;
 };
+
+//get deck tags 
+export const getDeckTags = async (deckId: string) => {
+	const tags = await db.query.cardDeckTable.findMany({
+		where: eq(cardDeckTable.deckId, deckId),
+		with: { card: true }
+	});
+
+	const deckTags = tags.flatMap(tag => tag.card.tags);
+	return Array.from(new Set(deckTags)); 
+};

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { superForm, type SuperValidated } from 'sveltekit-superforms';
+	import SuperDebug, { superForm, type SuperValidated } from 'sveltekit-superforms';
 	import { createCardSchema, type CreateCardSchema } from '$lib/config/zod-schemas';
 	import * as Card from '$lib/components/ui/card';
 	import * as Form from '$lib/components/ui/form';
@@ -68,12 +68,17 @@
 		$formData.studyDeckId = undefined;
 	}
 </script>
-
 <SimpleForm {form} {inputs} {action}>
 	<div slot="header">
 		<Card.Title class="text-2xl">Создание карты</Card.Title>
 	</div>
 	<div slot="custom-fields">
+		<Form.Field {form} name="tags" class="mb-5">
+			<Form.Control let:attrs>
+				<Form.Label>Теги (через запятую)</Form.Label>
+				<Input {...attrs} bind:value={$formData.tags} />
+			</Form.Control>
+		</Form.Field>
 		<!---нет ошибки на пустые блоки-->
 		{#each $formData.blocks as block, i}
 			<div class="flex w-full items-end gap-2">

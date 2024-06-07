@@ -12,7 +12,8 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { addCardToDeckSchema2 } from '$lib/config/zod-schemas';
 	import SimpleSubmit from '$lib/components/forms/SimpleSubmit.svelte';
-
+	import { Badge } from '$lib/components/ui/badge';
+	import { Search } from 'lucide-svelte'
 	export let data: PageData;
 
 	const form = superForm(data.addToDeckForm, {
@@ -25,6 +26,15 @@
 <section class="container grid items-center gap-6">
 	<Card.Root class="w-[350px]">
 		<Card.Header>
+			<div class="flex flex-wrap gap-2">
+				{#if data.card.tags?.length > 0}
+					{#each data.card.tags as tag}
+						<Badge href='/cards/browse?tag={tag}'>{tag}</Badge>
+					{/each}
+					<Badge href='/cards/browse?tag={data.card.tags}' variant='outline' title='Поиск по всем тегам'><Search class="w-4 h-4"/></Badge>
+				{/if}
+			</div>
+
 			<Card.Title>
 				<h1>{data.card?.topic.name}</h1>
 			</Card.Title>

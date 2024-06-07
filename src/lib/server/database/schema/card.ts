@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import {
 	pgTable,
 	primaryKey,
@@ -51,7 +51,6 @@ export const blockLikeTable = pgTable(
 	}
 );
 
-
 export const cardTable = pgTable('card', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
 	topicId: uuid('topic_id')
@@ -60,7 +59,12 @@ export const cardTable = pgTable('card', {
 	public: boolean('public').notNull().default(true),
 	authorId: text('author_id')
 		.notNull()
-		.references(() => userTable.id)
+		.references(() => userTable.id),
+	tags: text('tags')
+		.array()
+		.notNull()
+		.default(sql`'{}'::text[]`),
+	level: integer('level').notNull().default(1)
 });
 
 export const cardBlockTable = pgTable(

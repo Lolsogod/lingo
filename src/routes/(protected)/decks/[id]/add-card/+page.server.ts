@@ -19,7 +19,12 @@ export const load = (async (event) => {
 	const user = event.locals.user;
 	const deckId = event.params.id;
 	const query = event.url.searchParams.get('add') || null;
-
+	const tagQuery =
+	event.url.searchParams
+		.get('add-tag')
+		?.split(',')
+		.map((tag) => tag.trim())
+		.filter((tag) => tag !== '') || null;
 	let publicCards: CardExp[] | null = await getPublicCards(user?.id);
 	let userCreatedCards: CardExp[] | null = await getCardsByAuthor(user?.id);
 
@@ -32,6 +37,15 @@ export const load = (async (event) => {
 			const index = createCardIndex(userCreatedCards);
 			userCreatedCards = searchCardsIndex(query, index, userCreatedCards);
 		}
+	}
+	if (tagQuery) {
+		console.log(tagQuery);
+		const filterByTags = (cards: CardExp[] | null, tags: string[]) => {
+			return cards?.filter((card) => tags.every((tag) => card.tags.includes(tag))) || null;
+		};
+
+		publicCards = filterByTags(publicCards, tagQuery);
+		userCreatedCards = filterByTags(userCreatedCards, tagQuery);
 	}
 	const form = await superValidate(event, zod(addCardToDeckSchema));
 
