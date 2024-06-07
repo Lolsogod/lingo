@@ -4,7 +4,7 @@
 	import Button from '../ui/button/button.svelte';
 	import { Carta, Markdown } from 'carta-md';
 	import 'carta-md/default.css'; /* Default theme */
-	import DOMPurify from 'isomorphic-dompurify'
+	import DOMPurify from 'isomorphic-dompurify';
 	import { mode } from 'mode-watcher';
 	const carta = new Carta({
 		sanitizer: DOMPurify.sanitize
@@ -35,13 +35,13 @@
 		{/if}
 	</CardContent>
 	{#if add}
-	<div class="flex flex-col gap-2">
-		{#if !added}
-			<Button on:click class="m-2">+</Button>
-		{:else}
-			<Button class="m-2" disabled>✔</Button>
-		{/if}
-		<span>рейтинг: {blockInfo.rating}</span>
-	</div>
+		<div class="flex flex-col gap-2">
+			{#if !added}
+				<Button on:click class="m-2">+</Button>
+			{:else}
+				<Button class="m-2" disabled>✔</Button>
+			{/if}
+			<span>рейтинг: {blockInfo.rating}</span>
+		</div>
 	{/if}
 </Card>

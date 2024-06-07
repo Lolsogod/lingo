@@ -28,11 +28,11 @@ export const load = (async (event) => {
 	const deckId = event.params.id;
 	const query = event.url.searchParams.get('q') || null;
 	const tagQuery =
-	event.url.searchParams
-		.get('tag')
-		?.split(',')
-		.map((tag) => tag.trim())
-		.filter((tag) => tag !== '') || null;
+		event.url.searchParams
+			.get('tag')
+			?.split(',')
+			.map((tag) => tag.trim())
+			.filter((tag) => tag !== '') || null;
 	const topic = event.url.searchParams.get('topic') || '';
 
 	const deck = await getDeckById(deckId, user?.id);

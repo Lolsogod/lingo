@@ -1,6 +1,11 @@
 import type { PageServerLoad } from './$types';
 import { createCardSchema } from '$lib/config/zod-schemas';
-import { addCardToDeck, createCard, findBlockByTopic, findBlocks } from '$lib/server/database/models/card';
+import {
+	addCardToDeck,
+	createCard,
+	findBlockByTopic,
+	findBlocks
+} from '$lib/server/database/models/card';
 import { error, fail, redirect } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { setError, superValidate } from 'sveltekit-superforms';
@@ -8,12 +13,15 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { createCardIndex, searchCardsIndex } from '$lib/cardSearch';
 import { getCardsByAuthor, getPublicCards } from '$lib/server/database/models/card';
 import type { CardExp } from '$lib/server/database/schema';
-import { getUsersLikeStatusForBlock, getBlockLikesDislikes } from '$lib/server/database/models/card';
+import {
+	getUsersLikeStatusForBlock,
+	getBlockLikesDislikes
+} from '$lib/server/database/models/card';
 
 export const load = (async (event) => {
 	const topic = event.url.searchParams.get('topic') || '';
 	const user = event.locals.user;
-	if(!user){
+	if (!user) {
 		error(401, 'Unauthorized');
 	}
 	const publicCards: CardExp[] | null = await getPublicCards(user?.id);
@@ -29,16 +37,18 @@ export const load = (async (event) => {
 
 	const blocksBytitle = await findBlocks(topic);
 	const blockByTopicId = await findBlockByTopic(topic);
-	
-	const blocks = [...blocksBytitle, ...blockByTopicId].filter((block, index, self) =>
-		index === self.findIndex((b) => b.id === block.id)
+
+	const blocks = [...blocksBytitle, ...blockByTopicId].filter(
+		(block, index, self) => index === self.findIndex((b) => b.id === block.id)
 	);
 
-	const blocksWithLikes = await Promise.all(blocks.map(async (block) => {
-		const likeStatus = await getUsersLikeStatusForBlock(block.id, user.id);
-		const { likes, dislikes, rating } = await getBlockLikesDislikes(block.id);
-		return { ...block, liked: likeStatus?.liked || false, likes, dislikes, rating };
-	}));
+	const blocksWithLikes = await Promise.all(
+		blocks.map(async (block) => {
+			const likeStatus = await getUsersLikeStatusForBlock(block.id, user.id);
+			const { likes, dislikes, rating } = await getBlockLikesDislikes(block.id);
+			return { ...block, liked: likeStatus?.liked || false, likes, dislikes, rating };
+		})
+	);
 
 	blocksWithLikes.sort((a, b) => {
 		if (a.liked && !b.liked) return -1;

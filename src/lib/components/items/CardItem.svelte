@@ -25,15 +25,16 @@
 		<Card.Root class="w-[350px]">
 			<Card.Header>
 				<div class="flex flex-wrap gap-2">
-				{#if cardInfo.tags?.length > 0}
-					{#each cardInfo.tags as tag}
-						<Badge href="/cards/browse?tag={tag}">{tag}</Badge>
-					{/each}
-					<Badge
-						href="/cards/browse?tag={cardInfo.tags}"
-						variant="outline"
-						title="Поиск по всем тегам"><Search class="h-4 w-4" /></Badge>
-				{/if}</div>
+					{#if cardInfo.tags?.length > 0}
+						{#each cardInfo.tags as tag}
+							<Badge href="/cards/browse?tag={tag}">{tag}</Badge>
+						{/each}
+						<Badge
+							href="/cards/browse?tag={cardInfo.tags}"
+							variant="outline"
+							title="Поиск по всем тегам"><Search class="h-4 w-4" /></Badge>
+					{/if}
+				</div>
 				<Card.Title>
 					<h1>{cardInfo.topic.name}</h1>
 				</Card.Title>

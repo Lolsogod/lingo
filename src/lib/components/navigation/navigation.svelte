@@ -35,7 +35,7 @@
 		<div class="flex gap-6 md:gap-10">
 			<a class="flex items-center space-x-2" href="/"
 				><Logo size="24"></Logo><span class="inline-block font-bold">{APP_NAME}</span></a>
-			<nav class="hidden sm:flex gap-6">
+			<nav class="hidden gap-6 sm:flex">
 				<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
 					href={main_url}
@@ -136,8 +136,8 @@
 						</DropdownMenu.Content>
 					</DropdownMenu.Root>
 				{/if}
-				<div class="w-4 block sm:hidden"></div>
-				<Menu class="block sm:hidden"/>
+				<div class="block w-4 sm:hidden"></div>
+				<Menu class="block sm:hidden" />
 			</nav>
 		</div>
 	</div>

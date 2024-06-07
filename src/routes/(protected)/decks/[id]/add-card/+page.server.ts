@@ -20,11 +20,11 @@ export const load = (async (event) => {
 	const deckId = event.params.id;
 	const query = event.url.searchParams.get('add') || null;
 	const tagQuery =
-	event.url.searchParams
-		.get('add-tag')
-		?.split(',')
-		.map((tag) => tag.trim())
-		.filter((tag) => tag !== '') || null;
+		event.url.searchParams
+			.get('add-tag')
+			?.split(',')
+			.map((tag) => tag.trim())
+			.filter((tag) => tag !== '') || null;
 	let publicCards: CardExp[] | null = await getPublicCards(user?.id);
 	let userCreatedCards: CardExp[] | null = await getCardsByAuthor(user?.id);
 

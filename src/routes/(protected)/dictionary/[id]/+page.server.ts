@@ -1,7 +1,7 @@
 import type { PageServerLoad, PageServerLoadEvent } from './$types';
 import { error } from '@sveltejs/kit';
 import { createCardIndex, searchCardsIndex } from '$lib/cardSearch';
-import {process} from '../processWord';
+import { process } from '../processWord';
 import {
 	createComment,
 	findBlocks,
@@ -22,7 +22,11 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { blockLikeSchema, commentSchema, likeSchema } from '$lib/config/zod-schemas';
 import { setFlash } from 'sveltekit-flash-message/server';
 
-const getCommentData = async (event: PageServerLoadEvent, comments: (Block & { author: User })[], user: any) => {
+const getCommentData = async (
+	event: PageServerLoadEvent,
+	comments: (Block & { author: User })[],
+	user: any
+) => {
 	const likesData: {
 		comment: Block & { author: User };
 		likeForm: SuperValidated<any>;
@@ -43,7 +47,11 @@ const getCommentData = async (event: PageServerLoadEvent, comments: (Block & { a
 		});
 		dislikeForm.data.blockId = comment.id;
 		const serverlikeStatus = await getUsersLikeStatusForBlock(comment.id, user.id);
-		const likeStatus = serverlikeStatus ? (serverlikeStatus.liked ? 'liked' : 'disliked') : 'unrated';
+		const likeStatus = serverlikeStatus
+			? serverlikeStatus.liked
+				? 'liked'
+				: 'disliked'
+			: 'unrated';
 		const { likes, dislikes, rating } = await getBlockLikesDislikes(comment.id);
 		console.log('puching.... for', comment.content);
 		likesData.push({ comment, likeForm, dislikeForm, likeStatus, likes, dislikes, rating });
@@ -51,7 +59,7 @@ const getCommentData = async (event: PageServerLoadEvent, comments: (Block & { a
 
 	return likesData;
 };
- 
+
 export const load = (async (event) => {
 	const user = event.locals.user;
 	const wordId = event.params.id;
@@ -90,7 +98,9 @@ export const load = (async (event) => {
 
 	for (const [id, card] of uniqueCardsMap) {
 		const cardText = card.topic.name;
-		const isExactMatch = searchTerms.some((term) => cardText === term && cardText === process(word).title);
+		const isExactMatch = searchTerms.some(
+			(term) => cardText === term && cardText === process(word).title
+		);
 		const isPartOfWord = searchTerms.some((term) => cardText.includes(term));
 		const isWordPartOfCard = searchTerms.some((term) => term.includes(cardText));
 
@@ -110,7 +120,7 @@ export const load = (async (event) => {
 		likes: any[];
 		dislikes: any[];
 		rating: number;
-	}[] = []
+	}[] = [];
 
 	const exactMatchedCards = Array.from(exactMatchedCardsMap.values());
 	const relatedCards = Array.from(relatedCardsMap.values());
@@ -123,13 +133,13 @@ export const load = (async (event) => {
 	const commentForm = await superValidate(event, zod(commentSchema));
 
 	if (matchedTopic && user) {
-		console.log('what ')
+		console.log('what ');
 		commentForm.data.topicId = matchedTopic.id;
-		comments = await getComentsForTopic(matchedTopic.id) as (Block & { author: User })[];
+		comments = (await getComentsForTopic(matchedTopic.id)) as (Block & { author: User })[];
 		commentsData = await getCommentData(event, comments, user);
 		commentsData.sort((a, b) => b.rating - a.rating);
 	} else {
-		commentForm.data.potentialTopicName =  process(word).title;
+		commentForm.data.potentialTopicName = process(word).title;
 	}
 
 	return { word, exactMatchedCards, relatedCards, matchedTopic, commentForm, commentsData };
@@ -137,15 +147,21 @@ export const load = (async (event) => {
 
 export const actions = {
 	comment: async (event) => {
-		const user = event.locals.user
+		const user = event.locals.user;
 		const commentForm = await superValidate(event, zod(commentSchema));
-		console.log(commentForm.data)
+		console.log(commentForm.data);
 		if (!commentForm.valid) {
 			return fail(400, { commentForm });
 		}
 		try {
-			console.log(commentForm.data)
-			const newCommnet = await createComment(commentForm.data.topicId, commentForm.data.comment, commentForm.data.potentialTopicName, user!.id, commentForm.data.type);
+			console.log(commentForm.data);
+			const newCommnet = await createComment(
+				commentForm.data.topicId,
+				commentForm.data.comment,
+				commentForm.data.potentialTopicName,
+				user!.id,
+				commentForm.data.type
+			);
 			if (newCommnet) {
 				setFlash({ type: 'success', message: 'Коментарий успешно создан' }, event);
 			}
@@ -159,7 +175,7 @@ export const actions = {
 	rate: async (event) => {
 		console.log('работаем.......................');
 		const userId = event.locals.user?.id;
-		
+
 		const likeForm = await superValidate(event, zod(blockLikeSchema));
 		if (!likeForm.valid || !userId) {
 			return fail(400, {
@@ -173,17 +189,17 @@ export const actions = {
 		} else {
 			await addBlockDislike(userId, blockId);
 		}
-	}, 
+	},
 	unrate: async (event) => {
 		const userId = event.locals.user?.id;
 		const commentForm = await superValidate(event, zod(blockLikeSchema));
 		const blockId = commentForm.data.blockId;
-		console.log(blockId, userId)
+		console.log(blockId, userId);
 		if (!userId || !blockId) {
 			return fail(400);
 		}
-	
+
 		await removeBlockLike(userId, blockId);
-		return {commentForm}
+		return { commentForm };
 	}
 };

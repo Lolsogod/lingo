@@ -8,12 +8,14 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { Input } from '$lib/components/ui/input';
-
+	import { Badge } from '$lib/components/ui/badge';
+	import { Tags } from 'lucide-svelte';
+	import { Button } from '$lib/components/ui/button';
 	export let data: PageData;
 
 	let query = $page.url.searchParams.get('add') || '';
 	let tagQuery = $page.url.searchParams.get('add-tag') || '';
-	
+
 	$: if (browser && query !== $page.url.searchParams.get('add')) {
 		const url = new URL($page.url);
 		url.searchParams.set('add', query);
@@ -30,13 +32,16 @@
 			noScroll: true
 		});
 	}
+	$: console.log(tagQuery);
 </script>
 
 <div class="flex gap-2">
 	<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
 	<Input placeholder="теги (через запятую)" class="max-w-xs" bind:value={tagQuery} />
+	<Button on:click={() => (tagQuery = data.deckTags.join(','))} variant="outline" class="flex">
+		<Tags class="mr-2 w-4" /> Искать по тегам колоды
+	</Button>
 </div>
-<h2 class="border-b">Мои карты</h2>
 {#if data.userCreatedCards}
 	<ItemGrid>
 		{#each data.userCreatedCards as card}

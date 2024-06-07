@@ -116,7 +116,7 @@ export const getCardsByDeckId = async (deckId: string) => {
 export const getPublicCards = async (userId = ''): Promise<CardExp[] | null> => {
 	const cards = await db.query.cardTable.findMany({
 		where: and(eq(cardTable.public, true), ne(cardTable.authorId, userId)),
-		with: { topic: true, cardDeck: true, cardBlocks: { with: { block: true } }}
+		with: { topic: true, cardDeck: true, cardBlocks: { with: { block: true } } }
 	});
 	if (cards.length === 0) {
 		return null;
@@ -129,7 +129,7 @@ export const getCardsByAuthor = async (authorId?: string) => {
 	}
 	const cards = await db.query.cardTable.findMany({
 		where: eq(cardTable.authorId, authorId),
-		with: { topic: true, cardDeck: true, cardBlocks: { with: { block: true } }} //а пока костылина! add some processomg to check if it is inside deck
+		with: { topic: true, cardDeck: true, cardBlocks: { with: { block: true } } } //а пока костылина! add some processomg to check if it is inside deck
 	});
 	if (cards.length === 0) {
 		return null;
@@ -186,7 +186,7 @@ export const createComment = async (
 	} catch (error) {
 		topic = (await db.insert(topicTable).values({ name: potentialTopicName }).returning())[0];
 	}
-	if(!topic) {
+	if (!topic) {
 		return null;
 	}
 	const result = await db.transaction(async (tx) => {
@@ -285,11 +285,11 @@ export const addTagToCard = async (cardId: string, tag: string) => {
 
 	const updatedTags = [...card.tags, tag];
 
-	const result = await db.update(cardTable)
+	const result = await db
+		.update(cardTable)
 		.set({ tags: updatedTags })
 		.where(eq(cardTable.id, cardId))
 		.returning();
 
 	return result;
 };
-

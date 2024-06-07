@@ -4,10 +4,10 @@
 	import SimpleInput from './SimpleInput.svelte';
 	import DisplayErrors from './DisplayErrors.svelte';
 	import SimpleCheckbox from './SimpleCheckbox.svelte';
-	
+
 	let className = '';
 	export let innerClass = '';
-	export { className as class }
+	export { className as class };
 	export let inputs: { name: string; label?: string; type?: string }[] = [];
 	export let action: string = '';
 	export let form: SuperForm<any, any>;

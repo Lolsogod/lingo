@@ -67,7 +67,7 @@ export const actions = {
 		} else {
 			await addDislike(userId, deckId);
 		}
-	}, 
+	},
 	unrate: async (event) => {
 		const userId = event.locals.user?.id;
 		const deckId = event.params.id;

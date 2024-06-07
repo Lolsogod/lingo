@@ -82,7 +82,7 @@
 
 	onMount(() => {
 		const urlParams = new URLSearchParams($page.url.search);
-		src = 'https://www.youtube.com/watch?v=' +urlParams.get('v') || '';
+		src = 'https://www.youtube.com/watch?v=' + urlParams.get('v') || '';
 		return player.subscribe((state) => {
 			viewType = state.viewType;
 		});
@@ -121,7 +121,7 @@
 				<VideoLayout />
 			</media-player>
 
-			<div class="absolute bottom-20 flex justify-center  w-full">
+			<div class="absolute bottom-20 flex w-full justify-center">
 				<div class="bg-black">
 					{#each words as word}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->

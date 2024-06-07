@@ -11,7 +11,6 @@
 		sanitizer: DOMPurify.sanitize
 	});
 
-
 	export let form: SuperForm<any, any>;
 	export let label: string | undefined = undefined;
 	export let name: string;

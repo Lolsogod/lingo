@@ -33,7 +33,7 @@
 </script>
 
 <div class="mx-auto flex max-w-3xl flex-col items-center justify-center">
-	<h1 class="w-full mb-4">Словарь</h1>
+	<h1 class="mb-4 w-full">Словарь</h1>
 	{#if search === 'ready'}
 		<div class="w-full">
 			<Input bind:value={query} placeholder="Поиск..." autocomplete="off" />

@@ -16,10 +16,13 @@
 </script>
 
 <div class="flex gap-3">
-	<span class="font-bold {count.New === 0 ? 'opacity-70' : 'text-blue-600'}" title='Новые'>{count.New}</span>
-	<span class="font-bold {count.Learning === 0 ? 'opacity-70' : 'text-orange-600'}" title='В изучении'>{count.Learning}</span>
-	<span class="font-bold {count.Relearning === 0 ? 'opacity-70' : 'text-red-600'}" title='Забытые'
+	<span class="font-bold {count.New === 0 ? 'opacity-70' : 'text-blue-600'}" title="Новые"
+		>{count.New}</span>
+	<span
+		class="font-bold {count.Learning === 0 ? 'opacity-70' : 'text-orange-600'}"
+		title="В изучении">{count.Learning}</span>
+	<span class="font-bold {count.Relearning === 0 ? 'opacity-70' : 'text-red-600'}" title="Забытые"
 		>{count.Relearning}</span>
-	<span class="font-bold {count.Review === 0 ? 'opacity-70' : 'text-green-600'}" title='Повторяемые'
+	<span class="font-bold {count.Review === 0 ? 'opacity-70' : 'text-green-600'}" title="Повторяемые"
 		>{count.Review}</span>
 </div>

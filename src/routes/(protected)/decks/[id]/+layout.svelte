@@ -108,10 +108,8 @@
 			{#each data.deckTags as tag}
 				<Badge href="/decks/browse?tag={tag}">{tag}</Badge>
 			{/each}
-			<Badge
-				href="/decks/browse?tag={data.deckTags}"
-				variant="outline"
-				title="Поиск по всем тегам"><Search class="h-4 w-4" /></Badge>
+			<Badge href="/decks/browse?tag={data.deckTags}" variant="outline" title="Поиск по всем тегам"
+				><Search class="h-4 w-4" /></Badge>
 		{/if}
 	</div>
 

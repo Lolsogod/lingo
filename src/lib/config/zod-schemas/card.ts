@@ -12,7 +12,6 @@ export const commentSchema = z.object({
 	comment: z.string().min(1, { message: 'Введите комментарий' }),
 	potentialTopicName: z.string(),
 	type: z.enum(['text', 'markdown']).optional()
-
 });
 export const blockLikeSchema = z.object({
 	blockId: z.string(),
