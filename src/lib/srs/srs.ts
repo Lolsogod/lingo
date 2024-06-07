@@ -88,7 +88,6 @@ const preScheduleCard = (card: Card, now: Date): SchedulingCard => {
 		good.state = 'Review';
 	} else if (card.state === 'Review') {
 		again.state = 'Relearning';
-		good.state = 'Review';
 	}
 
 	return { again, good, last_review, last_elapsed_days };

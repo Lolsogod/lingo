@@ -1,16 +1,47 @@
 <script lang="ts">
-	import { Card, CardContent } from '$lib/components/ui/card';
 	import type { CardExp } from '$lib/server/database/schema';
-
+	import CalendarDays from 'lucide-svelte/icons/calendar-days';
+	import * as Avatar from '$lib/components/ui/avatar/index.js';
+	import * as Card from '$lib/components/ui/card';
+	import * as HoverCard from '$lib/components/ui/hover-card/index.js';
+	import BlockItem from './BlockItem.svelte';
+	import { declOfNum } from '$lib/_helpers/declOfNum';
 	export let cardInfo: CardExp;
 </script>
 
-<a href={`/cards/${cardInfo.id}`}>
-	<Card class="flex h-52 w-36 cursor-pointer flex-col ">
-		<CardContent class="flex h-12 flex-1 items-center justify-center p-2">
-			<span class="truncate text-2xl">{cardInfo.topic.name}</span>
-			<!--в слот мб-->
-		</CardContent>
-		<slot />
-	</Card>
-</a>
+<HoverCard.Root>
+	<HoverCard.Trigger href={`/cards/${cardInfo.id}`} target="_blank" rel="noreferrer noopener">
+		<Card.Root class="flex h-52 w-36 cursor-pointer flex-col ">
+			<Card.Content class="flex h-12 flex-1 items-center justify-center p-2">
+				<span class="truncate text-2xl">{cardInfo.topic.name}</span>
+				<!--в слот мб-->
+			</Card.Content>
+			<slot />
+		</Card.Root>
+	</HoverCard.Trigger>
+	<HoverCard.Content class="w-[380px]">
+		<Card.Root class="w-[350px]">
+			<Card.Header>
+				<Card.Title>
+					<h1>{cardInfo.topic.name}</h1>
+				</Card.Title>
+				<Card.Description
+					><a href={`/dictionary/?q=${cardInfo.topic.name}`}>Открыть словарь</a></Card.Description>
+			</Card.Header>
+			<Card.Content class="flex flex-col gap-2">
+				{#each cardInfo.cardBlocks || [] as cb}
+					<BlockItem blockInfo={cb.block} />
+				{/each}
+			</Card.Content>
+			<Card.Footer class="flex flex-col items-start">
+				{#if cardInfo.cardDeck}
+					<p class="text-sm text-muted-foreground">
+						Добавленна в {cardInfo.cardDeck.length}
+						{declOfNum(cardInfo.cardDeck.length, ['колоду', 'колоды', 'колод'])}
+					</p>
+				{/if}
+			
+			</Card.Footer>
+		</Card.Root>
+	</HoverCard.Content>
+</HoverCard.Root>

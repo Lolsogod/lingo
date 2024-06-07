@@ -93,9 +93,7 @@
 	<p>
 		{data.deck.description || ''}
 	</p>
-	<h2 class="border-b">
-		Список карт <!---доделать-->
-	</h2>
+	
 	<div class="flex gap-4">
 		<ActionButton
 			form={likeForm}
@@ -117,6 +115,9 @@
 		</ActionButton>
 	</div>
 	<span class="text-lg text-muted-foreground">Рейтинг колоды: {data.rating}</span>
+	<h2 class="border-b">
+		Список карт <!---доделать-->
+	</h2>
 	<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
 	<ItemGrid>
 		{#each data.cards as card}

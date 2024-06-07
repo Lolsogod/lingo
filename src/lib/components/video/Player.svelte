@@ -2,6 +2,7 @@
 	// Import styles.
 	import 'vidstack/player/styles/default/theme.css';
 	// Register elements.
+	import { page } from '$app/stores';
 	import 'vidstack/player';
 	import 'vidstack/player/ui';
 	import 'vidstack/icons';
@@ -80,6 +81,8 @@
 		viewType: MediaViewType = 'unknown';
 
 	onMount(() => {
+		const urlParams = new URLSearchParams($page.url.search);
+		src = 'https://www.youtube.com/watch?v=' +urlParams.get('v') || '';
 		return player.subscribe((state) => {
 			viewType = state.viewType;
 		});

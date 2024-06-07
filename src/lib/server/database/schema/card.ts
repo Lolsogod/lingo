@@ -200,9 +200,8 @@ export type CardExp = Card & {
 	cardDeck?: CardDeck[];
 	cardBlocks?: CardBlockExp[];
 };
-
+export type CardBlock = typeof cardBlockTable.$inferSelect;
 export type CardBlockExp = typeof cardBlockTable.$inferSelect & { block: NewBlock };
-
 export type StudyCard = typeof studyCardTable.$inferSelect;
 export type NewStudyCard = typeof studyCardTable.$inferInsert;
 export type StudyCardExp = StudyCard & {

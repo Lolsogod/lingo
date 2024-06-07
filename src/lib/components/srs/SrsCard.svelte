@@ -91,7 +91,7 @@
 					<GradeButton
 						form={againForm}
 						action={`/study/${studyCard.studyDeckId}/?/again`}
-						studyCardId={studyCard.id}>Непомню</GradeButton>
+						studyCardId={studyCard.id}>Не помню</GradeButton>
 					<GradeButton
 						form={goodForm}
 						action={`/study/${studyCard.studyDeckId}/?/good`}
