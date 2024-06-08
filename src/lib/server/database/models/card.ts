@@ -59,7 +59,8 @@ export const createCard = async (data: CreateCardSchema, authorId: string) => {
 				.values({
 					topicId: existingTopic.id,
 					authorId,
-					tags: data.tags?.split(',').map((tag) => tag.trim())
+					tags: data.tags?.split(',').map((tag) => tag.trim()),
+					level: data.level
 				})
 				.returning()
 		)[0];

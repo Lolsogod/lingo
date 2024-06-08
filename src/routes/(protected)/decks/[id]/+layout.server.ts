@@ -1,4 +1,5 @@
 import {
+	getAverageDeckLevel,
 	getDeckById,
 	getDeckTags,
 	getLikesDislikes,
@@ -90,10 +91,12 @@ export const load = (async (event) => {
 	const likeStatus = await getUsersLikeStatusForDeck(deckId, user.id);
 
 	const deckTags = await getDeckTags(deckId);
-
+	const deckLevel = await getAverageDeckLevel(deckId) || 0;
+	
 	return {
 		startStudyForm,
 		deck,
+		deckLevel,
 		cards,
 		alredyStudying,
 		canEdit,

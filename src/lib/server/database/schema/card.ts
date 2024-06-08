@@ -10,7 +10,7 @@ import {
 	real,
 	integer
 } from 'drizzle-orm/pg-core';
-import { cardDeckTable, studyDeckTable, type CardDeck } from './deck';
+import { cardDeckTable, studyDeckTable, type CardDeck, type StudyDeck } from './deck';
 import { userTable } from './user';
 import { pgRatings, pgStates } from './enums';
 
@@ -214,3 +214,8 @@ export type StudyCardExp = StudyCard & {
 
 export type NewReviewLog = typeof reviewLogTable.$inferInsert;
 export type ReviewLog = typeof reviewLogTable.$inferSelect;
+export type ReviewLogExp = ReviewLog & {
+	studyCard: StudyCard & {
+		studyDeck: StudyDeck;
+	};
+};

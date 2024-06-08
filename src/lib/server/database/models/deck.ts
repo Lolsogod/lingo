@@ -183,3 +183,19 @@ export const getDeckTags = async (deckId: string) => {
 	const deckTags = tags.flatMap((tag) => tag.card.tags);
 	return Array.from(new Set(deckTags));
 };
+//deck level
+export const getAverageDeckLevel = async (deckId: string): Promise<number | null> => {
+	const cards = await db.query.cardDeckTable.findMany({
+		where: eq(cardDeckTable.deckId, deckId),
+		with: { card: true }
+	});
+
+	if (cards.length === 0) {
+		return null;
+	}
+
+	const totalLevel = cards.reduce((sum, cardDeck) => sum + cardDeck.card.level, 0);
+	const averageLevel = totalLevel / cards.length;
+	
+	return averageLevel;
+};

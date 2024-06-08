@@ -23,7 +23,8 @@ export const cardSchema = z.object({
 	blocks: z.array(blockSchema).min(1, { message: 'У карточки должен быть минимум 1 блок' }),
 	tags: z.string().optional(),
 	addToStudy: z.boolean(),
-	studyDeckId: z.string().optional()
+	studyDeckId: z.string().optional(),
+	level: z.number().min(0).max(5).optional()
 });
 export type CardSchema = typeof cardSchema;
 //naming is wrong here but i am lazy
@@ -33,7 +34,8 @@ export const createCardSchema = cardSchema
 		blocks: true,
 		addToStudy: true,
 		studyDeckId: true,
-		tags: true
+		tags: true,
+		level: true
 	})
 	.refine((data) => !data.addToStudy || (data.addToStudy && data.studyDeckId), {
 		message: 'Необходимо выбрать колоду для добавления карточки',

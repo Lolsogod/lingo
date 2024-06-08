@@ -46,4 +46,7 @@
 			</div>
 		</div>
 	</SimpleForm>
+	<div class="mt-6 text-center text-sm">
+		<p>Рекомендуемый уровень сложности: {data.recommendedDifficulty}</p>
+	</div>
 </div>

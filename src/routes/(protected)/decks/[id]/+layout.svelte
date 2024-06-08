@@ -68,6 +68,12 @@
 		<h1 class="flex-1">
 			Колода {data.deck.name}
 		</h1>
+		<p class="text-sm text-muted-foreground" title="уровень: {data.deckLevel.toFixed(3)}">
+			Уровень 
+			{#each Array(5).fill(0).map((_, i) => i < Math.round(data.deckLevel)) as filled}
+				<span class={filled ? 'filled' : ''}>★</span>
+			{/each}
+		</p>
 		<ActionButton
 			form={starStudyForm}
 			action={`${deck_url}?/startStudy`}
@@ -163,3 +169,13 @@
 		<slot />
 	{/if}
 </section>
+
+<style scoped>
+	span {
+		font-size: 1rem;
+		color: gray;
+	}
+	span.filled {
+		color: rgb(228, 194, 0);
+	}
+</style>

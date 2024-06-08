@@ -1,6 +1,6 @@
 import { updateEmailAddressSuccessEmail } from '$lib/config/email-messages';
 import { editUserSchema } from '$lib/config/zod-schemas';
-import { updateUser } from '$lib/server/database/models/user';
+import { getRecommendedDifficulty, updateUser } from '$lib/server/database/models/user';
 import { error, fail } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { zod } from 'sveltekit-superforms/adapters';
@@ -20,8 +20,10 @@ export const load = async (event) => {
 		lastName: user.lastName,
 		email: user.email
 	};
+	const recommendedDifficulty = await getRecommendedDifficulty(user.id);
 	return {
-		form
+		form,
+		recommendedDifficulty
 	};
 };
 

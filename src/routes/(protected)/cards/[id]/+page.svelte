@@ -41,6 +41,12 @@
 			<Card.Title>
 				<h1>{data.card?.topic.name}</h1>
 			</Card.Title>
+			<p class="text-sm text-muted-foreground">
+				Уровень 
+				{#each Array(5).fill(0).map((_, i) => i < data.card.level) as filled}
+					<span class='stars {filled ? 'filled' : ''}'>★</span>
+				{/each}
+			</p>
 			<Card.Description
 				><a href={`/dictionary/?q=${data.card?.topic.name}`}>Открыть словарь</a></Card.Description>
 		</Card.Header>
@@ -61,6 +67,7 @@
 			<p class="text-sm text-muted-foreground">
 				Cложность {data.avgDiff}
 			</p>
+			
 		</Card.Footer>
 	</Card.Root>
 	{#if data.decks}
@@ -113,3 +120,12 @@
 		</Dialog.Root>
 	{/if}
 </section>
+<style scoped>
+	.stars {
+		font-size: 1rem;
+		color: gray;
+	}
+	.stars.filled {
+		color: rgb(228, 194, 0);
+	}
+</style>

@@ -17,6 +17,7 @@
 	import { BLOCK_TYPES } from '$lib/config/constants';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import BlockItem from '$lib/components/items/BlockItem.svelte';
+	import { onMount } from 'svelte';
 
 	export let data: SuperValidated<CreateCardSchema>; //подумать super validated
 	export let action: string = '';
@@ -52,21 +53,46 @@
 	};
 	$formData.topicName = $page.url.searchParams.get('topic') || '';
 
+	let manualLevel = false;
+	//get level
+	const getLevel = async (word: string) => {
+		const res = await fetch(`/level?word=${word}`);
+		console.log(res)
+		const parsed = await res.json();
+		console.log(parsed)
+		if (parsed.level == ''){
+			manualLevel = true;
+		}else{
+			manualLevel = false;
+		}
+		return parsed.level;
+	};
+	
+	onMount(async ()=>{
+		const level = await getLevel($formData.topicName);
+		console.log('level is', level)
+		$formData.level = level;
+	})
 	//find related
-	$: if (browser && $formData.topicName !== $page.url.searchParams.get('topic')) {
+	$: (async () => {if (browser && $formData.topicName !== $page.url.searchParams.get('topic')) {
 		const url = new URL($page.url);
 		url.searchParams.set('topic', $formData.topicName);
+		const level = await getLevel($formData.topicName);
+		console.log('level is', level)
+		$formData.level = level;
 		goto(url, {
 			keepFocus: true,
 			noScroll: true
 		});
-	}
+	}})();
 
 	let chosenDeck = { value: undefined };
 	$: if (!$formData.addToStudy && $formData.studyDeckId) {
 		chosenDeck = { value: undefined };
 		$formData.studyDeckId = undefined;
 	}
+
+	
 </script>
 
 <SimpleForm {form} {inputs} {action}>
@@ -78,6 +104,12 @@
 			<Form.Control let:attrs>
 				<Form.Label>Теги (через запятую)</Form.Label>
 				<Input {...attrs} bind:value={$formData.tags} />
+			</Form.Control>
+		</Form.Field>
+		<Form.Field {form} name="level" class="mb-5">
+			<Form.Control let:attrs>
+				<Form.Label>Сложность карты (определяется автоматически)</Form.Label>
+				<Input {...attrs} bind:value={$formData.level} disabled={!manualLevel} />
 			</Form.Control>
 		</Form.Field>
 		<!---нет ошибки на пустые блоки-->
