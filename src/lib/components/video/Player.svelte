@@ -27,6 +27,8 @@
 	import { fade } from 'svelte/transition';
 	import type { Word } from '../../../routes/(protected)/dictionary/types';
 	import { initIndex, searchIndex } from '../../../routes/(protected)/dictionary/search';
+	import * as Accordion from '$lib/components/ui/accordion/index.js';
+	import VideoItem from '../../../routes/(protected)/video/VideoItem.svelte';
 	let results: Word[] = [];
 	let search: 'loading' | 'ready' = 'loading';
 	onMount(async () => {
@@ -78,11 +80,17 @@
 
 	let player: MediaPlayerElement,
 		src = '',
-		viewType: MediaViewType = 'unknown';
+		viewType: MediaViewType = 'unknown',
+		watchHistory: { url: string; title: string; thumbnail: string }[] = [];
 
+	const refreshHistory = () => {
+		watchHistory = JSON.parse(localStorage.getItem('videoInfo') || '[]');
+	};
 	onMount(() => {
 		const urlParams = new URLSearchParams($page.url.search);
-		src = 'https://www.youtube.com/watch?v=' + urlParams.get('v') || '';
+		if (urlParams.get('v')) {
+			src = 'https://www.youtube.com/watch?v=' + urlParams.get('v') || '';
+		}
 		return player.subscribe((state) => {
 			viewType = state.viewType;
 		});
@@ -96,9 +104,40 @@
 		}
 	}
 
+	async function getVideoInfo(url: string) {
+		// Добавляем схему, если она отсутствует
+		if (!url.startsWith('http://') && !url.startsWith('https://')) {
+			url = 'https://' + url;
+		}
+
+		const videoId = new URL(url).searchParams.get('v');
+		const apiKey = 'AIzaSyAINrhcTmtJFEFFyx6TE9vnvHls0jiZDik'; // Замените на ваш API ключ
+		console.log(url, videoId, 'id yey');
+		const response = await fetch(
+			`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet`
+		);
+		const data = await response.json();
+
+		if (data.items && data.items.length > 0) {
+			const video = data.items[0].snippet;
+			return {
+				title: video.title,
+				thumbnail: video.thumbnails.high.url,
+				url: `/video?v=${videoId}`
+			};
+		} else {
+			throw new Error('Видео не найдено');
+		}
+	}
+
 	// We can listen for the `can-play` event to be notified when the player is ready.
-	function onCanPlay(event: MediaCanPlayEvent) {
-		// ...
+	async function onCanPlay(event: MediaCanPlayEvent) {
+		const info = await getVideoInfo(src);
+		let history = JSON.parse(localStorage.getItem('videoInfo') || '[]') || [];
+		history = history.filter((item: any) => item.url !== info.url);
+		history.unshift(info);
+		localStorage.setItem('videoInfo', JSON.stringify(history));
+		refreshHistory();
 	}
 </script>
 
@@ -146,6 +185,18 @@
 	</div>
 {/if}
 
+<Accordion.Root class="w-full">
+	<Accordion.Item value="item-1">
+		<Accordion.Trigger>История просмотров</Accordion.Trigger>
+		<Accordion.Content
+			><div class="video-grid">
+				{#each watchHistory as video (video.url)}
+					<VideoItem {video} canDelete on:deleted={refreshHistory} />
+				{/each}
+			</div></Accordion.Content>
+	</Accordion.Item>
+</Accordion.Root>
+
 <style lang="postcss">
 	.player {
 		--media-brand: #f5f5f5;
@@ -184,5 +235,10 @@
 		margin-top: 40px;
 		margin-inline: auto;
 		max-width: 300px;
+	}
+	.video-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+		grid-gap: 1rem;
 	}
 </style>

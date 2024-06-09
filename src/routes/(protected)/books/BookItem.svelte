@@ -4,18 +4,20 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 
 	export let book: Metadata;
-	export let deleteBook: (id: number) => void;
+	export let deleteBook: ((id: number) => void) | undefined = undefined;
 </script>
 
 <Card.Root class="group relative w-60 overflow-hidden">
-	<Button
-		class="absolute right-0 top-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-		variant="destructive"
-		on:click={() => {
-			if (book.id) deleteBook(book.id);
-		}}>
-		<Trash size={20} />
-	</Button>
+	{#if deleteBook}
+		<Button
+			class="absolute right-0 top-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+			variant="destructive"
+			on:click={() => {
+				if (book.id) deleteBook(book.id);
+			}}>
+			<Trash size={20} />
+		</Button>
+	{/if}
 	<a href="books/{book.id}">
 		<img
 			src={book.cover !== undefined ? URL.createObjectURL(book.cover) : ''}

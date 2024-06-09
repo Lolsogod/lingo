@@ -69,8 +69,10 @@
 			Колода {data.deck.name}
 		</h1>
 		<p class="text-sm text-muted-foreground" title="уровень: {data.deckLevel.toFixed(3)}">
-			Уровень 
-			{#each Array(5).fill(0).map((_, i) => i < Math.round(data.deckLevel)) as filled}
+			Уровень
+			{#each Array(5)
+				.fill(0)
+				.map((_, i) => i < Math.round(data.deckLevel)) as filled}
 				<span class={filled ? 'filled' : ''}>★</span>
 			{/each}
 		</p>

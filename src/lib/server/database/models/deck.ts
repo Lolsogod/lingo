@@ -196,6 +196,6 @@ export const getAverageDeckLevel = async (deckId: string): Promise<number | null
 
 	const totalLevel = cards.reduce((sum, cardDeck) => sum + cardDeck.card.level, 0);
 	const averageLevel = totalLevel / cards.length;
-	
+
 	return averageLevel;
 };

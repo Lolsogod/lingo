@@ -1,4 +1,9 @@
-import { getDecksByAuthor, getPublicDecks, getDeckTags, getAverageDeckLevel } from '$lib/server/database/models/deck';
+import {
+	getDecksByAuthor,
+	getPublicDecks,
+	getDeckTags,
+	getAverageDeckLevel
+} from '$lib/server/database/models/deck';
 import { getRecommendedDifficulty } from '$lib/server/database/models/user';
 import type { Deck } from '$lib/server/database/schema';
 import type { PageServerLoad } from './$types';

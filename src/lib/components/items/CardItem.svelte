@@ -39,9 +39,11 @@
 					<h1>{cardInfo.topic.name}</h1>
 				</Card.Title>
 				<p class="text-sm text-muted-foreground">
-					Уровень 
-					{#each Array(5).fill(0).map((_, i) => i < cardInfo.level) as filled}
-						<span class=' stars {filled ? 'filled' : ''}'>★</span>
+					Уровень
+					{#each Array(5)
+						.fill(0)
+						.map((_, i) => i < cardInfo.level) as filled}
+						<span class=" stars {filled ? 'filled' : ''}">★</span>
 					{/each}
 				</p>
 				<Card.Description
@@ -63,6 +65,7 @@
 		</Card.Root>
 	</HoverCard.Content>
 </HoverCard.Root>
+
 <style scoped>
 	.stars {
 		font-size: 1rem;

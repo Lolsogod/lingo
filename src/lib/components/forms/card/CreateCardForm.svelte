@@ -57,42 +57,42 @@
 	//get level
 	const getLevel = async (word: string) => {
 		const res = await fetch(`/level?word=${word}`);
-		console.log(res)
+		console.log(res);
 		const parsed = await res.json();
-		console.log(parsed)
-		if (parsed.level == ''){
+		console.log(parsed);
+		if (parsed.level == '') {
 			manualLevel = true;
-		}else{
+		} else {
 			manualLevel = false;
 		}
 		return parsed.level;
 	};
-	
-	onMount(async ()=>{
+
+	onMount(async () => {
 		const level = await getLevel($formData.topicName);
-		console.log('level is', level)
+		console.log('level is', level);
 		$formData.level = level;
-	})
+	});
 	//find related
-	$: (async () => {if (browser && $formData.topicName !== $page.url.searchParams.get('topic')) {
-		const url = new URL($page.url);
-		url.searchParams.set('topic', $formData.topicName);
-		const level = await getLevel($formData.topicName);
-		console.log('level is', level)
-		$formData.level = level;
-		goto(url, {
-			keepFocus: true,
-			noScroll: true
-		});
-	}})();
+	$: (async () => {
+		if (browser && $formData.topicName !== $page.url.searchParams.get('topic')) {
+			const url = new URL($page.url);
+			url.searchParams.set('topic', $formData.topicName);
+			const level = await getLevel($formData.topicName);
+			console.log('level is', level);
+			$formData.level = level;
+			goto(url, {
+				keepFocus: true,
+				noScroll: true
+			});
+		}
+	})();
 
 	let chosenDeck = { value: undefined };
 	$: if (!$formData.addToStudy && $formData.studyDeckId) {
 		chosenDeck = { value: undefined };
 		$formData.studyDeckId = undefined;
 	}
-
-	
 </script>
 
 <SimpleForm {form} {inputs} {action}>

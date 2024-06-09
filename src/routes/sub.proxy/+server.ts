@@ -11,7 +11,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		const transcript = await YoutubeTranscript.fetchTranscript(videoUrl, { lang: 'ja' });
 		const srtContent = convertToSRT(transcript);
 		console.log(srtContent);
-	
+
 		return new Response(srtContent, {
 			headers: {
 				'Content-Type': 'application/x-subrip',
@@ -36,7 +36,6 @@ function convertToSRT(transcript: any[]): string {
 		})
 		.join('\n');
 }
-
 
 function formatTime(seconds: number): string {
 	const hours = Math.floor(seconds / 3600);

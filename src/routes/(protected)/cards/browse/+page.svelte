@@ -41,7 +41,7 @@
 	<div class="flex gap-2">
 		<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
 		<Input placeholder="теги (через запятую)" class="max-w-xs" bind:value={tagQuery} />
-		<div class="flex flex-col flex-1 gap-2">
+		<div class="flex flex-1 flex-col gap-2">
 			<div class="flex items-center gap-2">
 				<Switch bind:checked={levelFilter} />
 				<span>Фильтр по уровню</span>
