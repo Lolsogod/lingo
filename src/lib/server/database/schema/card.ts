@@ -64,7 +64,7 @@ export const cardTable = pgTable('card', {
 		.array()
 		.notNull()
 		.default(sql`'{}'::text[]`),
-	level: integer('level').notNull().default(1)
+	level: integer('level').notNull().default(0)
 });
 
 export const cardBlockTable = pgTable(
@@ -168,7 +168,7 @@ export const cardBlockRelations = relations(cardBlockTable, ({ one }) => {
 	};
 });
 
-export const studyCardRelations = relations(studyCardTable, ({ one }) => {
+export const studyCardRelations = relations(studyCardTable, ({ one, many }) => {
 	return {
 		baseCard: one(cardTable, {
 			fields: [studyCardTable.baseCardId],
@@ -177,7 +177,8 @@ export const studyCardRelations = relations(studyCardTable, ({ one }) => {
 		studyDeck: one(studyDeckTable, {
 			fields: [studyCardTable.studyDeckId],
 			references: [studyDeckTable.id]
-		})
+		}),
+		reviewLogs: many(reviewLogTable)
 	};
 });
 
@@ -210,6 +211,7 @@ export type StudyCard = typeof studyCardTable.$inferSelect;
 export type NewStudyCard = typeof studyCardTable.$inferInsert;
 export type StudyCardExp = StudyCard & {
 	baseCard: CardExp;
+	reviewLogs?: ReviewLogExp[];
 };
 
 export type NewReviewLog = typeof reviewLogTable.$inferInsert;

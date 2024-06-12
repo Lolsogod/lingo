@@ -98,12 +98,20 @@ export const getStudyDecks = async (userId: string) => {
 	});
 	return decks;
 };
+
+export const getStudyDecksForDeck = async (deckId: string) => {
+	const decks = await db.query.studyDeckTable.findMany({
+		where: eq(studyDeckTable.deckId, deckId),
+		with: { deck: true, studyCards: true }
+	});
+	return decks;
+};
 //cделать чтоб удалялась полностью при отсутсвии стади деков
-export const softDeleteDeck = async (deckId: string, userId: string) => {
+export const softDeleteDeck = async (deckId: string, userId: string, isMod: boolean = false) => {
 	const result = await db
 		.update(deckTable)
 		.set({ deleted: true })
-		.where(and(eq(deckTable.id, deckId), eq(deckTable.authorId, userId)))
+		.where(and(eq(deckTable.id, deckId), isMod ? undefined : eq(deckTable.authorId, userId)))
 		.returning();
 	return result;
 };

@@ -87,6 +87,7 @@
 		watchHistory = JSON.parse(localStorage.getItem('videoInfo') || '[]');
 	};
 	onMount(() => {
+		refreshHistory();
 		const urlParams = new URLSearchParams($page.url.search);
 		if (urlParams.get('v')) {
 			src = 'https://www.youtube.com/watch?v=' + urlParams.get('v') || '';

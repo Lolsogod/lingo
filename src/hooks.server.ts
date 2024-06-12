@@ -24,7 +24,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const startTimer = Date.now();
 	event.locals.startTimer = startTimer;
 	const sessionId = event.cookies.get(lucia.sessionCookieName);
-	if (event.route.id?.startsWith('/(protected)')) {
+	if (event.route.id?.startsWith('/(protected)') || event.route.id?.startsWith('/tutorial')) {
 		if (!sessionId) redirect(302, '/auth/sign-in');
 		//TODO: set up resend domain, for now no verification needed
 		//if (!user.verified) redirect(302, '/auth/verify/email');
@@ -56,6 +56,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 		if (user?.role !== 'ADMIN') redirect(302, '/auth/sign-in');
 	}
 
+	if (event.route.id?.startsWith('/(protected)') && !user?.tutorialCompleted) {
+		redirect(302, '/tutorial');
+	}
+	if (event.route.id?.startsWith('/tutorial') && user?.tutorialCompleted) {
+		redirect(302, '/');
+	}
 	const response = await resolve(event);
 	log(response.status, event);
 	return response;

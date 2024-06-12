@@ -48,8 +48,8 @@
 				<Switch bind:checked={levelFilter} />
 				<span>Фильтр по уровню</span>
 				{#if levelFilter}
-					<Button variant="outline" on:click={() => (sliderVal[1] = data.recommendedDifficulty)}>
-						Рекомендованный уровень
+					<Button variant="outline" on:click={() => {sliderVal[1] = data.recommendedDifficulty; sliderVal[0] = 0}}>
+						Рекомендованный уровень: {data.recommendedDifficulty}
 					</Button>
 				{/if}
 			</div>

@@ -73,7 +73,7 @@
 			{#each Array(5)
 				.fill(0)
 				.map((_, i) => i < Math.round(data.deckLevel)) as filled}
-				<span class={filled ? 'filled' : ''}>★</span>
+				<span class="stars {filled ? 'filled' : ''}">★</span>
 			{/each}
 		</p>
 		<ActionButton
@@ -173,11 +173,11 @@
 </section>
 
 <style scoped>
-	span {
+	.stars {
 		font-size: 1rem;
 		color: gray;
 	}
-	span.filled {
+	.stars.filled {
 		color: rgb(228, 194, 0);
 	}
 </style>

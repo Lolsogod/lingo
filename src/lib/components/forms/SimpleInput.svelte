@@ -34,5 +34,3 @@
 	<Form.FieldErrors />
 </Form.Field>
 
-<style lang="postcss">
-</style>

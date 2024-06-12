@@ -2,15 +2,19 @@ import {
 	getDecksByAuthor,
 	getPublicDecks,
 	getDeckTags,
-	getAverageDeckLevel
+	getAverageDeckLevel,
+	getStudyDecksForDeck
 } from '$lib/server/database/models/deck';
 import { getRecommendedDifficulty } from '$lib/server/database/models/user';
 import type { Deck } from '$lib/server/database/schema';
+import { superValidate } from 'sveltekit-superforms';
 import type { PageServerLoad } from './$types';
+import { zod } from 'sveltekit-superforms/adapters';
+import { startStudySchema } from '$lib/config/zod-schemas';
 
 export const load = (async (event) => {
 	const user = event.locals.user;
-	const recommendedDifficulty = await getRecommendedDifficulty(user!.id);
+	const recommendedDifficulty = await getRecommendedDifficulty(user!.id, user!.initialLevel);
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	//@ts-ignore
 	let publicDecks: (Deck & { level?: number })[] = (await getPublicDecks(user?.id)) || [];
@@ -57,15 +61,25 @@ export const load = (async (event) => {
 
 	publicDecks = await Promise.all(
 		publicDecks.map(async (deck) => {
+			const addForm = await superValidate(event, zod(startStudySchema), {
+                id: deck.id
+            });
+            const studyDecks = await getStudyDecksForDeck(deck.id)
+            const alredyStudying = studyDecks.some((sd) => sd.userId === user?.id);
 			const level = await getAverageDeckLevel(deck.id!);
-			return { ...deck, level: level || 0 };
+			return { ...deck, level: level || 0, addForm ,alredyStudying };
 		})
 	);
 
 	userCreatedDecks = await Promise.all(
 		userCreatedDecks.map(async (deck) => {
+			const addForm = await superValidate(event, zod(startStudySchema), {
+                id: deck.id
+            });
+            const studyDecks = await getStudyDecksForDeck(deck.id)
+            const alredyStudying = studyDecks.some((sd) => sd.userId === user?.id);
 			const level = await getAverageDeckLevel(deck.id!);
-			return { ...deck, level: level || 0 };
+			return { ...deck, level: level || 0, addForm, alredyStudying };
 		})
 	);
 	console.log(userCreatedDecks.length);

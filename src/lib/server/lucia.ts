@@ -26,7 +26,9 @@ export const lucia = new Lucia(adapter, {
 			role: attributes.role,
 			verified: attributes.verified,
 			receiveEmail: attributes.receiveEmail,
-			token: attributes.token
+			token: attributes.token,
+			tutorialCompleted: attributes.tutorialCompleted,
+			initialLevel: attributes.initialLevel
 		};
 	}
 });
@@ -50,6 +52,8 @@ interface DatabaseUserAttributes {
 	verified: boolean;
 	receiveEmail: boolean;
 	token: string;
+	tutorialCompleted: boolean;
+	initialLevel: number;
 }
 
 /*interface DatabaseSessionAttributes {

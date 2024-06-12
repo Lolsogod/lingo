@@ -14,6 +14,7 @@
 	import SimpleSubmit from '$lib/components/forms/SimpleSubmit.svelte';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Search } from 'lucide-svelte';
+	import Stats from './Stats.svelte';
 	export let data: PageData;
 
 	const form = superForm(data.addToDeckForm, {
@@ -120,6 +121,10 @@
 			</Dialog.Content>
 		</Dialog.Root>
 	{/if}
+<!--
+	{#each data.card.studyCard as sc}
+		<Stats studyCard={sc} />
+	{/each}-->
 </section>
 
 <style scoped>

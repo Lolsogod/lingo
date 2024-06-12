@@ -46,7 +46,7 @@ const calculateAverageLevel = (
 	reviews: { grade: 'Manual' | 'Again' | 'Hard' | 'Good' | 'Easy'; level: number }[]
 ) => reviews.reduce((sum, review) => sum + review.level, 0) / reviews.length;
 
-export const getRecommendedDifficulty = async (userId: string, recentCount = 200) => {
+export const getRecommendedDifficulty = async (userId: string, initialLevel: number, recentCount = 200) => {
 	const userReviews = await db
 		.select({
 			grade: reviewLogTable.grade,
@@ -59,7 +59,9 @@ export const getRecommendedDifficulty = async (userId: string, recentCount = 200
 		.where(eq(studyDeckTable.userId, userId))
 		.orderBy(desc(reviewLogTable.review))
 		.limit(recentCount);
-
+	if (userReviews.length <= 50) {
+		return initialLevel;
+	}
 	const positiveReviews = userReviews.filter((review) => review.grade == 'Good');
 	const averageLevel = calculateAverageLevel(positiveReviews);
 
@@ -73,5 +75,19 @@ export const getRecommendedDifficulty = async (userId: string, recentCount = 200
 	if (averageLevel < 0) return 0;
 	if (averageLevel > 5) return 5;
 
+	if (userReviews.length <= 100){
+		return Math.round((initialLevel+initialLevel)/2)
+	}
+
 	return Math.round(averageLevel);
+};
+//tutiral
+export const skipTutorial = async (userId: string) => {
+	const result = await db.update(userTable).set({ tutorialCompleted: true }).where(eq(userTable.id, userId));
+	return result;
+};
+
+export const finishTutorial = async (userId: string, rating: number) => {
+	const result = await db.update(userTable).set({ tutorialCompleted: true, initialLevel: rating }).where(eq(userTable.id, userId));
+	return result;
 };

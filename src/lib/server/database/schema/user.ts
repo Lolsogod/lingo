@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { boolean, integer, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { deckLikeTable, deckTable, studyDeckTable } from './deck';
 import { cardTable } from './card';
 
@@ -15,6 +15,8 @@ export const userTable = pgTable('users', {
 	receiveEmail: boolean('receive_email').notNull().default(true),
 	password: text('password'),
 	token: text('token').unique(),
+	initialLevel: integer('initial_level').notNull().default(0),
+	tutorialCompleted: boolean('tutorial_completed').notNull().default(false),
 	createdAt: timestamp('created_at', {
 		withTimezone: true,
 		mode: 'date'

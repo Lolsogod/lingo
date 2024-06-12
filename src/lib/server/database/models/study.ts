@@ -47,6 +47,19 @@ export const getStudyDeck = async (deckId: string, userId = '') => {
 	return studyDeck;
 };
 
+export const getAllStudyDecks = async (userId: string) => {
+	const studyDecks = await db.query.studyDeckTable.findMany({
+		where: eq(studyDeckTable.userId, userId),
+		with: {
+			studyCards: {
+				with: { reviewLogs: true, baseCard: { with: { topic: true, cardBlocks: { with: { block: true } } } } }
+			},
+			deck: true
+		}
+	});
+	return studyDecks;
+};
+
 export const getTodayCount = async (studyDeckId: string, state?: State) => {
 	const startOfDay = getStartOfDay();
 	const nextDay = dateScheduler(startOfDay, 1, true);

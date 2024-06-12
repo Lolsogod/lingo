@@ -6,7 +6,7 @@ import type { PageServerLoad } from './$types';
 
 export const load = (async (event) => {
 	const user = event.locals.user;
-	const recommendedDifficulty = await getRecommendedDifficulty(user!.id);
+	const recommendedDifficulty = await getRecommendedDifficulty(user!.id, user!.initialLevel);
 
 	const query = event.url.searchParams.get('q') || null;
 	const tagQuery =

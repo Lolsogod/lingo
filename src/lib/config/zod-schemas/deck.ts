@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const deckSchema = z.object({
+	deckId: z.string().optional(),
 	name: z
 		.string()
 		.min(1, { message: 'Введите название колоды' })
@@ -33,6 +34,7 @@ export const studyDeckSchema = z.object({
 });
 // is it even needed? maybe will be when adding from browse page
 export const startStudySchema = deckSchema.pick({
+	deckId: true,
 	addToStudy: true
 });
 //separate study schemas
@@ -54,3 +56,9 @@ export const likeSchema = z.object({
 });
 
 export const dislikeSchema = likeSchema;
+
+export const skipSchema = z.object({});
+
+export const finishTutorialSchema = z.object({
+	rating: z.number().min(0).max(5)
+})

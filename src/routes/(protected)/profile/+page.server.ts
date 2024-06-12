@@ -20,7 +20,7 @@ export const load = async (event) => {
 		lastName: user.lastName,
 		email: user.email
 	};
-	const recommendedDifficulty = await getRecommendedDifficulty(user.id);
+	const recommendedDifficulty = await getRecommendedDifficulty(user.id, user.initialLevel);
 	return {
 		form,
 		recommendedDifficulty

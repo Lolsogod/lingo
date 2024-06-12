@@ -10,7 +10,7 @@ import {
 	varchar
 } from 'drizzle-orm/pg-core';
 import { userTable } from './user';
-import { cardTable, studyCardTable, type StudyCard } from './card';
+import { cardTable, studyCardTable, type StudyCard, type StudyCardExp } from './card';
 
 export const deckTable = pgTable('deck', {
 	id: uuid('id').notNull().primaryKey().defaultRandom(),
@@ -135,5 +135,6 @@ export type NewCardDeck = typeof cardDeckTable.$inferInsert;
 export type StudyDeck = typeof studyDeckTable.$inferSelect;
 export type NewStudyDeck = typeof studyDeckTable.$inferInsert;
 export type StudyDeckExp = StudyDeck & { deck: NewDeck; studyCards: StudyCard[] };
+export type StudyDeckExpPlus = StudyDeck & { deck: NewDeck; studyCards: StudyCardExp[] };
 export type DeckLike = typeof deckLikeTable.$inferSelect;
 export type NewDeckLike = typeof deckLikeTable.$inferInsert;

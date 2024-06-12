@@ -6,6 +6,7 @@ import {
 	reviewsForTimePeriodMerged
 } from '$lib/server/database/models/stats';
 import { error } from '@sveltejs/kit';
+import { getRecommendedDifficulty } from '$lib/server/database/models/user';
 
 function genLastYear(data: { [key: string]: number }) {
 	const result: { [key: string]: number } = {};
