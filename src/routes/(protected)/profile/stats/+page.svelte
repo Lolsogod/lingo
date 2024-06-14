@@ -20,6 +20,7 @@
 	} from 'chart.js';
 	import { onMount } from 'svelte';
 	import { declOfNum } from '$lib/_helpers/declOfNum';
+	import { Button } from '$lib/components/ui/button';
 	Chart.register(
 		Title,
 		Tooltip,
@@ -122,6 +123,7 @@
 </script>
 
 <section class="mx-10 h-[500px] flex-col">
+	<Button variant="secondary" class="mb-5" href="/profile">Назад</Button>
 	<Card class="mb-5">
 		<CardHeader>
 			<h2>Статистика пользователя</h2>
@@ -201,7 +203,7 @@
 	<div class="flex max-h-[50rem] flex-1 flex-col gap-5 xl:flex-row">
 		<Card class="w-full xl:w-1/4 xl:min-w-[40rem]">
 			<CardHeader>
-				<h2>Статус карт в колоде</h2>
+				<h2>Статус карт пользователя</h2>
 			</CardHeader>
 			<CardContent>
 				<div>&nbsp;</div>

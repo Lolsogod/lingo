@@ -23,7 +23,7 @@
 	export let action: string = '';
 	export let decks: Deck[] | null = null;
 	export let blocks;
-
+	let preTags = '';
 	const form = superForm(data, {
 		validators: zodClient(createCardSchema),
 		dataType: 'json'
@@ -60,6 +60,7 @@
 		console.log(res);
 		const parsed = await res.json();
 		console.log(parsed);
+		preTags = parsed.tags;
 		if (parsed.level == '') {
 			manualLevel = true;
 		} else {
@@ -93,6 +94,10 @@
 		chosenDeck = { value: undefined };
 		$formData.studyDeckId = undefined;
 	}
+
+	const autoTag = async () => {
+		$formData.tags = preTags;
+	};
 </script>
 
 <SimpleForm {form} {inputs} {action}>
@@ -103,7 +108,10 @@
 		<Form.Field {form} name="tags" class="mb-5">
 			<Form.Control let:attrs>
 				<Form.Label>Теги (через запятую)</Form.Label>
-				<Input {...attrs} bind:value={$formData.tags} />
+				<div class="flex gap-2">
+					<Input {...attrs} bind:value={$formData.tags} />
+					<Button on:click={autoTag} variant="outline">Aвто</Button>
+				</div>
 			</Form.Control>
 		</Form.Field>
 		<Form.Field {form} name="level" class="mb-5">

@@ -12,6 +12,7 @@
 	let bookDb: BookDb;
 	let startedBooks: Metadata[] = [];
 	let watchHistory: { url: string; title: string; thumbnail: string }[] = [];
+	let closedBefore = true;
 	const init = async () => {
 		const libdb = await import('$lib/book/bookDb');
 		bookDb = libdb.openBookDB;
@@ -21,13 +22,16 @@
 
 	onMount(async () => {
 		watchHistory = JSON.parse(localStorage.getItem('videoInfo') || '[]').slice(0, 5);
+		closedBefore = localStorage.getItem('welcomeClosed') === 'true';
 		console.log(watchHistory);
 		await init();
 	});
 </script>
 
 <section class="container grid items-center gap-6">
-	<Welcome />
+	{#if !closedBefore}
+		<Welcome />
+	{/if}
 	<h1>Колоды для повторения</h1>
 	<ItemGrid>
 		{#each data.decksWithQueues as studyDeck}

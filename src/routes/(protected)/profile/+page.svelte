@@ -32,7 +32,7 @@
 	];
 </script>
 
-<div class="mx-auto flex max-w-2xl items-center justify-center">
+<div class="mx-auto flex max-w-2xl flex-col items-center justify-center">
 	<SimpleForm {form} {inputs}>
 		<div slot="header">
 			<Card.Title class="text-2xl">Профиль</Card.Title>
@@ -40,13 +40,11 @@
 		</div>
 		<div slot="submit" class="block w-full">
 			<SimpleSubmit {form}>Обновить профиль</SimpleSubmit>
-			<div class="mt-6 text-center text-sm">
+			<div class="mt-6 text-center text-sm mb-6">
 				<Button on:click={() => goto('/auth/password/reset')} class="w-full" variant="outline"
 					>Изменить пароль</Button>
 			</div>
+			<Button class="w-full" href="/profile/stats">Статистика</Button>
 		</div>
 	</SimpleForm>
-	<div class="mt-6 text-center text-sm">
-		<p>Рекомендуемый уровень сложности: {data.recommendedDifficulty}</p>
-	</div>
 </div>

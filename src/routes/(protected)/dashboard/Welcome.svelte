@@ -4,8 +4,18 @@
 	import { X } from 'lucide-svelte';
 	import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
-
+	import { onMount } from 'svelte';
 	let closed = false;
+	onMount(() => {
+		let closedBefore = localStorage.getItem('welcomeClosed') === 'true';
+		if (closedBefore) {
+			closed = true;
+		}
+	});
+	const close = () => {
+		closed = true;
+		localStorage.setItem('welcomeClosed', 'true');
+	};
 </script>
 
 {#if !closed}
@@ -15,7 +25,7 @@
 				<div class="flex justify-between" style="justify-content: space-between">
 					<Card.Title class="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl"
 						>Добро пожаловать, в LinGo!</Card.Title>
-					<Button variant="outline" on:click={() => (closed = true)}><X /></Button>
+					<Button variant="outline" on:click={close}><X /></Button>
 				</div>
 				<Card.Description>Современную систему изучения японского языка</Card.Description>
 			</Card.Header>

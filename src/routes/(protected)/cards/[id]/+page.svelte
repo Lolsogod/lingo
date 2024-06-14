@@ -28,7 +28,7 @@
 	<Card.Root class="w-[350px]">
 		<Card.Header>
 			<div class="flex flex-wrap gap-2">
-				{#if data.card.tags?.length > 0}
+				{#if data.card.tags?.length > 0 && !data.card.tags?.every((tag) => tag === '')}
 					{#each data.card.tags as tag}
 						<Badge href="/cards/browse?tag={tag}">{tag}</Badge>
 					{/each}
