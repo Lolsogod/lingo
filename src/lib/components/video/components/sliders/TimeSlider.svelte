@@ -1,28 +1,32 @@
 <script lang="ts">
-	export let thumbnails: string | undefined = undefined;
+	interface Props {
+		thumbnails?: string | undefined;
+	}
+
+	let { thumbnails = undefined }: Props = $props();
 </script>
 
 <media-time-slider class="vds-time-slider vds-slider">
 	<media-slider-chapters class="vds-slider-chapters">
 		<template>
 			<div class="vds-slider-chapter">
-				<div class="vds-slider-track" />
-				<div class="vds-slider-track-fill vds-slider-track" />
-				<div class="vds-slider-progress vds-slider-track" />
+				<div class="vds-slider-track"></div>
+				<div class="vds-slider-track-fill vds-slider-track"></div>
+				<div class="vds-slider-progress vds-slider-track"></div>
 			</div>
 		</template>
 	</media-slider-chapters>
 
-	<div class="vds-slider-thumb" />
+	<div class="vds-slider-thumb"></div>
 
 	<!-- Slider Preview -->
 	<media-slider-preview class="vds-slider-preview">
 		{#if thumbnails}
-			<media-slider-thumbnail class="vds-slider-thumbnail vds-thumbnail" src={thumbnails} />
+			<media-slider-thumbnail class="vds-slider-thumbnail vds-thumbnail" src={thumbnails}></media-slider-thumbnail>
 		{/if}
 
-		<div class="vds-slider-chapter-title" data-part="chapter-title" />
+		<div class="vds-slider-chapter-title" data-part="chapter-title"></div>
 
-		<media-slider-value class="vds-slider-value" />
+		<media-slider-value class="vds-slider-value"></media-slider-value>
 	</media-slider-preview>
 </media-time-slider>

@@ -1,8 +1,8 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { vite as vidstack } from 'vidstack/plugins';
 import { defineConfig } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
 
-//vidstack({ include: /player\// });
 export default defineConfig({
-	plugins: [vidstack(), sveltekit()]
+	plugins: [tailwindcss(), vidstack(), sveltekit()]
 });

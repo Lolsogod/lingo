@@ -3,7 +3,12 @@
 	import type { SuperForm } from 'sveltekit-superforms';
 	import { Loader2 } from 'lucide-svelte';
 
-	export let form: SuperForm<any, any>;
+	interface Props {
+		form: SuperForm<any, any>;
+		children?: import('svelte').Snippet;
+	}
+
+	let { form, children }: Props = $props();
 
 	const { form: formData, enhance, submitting, errors } = form;
 </script>
@@ -13,6 +18,6 @@
 		<Loader2 class="mr-2 h-4 w-4 animate-spin" />
 		Подождите...
 	{:else}
-		<slot />
+		{@render children?.()}
 	{/if}
 </Form.Button>

@@ -2,17 +2,19 @@
 	import { Trash } from 'lucide-svelte';
 	import * as Card from '$lib/components/ui/card';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { createEventDispatcher } from 'svelte';
+	interface Props {
+		video: { url: string; title: string; thumbnail: string };
+		canDelete?: boolean;
+		ondeleted?: () => void;
+	}
 
-	export let video: { url: string; title: string; thumbnail: string };
-	export let canDelete: boolean = false;
+	let { video, canDelete = false, ondeleted }: Props = $props();
 
-	const dispatch = createEventDispatcher();
 	function removeVideoFromHistory(url: string) {
 		let history = JSON.parse(localStorage.getItem('videoInfo') || '[]') || [];
 		history = history.filter((item: { url: string }) => item.url !== url);
 		localStorage.setItem('videoInfo', JSON.stringify(history));
-		dispatch('deleted');
+		ondeleted?.();
 	}
 </script>
 
@@ -21,7 +23,7 @@
 		<Button
 			class="absolute right-0 top-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
 			variant="destructive"
-			on:click={() => removeVideoFromHistory(video.url)}>
+			onclick={() => removeVideoFromHistory(video.url)}>
 			<Trash size={20} />
 		</Button>
 	{/if}

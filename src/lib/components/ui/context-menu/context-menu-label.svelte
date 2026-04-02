@@ -1,18 +1,24 @@
 <script lang="ts">
-	import { ContextMenu as ContextMenuPrimitive } from 'bits-ui';
-	import { cn } from '$lib/utils.js';
+	import { cn, type WithElementRef } from "$lib/utils.js";
+	import type { HTMLAttributes } from "svelte/elements";
 
-	type $$Props = ContextMenuPrimitive.LabelProps & {
+	let {
+		ref = $bindable(null),
+		class: className,
+		inset,
+		children,
+		...restProps
+	}: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		inset?: boolean;
-	};
-
-	let className: $$Props['class'] = undefined;
-	export let inset: $$Props['inset'] = undefined;
-	export { className as class };
+	} = $props();
 </script>
 
-<ContextMenuPrimitive.Label
-	class={cn('px-2 py-1.5 text-sm font-semibold text-foreground', inset && 'pl-8', className)}
-	{...$$restProps}>
-	<slot />
-</ContextMenuPrimitive.Label>
+<div
+	bind:this={ref}
+	data-slot="context-menu-label"
+	data-inset={inset}
+	class={cn("text-muted-foreground px-1.5 py-1 text-xs font-medium data-inset:pl-7 data-inset:pl-8", className)}
+	{...restProps}
+>
+	{@render children?.()}
+</div>

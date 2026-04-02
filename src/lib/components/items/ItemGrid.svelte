@@ -1,11 +1,16 @@
-<!-- Start of Selection -->
 <script lang="ts">
-	let className: string = '';
-	export { className as class };
+	import type { Snippet } from 'svelte';
+
+	interface Props {
+		class?: string;
+		children?: Snippet;
+	}
+
+	let { class: className = '', children }: Props = $props();
 </script>
 
 <div class="auto-grid {className}">
-	<slot />
+	{@render children?.()}
 </div>
 
 <style>

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount } from 'svelte';
 	import { initIndex, searchIndex } from './search';
 	import type { Word } from './types';
@@ -9,27 +11,31 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 
-	let search: 'loading' | 'ready' = 'loading';
-	let query = $page.url.searchParams.get('q') || '';
-	let results: Word[] = [];
+	let search: 'loading' | 'ready' = $state('loading');
+	let query = $state($page.url.searchParams.get('q') || '');
+	let results: Word[] = $state([]);
 
 	onMount(async () => {
 		await initIndex();
 		search = 'ready';
 	});
 
-	$: if (search === 'ready') {
-		results = searchIndex(query);
-	}
+	run(() => {
+		if (search === 'ready') {
+			results = searchIndex(query);
+		}
+	});
 
-	$: if (browser && query !== $page.url.searchParams.get('q')) {
-		const url = new URL($page.url);
-		url.searchParams.set('q', query);
-		goto(url, {
-			keepFocus: true,
-			noScroll: true
-		});
-	}
+	run(() => {
+		if (browser && query !== $page.url.searchParams.get('q')) {
+			const url = new URL($page.url);
+			url.searchParams.set('q', query);
+			goto(url, {
+				keepFocus: true,
+				noScroll: true
+			});
+		}
+	});
 </script>
 
 <div class="mx-auto flex max-w-3xl flex-col items-center justify-center">

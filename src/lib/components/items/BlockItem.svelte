@@ -10,14 +10,19 @@
 		sanitizer: DOMPurify.sanitize
 	});
 
-	export let blockInfo: Block & {
+	interface Props {
+		blockInfo: Block & {
 		liked: boolean;
 		likes: number;
 		dislikes: number;
 		rating: number;
 	};
-	export let add: boolean = false;
-	export let added: boolean = false;
+		add?: boolean;
+		added?: boolean;
+		onclick?: () => void;
+	}
+
+	let { blockInfo, add = false, added = false, onclick }: Props = $props();
 </script>
 
 <Card class="flex cursor-pointer p-4 {blockInfo.liked ? 'border-2 border-green-500' : ''}">
@@ -29,15 +34,15 @@
 		{:else if blockInfo.type === 'image'}
 			<img src={blockInfo.content} alt="" class="w-48 rounded-lg object-cover" />
 		{:else if blockInfo.type === 'audio'}
-			<audio controls src={blockInfo.content} />
+			<audio controls src={blockInfo.content}></audio>
 		{:else if blockInfo.type === 'markdown'}
 			<Markdown {carta} value={blockInfo.content} />
 		{/if}
 	</CardContent>
 	{#if add}
 		<div class="flex flex-col gap-2">
-			{#if !added}
-				<Button on:click class="m-2">+</Button>
+		{#if !added}
+			<Button {onclick} class="m-2">+</Button>
 			{:else}
 				<Button class="m-2" disabled>✔</Button>
 			{/if}

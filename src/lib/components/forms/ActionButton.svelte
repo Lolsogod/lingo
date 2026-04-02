@@ -3,20 +3,34 @@
 	import { type SuperForm } from 'sveltekit-superforms';
 	import { Loader2, Check } from 'lucide-svelte';
 
-	export let form: SuperForm<any>;
-	export let action: string = '';
-	export let condition: boolean = false;
-	export let conditionText: string = '';
-	let _class: string = '';
-	export { _class as class };
-	export let hideLoading: boolean = false;
-	export let variant: 'link' | 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' =
-		'default';
+	
 	type ActionValue = {
 		name: string;
 		value?: any;
 	};
-	export let values: ActionValue[];
+	interface Props {
+		form: SuperForm<any>;
+		action?: string;
+		condition?: boolean;
+		conditionText?: string;
+		class?: string;
+		hideLoading?: boolean;
+		variant?: 'link' | 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost';
+		values: ActionValue[];
+		children?: import('svelte').Snippet;
+	}
+
+	let {
+		form,
+		action = '',
+		condition = false,
+		conditionText = '',
+		class: _class = '',
+		hideLoading = false,
+		variant = 'default',
+		values,
+		children
+	}: Props = $props();
 
 	const { enhance, form: formData, submitting } = form;
 	//Костыльная вещь получилась, нужна ли суперформа для таких кнопок?, ну пока пускай будет
@@ -25,15 +39,17 @@
 <form {action} method="POST" use:enhance class={_class}>
 	{#each values as value}
 		<Form.Field {form} name={value.name}>
-			<Form.Control let:attrs>
-				<input name={attrs.name} value={value.value || $formData[attrs.name]} hidden />
-			</Form.Control>
+			<Form.Control >
+			{#snippet children({ props })}
+							<input name={props.name} value={value.value || $formData[props.name]} hidden />
+										{/snippet}
+						</Form.Control>
 		</Form.Field>
 	{/each}
 	<Form.Button
 		{variant}
 		class="w-full"
-		on:click={(e) => e.stopPropagation()}
+		onclick={(e) => e.stopPropagation()}
 		disabled={(condition || $submitting) && !hideLoading}>
 		{#if $submitting && !hideLoading}
 			<Loader2 class="mr-2 h-4 w-4 animate-spin" />
@@ -41,7 +57,7 @@
 			<Check class="mr-2 h-4 w-4" />
 			{conditionText}
 		{:else}
-			<slot />
+			{@render children?.()}
 		{/if}
 	</Form.Button>
 </form>

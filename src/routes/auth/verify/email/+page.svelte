@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { APP_NAME } from '$lib/config/constants';
 	import type { PageData } from './$types';
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 </script>
 
 <section class="container grid items-center gap-6">

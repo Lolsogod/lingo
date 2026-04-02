@@ -8,8 +8,12 @@
 	import { superForm, type SuperForm, type SuperValidated } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	export let form: SuperForm<any>;
-	export let studyDeck: StudyDeckExp;
+	interface Props {
+		form: SuperForm<any>;
+		studyDeck: StudyDeckExp;
+	}
+
+	let { form, studyDeck }: Props = $props();
 
 	const inputs = [
 		{
@@ -33,9 +37,11 @@
 			<Dialog.Description>выставте 0 - чтобы отключить таймер</Dialog.Description>
 		</Dialog.Header>
 		<SimpleForm {form} {inputs} action={`/study/${studyDeck.id}/?/settings`}>
-			<div slot="submit">
-				<SimpleSubmit {form}>Сохранить</SimpleSubmit>
-			</div>
+			{#snippet submit()}
+						<div >
+					<SimpleSubmit {form}>Сохранить</SimpleSubmit>
+				</div>
+					{/snippet}
 		</SimpleForm>
 	</Dialog.Content>
 </Dialog.Root>

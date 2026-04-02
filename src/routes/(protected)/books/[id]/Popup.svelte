@@ -3,23 +3,36 @@
 	import SearchResult from '../../dictionary/SearchResult.svelte';
 	import { Button } from '$lib/components/ui/button';
 
-	export let text: string = '';
-	export let x: number = 0;
-	export let y: number = 0;
-	export let results: Word[] = [];
-	export let isVisible = false;
-	export let ref;
+	interface Props {
+		text?: string;
+		x?: number;
+		y?: number;
+		results?: Word[];
+		isVisible?: boolean;
+		ref: any;
+		onclick?: () => void;
+	}
+
+	let {
+		text = '',
+		x = 0,
+		y = 0,
+		results = [],
+		isVisible = false,
+		ref = $bindable(),
+		onclick
+	}: Props = $props();
 </script>
 
 {#if isVisible}
 	<!-- Use isVisible to conditionally render the popup -->
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div on:click class="fixed inset-0 z-0">
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
+	<!-- svelte-ignore a11y_no_static_element_interactions -->
+	<div {onclick} class="fixed inset-0 z-0">
 		<!-- Backdrop covering the entire viewport -->
 		<!-- Prevent click inside the popup from closing it -->
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<div
 			bind:offsetHeight={ref}
 			class="popup absolute z-10 rounded-md border border-black bg-secondary p-3 shadow-md"

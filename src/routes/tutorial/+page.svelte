@@ -6,7 +6,11 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { skipSchema } from '$lib/config/zod-schemas';
 
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
     const form = superForm(data.skipForm, {
 		validators: zodClient(skipSchema)
 	});

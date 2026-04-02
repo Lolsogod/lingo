@@ -1,7 +1,11 @@
 <script lang="ts">
 	import type { StudyCard } from '$lib/server/database/schema';
 
-	export let studyCards: StudyCard[];
+	interface Props {
+		studyCards: StudyCard[];
+	}
+
+	let { studyCards }: Props = $props();
 	const initialState: Count = {
 		New: 0,
 		Learning: 0,

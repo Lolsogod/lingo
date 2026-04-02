@@ -7,7 +7,11 @@
 	import SimpleForm from '$lib/components/forms/SimpleForm.svelte';
 	import SimpleSubmit from '$lib/components/forms/SimpleSubmit.svelte';
 
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 	const form = superForm(data.form, {
 		validators: zodClient(userUpdatePasswordSchema)
 	});
@@ -27,12 +31,16 @@
 
 <div class="mx-auto flex max-w-2xl items-center justify-center">
 	<SimpleForm {form} {inputs}>
-		<div slot="header">
-			<Card.Title class="text-2xl">Измените ваш пароль</Card.Title>
-			<Card.Description>Выберите новый пароль для вашей учетной записи.</Card.Description>
-		</div>
-		<div slot="submit" class="block w-full">
-			<SimpleSubmit {form}>Обновить пароль</SimpleSubmit>
-		</div>
+		{#snippet header()}
+				<div >
+				<Card.Title class="text-2xl">Измените ваш пароль</Card.Title>
+				<Card.Description>Выберите новый пароль для вашей учетной записи.</Card.Description>
+			</div>
+			{/snippet}
+		{#snippet submit()}
+				<div  class="block w-full">
+				<SimpleSubmit {form}>Обновить пароль</SimpleSubmit>
+			</div>
+			{/snippet}
 	</SimpleForm>
 </div>

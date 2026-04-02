@@ -1,0 +1,669 @@
+
+> lingo@1.0.0 check D:\Documents\lingo
+> svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: d:\Documents\lingo
+Getting Svelte diagnostics...
+
+d:\Documents\lingo\src\lib\server\database\drizzle.ts:1:10
+Error: Module '"$env/static/private"' has no exported member 'DATABASE_URL'. 
+import { DATABASE_URL } from '$env/static/private';
+import { drizzle } from 'drizzle-orm/node-postgres';
+
+d:\Documents\lingo\src\lib\server\email-send.ts:1:10
+Error: Module '"$env/static/private"' has no exported member 'FROM_EMAIL'. 
+import { FROM_EMAIL, RESEND_KEY } from '$env/static/private';
+import { Resend } from 'resend';
+
+d:\Documents\lingo\src\lib\server\email-send.ts:1:22
+Error: Module '"$env/static/private"' has no exported member 'RESEND_KEY'. 
+import { FROM_EMAIL, RESEND_KEY } from '$env/static/private';
+import { Resend } from 'resend';
+
+d:\Documents\lingo\src\lib\server\log.ts:1:10
+Error: Module '"$env/static/private"' has no exported member 'AXIOM_DATASET'. 
+import { AXIOM_DATASET, AXIOM_ORG_ID, AXIOM_TOKEN } from '$env/static/private';
+import getAllUrlParams from '$lib/_helpers/getAllUrlParams';
+
+d:\Documents\lingo\src\lib\server\log.ts:1:25
+Error: Module '"$env/static/private"' has no exported member 'AXIOM_ORG_ID'. 
+import { AXIOM_DATASET, AXIOM_ORG_ID, AXIOM_TOKEN } from '$env/static/private';
+import getAllUrlParams from '$lib/_helpers/getAllUrlParams';
+
+d:\Documents\lingo\src\lib\server\log.ts:1:39
+Error: Module '"$env/static/private"' has no exported member 'AXIOM_TOKEN'. 
+import { AXIOM_DATASET, AXIOM_ORG_ID, AXIOM_TOKEN } from '$env/static/private';
+import getAllUrlParams from '$lib/_helpers/getAllUrlParams';
+
+d:\Documents\lingo\src\lib\components\video\components\ChapterTitle.svelte:1:22
+Error: Object literal may only specify known properties, and '"class"' does not exist in type 'MediaChapterTitleAttributes'. (js)
+<media-chapter-title class="vds-chapter-title"></media-chapter-title>
+
+d:\Documents\lingo\src\lib\components\video\components\VideoCaptions.svelte:2:6
+Error: Type 'Element | undefined' is not assignable to type 'Element'.
+  Type 'undefined' is not assignable to type 'Element'. (ts)
+<script lang="ts">
+	let test: Element = $state();
+	import { content } from '../subFix';
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\SearchResult.svelte:13:23
+Warn: This reference only captures the initial value of `rawWord`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { rawWord, detailed = false }: Props = $props();
+	const word = process(rawWord);
+</script>
+
+d:\Documents\lingo\src\routes\(protected)\video\VideoItem.svelte:28:7
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+			variant="destructive"
+			on:click={() => removeVideoFromHistory(video.url)}>
+			<Trash size={20} />
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:213:3
+Warn: Unused CSS selector "&[data-view-type='audio']"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+		&[data-view-type='audio'] {
+			--media-tooltip-y-offset: 44px;
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:223:3
+Warn: Unused CSS selector "&[data-view-type='video']"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+		&[data-view-type='video'] {
+			--media-tooltip-y-offset: 30px;
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:233:3
+Warn: Unused CSS selector "media-poster"
+https://svelte.dev/e/css_unused_selector (svelte)
+		& :global(video),
+		media-poster {
+			border-radius: var(--media-border-radius);
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:238:2
+Warn: Unused CSS selector ".src-buttons"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.src-buttons {
+		display: flex;
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:43:6
+Error: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'. (ts)
+	const segmenter = new TinySegmenter();
+	let offset: number = $state();
+	let showPopup = $state(false);
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:79:6
+Error: Type 'MediaPlayerElement | undefined' is not assignable to type 'MediaPlayerElement'.
+  Type 'undefined' is not assignable to type 'MaverickElement<HTMLElement, MediaPlayer, MediaPlayerEvents>'.
+    Type 'undefined' is not assignable to type 'Omit<HTMLElement, "addEventListener" | "removeEventListener">'. (ts)
+
+	let player: MediaPlayerElement = $state(),
+		src = $state(''),
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:147:3
+Error: Type 'string[]' is not assignable to type 'never[]'.
+  Type 'string' is not assignable to type 'never'. (ts)
+	run(() => {
+		words = segmenter.segment($content);
+	});
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:161:5
+Error: Object literal may only specify known properties, and '"onprovider-change"' does not exist in type 'MediaPlayerAttributes'. (ts)
+				playsInline
+				onprovider-change={onProviderChange}
+				oncan-play={onCanPlay}
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:189:7
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+			{results}
+			on:click={closePopup}
+			isVisible={showPopup}
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:195:15
+Error: Type '{ children: () => any; class: string; }' is not assignable to type 'AccordionRootProps | undefined'.
+  Type '{ children: () => any; class: string; }' is not assignable to type 'Omit<AccordionRootMultiplePropsWithoutHTML, "child" | "children"> & { child?: Snippet<[{ props: Record<string, unknown>; }]> | undefined; children?: Snippet<[]> | undefined; style?: any; ref?: HTMLElement | null | undefined; } & Without<BitsPrimitiveDivAttributes, AccordionRootPropsWithoutHTML>'.
+    Property 'type' is missing in type '{ children: () => any; class: string; }' but required in type 'Omit<AccordionRootMultiplePropsWithoutHTML, "child" | "children">'. (ts)
+
+<Accordion.Root class="w-full">
+	<Accordion.Item value="item-1">
+
+d:\Documents\lingo\src\lib\components\video\main.ts:3:1
+Error: Expected 2 arguments, but got 1. 
+
+new Player({
+	target: document.getElementById('player')!
+});
+
+d:\Documents\lingo\src\lib\components\video\main.ts:3:1
+Error: 'new' expression, whose target lacks a construct signature, implicitly has an 'any' type. 
+
+new Player({
+	target: document.getElementById('player')!
+});
+
+d:\Documents\lingo\src\lib\components\forms\ActionButton.svelte:35:50
+Warn: This reference only captures the initial value of `form`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const { enhance, form: formData, submitting } = form;
+	//╨Ъ╨╛╤Б╤В╤Л╨╗╤М╨╜╨░╤П ╨▓╨╡╤Й╤М ╨┐╨╛╨╗╤Г╤З╨╕╨╗╨░╤Б╤М, ╨╜╤Г╨╢╨╜╨░ ╨╗╨╕ ╤Б╤Г╨┐╨╡╤А╤Д╨╛╤А╨╝╨░ ╨┤╨╗╤П ╤В╨░╨║╨╕╤Е ╨║╨╜╨╛╨┐╨╛╨║?, ╨╜╤Г ╨┐╨╛╨║╨░ ╨┐╤Г╤Б╨║╨░╨╣ ╨▒╤Г╨┤╨╡╤В
+
+d:\Documents\lingo\src\lib\components\forms\SimpleCheckbox.svelte:14:29
+Warn: This reference only captures the initial value of `form`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const { form: formData } = form;
+</script>
+
+d:\Documents\lingo\src\lib\components\forms\SimpleInput.svelte:28:29
+Warn: This reference only captures the initial value of `form`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const { form: formData } = form;
+</script>
+
+d:\Documents\lingo\src\lib\components\forms\SimpleForm.svelte:31:30
+Warn: This reference only captures the initial value of `form`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const { enhance, errors } = form;
+</script>
+
+d:\Documents\lingo\src\lib\components\forms\SimpleSubmit.svelte:13:58
+Warn: This reference only captures the initial value of `form`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const { form: formData, enhance, submitting, errors } = form;
+</script>
+
+d:\Documents\lingo\src\lib\components\forms\card\CreateCardForm.svelte:37:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let preTags = '';
+	const form = superForm(data, {
+		validators: zodClient(createCardSchema),
+
+d:\Documents\lingo\src\lib\components\items\CardItem.svelte:59:17
+Error: Type '{ content: string; id?: string | undefined; type?: string | undefined; createdAt?: Date | undefined; topicId?: string | null | undefined; authorId?: string | null | undefined; }' is not assignable to type '{ id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; } & { liked: boolean; likes: number; dislikes: number; rating: number; }'.
+  Type '{ content: string; id?: string | undefined; type?: string | undefined; createdAt?: Date | undefined; topicId?: string | null | undefined; authorId?: string | null | undefined; }' is not assignable to type '{ id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }'.
+    Types of property 'id' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'. (ts)
+				{#each cardInfo.cardBlocks || [] as cb}
+					<BlockItem blockInfo={cb.block} />
+				{/each}
+
+d:\Documents\lingo\src\lib\components\items\CommentItem.svelte:34:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const likeForm = superForm(data.likeForm, {
+		validators: zodClient(blockLikeSchema)
+
+d:\Documents\lingo\src\lib\components\items\CommentItem.svelte:37:32
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	});
+	const dislikeForm = superForm(data.dislikeForm, {
+		validators: zodClient(blockLikeSchema)
+
+d:\Documents\lingo\src\lib\components\items\DeckItem.svelte:22:29
+Warn: This reference only captures the initial value of `deckInfo`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { deckInfo, noRedirect = false }: Props = $props();
+	const deck_url = `/decks/${deckInfo.id}`;
+
+d:\Documents\lingo\src\lib\components\items\DeckItem.svelte:24:25
+Warn: This reference only captures the initial value of `deckInfo`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const form = superForm(deckInfo.addForm, {
+		validators: zodClient(startStudySchema)
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:30:19
+Warn: This reference only captures the initial value of `user`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	};
+	const main_url = user ? '/dashboard' : '/';
+	let initials = $state('');
+
+d:\Documents\lingo\src\lib\components\srs\CardCounterMini.svelte:16:16
+Warn: This reference only captures the initial value of `studyCards`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const count = studyCards.reduce((count, card) => {
+		count[card.state]++;
+
+d:\Documents\lingo\src\lib\components\srs\SrsCard.svelte:34:29
+Warn: This reference only captures the initial value of `timerLength`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let timer: NodeJS.Timeout;
+	let remainingTime = $state(timerLength);
+	const revealAfterTimeout = () => {
+
+d:\Documents\lingo\src\lib\components\srs\SrsCard.svelte:45:6
+Warn: This reference only captures the initial value of `timerLength`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	};
+	if (timerLength > 0) {
+		revealAfterTimeout();
+
+d:\Documents\lingo\src\lib\components\srs\SrsCard.svelte:69:17
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+				<Card.Footer class="flex justify-center gap-3 p-0 pb-6">
+					<Button on:click={reveal} class="self-bottom">╨Ю╤В╨║╤А╤Л╤В╤М</Button>
+				</Card.Footer>
+
+d:\Documents\lingo\src\routes\(protected)\books\BookItem.svelte:19:7
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+			variant="destructive"
+			on:click={() => {
+				if (book.id) deleteBook(book.id);
+
+d:\Documents\lingo\src\routes\(protected)\books\+page.svelte:48:26
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+<section class="container grid items-center gap-6">
+	<Button class="w-52" on:click={() => addBook()}>╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╨║╨╜╨╕╨│╤Г</Button>
+	{#if bookList}
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\TableOfContents.svelte:24:32
+Warn: This reference only captures the initial value of `toc`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const chapters = getLeafNodes(toc);
+</script>
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\TableOfContents.svelte:35:9
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+				<DropdownMenu.Item
+					on:click={() => jumpTo(chapter.href)}
+					class="cursor-pointer {isCurrent(chapter) ? 'bg-accent' : ''}">
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\Config.svelte:39:22
+Error: Type 'string' is not assignable to type 'string[]'. (ts)
+		<div class="flex">
+			<Select.Root bind:value={settings.fontFamily}>
+				<Select.Trigger>
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\Config.svelte:59:9
+Error: Type '{ value: number[]; max: number; min: number; step: number; onchange: () => void; }' is not assignable to type 'WithoutChildrenOrChild<SliderRootProps> | undefined'.
+  Property 'type' is missing in type '{ value: number[]; max: number; min: number; step: number; onchange: () => void; }' but required in type 'Omit<Omit<SliderMultiRootPropsWithoutHTML, "child" | "children"> & { child?: Snippet<[SliderRootSnippetProps & { props: Record<string, unknown>; }]> | undefined; children?: Snippet<[SliderRootSnippetProps]> | undefined; style?: any; ref?: HTMLElement | null | undefined; } & Without<BitsPrimitiveSpanAttributes, SliderRootPropsWithoutHTML>, "child" | "children">'. (ts)
+
+		<Slider bind:value={sliderVal} max={30} min={5} step={1} onchange={onScaleChange} />
+	</Popover.Content>
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:48:19
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	let book: Book = data.book;
+	let meta: Metadata = $state(data.meta);
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:49:30
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let book: Book = data.book;
+	let meta: Metadata = $state(data.meta);
+	type settingsType = {
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:17:6
+Error: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'. (ts)
+	import { fade } from 'svelte/transition';
+	let offset: number = $state();
+	let showPopup = $state(false);
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:67:6
+Error: Type 'HTMLElement | undefined' is not assignable to type 'HTMLElement'.
+  Type 'undefined' is not assignable to type 'HTMLElement'. (ts)
+
+	let container: HTMLElement = $state();
+	let entries: ZipInfo['entries'];
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:254:5
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+<Button
+	on:click={() => incrementSection(-1)}
+	class="fixed bottom-10 left-10 z-10 lg:top-1/2"
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:258:5
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+<Button
+	on:click={() => incrementSection(1)}
+	class="fixed bottom-10 right-10 z-10 lg:top-1/2"
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:279:7
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+			{results}
+			on:click={closePopup}
+			isVisible={showPopup}
+
+d:\Documents\lingo\src\routes\(protected)\cards\[id]\+page.svelte:25:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const form = superForm(data.addToDeckForm, {
+		validators: zodClient(addCardToDeckSchema2)
+
+d:\Documents\lingo\src\routes\(protected)\cards\browse\+page.svelte:43:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let levelFilter = $state(false);
+	let sliderVal = $state([0, data.recommendedDifficulty]);
+</script>
+
+d:\Documents\lingo\src\routes\(protected)\cards\browse\+page.svelte:68:14
+Error: Type '"range"' is not assignable to type '"single" | "multiple"'. (ts)
+					<span>0</span>
+					<Slider type="range" bind:value={sliderVal} max={5} step={1} class="max-w-[70%]" />
+					<span>5</span>
+
+d:\Documents\lingo\src\routes\(protected)\dashboard\StudyDeckDelete.svelte:17:35
+Warn: This reference only captures the initial value of `studyDeck`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const study_deck_url = `/study/${studyDeck.id}`;
+	const form = superForm(deleteForm, {
+
+d:\Documents\lingo\src\routes\(protected)\dashboard\StudyDeckDelete.svelte:18:25
+Warn: This reference only captures the initial value of `deleteForm`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	const study_deck_url = `/study/${studyDeck.id}`;
+	const form = superForm(deleteForm, {
+		validators: zodClient(deleteDeckSchema)
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:56:34
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const starStudyForm = superForm(data.startStudyForm, {
+		validators: zodClient(startStudySchema)
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:59:35
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	});
+	const deleteDeckForm = superForm(data.deleteDeckForm, {
+		validators: zodClient(deleteDeckSchema)
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:63:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const likeForm = superForm(data.likeForm, {
+		validators: zodClient(likeSchema)
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:66:32
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	});
+	const dislikeForm = superForm(data.dislikeForm, {
+		validators: zodClient(dislikeSchema)
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:70:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const deck_url = `/decks/${data.deck.id}`;
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\add-card\AddCard.svelte:30:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { data, cardInfo }: Props = $props();
+	const form = superForm(data.form, {
+		validators: zodClient(addCardToDeckSchema),
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\add-card\+page.svelte:53:13
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+	<Input placeholder="╤В╨╡╨│╨╕ (╤З╨╡╤А╨╡╨╖ ╨╖╨░╨┐╤П╤В╤Г╤О)" class="max-w-xs" bind:value={tagQuery} />
+	<Button on:click={() => (tagQuery = data.deckTags.join(','))} variant="outline" class="flex">
+		<Tags class="mr-2 w-4" /> ╨Ш╤Б╨║╨░╤В╤М ╨┐╨╛ ╤В╨╡╨│╨░╨╝ ╨║╨╛╨╗╨╛╨┤╤Л
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\edit\+page@.svelte:18:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	const deck_url = `/decks/${$page.params.id}`;
+	const form = superForm(data.form, {
+		validators: zodClient(editDeckSchema),
+
+d:\Documents\lingo\src\routes\(protected)\decks\browse\+page.svelte:45:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let levelFilter = $state(false);
+	let sliderVal = $state([0, data.recommendedDifficulty]);
+</script>
+
+d:\Documents\lingo\src\routes\(protected)\decks\browse\+page.svelte:70:14
+Error: Type '"range"' is not assignable to type '"single" | "multiple"'. (ts)
+					<span>0</span>
+					<Slider type="range" bind:value={sliderVal} max={5} step={1} class="max-w-[70%]" />
+					<span>5</span>
+
+d:\Documents\lingo\src\routes\(protected)\decks\create\+page.svelte:16:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const form = superForm(data.form, {
+		validators: zodClient(createDeckSchema)
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.svelte:24:34
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { data }: Props = $props();
+	const word_url = `/dictionary/${data.word.id}`;
+	const commentForm = superForm(data.commentForm, {
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.svelte:25:32
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	const word_url = `/dictionary/${data.word.id}`;
+	const commentForm = superForm(data.commentForm, {
+		validators: zodClient(commentSchema)
+
+d:\Documents\lingo\src\routes\(protected)\profile\+page.svelte:18:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const form = superForm(data.form, {
+		validators: zodClient(editUserSchema),
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:48:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				data: [
+					data.stateCount.new,
+					data.stateCount.learning,
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:49:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+					data.stateCount.new,
+					data.stateCount.learning,
+					data.stateCount.relearning,
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:50:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+					data.stateCount.learning,
+					data.stateCount.relearning,
+					data.stateCount.review
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:51:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+					data.stateCount.relearning,
+					data.stateCount.review
+				],
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:58:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const labels = Object.keys(data.reviewData.new);
+	const lineData = {
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:64:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Э╨╛╨▓╤Л╨╡',
+				data: Object.values(data.reviewData.new) as number[],
+				backgroundColor: 'rgb(59 130 246)'
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:69:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Ш╨╖╤Г╤З╨░╤О╤В╤Б╤П',
+				data: Object.values(data.reviewData.learning) as number[],
+				backgroundColor: 'rgb(249 115 22)'
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:74:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Ч╨░╨▒╤Л╤В╤Л',
+				data: Object.values(data.reviewData.relearning) as number[],
+				backgroundColor: 'rgb(239 68 68)'
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:79:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Я╨╛╨▓╤В╨╛╤А╤П╤О╤В╤Б╤П',
+				data: Object.values(data.reviewData.review) as number[],
+				backgroundColor: 'rgb(34 197 94)'
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.svelte:21:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const goodForm = superForm(data.goodForm, {
+		validators: zodClient(gradeCardSchema),
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.svelte:26:30
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	});
+	const againForm = superForm(data.againForm, {
+		validators: zodClient(gradeCardSchema),
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.svelte:31:33
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	});
+	const settingsForm = superForm(data.settingsForm, {
+		validators: zodClient(studyDeckSettingsSchema),
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:47:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				data: [
+					data.stateCount.New,
+					data.stateCount.Learning,
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:48:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+					data.stateCount.New,
+					data.stateCount.Learning,
+					data.stateCount.Relearning,
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:49:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+					data.stateCount.Learning,
+					data.stateCount.Relearning,
+					data.stateCount.Review
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:50:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+					data.stateCount.Relearning,
+					data.stateCount.Review
+				],
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:57:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const labels = Object.keys(data.reviewData.new);
+	const lineData = {
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:63:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Э╨╛╨▓╤Л╨╡',
+				data: Object.values(data.reviewData.new),
+				backgroundColor: 'rgb(59 130 246)'
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:68:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Ш╨╖╤Г╤З╨░╤О╤В╤Б╤П',
+				data: Object.values(data.reviewData.learning),
+				backgroundColor: 'rgb(249 115 22)'
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:73:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Ч╨░╨▒╤Л╤В╤Л',
+				data: Object.values(data.reviewData.relearning),
+				backgroundColor: 'rgb(239 68 68)'
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:78:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Я╨╛╨▓╤В╨╛╤А╤П╤О╤В╤Б╤П',
+				data: Object.values(data.reviewData.review),
+				backgroundColor: 'rgb(34 197 94)'
+
+d:\Documents\lingo\src\routes\auth\password\reset\+page.svelte:15:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { data }: Props = $props();
+	const form = superForm(data.form, {
+		validators: zodClient(resetPasswordSchema)
+
+d:\Documents\lingo\src\routes\auth\password\update-[token]\+page.svelte:15:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { data }: Props = $props();
+	const form = superForm(data.form, {
+		validators: zodClient(userUpdatePasswordSchema)
+
+d:\Documents\lingo\src\routes\auth\sign-in\+page.svelte:18:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { data }: Props = $props();
+	const form = superForm(data.form, {
+		validators: zodClient(signInSchema)
+
+d:\Documents\lingo\src\routes\auth\sign-up\+page.svelte:17:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const form = superForm(data.form, {
+		validators: zodClient(signUpSchema)
+
+d:\Documents\lingo\src\routes\tutorial\+page.svelte:14:28
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { data }: Props = $props();
+    const form = superForm(data.skipForm, {
+		validators: zodClient(skipSchema)
+
+d:\Documents\lingo\src\routes\tutorial\test\+page.svelte:18:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const form = superForm(data.form, {
+		validators: zodClient(finishTutorialSchema)
+
+d:\Documents\lingo\src\routes\tutorial\test\+page.svelte:150:14
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+		</div>
+		<Button on:click={() => (level = calculateLanguageLevel())}>╨Ч╨░╨▓╨╡╤А╤И╨╕╤В╤М</Button>
+	{:else}
+
+====================================
+svelte-check found 33 errors and 65 warnings in 46 files
+тАЙELIFECYCLEтАЙ Command failed with exit code 1.

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { openBookDB } from '$lib/book/bookDb';
 	import type { PageData } from './$types';
 	import { onMount, tick } from 'svelte';
@@ -12,31 +14,39 @@
 	import type { Word } from '../../dictionary/types';
 	import { initIndex, searchIndex } from '../../dictionary/search';
 	import { fade } from 'svelte/transition';
-	let offset: number;
-	let showPopup = false;
-	let popupText = '';
-	let popupX = 0;
-	let popupY = 0;
-	$: console.log(offset);
-	let search: 'loading' | 'ready' = 'loading';
-	let results: Word[] = [];
+	let offset: number | undefined = $state();
+	let showPopup = $state(false);
+	let popupText = $state('');
+	let popupX = $state(0);
+	let popupY = $state(0);
+	run(() => {
+		console.log(offset);
+	});
+	let search: 'loading' | 'ready' = $state('loading');
+	let results: Word[] = $state([]);
 
 	onMount(async () => {
 		await initIndex();
 		search = 'ready';
 	});
 
-	$: if (search === 'ready') {
-		results = searchIndex(popupText);
-	}
+	run(() => {
+		if (search === 'ready') {
+			results = searchIndex(popupText);
+		}
+	});
 
 	function closePopup() {
 		showPopup = false;
 	}
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 
 	let book: Book = data.book;
-	let meta: Metadata = data.meta;
+	let meta: Metadata = $state(data.meta);
 	type settingsType = {
 		scale: number;
 		fontFamily: string;
@@ -45,19 +55,19 @@
 	};
 
 	let storedSettingsJson = localStorage.getItem('settings');
-	let settings: settingsType = storedSettingsJson
+	let settings: settingsType = $state(storedSettingsJson
 		? JSON.parse(storedSettingsJson)
 		: {
 				scale: 10,
 				fontFamily: 'Default',
 				paginated: window.innerWidth > 1000, // Default to paginated if screen is big enough
 				animations: true
-			};
+			});
 
-	let container: HTMLElement;
+	let container: HTMLElement | null = $state(null);
 	let entries: ZipInfo['entries'];
-	let section: number = 0;
-	let scrolled: number = 0;
+	let section: number = $state(0);
+	let scrolled: number = $state(0);
 	onMount(async () => {
 		try {
 			entries = (await unzip(book.file)).entries;
@@ -79,8 +89,8 @@
 			if (meta.id) {
 				(await openBookDB).put('metas', meta);
 			}
-			container.replaceChildren(await assembleChapter(book.spine[section], entries, jumpTo));
-			const words = container.querySelectorAll('.word');
+		container!.replaceChildren(await assembleChapter(book.spine[section], entries, jumpTo));
+		const words = container!.querySelectorAll('.word');
 			words.forEach((word) => {
 				if (word.textContent) {
 					highlightWord(word);
@@ -96,7 +106,7 @@
 
 		if (settings.paginated) {
 			pagesScrolled = 0;
-			container.scrollTo({ left: 0 });
+			container!.scrollTo({ left: 0 });
 		}
 		if (chapter) {
 			const chapterIndex = book.spine.indexOf(chapter);
@@ -108,10 +118,10 @@
 			const element = document.getElementById(elemId);
 			if (!element) return;
 			if (settings.paginated) {
-				const left = element.getBoundingClientRect().left - container.getBoundingClientRect().left;
-				pagesScrolled = Math.floor(left / container.clientWidth);
-				container.scrollTo({
-					left: pagesScrolled * container.clientWidth,
+				const left = element.getBoundingClientRect().left - container!.getBoundingClientRect().left;
+				pagesScrolled = Math.floor(left / container!.clientWidth);
+				container!.scrollTo({
+					left: pagesScrolled * container!.clientWidth,
 					behavior: settings.animations ? 'smooth' : 'instant'
 				});
 			} else {
@@ -126,8 +136,8 @@
 	let timeout: any; //number?
 	const updateAfterResize = () => {
 		if (settings.paginated) {
-			container.scrollTo({
-				left: pagesScrolled * container.clientWidth,
+			container!.scrollTo({
+				left: pagesScrolled * container!.clientWidth,
 				behavior: settings.animations ? 'smooth' : 'instant'
 			});
 		}
@@ -150,14 +160,14 @@
 		}
 	};
 	const nextPage = () => {
-		if ((pagesScrolled + 1) * container.clientWidth < container.scrollWidth) {
+		if ((pagesScrolled + 1) * container!.clientWidth < container!.scrollWidth) {
 			pagesScrolled++;
 		} else {
 			updateSection(section + 1);
 			pagesScrolled = 0;
 		}
-		container.scrollTo({
-			left: pagesScrolled * container.clientWidth,
+		container!.scrollTo({
+			left: pagesScrolled * container!.clientWidth,
 			behavior: settings.animations ? 'smooth' : 'instant'
 		});
 	};
@@ -170,14 +180,14 @@
 			await delay(50); // Wait so that CSS styles can be applied on previous chapter
 			// Necessary since the width changes when styles are applied
 
-			if (container.scrollWidth > container.clientWidth) {
-				pagesScrolled = Math.floor(container.scrollWidth / container.clientWidth);
+			if (container!.scrollWidth > container!.clientWidth) {
+				pagesScrolled = Math.floor(container!.scrollWidth / container!.clientWidth);
 			} else {
 				pagesScrolled = 0;
 			}
 		}
-		container.scrollTo({
-			left: pagesScrolled * container.clientWidth,
+		container!.scrollTo({
+			left: pagesScrolled * container!.clientWidth,
 			behavior: settings.animations ? 'smooth' : 'instant'
 		});
 	};
@@ -203,7 +213,7 @@
 
 		await tick(); // Wait for the next microtask to ensure the DOM is updated
 
-		const popupHeight = offset + 10; // Dynamically get the popup's height
+		const popupHeight = (offset ?? 0) + 10; // Dynamically get the popup's height
 		const viewportHeight = window.innerHeight;
 		const spaceBelow = viewportHeight - (rect.top + window.scrollY);
 
@@ -241,11 +251,11 @@
 	<Config bind:settings onScaleChange={updateAfterResize} />
 </div>
 <Button
-	on:click={() => incrementSection(-1)}
+	onclick={() => incrementSection(-1)}
 	class="fixed bottom-10 left-10 z-10 lg:top-1/2"
 	variant="outline"><ChevronLeft size={40} /></Button>
 <Button
-	on:click={() => incrementSection(1)}
+	onclick={() => incrementSection(1)}
 	class="fixed bottom-10 right-10 z-10 lg:top-1/2"
 	variant="outline"><ChevronRight size={40} /></Button>
 
@@ -256,7 +266,7 @@
 		id="container"
 		class={settings.paginated ? 'paginated' : 'scrolled'}
 		data-sveltekit-preload-data="off"
-		bind:this={container} />
+		bind:this={container}></div>
 </div>
 
 {#if showPopup}
@@ -266,13 +276,13 @@
 			x={popupX}
 			y={popupY}
 			{results}
-			on:click={closePopup}
+			onclick={closePopup}
 			isVisible={showPopup}
 			bind:ref={offset} />
 	</div>
 {/if}
 
-<svelte:window bind:scrollY={scrolled} on:resize={handleResize} on:keydown={handleKeydown} />
+<svelte:window bind:scrollY={scrolled} onresize={handleResize} onkeydown={handleKeydown} />
 
 <style>
 	#container {

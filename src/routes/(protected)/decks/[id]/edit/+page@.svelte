@@ -9,7 +9,11 @@
 	import { Button } from '$lib/components/ui/button';
 	import { page } from '$app/stores';
 
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 	const deck_url = `/decks/${$page.params.id}`;
 	const form = superForm(data.form, {
 		validators: zodClient(editDeckSchema),
@@ -38,11 +42,15 @@
 <section class="container grid items-center gap-6">
 	<Button href={`${deck_url}/`} variant="secondary">Назад</Button>
 	<SimpleForm {form} {inputs}>
-		<div slot="header">
-			<Card.Title class="text-2xl">Редактировать колоду</Card.Title>
-		</div>
-		<div slot="submit" class="block w-full">
-			<SimpleSubmit {form}>Сохранить</SimpleSubmit>
-		</div>
+		{#snippet header()}
+				<div >
+				<Card.Title class="text-2xl">Редактировать колоду</Card.Title>
+			</div>
+			{/snippet}
+		{#snippet submit()}
+				<div  class="block w-full">
+				<SimpleSubmit {form}>Сохранить</SimpleSubmit>
+			</div>
+			{/snippet}
 	</SimpleForm>
 </section>

@@ -1,22 +1,17 @@
 <script lang="ts">
-	import { Menubar as MenubarPrimitive } from 'bits-ui';
-	import { cn } from '$lib/utils.js';
+	import { Menubar as MenubarPrimitive } from "bits-ui";
+	import { cn } from "$lib/utils.js";
 
-	type $$Props = MenubarPrimitive.TriggerProps;
-	type $$Events = MenubarPrimitive.TriggerEvents;
-
-	let className: $$Props['class'] = undefined;
-	export { className as class };
+	let {
+		ref = $bindable(null),
+		class: className,
+		...restProps
+	}: MenubarPrimitive.TriggerProps = $props();
 </script>
 
 <MenubarPrimitive.Trigger
-	class={cn(
-		'flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none data-[highlighted]:bg-accent data-[state=open]:bg-accent data-[highlighted]:text-accent-foreground data-[state=open]:text-accent-foreground',
-		className
-	)}
-	on:click
-	on:keydown
-	on:pointerenter
-	{...$$restProps}>
-	<slot />
-</MenubarPrimitive.Trigger>
+	bind:ref
+	data-slot="menubar-trigger"
+	class={cn("hover:bg-muted aria-expanded:bg-muted rounded-sm px-1.5 py-[2px] text-sm font-medium flex items-center outline-hidden select-none", className)}
+	{...restProps}
+/>

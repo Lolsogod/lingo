@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import '../app.pcss';
 	import { page } from '$app/stores';
 	import { ModeWatcher } from 'mode-watcher';
@@ -10,21 +12,28 @@
 	import type { PageData } from './$types';
 	import { fly } from 'svelte/transition';
 
-	export let data: PageData;
-	//console.log(data);
-	let user: User | null;
-	$: user = data.user;
-	const flash = getFlash(page);
-	$: if ($flash) {
-		switch ($flash.type) {
-			case 'success':
-				toast.success($flash.message);
-				break;
-			case 'error':
-				toast.error($flash.message);
-				break;
-		}
+	interface Props {
+		data: PageData;
+		children?: import('svelte').Snippet;
 	}
+
+	let { data, children }: Props = $props();
+	//console.log(data);
+	let user: User | null = $derived(data.user);
+	
+	const flash = getFlash(page);
+	run(() => {
+		if ($flash) {
+			switch ($flash.type) {
+				case 'success':
+					toast.success($flash.message);
+					break;
+				case 'error':
+					toast.error($flash.message);
+					break;
+			}
+		}
+	});
 </script>
 
 <svelte:head>
@@ -44,6 +53,6 @@
 		</div>
 	{/key}-->
 	<div class="mt-8 md:mt-12">
-		<slot />
+		{@render children?.()}
 	</div>
 </div>

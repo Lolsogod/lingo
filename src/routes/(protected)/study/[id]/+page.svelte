@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import type { PageData } from './$types';
 	import CardCounter from '$lib/components/srs/CardCounter.svelte';
 	import SrsCard from '$lib/components/srs/SrsCard.svelte';
@@ -9,8 +11,12 @@
 	import { quintInOut } from 'svelte/easing';
 	import StudyDeckDelete from '../../dashboard/StudyDeckDelete.svelte';
 	import { Button } from '$lib/components/ui/button';
-	export let data: PageData;
-	let dir = 0;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
+	let dir = $state(0);
 
 	const goodForm = superForm(data.goodForm, {
 		validators: zodClient(gradeCardSchema),
@@ -38,14 +44,20 @@
 			}
 		};
 	};
-	let optSubmitCounter = 0;
+	let optSubmitCounter = $state(0);
 	const { submitting: subGood, form: goodData } = goodForm;
 	const { submitting: subAgain, form: againData } = againForm;
 	const { submitting: subSettings } = settingsForm;
 
-	$: $subGood === true ? optSubmitCounter++ : undefined;
-	$: $subAgain === true ? optSubmitCounter++ : undefined;
-	$: dir = $subGood ? 1 : $subAgain ? -1 : 0;
+	run(() => {
+		$subGood === true ? optSubmitCounter++ : undefined;
+	});
+	run(() => {
+		$subAgain === true ? optSubmitCounter++ : undefined;
+	});
+	run(() => {
+		dir = $subGood ? 1 : $subAgain ? -1 : 0;
+	});
 </script>
 
 <section class="container grid items-center gap-6">

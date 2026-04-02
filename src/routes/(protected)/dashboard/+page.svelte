@@ -8,11 +8,15 @@
 	import type { BookDb } from '$lib/book/bookDb';
 	import { onMount } from 'svelte';
 	import VideoItem from '../video/VideoItem.svelte';
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 	let bookDb: BookDb;
-	let startedBooks: Metadata[] = [];
-	let watchHistory: { url: string; title: string; thumbnail: string }[] = [];
-	let closedBefore = true;
+	let startedBooks: Metadata[] = $state([]);
+	let watchHistory: { url: string; title: string; thumbnail: string }[] = $state([]);
+	let closedBefore = $state(true);
 	const init = async () => {
 		const libdb = await import('$lib/book/bookDb');
 		bookDb = libdb.openBookDB;

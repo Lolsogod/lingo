@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import convertNameToInitials from '$lib/_helpers/convertNameToInitials';
@@ -11,8 +13,12 @@
 	import { LogOut, Moon, Sun, SunMoon, UserRound } from 'lucide-svelte';
 	import { resetMode, setMode } from 'mode-watcher';
 	import { Menu } from 'lucide-svelte';
-	export let user: User | null;
-	$: currentPage = $page.url.pathname;
+	interface Props {
+		user: User | null;
+	}
+
+	let { user }: Props = $props();
+	let currentPage = $derived($page.url.pathname);
 
 	const signOut = () => {
 		const form = document.createElement('form');
@@ -22,12 +28,12 @@
 		form.submit();
 	};
 	const main_url = user ? '/dashboard' : '/';
-	let initials = '';
-	$: {
+	let initials = $state('');
+	run(() => {
 		if (user) {
 			initials = convertNameToInitials(user.firstName, user.lastName);
 		}
-	}
+	});
 </script>
 
 <header class="sticky top-0 z-40 w-full border-b bg-background">
@@ -65,31 +71,35 @@
 		<div class="flex flex-1 items-center justify-end space-x-4">
 			<nav class="flex items-center space-x-1">
 				{#if !user}
-					<Button on:click={() => goto('/auth/sign-in')}>Войти</Button>
+				<Button onclick={() => goto('/auth/sign-in')}>Войти</Button>
 					<DropdownMenu.Root>
-						<DropdownMenu.Trigger asChild let:builder>
-							<Button builders={[builder]} variant="ghost" size="icon">
-								<Sun
-									class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-								<Moon
-									class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-								<span class="sr-only">Тема</span>
-							</Button>
+						<DropdownMenu.Trigger>
+							{#snippet child({ props })}
+								<Button {...props} variant="ghost" size="icon">
+									<Sun
+										class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+									<Moon
+										class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+									<span class="sr-only">Тема</span>
+								</Button>
+							{/snippet}
 						</DropdownMenu.Trigger>
 						<DropdownMenu.Content align="end">
-							<DropdownMenu.Item on:click={() => setMode('light')}>Светлая</DropdownMenu.Item>
-							<DropdownMenu.Item on:click={() => setMode('dark')}>Тёмная</DropdownMenu.Item>
-							<DropdownMenu.Item on:click={() => resetMode()}>Системная</DropdownMenu.Item>
+							<DropdownMenu.Item onclick={() => setMode('light')}>Светлая</DropdownMenu.Item>
+							<DropdownMenu.Item onclick={() => setMode('dark')}>Тёмная</DropdownMenu.Item>
+							<DropdownMenu.Item onclick={() => resetMode()}>Системная</DropdownMenu.Item>
 						</DropdownMenu.Content>
 					</DropdownMenu.Root>
 				{:else}
-					<DropdownMenu.Root>
-						<DropdownMenu.Trigger asChild let:builder>
-							<Button variant="ghost" builders={[builder]} class="relative h-8 w-8 rounded-full">
-								<Avatar.Root class="h-8 w-8">
-									<Avatar.Fallback>{initials}</Avatar.Fallback>
-								</Avatar.Root>
-							</Button>
+				<DropdownMenu.Root>
+						<DropdownMenu.Trigger>
+							{#snippet child({ props })}
+								<Button {...props} variant="ghost" class="relative h-8 w-8 rounded-full">
+									<Avatar.Root class="h-8 w-8">
+										<Avatar.Fallback>{initials}</Avatar.Fallback>
+									</Avatar.Root>
+								</Button>
+							{/snippet}
 						</DropdownMenu.Trigger>
 						<DropdownMenu.Content class="w-56" align="end">
 							<DropdownMenu.Label class="font-normal">
@@ -100,11 +110,11 @@
 							</DropdownMenu.Label>
 							<DropdownMenu.Separator />
 							<DropdownMenu.Group>
-								<DropdownMenu.Item on:click={() => goto('/profile')}>
-									<UserRound class="mr-2 h-4 w-4" />
-									Профиль
-									<DropdownMenu.Shortcut>⇧⌘P</DropdownMenu.Shortcut>
-								</DropdownMenu.Item>
+						<DropdownMenu.Item onclick={() => goto('/profile')}>
+								<UserRound class="mr-2 h-4 w-4" />
+								Профиль
+								<DropdownMenu.Shortcut>⇧⌘P</DropdownMenu.Shortcut>
+							</DropdownMenu.Item>
 							</DropdownMenu.Group>
 
 							<DropdownMenu.Sub>
@@ -116,19 +126,19 @@
 									Тема
 								</DropdownMenu.SubTrigger>
 								<DropdownMenu.SubContent>
-									<DropdownMenu.Item on:click={() => setMode('light')}
-										><Sun class="mr-2 h-4 w-4" />Светлая
-									</DropdownMenu.Item>
-									<DropdownMenu.Item on:click={() => setMode('dark')}
-										><Moon class="mr-2 h-4 w-4" />Тёмная
-									</DropdownMenu.Item>
-									<DropdownMenu.Item on:click={() => setMode('system')}
-										><SunMoon class="mr-2 h-4 w-4" />Системная
-									</DropdownMenu.Item>
+								<DropdownMenu.Item onclick={() => setMode('light')}
+									><Sun class="mr-2 h-4 w-4" />Светлая
+								</DropdownMenu.Item>
+								<DropdownMenu.Item onclick={() => setMode('dark')}
+									><Moon class="mr-2 h-4 w-4" />Тёмная
+								</DropdownMenu.Item>
+								<DropdownMenu.Item onclick={() => setMode('system')}
+									><SunMoon class="mr-2 h-4 w-4" />Системная
+								</DropdownMenu.Item>
 								</DropdownMenu.SubContent>
 							</DropdownMenu.Sub>
 							<DropdownMenu.Separator />
-							<DropdownMenu.Item on:click={signOut}>
+							<DropdownMenu.Item onclick={signOut}>
 								<LogOut class="mr-2 h-4 w-4" />
 								Выйти
 								<DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>

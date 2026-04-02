@@ -4,8 +4,12 @@
 	import * as Card from '$lib/components/ui/card';
 	import Button from '$lib/components/ui/button/button.svelte';
 
-	export let rawWord: Word;
-	export let detailed = false;
+	interface Props {
+		rawWord: Word;
+		detailed?: boolean;
+	}
+
+	let { rawWord, detailed = false }: Props = $props();
 	const word = process(rawWord);
 </script>
 

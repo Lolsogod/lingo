@@ -9,7 +9,11 @@
 	import {superForm} from 'sveltekit-superforms';
 	import {finishTutorialSchema} from '$lib/config/zod-schemas';
 	import {zodClient} from 'sveltekit-superforms/adapters';
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 
 	const form = superForm(data.form, {
 		validators: zodClient(finishTutorialSchema)
@@ -46,7 +50,7 @@
 				'На этом уровне вы обладаете высоким уровнем владения японским языком. Вы можете свободно читать и понимать сложные тексты, а также вести разговоры на любые темы, включая специализированные и абстрактные.'
 		}
 	];
-	const testWords = [
+	const testWords = $state([
 		{ word: 'あ', meaning: 'a', level: 0, know: false },
 		{ word: 'た', meaning: 'та', level: 0, know: false },
 		{ word: 'ぎ', meaning: 'ги', level: 0, know: false },
@@ -74,9 +78,9 @@
 		{ word: '前売り', meaning: 'предыдущая продажа', level: 5, know: false },
 		{ word: '聞き取り', meaning: 'слушание', level: 5, know: false },
 		{ word: '売り出し', meaning: 'продажа', level: 5, know: false }
-	];
+	]);
 
-	let level: number | null = null;
+	let level: number | null = $state(null);
 	function calculateLanguageLevel() {
 		const levelCounts = Array(6).fill(0);
 		const totalWordsAtLevel = Array(6).fill(0);
@@ -106,7 +110,7 @@
 		if (totalKnownPercentage >= 30) return 1;
 		return 0;
 	}
-	let revealed = Array(testWords.length).fill(false);
+	let revealed = $state(Array(testWords.length).fill(false));
 	function toggleReveal(index: number) {
 		revealed[index] = !revealed[index];
 	}
@@ -133,17 +137,17 @@
 						{#if revealed[index]}
 							{word.meaning}
 						{:else}
-							<!-- svelte-ignore a11y-click-events-have-key-events -->
-							<!-- svelte-ignore a11y-no-static-element-interactions -->
+							<!-- svelte-ignore a11y_click_events_have_key_events -->
+							<!-- svelte-ignore a11y_no_static_element_interactions -->
 							<span
 								class="cursor-pointer text-xs text-muted-foreground"
-								on:click={() => toggleReveal(index)}>Показать значение</span>
+								onclick={() => toggleReveal(index)}>Показать значение</span>
 						{/if}
 					</div>
 				</div>
 			{/each}
 		</div>
-		<Button on:click={() => (level = calculateLanguageLevel())}>Завершить</Button>
+		<Button onclick={() => (level = calculateLanguageLevel())}>Завершить</Button>
 	{:else}
 		<h2>Ваш текущий уровень приблизительно равен {level} - {levelDetails[level].title}</h2>
 		<p>{levelDetails[level].description}</p>

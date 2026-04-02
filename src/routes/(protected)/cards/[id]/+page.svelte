@@ -15,13 +15,18 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Search } from 'lucide-svelte';
 	import Stats from './Stats.svelte';
-	export let data: PageData;
+
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 
 	const form = superForm(data.addToDeckForm, {
 		validators: zodClient(addCardToDeckSchema2)
 	});
 	const { form: formData } = form;
-	let chosenDeck = { value: '' };
+	let chosenDeckValue = $state('');
 </script>
 
 <section class="container grid items-center gap-6">
@@ -54,9 +59,9 @@
 				><a href={`/dictionary/?q=${data.card?.topic.name}`}>Открыть словарь</a></Card.Description>
 		</Card.Header>
 		<Card.Content class="flex flex-col gap-2">
-			{#each data.card.cardBlocks as cb}
-				<BlockItem blockInfo={cb.block} />
-			{/each}
+		{#each data.card.cardBlocks as cb}
+			<BlockItem blockInfo={{ ...cb.block, liked: false, likes: 0, dislikes: 0, rating: 0 }} />
+		{/each}
 		</Card.Content>
 		<Card.Footer class="flex flex-col items-start">
 			<p class="text-sm text-muted-foreground">
@@ -84,47 +89,49 @@
 					<Dialog.Title>Добавить в колоду</Dialog.Title>
 					<Dialog.Description class="flex flex-col gap-2">
 						<SimpleForm {form}>
-							<div slot="custom-fields">
+							{#snippet customFields()}
 								<Form.Field {form} name="deckId">
-									<Form.Control let:attrs>
+									<Form.Control>
+					{#snippet children({ props })}
 										<Form.Label>Выберите колоду</Form.Label>
 										<Select.Root
-											selected={chosenDeck}
-											onSelectedChange={(v) => {
-												v && ($formData.deckId = v.value);
+											type="single"
+											bind:value={chosenDeckValue}
+											onValueChange={(v: string) => {
+												$formData.deckId = v;
 											}}>
-											<Select.Trigger {...attrs}>
-												<Select.Value placeholder="Колода" />
-											</Select.Trigger>
-											<Select.Content>
-												<Select.Group>
-													{#each data.decks as deck}
-														<Select.Item value={deck.id} label={deck.name}>
-															{deck.name}
-														</Select.Item>
-													{/each}
-												</Select.Group>
-											</Select.Content>
-											<Select.Input name={attrs.name} />
-										</Select.Root>
-										<input hidden bind:value={$formData.deckId} name={attrs.name} />
+											<Select.Trigger {...props}>
+													{chosenDeckValue
+														? data.decks?.find((d) => d.id === chosenDeckValue)?.name
+														: 'Колода'}
+												</Select.Trigger>
+												<Select.Content>
+													<Select.Group>
+														{#each data.decks as deck}
+															<Select.Item value={deck.id} label={deck.name}>
+																{deck.name}
+															</Select.Item>
+														{/each}
+													</Select.Group>
+												</Select.Content>
+											</Select.Root>
+											<input hidden bind:value={$formData.deckId} name={props.name} />
+										{/snippet}
 									</Form.Control>
 									<Form.FieldErrors />
 								</Form.Field>
-							</div>
-							<div slot="submit">
-								<SimpleSubmit {form}>Добавить</SimpleSubmit>
-							</div>
+							{/snippet}
+							{#snippet submit()}
+								<div>
+									<SimpleSubmit {form}>Добавить</SimpleSubmit>
+								</div>
+							{/snippet}
 						</SimpleForm>
 					</Dialog.Description>
 				</Dialog.Header>
 			</Dialog.Content>
 		</Dialog.Root>
 	{/if}
-<!--
-	{#each data.card.studyCard as sc}
-		<Stats studyCard={sc} />
-	{/each}-->
 </section>
 
 <style scoped>

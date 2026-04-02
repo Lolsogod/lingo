@@ -1,5 +1,5 @@
 <script lang="ts">
-	let test: Element;
+	let test: Element | undefined = $state();
 	import { content } from '../subFix';
 	// Function to log text content
 	const subToSpan = () => {
@@ -25,7 +25,7 @@
 	});
 </script>
 
-<media-captions class="vds-captions" bind:this={test} />
+<media-captions class="vds-captions" bind:this={test}></media-captions>
 
 <style>
 	media-captions {

@@ -3,7 +3,11 @@
 	import CardFooter from '$lib/components/ui/card/card-footer.svelte';
 	import type { StudyCardExp, StudyDeckExp } from '$lib/server/database/schema';
 	import CardCounterMini from '../../../lib/components/srs/CardCounterMini.svelte';
-	export let deckInfo: StudyDeckExp & { queue: StudyCardExp[] };
+	interface Props {
+		deckInfo: StudyDeckExp & { queue: StudyCardExp[] };
+	}
+
+	let { deckInfo }: Props = $props();
 </script>
 
 <a href="/study/{deckInfo.id}">

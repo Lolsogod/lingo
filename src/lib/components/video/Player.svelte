@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	// Import styles.
 	import 'vidstack/player/styles/default/theme.css';
 	// Register elements.
@@ -29,27 +31,24 @@
 	import { initIndex, searchIndex } from '../../../routes/(protected)/dictionary/search';
 	import * as Accordion from '$lib/components/ui/accordion/index.js';
 	import VideoItem from '../../../routes/(protected)/video/VideoItem.svelte';
-	let results: Word[] = [];
-	let search: 'loading' | 'ready' = 'loading';
+	let results: Word[] = $state([]);
+	let search: 'loading' | 'ready' = $state('loading');
 	onMount(async () => {
 		await initIndex();
 		search = 'ready';
 	});
 
-	$: if (search === 'ready') {
-		results = searchIndex(popupText);
-	}
 	//опять повторение кода...
 	const segmenter = new TinySegmenter();
-	let offset: number;
-	let showPopup = false;
-	let popupText = '';
-	let popupX = 0;
-	let popupY = 0;
+	let offset: number | undefined = $state();
+	let showPopup = $state(false);
+	let popupText = $state('');
+	let popupX = $state(0);
+	let popupY = $state(0);
 	const remote = new MediaRemoteControl();
 
 	const handleWordClick = async (event: { target: any }) => {
-		remote.setTarget(player);
+		if (player) remote.setTarget(player);
 		remote.pause();
 		const word = event.target;
 		const rect = word.getBoundingClientRect();
@@ -59,7 +58,7 @@
 
 		await tick(); // Wait for the next microtask to ensure the DOM is updated
 
-		const popupHeight = offset + 10; // Dynamically get the popup's height
+		const popupHeight = (offset ?? 0) + 10; // Dynamically get the popup's height
 		const viewportHeight = window.innerHeight;
 		const spaceBelow = viewportHeight - (rect.top + window.scrollY);
 
@@ -70,18 +69,17 @@
 		}
 	};
 	function closePopup() {
-		remote.setTarget(player);
+		if (player) remote.setTarget(player);
 		remote.play();
 		showPopup = false;
 	}
-	let words = [];
+	let words: string[] = $state([]);
 
-	$: words = segmenter.segment($content);
 
-	let player: MediaPlayerElement,
-		src = '',
+	let player: MediaPlayerElement | undefined = $state(),
+		src = $state(''),
 		viewType: MediaViewType = 'unknown',
-		watchHistory: { url: string; title: string; thumbnail: string }[] = [];
+		watchHistory: { url: string; title: string; thumbnail: string }[] = $state([]);
 
 	const refreshHistory = () => {
 		watchHistory = JSON.parse(localStorage.getItem('videoInfo') || '[]');
@@ -92,7 +90,7 @@
 		if (urlParams.get('v')) {
 			src = 'https://www.youtube.com/watch?v=' + urlParams.get('v') || '';
 		}
-		return player.subscribe((state) => {
+		return player?.subscribe((state) => {
 			viewType = state.viewType;
 		});
 	});
@@ -140,6 +138,14 @@
 		localStorage.setItem('videoInfo', JSON.stringify(history));
 		refreshHistory();
 	}
+	run(() => {
+		if (search === 'ready') {
+			results = searchIndex(popupText);
+		}
+	});
+	run(() => {
+		words = segmenter.segment($content);
+	});
 </script>
 
 <h1 class="mb-5">Видео плеер</h1>
@@ -152,8 +158,8 @@
 				{src}
 				crossOrigin
 				playsInline
-				on:provider-change={onProviderChange}
-				on:can-play={onCanPlay}
+				oncan-play={onCanPlay}
+			{...({'onprovider-change': onProviderChange} as any)}
 				bind:this={player}>
 				<media-provider>
 					<track src="/sub.proxy?v={src}" data-type="srt" kind="captions" srclang="jp" />
@@ -164,9 +170,9 @@
 			<div class="absolute bottom-20 flex w-full justify-center">
 				<div class="bg-black">
 					{#each words as word}
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<!-- svelte-ignore a11y-no-static-element-interactions -->
-						<span class="text-2xl text-white" on:click={handleWordClick}>{word}</span>
+						<!-- svelte-ignore a11y_click_events_have_key_events -->
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<span class="text-2xl text-white" onclick={handleWordClick}>{word}</span>
 					{/each}
 				</div>
 			</div>
@@ -180,19 +186,19 @@
 			x={popupX}
 			y={popupY}
 			{results}
-			on:click={closePopup}
+			onclick={closePopup}
 			isVisible={showPopup}
 			bind:ref={offset} />
 	</div>
 {/if}
 
-<Accordion.Root class="w-full">
+<Accordion.Root type="single" class="w-full">
 	<Accordion.Item value="item-1">
 		<Accordion.Trigger>История просмотров</Accordion.Trigger>
 		<Accordion.Content
 			><div class="video-grid">
 				{#each watchHistory as video (video.url)}
-					<VideoItem {video} canDelete on:deleted={refreshHistory} />
+					<VideoItem {video} canDelete ondeleted={refreshHistory} />
 				{/each}
 			</div></Accordion.Content>
 	</Accordion.Item>

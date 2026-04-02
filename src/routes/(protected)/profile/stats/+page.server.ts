@@ -46,7 +46,7 @@ function mapDataToArray(data: { [key: string]: number }): Array<{ date: string; 
 }
 
 function calculateStreaks(studyDecks: StudyDeckExpPlus[]) {
-	const reviewDates = new Set();
+	const reviewDates = new Set<string>();
 
 	// Собираем все даты обзоров
 	studyDecks.forEach((deck) => {
@@ -183,7 +183,7 @@ export const load = (async (event) => {
 	
 	const forgottenCount = totalReviews - rememberedCount;
 	
-	const { currentStreak, longestStreak } = calculateStreaks(studyDecks);
+	const { currentStreak, longestStreak } = calculateStreaks(studyDecks as unknown as StudyDeckExpPlus[]);
 
 	return {
 		currentStreak,

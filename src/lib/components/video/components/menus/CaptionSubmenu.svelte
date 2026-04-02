@@ -4,11 +4,15 @@
 </script>
 
 <Submenu label="Captions">
-	<media-icon class="vds-menu-button-icon" type="closed-captions" slot="icon" />
+	{#snippet icon()}
+		<media-icon class="vds-menu-button-icon" type="closed-captions" ></media-icon>
+	{/snippet}
 
-	<media-captions-radio-group class="vds-captions-radio-group vds-radio-group" slot="content">
-		<template>
-			<MenuRadio />
-		</template>
-	</media-captions-radio-group>
+	{#snippet content()}
+		<media-captions-radio-group class="vds-captions-radio-group vds-radio-group" >
+			<template>
+				<MenuRadio />
+			</template>
+		</media-captions-radio-group>
+	{/snippet}
 </Submenu>

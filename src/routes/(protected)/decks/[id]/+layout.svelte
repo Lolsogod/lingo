@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { Button } from '$lib/components/ui/button';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
@@ -21,26 +23,35 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Search } from 'lucide-svelte';
 
-	export let data: LayoutData;
+	interface Props {
+		data: LayoutData;
+		children?: import('svelte').Snippet;
+	}
 
-	let query = $page.url.searchParams.get('q') || '';
-	let tagQuery = $page.url.searchParams.get('tag') || '';
-	$: if (browser && query !== $page.url.searchParams.get('q')) {
-		const url = new URL($page.url);
-		url.searchParams.set('q', query);
-		goto(url, {
-			keepFocus: true,
-			noScroll: true
-		});
-	}
-	$: if (browser && tagQuery !== $page.url.searchParams.get('tag')) {
-		const url = new URL($page.url);
-		url.searchParams.set('tag', tagQuery);
-		goto(url, {
-			keepFocus: true,
-			noScroll: true
-		});
-	}
+	let { data, children }: Props = $props();
+
+	let query = $state($page.url.searchParams.get('q') || '');
+	let tagQuery = $state($page.url.searchParams.get('tag') || '');
+	run(() => {
+		if (browser && query !== $page.url.searchParams.get('q')) {
+			const url = new URL($page.url);
+			url.searchParams.set('q', query);
+			goto(url, {
+				keepFocus: true,
+				noScroll: true
+			});
+		}
+	});
+	run(() => {
+		if (browser && tagQuery !== $page.url.searchParams.get('tag')) {
+			const url = new URL($page.url);
+			url.searchParams.set('tag', tagQuery);
+			goto(url, {
+				keepFocus: true,
+				noScroll: true
+			});
+		}
+	});
 
 	const starStudyForm = superForm(data.startStudyForm, {
 		validators: zodClient(startStudySchema)
@@ -58,9 +69,9 @@
 
 	const deck_url = `/decks/${data.deck.id}`;
 
-	$: likeStatus = data.likeStatus ? (data.likeStatus.liked ? 'liked' : 'disliked') : 'unrated';
-	$: liked = likeStatus === 'liked';
-	$: disliked = likeStatus === 'disliked';
+	let likeStatus = $derived(data.likeStatus ? (data.likeStatus.liked ? 'liked' : 'disliked') : 'unrated');
+	let liked = $derived(likeStatus === 'liked');
+	let disliked = $derived(likeStatus === 'disliked');
 </script>
 
 <section class="container grid items-center gap-6">
@@ -87,8 +98,10 @@
 		{#if data.canEdit}
 			<Button href={`${deck_url}/edit`} variant="secondary">Редактировать</Button>
 			<AlertDialog.Root>
-				<AlertDialog.Trigger asChild let:builder>
-					<Button builders={[builder]} variant="destructive">Удалить</Button>
+				<AlertDialog.Trigger>
+					{#snippet child({ props })}
+						<Button {...props} variant="destructive">Удалить</Button>
+					{/snippet}
 				</AlertDialog.Trigger>
 				<AlertDialog.Content>
 					<AlertDialog.Header>
@@ -168,7 +181,7 @@
 				<Button href={`${deck_url}${query ? `?q=${query}` : ''}`} variant="secondary">✕</Button>
 			{/if}
 		</div>
-		<slot />
+		{@render children?.()}
 	{/if}
 </section>
 

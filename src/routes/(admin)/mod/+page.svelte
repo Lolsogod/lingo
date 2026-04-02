@@ -5,12 +5,16 @@
 	import BlockTable from './BlockTable.svelte';
 	import UserTable from './UserTable.svelte';
 	import { Switch } from '$lib/components/ui/switch';
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
 
-	let displayAllUsers = false;
-	let displayAllBlocks = false;
-	let displayAllCards = false;
-	let displayAllDecks = false;
+	let { data }: Props = $props();
+
+	let displayAllUsers = $state(false);
+	let displayAllBlocks = $state(false);
+	let displayAllCards = $state(false);
+	let displayAllDecks = $state(false);
 </script>
 
 <section class="container grid items-center gap-6">

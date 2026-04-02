@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { Badge } from '$lib/components/ui/badge/index.js';
-	export let count: Count;
-	let className;
-	export { className as class };
+	interface Props {
+		count: Count;
+		class: any;
+	}
+
+	let { count, class: className }: Props = $props();
+	
 </script>
 
 <div class={className}>

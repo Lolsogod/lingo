@@ -16,7 +16,8 @@
 		sanitizer: DOMPurify.sanitize
 	});
 
-	export let data: {
+	interface Props {
+		data: {
 		comment: Block & { author?: User };
 		likeForm: SuperValidated<any>;
 		dislikeForm: SuperValidated<any>;
@@ -25,7 +26,10 @@
 		dislikes: any[];
 		rating: number;
 	};
-	export let url: string;
+		url: string;
+	}
+
+	let { data, url }: Props = $props();
 
 	const likeForm = superForm(data.likeForm, {
 		validators: zodClient(blockLikeSchema)
@@ -34,8 +38,8 @@
 		validators: zodClient(blockLikeSchema)
 	});
 
-	$: liked = data.likeStatus === 'liked';
-	$: disliked = data.likeStatus === 'disliked';
+	let liked = $derived(data.likeStatus === 'liked');
+	let disliked = $derived(data.likeStatus === 'disliked');
 </script>
 
 <Card class="flex flex-col">
@@ -55,7 +59,7 @@
 		{:else if data.comment.type === 'image'}
 			<img src={data.comment.content} alt="" class="w-48 rounded-lg object-cover" />
 		{:else if data.comment.type === 'audio'}
-			<audio controls src={data.comment.content} />
+			<audio controls src={data.comment.content}></audio>
 		{:else if data.comment.type === 'markdown'}
 			<Markdown {carta} value={data.comment.content} />
 		{/if}

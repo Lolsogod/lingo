@@ -8,8 +8,11 @@
 	import { Check, Loader2 } from 'lucide-svelte';
 	import { addCardToDeckSchema } from '$lib/config/zod-schemas';
 	import ActionButton from '$lib/components/forms/ActionButton.svelte';
-	//TODO: самнительнаа....
-	export let data: {
+	
+
+	interface Props {
+		//TODO: самнительнаа....
+		data: {
 		form: SuperValidated<
 			{
 				cardId: string;
@@ -20,8 +23,10 @@
 			}
 		>;
 	};
+		cardInfo: CardExp;
+	}
 
-	export let cardInfo: CardExp;
+	let { data, cardInfo }: Props = $props();
 	const form = superForm(data.form, {
 		validators: zodClient(addCardToDeckSchema),
 		resetForm: false

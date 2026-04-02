@@ -4,14 +4,24 @@
 	import CaptionSubmenu from '../menus/CaptionSubmenu.svelte';
 	import Menu from '../menus/Menu.svelte';
 
-	export let placement: MenuPlacement;
-	export let tooltipPlacement: TooltipPlacement;
+	interface Props {
+		placement: MenuPlacement;
+		tooltipPlacement: TooltipPlacement;
+	}
+
+	let { placement, tooltipPlacement }: Props = $props();
 </script>
 
 <Menu {placement} {tooltipPlacement}>
-	<media-icon class="vds-rotate-icon" type="settings" slot="button" />
+	{#snippet button()}
+		<media-icon class="vds-rotate-icon" type="settings"></media-icon>
+	{/snippet}
 
-	<CaptionSubmenu slot="content" />
+	{#snippet tooltipContent()}
+		<span>Settings</span>
+	{/snippet}
 
-	<span slot="tooltip-content">Settings</span>
+	{#snippet content()}
+		<CaptionSubmenu />
+	{/snippet}
 </Menu>

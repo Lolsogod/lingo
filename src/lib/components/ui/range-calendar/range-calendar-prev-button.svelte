@@ -1,26 +1,36 @@
 <script lang="ts">
-	import { RangeCalendar as RangeCalendarPrimitive } from 'bits-ui';
-	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
-	import { buttonVariants } from '$lib/components/ui/button/index.js';
-	import { cn } from '$lib/utils.js';
+	import { RangeCalendar as RangeCalendarPrimitive } from "bits-ui";
+	import ChevronLeftIcon from "@lucide/svelte/icons/chevron-left";
+	import { buttonVariants, type ButtonVariant } from "$lib/components/ui/button/index.js";
+	import { cn } from "$lib/utils.js";
 
-	type $$Props = RangeCalendarPrimitive.PrevButtonProps;
-	type $$Events = RangeCalendarPrimitive.PrevButtonEvents;
-
-	let className: $$Props['class'] = undefined;
-	export { className as class };
+	let {
+		ref = $bindable(null),
+		class: className,
+		children,
+		variant = "ghost",
+		...restProps
+	}: RangeCalendarPrimitive.PrevButtonProps & {
+		variant?: ButtonVariant;
+	} = $props();
 </script>
 
+{#snippet Fallback()}
+	<ChevronLeftIcon class="size-4" />
+{/snippet}
+
 <RangeCalendarPrimitive.PrevButton
-	on:click
+	bind:ref
 	class={cn(
-		buttonVariants({ variant: 'outline' }),
-		'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100',
+		buttonVariants({ variant }),
+		"size-(--cell-size) bg-transparent p-0 select-none disabled:opacity-50 rtl:rotate-180",
 		className
 	)}
-	{...$$restProps}
-	let:builder>
-	<slot {builder}>
-		<ChevronLeft class="h-4 w-4" />
-	</slot>
+	{...restProps}
+>
+	{#if children}
+		{@render children?.()}
+	{:else}
+		{@render Fallback()}
+	{/if}
 </RangeCalendarPrimitive.PrevButton>

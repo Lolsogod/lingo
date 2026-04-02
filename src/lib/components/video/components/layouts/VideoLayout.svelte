@@ -12,14 +12,18 @@
 	import VideoCaptions from '../VideoCaptions.svelte';
 	import VideoGestures from '../VideoGestures.svelte';
 
-	export let thumbnails: string | undefined = undefined;
+	interface Props {
+		thumbnails?: string | undefined;
+	}
+
+	let { thumbnails = undefined }: Props = $props();
 </script>
 
 <VideoGestures />
 <VideoCaptions />
 
 <media-controls class="vds-controls controls">
-	<div class="vds-controls-spacer" />
+	<div class="vds-controls-spacer"></div>
 	<media-controls-group class="vds-controls-group controls-group">
 		<TimeSlider {thumbnails} />
 	</media-controls-group>
@@ -29,7 +33,7 @@
 		<VolumeSlider />
 		<TimeGroup />
 		<ChapterTitle />
-		<div class="vds-controls-spacer" />
+		<div class="vds-controls-spacer"></div>
 		<CaptionButton tooltipPlacement="top" />
 		<SettingsMenu placement="top end" tooltipPlacement="top" />
 		<PIPButton tooltipPlacement="top" />

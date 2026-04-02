@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	//просто отвратительнешее повторение кода
 	import CardItem from '$lib/components/items/CardItem.svelte';
 	import type { PageData } from './$types';
@@ -11,34 +13,44 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Tags } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
-	export let data: PageData;
-
-	let query = $page.url.searchParams.get('add') || '';
-	let tagQuery = $page.url.searchParams.get('add-tag') || '';
-
-	$: if (browser && query !== $page.url.searchParams.get('add')) {
-		const url = new URL($page.url);
-		url.searchParams.set('add', query);
-		goto(url, {
-			keepFocus: true,
-			noScroll: true
-		});
+	interface Props {
+		data: PageData;
 	}
-	$: if (browser && tagQuery !== $page.url.searchParams.get('add-tag')) {
-		const url = new URL($page.url);
-		url.searchParams.set('add-tag', tagQuery);
-		goto(url, {
-			keepFocus: true,
-			noScroll: true
-		});
-	}
-	$: console.log(tagQuery);
+
+	let { data }: Props = $props();
+
+	let query = $state($page.url.searchParams.get('add') || '');
+	let tagQuery = $state($page.url.searchParams.get('add-tag') || '');
+
+	run(() => {
+		if (browser && query !== $page.url.searchParams.get('add')) {
+			const url = new URL($page.url);
+			url.searchParams.set('add', query);
+			goto(url, {
+				keepFocus: true,
+				noScroll: true
+			});
+		}
+	});
+	run(() => {
+		if (browser && tagQuery !== $page.url.searchParams.get('add-tag')) {
+			const url = new URL($page.url);
+			url.searchParams.set('add-tag', tagQuery);
+			goto(url, {
+				keepFocus: true,
+				noScroll: true
+			});
+		}
+	});
+	run(() => {
+		console.log(tagQuery);
+	});
 </script>
 
 <div class="flex gap-2">
 	<Input placeholder="поиск" class="max-w-xs" bind:value={query} />
 	<Input placeholder="теги (через запятую)" class="max-w-xs" bind:value={tagQuery} />
-	<Button on:click={() => (tagQuery = data.deckTags.join(','))} variant="outline" class="flex">
+	<Button onclick={() => (tagQuery = data.deckTags.join(','))} variant="outline" class="flex">
 		<Tags class="mr-2 w-4" /> Искать по тегам колоды
 	</Button>
 </div>

@@ -7,7 +7,11 @@
 	import SimpleForm from '$lib/components/forms/SimpleForm.svelte';
 	import SimpleSubmit from '$lib/components/forms/SimpleSubmit.svelte';
 
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 
 	const form = superForm(data.form, {
 		validators: zodClient(createDeckSchema)
@@ -38,11 +42,15 @@
 
 <section class="container grid items-center gap-6">
 	<SimpleForm {form} {inputs}>
-		<div slot="header">
-			<Card.Title class="text-2xl">Создать колоду</Card.Title>
-		</div>
-		<div slot="submit" class="block w-full">
-			<SimpleSubmit {form}>Создать</SimpleSubmit>
-		</div>
+		{#snippet header()}
+				<div >
+				<Card.Title class="text-2xl">Создать колоду</Card.Title>
+			</div>
+			{/snippet}
+		{#snippet submit()}
+				<div  class="block w-full">
+				<SimpleSubmit {form}>Создать</SimpleSubmit>
+			</div>
+			{/snippet}
 	</SimpleForm>
 </section>

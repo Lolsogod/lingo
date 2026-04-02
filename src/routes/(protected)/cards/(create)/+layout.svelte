@@ -1,8 +1,13 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 </script>
 
 <section class="container grid items-center gap-6">
 	<Button href="/cards/browse" class="w-14" variant="secondary">Назад</Button>
-	<slot />
+	{@render children?.()}
 </section>

@@ -1,9 +1,13 @@
 <script lang="ts">
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { List } from 'lucide-svelte';
-	export let jumpTo: (href: string) => void;
-	export let section: number;
-	export let toc: TableOfContentsItem[];
+	interface Props {
+		jumpTo: (href: string) => void;
+		section: number;
+		toc: TableOfContentsItem[];
+	}
+
+	let { jumpTo, section, toc }: Props = $props();
 
 	const getLeafNodes = (toc: TableOfContentsItem[]): TableOfContentsItem[] => {
 		return toc.flatMap((item) => (item.children ? getLeafNodes(item.children) : item));
@@ -28,7 +32,7 @@
 			<DropdownMenu.Separator />
 			{#each chapters as chapter}
 				<DropdownMenu.Item
-					on:click={() => jumpTo(chapter.href)}
+					onclick={() => jumpTo(chapter.href)}
 					class="cursor-pointer {isCurrent(chapter) ? 'bg-accent' : ''}">
 					{chapter.title}
 				</DropdownMenu.Item>

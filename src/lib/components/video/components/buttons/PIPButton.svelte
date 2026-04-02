@@ -3,17 +3,25 @@
 
 	import Tooltip from '../Tooltip.svelte';
 
-	export let tooltipPlacement: TooltipPlacement;
+	interface Props {
+		tooltipPlacement: TooltipPlacement;
+	}
+
+	let { tooltipPlacement }: Props = $props();
 </script>
 
 <Tooltip placement={tooltipPlacement}>
-	<media-pip-button class="vds-button" slot="trigger">
-		<media-icon class="vds-pip-enter-icon" type="picture-in-picture" />
-		<media-icon class="vds-pip-exit-icon" type="picture-in-picture-exit" />
-	</media-pip-button>
+	{#snippet trigger()}
+		<media-pip-button class="vds-button" >
+			<media-icon class="vds-pip-enter-icon" type="picture-in-picture"></media-icon>
+			<media-icon class="vds-pip-exit-icon" type="picture-in-picture-exit"></media-icon>
+		</media-pip-button>
+	{/snippet}
 
-	<svelte:fragment slot="content">
-		<span class="vds-pip-enter-tooltip-text">Enter PIP</span>
-		<span class="vds-pip-exit-tooltip-text">Exit PIP</span>
-	</svelte:fragment>
+	{#snippet content()}
+	
+			<span class="vds-pip-enter-tooltip-text">Enter PIP</span>
+			<span class="vds-pip-exit-tooltip-text">Exit PIP</span>
+		
+	{/snippet}
 </Tooltip>

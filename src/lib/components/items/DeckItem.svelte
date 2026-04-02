@@ -9,12 +9,16 @@
 	import { superForm, type SuperValidated } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import ActionButton from '../forms/ActionButton.svelte';
-	export let deckInfo: NewDeck & {
+	interface Props {
+		deckInfo: NewDeck & {
 		level?: number;
 		addForm?: SuperValidated<any>;
 		alredyStudying?: boolean;
 	};
-	export let noRedirect = false;
+		noRedirect?: boolean;
+	}
+
+	let { deckInfo, noRedirect = false }: Props = $props();
 	const deck_url = `/decks/${deckInfo.id}`;
 
 	const form = superForm(deckInfo.addForm, {

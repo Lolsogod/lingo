@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Pie } from 'svelte-chartjs';
+	import { Pie } from 'svelte5-chartjs';
 	import { Card, CardHeader, CardContent } from '$lib/components/ui/card';
 	import type { PageData } from './$types';
-	import { Bar } from 'svelte-chartjs';
+	import { Bar } from 'svelte5-chartjs';
 	import 'cal-heatmap/cal-heatmap.css';
 	import { mode } from 'mode-watcher';
 	import { slide } from 'svelte/transition';
@@ -32,7 +32,11 @@
 		PointElement
 	);
 
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 
 	const pieData = {
 		labels: ['Новые', 'Изучаются', 'Забыты', 'Повторяются'],
@@ -77,7 +81,7 @@
 		]
 	};
 	let CalHeatMap: any;
-	let mapCont: Element;
+	let mapCont: Element | undefined = $state();
 	onMount(async () => {
 		CalHeatMap = (await import('cal-heatmap')).default;
 		let cal = new CalHeatMap();
@@ -112,13 +116,13 @@
 				}
 			},
 			animationDuration: 750,
-			theme: $mode
+			theme: mode.current
 		});
 		cal.on('mouseover', (event: any, timestamp: string | number | Date, value: string) => {
 			info = `${new Date(timestamp).toLocaleDateString()} было изученно ${value} ${declOfNum(Number(value), ['карточка', 'карточки', 'карточек'])}`;
 		});
 	});
-	let info = '';
+	let info = $state('');
 </script>
 
 <section class="mx-10 h-[500px] flex-col">

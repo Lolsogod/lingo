@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { Languages } from 'lucide-svelte';
-	export let size: string;
+	interface Props {
+		size: string;
+	}
+
+	let { size }: Props = $props();
 </script>
 
 <Languages {size} />

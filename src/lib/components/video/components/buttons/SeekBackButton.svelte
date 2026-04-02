@@ -3,13 +3,21 @@
 
 	import Tooltip from '../Tooltip.svelte';
 
-	export let tooltipPlacement: TooltipPlacement;
+	interface Props {
+		tooltipPlacement: TooltipPlacement;
+	}
+
+	let { tooltipPlacement }: Props = $props();
 </script>
 
 <Tooltip placement={tooltipPlacement}>
-	<media-seek-button class="vds-button" seconds={-10} slot="trigger">
-		<media-icon type="seek-backward-10" />
-	</media-seek-button>
+	{#snippet trigger()}
+		<media-seek-button class="vds-button" seconds={-10} >
+			<media-icon type="seek-backward-10"></media-icon>
+		</media-seek-button>
+	{/snippet}
 
-	<span slot="content">Seek Backward</span>
+	{#snippet content()}
+		<span >Seek Backward</span>
+	{/snippet}
 </Tooltip>

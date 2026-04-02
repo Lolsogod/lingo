@@ -8,7 +8,11 @@
 	import type { PageData } from './$types';
 	import SimpleForm from '$lib/components/forms/SimpleForm.svelte';
 	import SimpleSubmit from '$lib/components/forms/SimpleSubmit.svelte';
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 
 	const form = superForm(data.form, {
 		validators: zodClient(signUpSchema)
@@ -39,32 +43,37 @@
 
 <div class="mx-auto flex max-w-2xl items-center justify-center">
 	<SimpleForm {form} {inputs}>
-		<div slot="header">
-			<Card.Title class="text-2xl">Регистрация</Card.Title>
-			<Card.Description
-				>Уже есть акаунт? <a href="/auth/sign-in" class="underline">Войти</a></Card.Description>
-		</div>
-		<div slot="custom-fields">
+		{#snippet header()}
+				<div >
+				<Card.Title class="text-2xl">Регистрация</Card.Title>
+				<Card.Description
+					>Уже есть акаунт? <a href="/auth/sign-in" class="underline">Войти</a></Card.Description>
+			</div>
+			{/snippet}
+		{#snippet customFields()}
 			<Form.Field
 				{form}
 				name="terms"
 				class="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-				<Form.Control let:attrs>
-					<Checkbox {...attrs} bind:checked={$formData.terms} />
+				<Form.Control>
+				{#snippet children({ props })}
+					<Checkbox {...props} bind:checked={$formData.terms} />
 					<div class="space-y-1 leading-none">
 						<Form.Label>Я принимаю условия и политику конфиденциальности.</Form.Label>
 						<Form.Description>
 							Вы соглашаетесь с <a href="/terms" class="text-primaryHover underline">условиями</a> и
-							<a href="/privacy" class="text-primaryHover underline">политикой конфиденциальности</a
-							>.
+							<a href="/privacy" class="text-primaryHover underline">политикой конфиденциальности</a>.
 						</Form.Description>
 					</div>
-					<input name={attrs.name} value={$formData.terms} hidden />
+					<input name={props.name} value={$formData.terms} hidden />
+				{/snippet}
 				</Form.Control>
 			</Form.Field>
-		</div>
-		<div slot="submit" class="block w-full">
-			<SimpleSubmit {form}>Зарегестрироваться</SimpleSubmit>
-		</div>
+		{/snippet}
+		{#snippet submit()}
+				<div  class="block w-full">
+				<SimpleSubmit {form}>Зарегестрироваться</SimpleSubmit>
+			</div>
+			{/snippet}
 	</SimpleForm>
 </div>

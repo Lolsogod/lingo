@@ -5,7 +5,7 @@
 	import type { BookDb } from '$lib/book/bookDb';
 
 	let bookDb: BookDb;
-	let bookList: Metadata[] = [];
+	let bookList: Metadata[] = $state([]);
 
 	const addBook = async () => {
 		let input = document.createElement('input');
@@ -45,7 +45,7 @@
 </script>
 
 <section class="container grid items-center gap-6">
-	<Button class="w-52" on:click={() => addBook()}>Добавить книгу</Button>
+	<Button class="w-52" onclick={() => addBook()}>Добавить книгу</Button>
 	{#if bookList}
 		<div class="book-grid">
 			{#each bookList as book (book.id)}

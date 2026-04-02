@@ -1,14 +1,20 @@
 <script lang="ts">
 	import type { TooltipPlacement } from 'vidstack';
 
-	export let placement: TooltipPlacement;
+	interface Props {
+		placement: TooltipPlacement;
+		trigger?: import('svelte').Snippet;
+		content?: import('svelte').Snippet;
+	}
+
+	let { placement, trigger, content }: Props = $props();
 </script>
 
 <media-tooltip>
 	<media-tooltip-trigger>
-		<slot name="trigger" />
+		{@render trigger?.()}
 	</media-tooltip-trigger>
 	<media-tooltip-content class="vds-tooltip-content" {placement}>
-		<slot name="content" />
+		{@render content?.()}
 	</media-tooltip-content>
 </media-tooltip>

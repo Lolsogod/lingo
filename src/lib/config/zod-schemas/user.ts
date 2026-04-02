@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v3';
 export const userSchema = z.object({
 	firstName: z
 		.string({ required_error: 'Имя не может быть пустым' })

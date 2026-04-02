@@ -1,4 +1,4 @@
-<media-captions class="vds-captions" />
+<media-captions class="vds-captions"></media-captions>
 
 <style>
 	media-captions {

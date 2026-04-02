@@ -3,17 +3,25 @@
 
 	import Tooltip from '../Tooltip.svelte';
 
-	export let tooltipPlacement: TooltipPlacement;
+	interface Props {
+		tooltipPlacement: TooltipPlacement;
+	}
+
+	let { tooltipPlacement }: Props = $props();
 </script>
 
 <Tooltip placement={tooltipPlacement}>
-	<media-fullscreen-button class="vds-button" slot="trigger">
-		<media-icon class="vds-fs-enter-icon" type="fullscreen" />
-		<media-icon class="vds-fs-exit-icon" type="fullscreen-exit" />
-	</media-fullscreen-button>
+	{#snippet trigger()}
+		<media-fullscreen-button class="vds-button" >
+			<media-icon class="vds-fs-enter-icon" type="fullscreen"></media-icon>
+			<media-icon class="vds-fs-exit-icon" type="fullscreen-exit"></media-icon>
+		</media-fullscreen-button>
+	{/snippet}
 
-	<svelte:fragment slot="content">
-		<span class="vds-fs-enter-tooltip-text">Enter Fullscreen</span>
-		<span class="vds-fs-exit-tooltip-text">Exit Fullscreen</span>
-	</svelte:fragment>
+	{#snippet content()}
+	
+			<span class="vds-fs-enter-tooltip-text">Enter Fullscreen</span>
+			<span class="vds-fs-exit-tooltip-text">Exit Fullscreen</span>
+		
+	{/snippet}
 </Tooltip>

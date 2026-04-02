@@ -7,8 +7,12 @@
 	import { superForm, type SuperValidated } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	export let deleteForm: SuperValidated<any>;
-	export let studyDeck: StudyDeckExp;
+	interface Props {
+		deleteForm: SuperValidated<any>;
+		studyDeck: StudyDeckExp;
+	}
+
+	let { deleteForm, studyDeck }: Props = $props();
 
 	const study_deck_url = `/study/${studyDeck.id}`;
 	const form = superForm(deleteForm, {
@@ -17,8 +21,10 @@
 </script>
 
 <AlertDialog.Root>
-	<AlertDialog.Trigger asChild let:builder>
-		<Button builders={[builder]} variant="destructive">Удалить</Button>
+	<AlertDialog.Trigger>
+		{#snippet child({ props })}
+			<Button {...props} variant="destructive">Удалить</Button>
+		{/snippet}
 	</AlertDialog.Trigger>
 	<AlertDialog.Content>
 		<AlertDialog.Header>

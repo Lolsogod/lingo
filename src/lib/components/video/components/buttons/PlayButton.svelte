@@ -3,17 +3,25 @@
 
 	import Tooltip from '../Tooltip.svelte';
 
-	export let tooltipPlacement: TooltipPlacement;
+	interface Props {
+		tooltipPlacement: TooltipPlacement;
+	}
+
+	let { tooltipPlacement }: Props = $props();
 </script>
 
 <Tooltip placement={tooltipPlacement}>
-	<media-play-button class="vds-button" slot="trigger">
-		<media-icon class="vds-play-icon" type="play" />
-		<media-icon class="vds-pause-icon" type="pause" />
-	</media-play-button>
+	{#snippet trigger()}
+		<media-play-button class="vds-button" >
+			<media-icon class="vds-play-icon" type="play"></media-icon>
+			<media-icon class="vds-pause-icon" type="pause"></media-icon>
+		</media-play-button>
+	{/snippet}
 
-	<svelte:fragment slot="content">
-		<span class="vds-play-tooltip-text">Play</span>
-		<span class="vds-pause-tooltip-text">Pause</span>
-	</svelte:fragment>
+	{#snippet content()}
+	
+			<span class="vds-play-tooltip-text">Play</span>
+			<span class="vds-pause-tooltip-text">Pause</span>
+		
+	{/snippet}
 </Tooltip>

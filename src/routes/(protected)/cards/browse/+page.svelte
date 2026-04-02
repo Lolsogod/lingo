@@ -1,8 +1,9 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import type { PageData } from './$types';
 	import { Input } from '$lib/components/ui/input';
 	import CardItem from '$lib/components/items/CardItem.svelte';
-	export let data: PageData;
 	import ItemGrid from '$lib/components/items/ItemGrid.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { page } from '$app/stores';
@@ -10,27 +11,36 @@
 	import { browser } from '$app/environment';
 	import { Slider } from '$lib/components/ui/slider/index.js';
 	import { Switch } from '$lib/components/ui/switch';
-	let query = $page.url.searchParams.get('q') || '';
-	let tagQuery = $page.url.searchParams.get('tag') || '';
+	interface Props {
+		data: PageData;
+	}
 
-	$: if (browser && query !== $page.url.searchParams.get('q')) {
-		const url = new URL($page.url);
-		url.searchParams.set('q', query);
-		goto(url, {
-			keepFocus: true,
-			noScroll: true
-		});
-	}
-	$: if (browser && tagQuery !== $page.url.searchParams.get('tag')) {
-		const url = new URL($page.url);
-		url.searchParams.set('tag', tagQuery);
-		goto(url, {
-			keepFocus: true,
-			noScroll: true
-		});
-	}
-	let levelFilter = false;
-	let sliderVal = [0, data.recommendedDifficulty];
+	let { data }: Props = $props();
+	let query = $state($page.url.searchParams.get('q') || '');
+	let tagQuery = $state($page.url.searchParams.get('tag') || '');
+
+	run(() => {
+		if (browser && query !== $page.url.searchParams.get('q')) {
+			const url = new URL($page.url);
+			url.searchParams.set('q', query);
+			goto(url, {
+				keepFocus: true,
+				noScroll: true
+			});
+		}
+	});
+	run(() => {
+		if (browser && tagQuery !== $page.url.searchParams.get('tag')) {
+			const url = new URL($page.url);
+			url.searchParams.set('tag', tagQuery);
+			goto(url, {
+				keepFocus: true,
+				noScroll: true
+			});
+		}
+	});
+	let levelFilter = $state(false);
+	let sliderVal = $state([0, data.recommendedDifficulty]);
 </script>
 
 <section class="container grid items-center gap-6">
@@ -46,7 +56,7 @@
 				<Switch bind:checked={levelFilter} />
 				<span>Фильтр по уровню</span>
 				{#if levelFilter}
-				<Button variant="outline" on:click={() => {sliderVal[1] = data.recommendedDifficulty; sliderVal[0] = 0}}>
+				<Button variant="outline" onclick={() => {sliderVal[1] = data.recommendedDifficulty; sliderVal[0] = 0}}>
 					Рекомендованный уровень: {data.recommendedDifficulty}
 				</Button>
 				{/if}
@@ -55,7 +65,7 @@
 			{#if levelFilter}
 				<div class="flex items-center gap-5">
 					<span>0</span>
-					<Slider bind:value={sliderVal} max={5} step={1} class="max-w-[70%]" />
+					<Slider type="multiple" bind:value={sliderVal} max={5} step={1} class="max-w-[70%]" />
 					<span>5</span>
 				</div>
 			{/if}

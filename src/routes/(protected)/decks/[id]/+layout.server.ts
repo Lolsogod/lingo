@@ -23,6 +23,7 @@ import {
 } from '$lib/server/database/models/card';
 import { error } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
+import type { CardExp } from '$lib/server/database/schema';
 
 export const load = (async (event) => {
 	const user = event.locals.user;
@@ -42,7 +43,7 @@ export const load = (async (event) => {
 	}
 	const startStudyForm = await superValidate(event, zod(startStudySchema));
 	const deleteDeckForm = await superValidate(event, zod(deleteDeckSchema));
-	let cards = await getCardsByDeckId(deckId);
+	let cards: CardExp[] | null = (await getCardsByDeckId(deckId)) as CardExp[] | null;
 
 	if (query) {
 		if (cards) {
@@ -53,7 +54,7 @@ export const load = (async (event) => {
 
 	if (tagQuery) {
 		console.log(tagQuery);
-		const filterByTags = (cards: { tags: string[] }[] | null, tags: string[]) => {
+		const filterByTags = (cards: CardExp[] | null, tags: string[]): CardExp[] | null => {
 			return cards?.filter((card) => tags.every((tag) => card.tags.includes(tag))) || null;
 		};
 

@@ -6,12 +6,21 @@
 	import type { SuperForm } from 'sveltekit-superforms';
 	import { Badge } from '$lib/components/ui/badge/index.js';
 
-	export let studyCard: StudyCardExp;
-	export let goodForm: SuperForm<any>;
-	export let againForm: SuperForm<any>;
-	export let timerLength: number;
+	interface Props {
+		studyCard: StudyCardExp;
+		goodForm: SuperForm<any>;
+		againForm: SuperForm<any>;
+		timerLength: number;
+	}
 
-	let revealed = false;
+	let {
+		studyCard,
+		goodForm,
+		againForm,
+		timerLength
+	}: Props = $props();
+
+	let revealed = $state(false);
 	const stateMap = {
 		New: { label: 'Новая', color: 'bg-blue-500' },
 		Learning: { label: 'Изучается', color: 'bg-orange-500' },
@@ -22,7 +31,7 @@
 	const reveal = () => (revealed = true);
 
 	let timer: NodeJS.Timeout;
-	let remainingTime = timerLength;
+	let remainingTime = $state(timerLength);
 	const revealAfterTimeout = () => {
 		timer = setInterval(() => {
 			if (remainingTime > 0) {
@@ -57,7 +66,7 @@
 					{/if}
 				</Card.Content>
 				<Card.Footer class="flex justify-center gap-3 p-0 pb-6">
-					<Button on:click={reveal} class="self-bottom">Открыть</Button>
+					<Button onclick={reveal} class="self-bottom">Открыть</Button>
 				</Card.Footer>
 			</Card.Root>
 		</div>
@@ -82,7 +91,7 @@
 							{:else if cardBlock.block.type === 'image'}
 								<img src={cardBlock.block.content} alt="" class="w-full object-cover" />
 							{:else if cardBlock.block.type === 'audio'}
-								<audio controls src={cardBlock.block.content} />
+								<audio controls src={cardBlock.block.content}></audio>
 							{/if}
 						{/each}
 					{/if}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CardExp } from '$lib/server/database/schema';
+	import type { Block, CardExp } from '$lib/server/database/schema';
 	import CalendarDays from 'lucide-svelte/icons/calendar-days';
 	import * as Avatar from '$lib/components/ui/avatar/index.js';
 	import * as Card from '$lib/components/ui/card';
@@ -8,7 +8,12 @@
 	import { declOfNum } from '$lib/_helpers/declOfNum';
 	import { Badge } from '../ui/badge';
 	import { Search } from 'lucide-svelte';
-	export let cardInfo: CardExp;
+	interface Props {
+		cardInfo: CardExp;
+		children?: import('svelte').Snippet;
+	}
+
+	let { cardInfo, children }: Props = $props();
 </script>
 
 <HoverCard.Root>
@@ -18,7 +23,7 @@
 				<span class="truncate text-2xl">{cardInfo.topic.name}</span>
 				<!--в слот мб-->
 			</Card.Content>
-			<slot />
+			{@render children?.()}
 		</Card.Root>
 	</HoverCard.Trigger>
 	<HoverCard.Content class="w-[380px]">
@@ -50,9 +55,9 @@
 					><a href={`/dictionary/?q=${cardInfo.topic.name}`}>Открыть словарь</a></Card.Description>
 			</Card.Header>
 			<Card.Content class="flex flex-col gap-2">
-				{#each cardInfo.cardBlocks || [] as cb}
-					<BlockItem blockInfo={cb.block} />
-				{/each}
+			{#each cardInfo.cardBlocks || [] as cb}
+				<BlockItem blockInfo={{ ...(cb.block as Block), liked: false, likes: 0, dislikes: 0, rating: 0 }} />
+			{/each}
 			</Card.Content>
 			<Card.Footer class="flex flex-col items-start">
 				{#if cardInfo.cardDeck}

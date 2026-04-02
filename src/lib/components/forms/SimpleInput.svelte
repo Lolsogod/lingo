@@ -11,26 +11,37 @@
 		sanitizer: DOMPurify.sanitize
 	});
 
-	export let form: SuperForm<any, any>;
-	export let label: string | undefined = undefined;
-	export let name: string;
-	export let type: string = '';
+	interface Props {
+		form: SuperForm<any, any>;
+		label?: string | undefined;
+		name: string;
+		type?: string;
+	}
+
+	let {
+		form,
+		label = undefined,
+		name,
+		type = ''
+	}: Props = $props();
 
 	const { form: formData } = form;
 </script>
 
 <Form.Field {form} {name}>
-	<Form.Control let:attrs>
-		{#if label}<Form.Label>{label}</Form.Label>{/if}
-		{#if type === 'textarea'}
-			<Textarea {...attrs} bind:value={$formData[name]} />
-		{:else if type === 'markdown'}
-			<MarkdownEditor {carta} bind:value={$formData[name]} />
-			<Input {...attrs} bind:value={$formData[name]} type="hidden" />
-		{:else}
-			<Input {...attrs} bind:value={$formData[name]} {type} />
-		{/if}
-	</Form.Control>
+	<Form.Control >
+		{#snippet children({ props })}
+				{#if label}<Form.Label>{label}</Form.Label>{/if}
+			{#if type === 'textarea'}
+				<Textarea {...props} bind:value={$formData[name]} />
+			{:else if type === 'markdown'}
+				<MarkdownEditor {carta} bind:value={$formData[name]} />
+				<Input {...props} bind:value={$formData[name]} type="hidden" />
+			{:else}
+				<Input {...props} bind:value={$formData[name]} {type} />
+			{/if}
+					{/snippet}
+		</Form.Control>
 	<Form.FieldErrors />
 </Form.Field>
 

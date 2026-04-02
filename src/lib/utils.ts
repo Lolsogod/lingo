@@ -2,10 +2,33 @@ import { type ClassValue, clsx } from 'clsx';
 import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
 import { twMerge } from 'tailwind-merge';
+import type { Component, Snippet } from 'svelte';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
+
+// Type utilities for shadcn-svelte components
+export type WithElementRef<T, E extends HTMLElement = HTMLElement> = T & {
+	ref?: E | null;
+};
+
+// Removes the bits-ui v2 `child` prop (as-child pattern), keeping `children` (Svelte 5 snippets)
+export type WithoutChild<T> = T extends { child?: any }
+	? Omit<T, 'child'>
+	: T;
+
+export type WithoutChildren<T> = T extends { children?: any }
+	? Omit<T, 'children'>
+	: T;
+
+export type WithoutChildrenOrChild<T> = T extends { children?: any; child?: any }
+	? Omit<T, 'children' | 'child'>
+	: T extends { children?: any }
+		? Omit<T, 'children'>
+		: T extends { child?: any }
+			? Omit<T, 'child'>
+			: T;
 
 type FlyAndScaleParams = {
 	y?: number;

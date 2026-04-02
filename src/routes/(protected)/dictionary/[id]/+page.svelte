@@ -1,11 +1,12 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import type { PageData } from './$types';
 	import SearchResult from '../SearchResult.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import ItemGrid from '$lib/components/items/ItemGrid.svelte';
 	import CardItem from '$lib/components/items/CardItem.svelte';
 
-	export let data: PageData;
 	import SimpleForm from '$lib/components/forms/SimpleForm.svelte';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
@@ -15,14 +16,21 @@
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { Switch } from '$lib/components/ui/switch/index.js';
 	import SuperDebug from 'sveltekit-superforms';
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 	const word_url = `/dictionary/${data.word.id}`;
 	const commentForm = superForm(data.commentForm, {
 		validators: zodClient(commentSchema)
 	});
-	let isMd = false;
+	let isMd = $state(false);
 	const { form: formData } = commentForm;
-	$: $formData.type = isMd ? 'markdown' : 'text';
-	$: inputs = [
+	run(() => {
+		$formData.type = isMd ? 'markdown' : 'text';
+	});
+	let inputs = $derived([
 		{
 			name: 'topicId',
 			type: 'hidden'
@@ -40,7 +48,7 @@
 			name: 'type',
 			type: 'hidden'
 		}
-	];
+	]);
 </script>
 
 <section class="mx-auto flex max-w-3xl flex-col items-start justify-center gap-4">
@@ -80,9 +88,11 @@
 			class="border-0"
 			innerClass="p-0 gap-0"
 			action="?/comment">
-			<div slot="submit">
-				<SimpleSubmit form={commentForm}>Отправить</SimpleSubmit>
-			</div>
+			{#snippet submit()}
+						<div >
+					<SimpleSubmit form={commentForm}>Отправить</SimpleSubmit>
+				</div>
+					{/snippet}
 		</SimpleForm>
 		{#if data.commentsData}
 			{#each data.commentsData as commentData (commentData.comment.id)}

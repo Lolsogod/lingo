@@ -1,0 +1,1795 @@
+
+> lingo@1.0.0 check D:\Documents\lingo
+> svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: d:\Documents\lingo
+Getting Svelte diagnostics...
+
+d:\Documents\lingo\src\lib\server\database\drizzle.ts:1:10
+Error: Module '"$env/static/private"' has no exported member 'DATABASE_URL'. 
+import { DATABASE_URL } from '$env/static/private';
+import { drizzle } from 'drizzle-orm/node-postgres';
+
+d:\Documents\lingo\src\routes\(protected)\cards\(create)\+layout.server.ts:20:46
+Error: Argument of type 'ZodEffects<ZodObject<Pick<{ topicName: ZodString; blocks: ZodArray<ZodObject<{ id: ZodOptional<ZodString>; type: ZodString; content: ZodString; isNew: ZodBoolean; }, "strip", ZodTypeAny, { type: string; content: string; isNew: boolean; id?: string | undefined; }, { type: string; content: string; isNew: boolean; id?: string | undefined; }>, "many">; tags: ZodOptional<ZodString>; addToStudy: ZodBoolean; studyDeckId: ZodOptional<ZodString>; level: ZodOptional<ZodNumber>; }, "tags" | "level" | "studyDeckId" | "topicName" | "blocks" | "addToStudy">, "strip", ZodTypeAny, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'.
+                    Property '_errors' is missing in type 'string[]' but required in type '{ _errors: string[]; }'. 
+
+	const form = await superValidate(event, zod(createCardSchema));
+	const decks = await getDecksByAuthor(user?.id);
+
+d:\Documents\lingo\src\routes\(protected)\cards\(create)\+layout.server.ts:24:3
+Error: 'form.data.blocks' is of type 'unknown'. 
+		form.data.topicName = base.title;
+		form.data.blocks.push({
+			content: base.subTitle,
+
+d:\Documents\lingo\src\routes\(protected)\cards\(create)\+layout.server.ts:30:4
+Error: 'form.data.blocks' is of type 'unknown'. 
+		base.meanings.forEach((meaning) => {
+			form.data.blocks.push({
+				content: meaning,
+
+d:\Documents\lingo\src\routes\(protected)\cards\(create)\create\+page.server.ts:65:47
+Error: Argument of type 'ZodEffects<ZodObject<Pick<{ topicName: ZodString; blocks: ZodArray<ZodObject<{ id: ZodOptional<ZodString>; type: ZodString; content: ZodString; isNew: ZodBoolean; }, "strip", ZodTypeAny, { type: string; content: string; isNew: boolean; id?: string | undefined; }, { type: string; content: string; isNew: boolean; id?: string | undefined; }>, "many">; tags: ZodOptional<ZodString>; addToStudy: ZodBoolean; studyDeckId: ZodOptional<ZodString>; level: ZodOptional<ZodNumber>; }, "tags" | "level" | "studyDeckId" | "topicName" | "blocks" | "addToStudy">, "strip", ZodTypeAny, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+		const userId = event.locals.user?.id;
+		const form = await superValidate(event, zod(createCardSchema));
+
+d:\Documents\lingo\src\routes\(protected)\cards\(create)\create\+page.server.ts:75:37
+Error: Argument of type 'Record<string, unknown>' is not assignable to parameter of type '{ topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }'.
+  Type 'Record<string, unknown>' is missing the following properties from type '{ topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }': topicName, blocks, addToStudy 
+		try {
+			const newCard = await createCard(form.data, userId);
+			if (newCard) {
+
+d:\Documents\lingo\src\routes\(protected)\cards\(create)\create\+page.server.ts:79:41
+Error: Argument of type '{}' is not assignable to parameter of type 'string'. 
+				if (form.data.addToStudy && form.data.studyDeckId) {
+					const result = await addCardToDeck(form.data.studyDeckId, newCard.id);
+					if (result) {
+
+d:\Documents\lingo\src\routes\(protected)\cards\[id]\+page.server.ts:22:55
+Error: Argument of type 'ZodObject<Pick<{ cardId: ZodString; deckId: ZodString; }, "deckId">, "strip", ZodTypeAny, { deckId: string; }, { deckId: string; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ deckId: string; }, { deckId: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ deckId: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ deckId: string; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ deckId: string; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ deckId: string; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+	const decks = await getDecksByAuthor(user?.id);
+	const addToDeckForm = await superValidate(event, zod(addCardToDeckSchema2));
+
+d:\Documents\lingo\src\routes\(protected)\cards\[id]\+page.server.ts:31:47
+Error: Argument of type 'ZodObject<Pick<{ cardId: ZodString; deckId: ZodString; }, "deckId">, "strip", ZodTypeAny, { deckId: string; }, { deckId: string; }>' is not assignable to parameter of type 'ZodObjectType'. 
+		const cardId = event.params.id;
+		const form = await superValidate(event, zod(addCardToDeckSchema2));
+
+d:\Documents\lingo\src\routes\(protected)\cards\[id]\+page.server.ts:39:38
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+		}
+		const result = await addCardToDeck(form.data.deckId, cardId);
+		if (result) {
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+page.server.ts:19:57
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "deckId" | "addToStudy">, "strip", ZodTypeAny, { addToStudy: boolean; deckId?: string | undefined; }, { deckId?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ deckId?: string | undefined; addToStudy?: boolean | undefined; }, { addToStudy: boolean; deckId?: string | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ deckId?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ deckId?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ deckId?: string | undefined; addToStudy?: boolean | undefined; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ deckId?: string | undefined; addToStudy?: boolean | undefined; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+	startStudy: async (event) => {
+		const startStudyForm = await superValidate(event, zod(startStudySchema));
+		if (!startStudyForm.valid) {
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+page.server.ts:45:53
+Error: Type instantiation is excessively deep and possibly infinite. 
+		const deckId = event.params.id;
+		const deleteDeckForm = await superValidate(event, zod(deleteDeckSchema));
+		const userId = event.locals.user?.id;
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+page.server.ts:58:51
+Error: Argument of type 'ZodObject<{ deckId: ZodOptional<ZodString>; userId: ZodOptional<ZodString>; liked: ZodBoolean; }, "strip", ZodTypeAny, { liked: boolean; userId?: string | undefined; deckId?: string | undefined; }, { liked: boolean; userId?: string | undefined; deckId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ liked: boolean; userId?: string | undefined; deckId?: string | undefined; }, { liked: boolean; userId?: string | undefined; deckId?: string | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ liked: boolean; userId?: string | undefined; deckId?: string | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ liked: boolean; userId?: string | undefined; deckId?: string | undefined; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ liked: boolean; userId?: string | undefined; deckId?: string | undefined; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ liked: boolean; userId?: string | undefined; deckId?: string | undefined; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+		const deckId = event.params.id;
+		const likeForm = await superValidate(event, zod(likeSchema));
+		if (!likeForm.valid || !userId || !deckId) {
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.server.ts:43:56
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "deckId" | "addToStudy">, "strip", ZodTypeAny, { addToStudy: boolean; deckId?: string | undefined; }, { deckId?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+	}
+	const startStudyForm = await superValidate(event, zod(startStudySchema));
+	const deleteDeckForm = await superValidate(event, zod(deleteDeckSchema));
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.server.ts:50:4
+Error: Type 'CardExp[]' is not assignable to type '{ id: string; topicId: string; authorId: string; public: boolean; tags: string[]; level: number; topic: { name: string; id: string; }; cardBlocks: { blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]; }[]'.
+  Type 'CardExp' is not assignable to type '{ id: string; topicId: string; authorId: string; public: boolean; tags: string[]; level: number; topic: { name: string; id: string; }; cardBlocks: { blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]; }'.
+    Types of property 'cardBlocks' are incompatible.
+      Type 'CardBlockExp[] | undefined' is not assignable to type '{ blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]'.
+        Type 'undefined' is not assignable to type '{ blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]'. 
+			const index = createCardIndex(cards);
+			cards = searchCardsIndex(query, index, cards);
+		}
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.server.ts:60:3
+Error: Type '{ tags: string[]; }[] | null' is not assignable to type '{ id: string; topicId: string; authorId: string; public: boolean; tags: string[]; level: number; topic: { name: string; id: string; }; cardBlocks: { blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]; }[]'.
+  Type 'null' is not assignable to type '{ id: string; topicId: string; authorId: string; public: boolean; tags: string[]; level: number; topic: { name: string; id: string; }; cardBlocks: { blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]; }[]'. 
+
+		cards = filterByTags(cards, tagQuery);
+	}
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.server.ts:87:50
+Error: Argument of type 'ZodObject<{ deckId: ZodOptional<ZodString>; userId: ZodOptional<ZodString>; liked: ZodBoolean; }, "strip", ZodTypeAny, { liked: boolean; userId?: string | undefined; deckId?: string | undefined; }, { liked: boolean; userId?: string | undefined; deckId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+
+	const likeForm = await superValidate(event, zod(likeSchema));
+	const dislikeForm = await superValidate(event, zod(dislikeSchema));
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.server.ts:88:53
+Error: Argument of type 'ZodObject<{ deckId: ZodOptional<ZodString>; userId: ZodOptional<ZodString>; liked: ZodBoolean; }, "strip", ZodTypeAny, { liked: boolean; userId?: string | undefined; deckId?: string | undefined; }, { liked: boolean; userId?: string | undefined; deckId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+	const likeForm = await superValidate(event, zod(likeSchema));
+	const dislikeForm = await superValidate(event, zod(dislikeSchema));
+	const { likes, dislikes, rating } = await getLikesDislikes(deckId);
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\add-card\+page.server.ts:50:46
+Error: Argument of type 'ZodObject<Pick<{ cardId: ZodString; deckId: ZodString; }, "cardId">, "strip", ZodTypeAny, { cardId: string; }, { cardId: string; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ cardId: string; }, { cardId: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ cardId: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ cardId: string; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ cardId: string; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ cardId: string; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+	}
+	const form = await superValidate(event, zod(addCardToDeckSchema));
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\add-card\+page.server.ts:60:47
+Error: Argument of type 'ZodObject<Pick<{ cardId: ZodString; deckId: ZodString; }, "cardId">, "strip", ZodTypeAny, { cardId: string; }, { cardId: string; }>' is not assignable to parameter of type 'ZodObjectType'. 
+		const deckId = event.params.id;
+		const form = await superValidate(event, zod(addCardToDeckSchema));
+		console.log(form.data.cardId, deckId);
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\add-card\+page.server.ts:62:38
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+		console.log(form.data.cardId, deckId);
+		console.log(isUUID(deckId), isUUID(form.data.cardId));
+		await addCardToDeck(deckId, form.data.cardId);
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\add-card\+page.server.ts:63:31
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+		console.log(isUUID(deckId), isUUID(form.data.cardId));
+		await addCardToDeck(deckId, form.data.cardId);
+		return { form };
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\create-card\+page.server.ts:11:46
+Error: Argument of type 'ZodEffects<ZodObject<Pick<{ topicName: ZodString; blocks: ZodArray<ZodObject<{ id: ZodOptional<ZodString>; type: ZodString; content: ZodString; isNew: ZodBoolean; }, "strip", ZodTypeAny, { type: string; content: string; isNew: boolean; id?: string | undefined; }, { type: string; content: string; isNew: boolean; id?: string | undefined; }>, "many">; tags: ZodOptional<ZodString>; addToStudy: ZodBoolean; studyDeckId: ZodOptional<ZodString>; level: ZodOptional<ZodNumber>; }, "tags" | "level" | "studyDeckId" | "topicName" | "blocks" | "addToStudy">, "strip", ZodTypeAny, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+export const load = (async (event) => {
+	const form = await superValidate(event, zod(createCardSchema));
+	return { form };
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\create-card\+page.server.ts:19:54
+Error: Argument of type 'ZodEffects<ZodObject<Pick<{ topicName: ZodString; blocks: ZodArray<ZodObject<{ id: ZodOptional<ZodString>; type: ZodString; content: ZodString; isNew: ZodBoolean; }, "strip", ZodTypeAny, { type: string; content: string; isNew: boolean; id?: string | undefined; }, { type: string; content: string; isNew: boolean; id?: string | undefined; }>, "many">; tags: ZodOptional<ZodString>; addToStudy: ZodBoolean; studyDeckId: ZodOptional<ZodString>; level: ZodOptional<ZodNumber>; }, "tags" | "level" | "studyDeckId" | "topicName" | "blocks" | "addToStudy">, "strip", ZodTypeAny, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+		const userId = event.locals.user?.id;
+		const addCardform = await superValidate(event, zod(createCardSchema));
+		if (!addCardform.valid || !userId || !isUUID(deckId)) {
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\create-card\+page.server.ts:27:37
+Error: Argument of type 'Record<string, unknown>' is not assignable to parameter of type '{ topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }'. 
+			//╤В╤А╨░╨╜╨╖╨░╨║╤Ж╨╕╨╡╨╣?
+			const newCard = await createCard(addCardform.data, userId);
+			const newCardDeck = await addCardToDeck(deckId, newCard.id);
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\edit\+page.server.ts:14:46
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "name" | "public" | "description">, "strip", ZodTypeAny, { name: string; public: boolean; description?: string | undefined; }, { name: string; public?: boolean | undefined; description?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ name: string; public?: boolean | undefined; description?: string | undefined; }, { name: string; public: boolean; description?: string | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ name: string; public?: boolean | undefined; description?: string | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ name: string; public?: boolean | undefined; description?: string | undefined; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ name: string; public?: boolean | undefined; description?: string | undefined; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ name: string; public?: boolean | undefined; description?: string | undefined; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+
+	const form = await superValidate(event, zod(editDeckSchema));
+	const deck = await getDeckById(deckId, user?.id);
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\edit\+page.server.ts:36:47
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "name" | "public" | "description">, "strip", ZodTypeAny, { name: string; public: boolean; description?: string | undefined; }, { name: string; public?: boolean | undefined; description?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+		let updatedDeck: Partial<Deck> | null;
+		const form = await superValidate(event, zod(editDeckSchema));
+		if (!form.valid) {
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\edit\+page.server.ts:49:6
+Error: Type 'unknown' is not assignable to type 'string | undefined'. 
+					id: deckId,
+					name: form.data.name,
+					description: form.data.description,
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\edit\+page.server.ts:50:6
+Error: Type 'unknown' is not assignable to type 'string | null | undefined'. 
+					name: form.data.name,
+					description: form.data.description,
+					public: form.data.public
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\edit\+page.server.ts:51:6
+Error: Type 'unknown' is not assignable to type 'boolean | undefined'. 
+					description: form.data.description,
+					public: form.data.public
+				},
+
+d:\Documents\lingo\src\routes\(protected)\decks\browse\+page.server.ts:64:51
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "deckId" | "addToStudy">, "strip", ZodTypeAny, { addToStudy: boolean; deckId?: string | undefined; }, { deckId?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+		publicDecks.map(async (deck) => {
+			const addForm = await superValidate(event, zod(startStudySchema), {
+                id: deck.id
+
+d:\Documents\lingo\src\routes\(protected)\decks\browse\+page.server.ts:76:51
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "deckId" | "addToStudy">, "strip", ZodTypeAny, { addToStudy: boolean; deckId?: string | undefined; }, { deckId?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+		userCreatedDecks.map(async (deck) => {
+			const addForm = await superValidate(event, zod(startStudySchema), {
+                id: deck.id
+
+d:\Documents\lingo\src\routes\(protected)\decks\create\+page.server.ts:11:46
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "name" | "public" | "description" | "addToStudy">, "strip", ZodTypeAny, { name: string; public: boolean; addToStudy: boolean; description?: string | undefined; }, { name: string; public?: boolean | undefined; description?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ name: string; public?: boolean | undefined; description?: string | undefined; addToStudy?: boolean | undefined; }, { name: string; public: boolean; addToStudy: boolean; description?: string | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ name: string; public?: boolean | undefined; description?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ name: string; public?: boolean | undefined; description?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ name: string; public?: boolean | undefined; description?: string | undefined; addToStudy?: boolean | undefined; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ name: string; public?: boolean | undefined; description?: string | undefined; addToStudy?: boolean | undefined; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+export const load = (async (event) => {
+	const form = await superValidate(event, zod(createDeckSchema));
+	return {
+
+d:\Documents\lingo\src\routes\(protected)\decks\create\+page.server.ts:22:47
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "name" | "public" | "description" | "addToStudy">, "strip", ZodTypeAny, { name: string; public: boolean; addToStudy: boolean; description?: string | undefined; }, { name: string; public?: boolean | undefined; description?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+		console.log(user);
+		const form = await superValidate(event, zod(createDeckSchema));
+		if (!form.valid) {
+
+d:\Documents\lingo\src\routes\(protected)\decks\create\+page.server.ts:36:5
+Error: Type 'unknown' is not assignable to type 'string'. 
+			newDeck = await createDeck({
+				name: form.data.name,
+				description: form.data.description,
+
+d:\Documents\lingo\src\routes\(protected)\decks\create\+page.server.ts:37:5
+Error: Type 'unknown' is not assignable to type 'string | null | undefined'. 
+				name: form.data.name,
+				description: form.data.description,
+				public: form.data.public,
+
+d:\Documents\lingo\src\routes\(protected)\decks\create\+page.server.ts:38:5
+Error: Type 'unknown' is not assignable to type 'boolean | undefined'. 
+				description: form.data.description,
+				public: form.data.public,
+				authorId: user.id
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.server.ts:41:51
+Error: Argument of type 'ZodObject<{ blockId: ZodString; userId: ZodOptional<ZodString>; liked: ZodBoolean; }, "strip", ZodTypeAny, { blockId: string; liked: boolean; userId?: string | undefined; }, { blockId: string; liked: boolean; userId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+	for (const comment of comments) {
+		const likeForm = await superValidate(event, zod(blockLikeSchema), {
+			id: comment.id + 'l'
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.server.ts:45:54
+Error: Argument of type 'ZodObject<{ blockId: ZodString; userId: ZodOptional<ZodString>; liked: ZodBoolean; }, "strip", ZodTypeAny, { blockId: string; liked: boolean; userId?: string | undefined; }, { blockId: string; liked: boolean; userId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+		likeForm.data.blockId = comment.id;
+		const dislikeForm = await superValidate(event, zod(blockLikeSchema), {
+			id: comment.id + 'd'
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.server.ts:133:53
+Error: Argument of type 'ZodObject<{ topicId: ZodString; comment: ZodString; potentialTopicName: ZodString; type: ZodOptional<ZodEnum<["text", "markdown"]>>; }, "strip", ZodTypeAny, { topicId: string; comment: string; potentialTopicName: string; type?: "text" | "markdown" | undefined; }, { topicId: string; comment: string; potentialTopicName: string; type?: "text" | "markdown" | undefined; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ topicId: string; comment: string; potentialTopicName: string; type?: "text" | "markdown" | undefined; }, { topicId: string; comment: string; potentialTopicName: string; type?: "text" | "markdown" | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ topicId: string; comment: string; potentialTopicName: string; type?: "text" | "markdown" | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ topicId: string; comment: string; potentialTopicName: string; type?: "text" | "markdown" | undefined; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ topicId: string; comment: string; potentialTopicName: string; type?: "text" | "markdown" | undefined; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ topicId: string; comment: string; potentialTopicName: string; type?: "text" | "markdown" | undefined; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+
+	const commentForm = await superValidate(event, zod(commentSchema));
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.server.ts:151:54
+Error: Argument of type 'ZodObject<{ topicId: ZodString; comment: ZodString; potentialTopicName: ZodString; type: ZodOptional<ZodEnum<["text", "markdown"]>>; }, "strip", ZodTypeAny, { topicId: string; comment: string; potentialTopicName: string; type?: "text" | "markdown" | undefined; }, { topicId: string; comment: string; potentialTopicName: string; type?: "text" | "markdown" | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+		const user = event.locals.user;
+		const commentForm = await superValidate(event, zod(commentSchema));
+		console.log(commentForm.data);
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.server.ts:159:5
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+			const newCommnet = await createComment(
+				commentForm.data.topicId,
+				commentForm.data.comment,
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.server.ts:179:51
+Error: Argument of type 'ZodObject<{ blockId: ZodString; userId: ZodOptional<ZodString>; liked: ZodBoolean; }, "strip", ZodTypeAny, { blockId: string; liked: boolean; userId?: string | undefined; }, { blockId: string; liked: boolean; userId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ blockId: string; liked: boolean; userId?: string | undefined; }, { blockId: string; liked: boolean; userId?: string | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ blockId: string; liked: boolean; userId?: string | undefined; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ blockId: string; liked: boolean; userId?: string | undefined; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ blockId: string; liked: boolean; userId?: string | undefined; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ blockId: string; liked: boolean; userId?: string | undefined; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+
+		const likeForm = await superValidate(event, zod(blockLikeSchema));
+		if (!likeForm.valid || !userId) {
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.server.ts:188:31
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+		if (liked) {
+			await addBlockLike(userId, blockId);
+		} else {
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.server.ts:190:34
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+		} else {
+			await addBlockDislike(userId, blockId);
+		}
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.server.ts:195:54
+Error: Argument of type 'ZodObject<{ blockId: ZodString; userId: ZodOptional<ZodString>; liked: ZodBoolean; }, "strip", ZodTypeAny, { blockId: string; liked: boolean; userId?: string | undefined; }, { blockId: string; liked: boolean; userId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+		const userId = event.locals.user?.id;
+		const commentForm = await superValidate(event, zod(blockLikeSchema));
+		const blockId = commentForm.data.blockId;
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.server.ts:202:33
+Error: Argument of type '{}' is not assignable to parameter of type 'string'. 
+
+		await removeBlockLike(userId, blockId);
+		return { commentForm };
+
+d:\Documents\lingo\src\lib\server\email-send.ts:1:10
+Error: Module '"$env/static/private"' has no exported member 'FROM_EMAIL'. 
+import { FROM_EMAIL, RESEND_KEY } from '$env/static/private';
+import { Resend } from 'resend';
+
+d:\Documents\lingo\src\lib\server\email-send.ts:1:22
+Error: Module '"$env/static/private"' has no exported member 'RESEND_KEY'. 
+import { FROM_EMAIL, RESEND_KEY } from '$env/static/private';
+import { Resend } from 'resend';
+
+d:\Documents\lingo\src\routes\(protected)\profile\+page.server.ts:10:46
+Error: Argument of type 'ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "email" | "firstName" | "lastName">, "strip", ZodTypeAny, { email: string; firstName: string; lastName: string; }, { email: string; firstName: string; lastName: string; }>' is not assignable to parameter of type 'ZodObjectType'. 
+export const load = async (event) => {
+	const form = await superValidate(event, zod(editUserSchema));
+
+d:\Documents\lingo\src\routes\(protected)\profile\+page.server.ts:32:47
+Error: Argument of type 'ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "email" | "firstName" | "lastName">, "strip", ZodTypeAny, { email: string; firstName: string; lastName: string; }, { email: string; firstName: string; lastName: string; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ email: string; firstName: string; lastName: string; }, { email: string; firstName: string; lastName: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ email: string; firstName: string; lastName: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ email: string; firstName: string; lastName: string; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ email: string; firstName: string; lastName: string; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ email: string; firstName: string; lastName: string; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+	default: async (event) => {
+		const form = await superValidate(event, zod(editUserSchema));
+		//console.log(form);
+
+d:\Documents\lingo\src\routes\(protected)\profile\+page.server.ts:47:6
+Error: Type 'unknown' is not assignable to type 'string | undefined'. 
+				await updateUser(user.id, {
+					firstName: form.data.firstName,
+					lastName: form.data.lastName,
+
+d:\Documents\lingo\src\routes\(protected)\profile\+page.server.ts:48:6
+Error: Type 'unknown' is not assignable to type 'string | undefined'. 
+					firstName: form.data.firstName,
+					lastName: form.data.lastName,
+					email: form.data.email
+
+d:\Documents\lingo\src\routes\(protected)\profile\+page.server.ts:49:6
+Error: Type 'unknown' is not assignable to type 'string | undefined'. 
+					lastName: form.data.lastName,
+					email: form.data.email
+				});
+
+d:\Documents\lingo\src\routes\(protected)\profile\+page.server.ts:59:43
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+					});
+					await updateEmailAddressSuccessEmail(form.data.email, user?.email, user?.token);
+				}
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.server.ts:89:3
+Error: Type 'unknown' is not assignable to type 'string | null'. 
+
+		previousDate = date;
+	});
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.server.ts:186:60
+Error: Argument of type '{ id: string; userId: string; deleted: boolean; deckId: string; newCardsLimit: number; timer: number; deck: { name: string; id: string; authorId: string; public: boolean; description: string | null; deleted: boolean; }; studyCards: { id: string; createdAt: Date; deleted: boolean; studyDeckId: string; baseCardId: string; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; reps: number; lapses: number; state: "New" | "Learning" | "Review" | "Relearning"; last_review: Date | null; suspended: Date; baseCard: { id: string; topicId: string; authorId: string; public: boolean; tags: string[]; level: number; topic: { name: string; id: string; }; cardBlocks: { blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]; }; reviewLogs: { id: string; duration: number; createdAt: Date; cardId: string; deleted: boolean; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; state: "New" | "Learning" | "Review" | "Relearning"; grade: "Manual" | "Again" | "Hard" | "Good" | "Easy"; last_elapsed_days: number; review: Date; }[]; }[]; }[]' is not assignable to parameter of type 'StudyDeckExpPlus[]'.
+  Type '{ id: string; userId: string; deleted: boolean; deckId: string; newCardsLimit: number; timer: number; deck: { name: string; id: string; authorId: string; public: boolean; description: string | null; deleted: boolean; }; studyCards: { id: string; createdAt: Date; deleted: boolean; studyDeckId: string; baseCardId: string; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; reps: number; lapses: number; state: "New" | "Learning" | "Review" | "Relearning"; last_review: Date | null; suspended: Date; baseCard: { id: string; topicId: string; authorId: string; public: boolean; tags: string[]; level: number; topic: { name: string; id: string; }; cardBlocks: { blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]; }; reviewLogs: { id: string; duration: number; createdAt: Date; cardId: string; deleted: boolean; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; state: "New" | "Learning" | "Review" | "Relearning"; grade: "Manual" | "Again" | "Hard" | "Good" | "Easy"; last_elapsed_days: number; review: Date; }[]; }[]; }' is not assignable to type 'StudyDeckExpPlus'.
+    Type '{ id: string; userId: string; deleted: boolean; deckId: string; newCardsLimit: number; timer: number; deck: { name: string; id: string; authorId: string; public: boolean; description: string | null; deleted: boolean; }; studyCards: { id: string; createdAt: Date; deleted: boolean; studyDeckId: string; baseCardId: string; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; reps: number; lapses: number; state: "New" | "Learning" | "Review" | "Relearning"; last_review: Date | null; suspended: Date; baseCard: { id: string; topicId: string; authorId: string; public: boolean; tags: string[]; level: number; topic: { name: string; id: string; }; cardBlocks: { blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]; }; reviewLogs: { id: string; duration: number; createdAt: Date; cardId: string; deleted: boolean; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; state: "New" | "Learning" | "Review" | "Relearning"; grade: "Manual" | "Again" | "Hard" | "Good" | "Easy"; last_elapsed_days: number; review: Date; }[]; }[]; }' is not assignable to type '{ deck: { name: string; authorId: string; id?: string | undefined; public?: boolean | undefined; description?: string | null | undefined; deleted?: boolean | undefined; }; studyCards: StudyCardExp[]; }'.
+      Types of property 'studyCards' are incompatible.
+        Type '{ id: string; createdAt: Date; deleted: boolean; studyDeckId: string; baseCardId: string; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; reps: number; lapses: number; state: "New" | "Learning" | "Review" | "Relearning"; last_review: Date | null; suspended: Date; baseCard: { id: string; topicId: string; authorId: string; public: boolean; tags: string[]; level: number; topic: { name: string; id: string; }; cardBlocks: { blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]; }; reviewLogs: { id: string; duration: number; createdAt: Date; cardId: string; deleted: boolean; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; state: "New" | "Learning" | "Review" | "Relearning"; grade: "Manual" | "Again" | "Hard" | "Good" | "Easy"; last_elapsed_days: number; review: Date; }[]; }[]' is not assignable to type 'StudyCardExp[]'.
+          Type '{ id: string; createdAt: Date; deleted: boolean; studyDeckId: string; baseCardId: string; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; reps: number; lapses: number; state: "New" | "Learning" | "Review" | "Relearning"; last_review: Date | null; suspended: Date; baseCard: { id: string; topicId: string; authorId: string; public: boolean; tags: string[]; level: number; topic: { name: string; id: string; }; cardBlocks: { blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]; }; reviewLogs: { id: string; duration: number; createdAt: Date; cardId: string; deleted: boolean; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; state: "New" | "Learning" | "Review" | "Relearning"; grade: "Manual" | "Again" | "Hard" | "Good" | "Easy"; last_elapsed_days: number; review: Date; }[]; }' is not assignable to type 'StudyCardExp'.
+            Type '{ id: string; createdAt: Date; deleted: boolean; studyDeckId: string; baseCardId: string; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; reps: number; lapses: number; state: "New" | "Learning" | "Review" | "Relearning"; last_review: Date | null; suspended: Date; baseCard: { id: string; topicId: string; authorId: string; public: boolean; tags: string[]; level: number; topic: { name: string; id: string; }; cardBlocks: { blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]; }; reviewLogs: { id: string; duration: number; createdAt: Date; cardId: string; deleted: boolean; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; state: "New" | "Learning" | "Review" | "Relearning"; grade: "Manual" | "Again" | "Hard" | "Good" | "Easy"; last_elapsed_days: number; review: Date; }[]; }' is not assignable to type '{ baseCard: CardExp; reviewLogs?: ReviewLogExp[] | undefined; }'.
+              Types of property 'reviewLogs' are incompatible.
+                Type '{ id: string; duration: number; createdAt: Date; cardId: string; deleted: boolean; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; state: "New" | "Learning" | "Review" | "Relearning"; grade: "Manual" | "Again" | "Hard" | "Good" | "Easy"; last_elapsed_days: number; review: Date; }[]' is not assignable to type 'ReviewLogExp[]'.
+                  Type '{ id: string; duration: number; createdAt: Date; cardId: string; deleted: boolean; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; state: "New" | "Learning" | "Review" | "Relearning"; grade: "Manual" | "Again" | "Hard" | "Good" | "Easy"; last_elapsed_days: number; review: Date; }' is not assignable to type 'ReviewLogExp'.
+                    Property 'studyCard' is missing in type '{ id: string; duration: number; createdAt: Date; cardId: string; deleted: boolean; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; state: "New" | "Learning" | "Review" | "Relearning"; grade: "Manual" | "Again" | "Hard" | "Good" | "Easy"; last_elapsed_days: number; review: Date; }' but required in type '{ studyCard: { id: string; createdAt: Date; deleted: boolean; studyDeckId: string; baseCardId: string; due: Date; stability: number; difficulty: number; elapsed_days: number; scheduled_days: number; reps: number; lapses: number; state: "New" | "Learning" | "Review" | "Relearning"; last_review: Date | null; suspended: Date; } & { studyDeck: { id: string; userId: string; deleted: boolean; deckId: string; newCardsLimit: number; timer: number; }; }; }'. 
+	
+	const { currentStreak, longestStreak } = calculateStreaks(studyDecks);
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.server.ts:73:50
+Error: Argument of type 'ZodObject<{ studyCardId: ZodString; direction: ZodString; }, "strip", ZodTypeAny, { studyCardId: string; direction: string; }, { studyCardId: string; direction: string; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ studyCardId: string; direction: string; }, { studyCardId: string; direction: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ studyCardId: string; direction: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ studyCardId: string; direction: string; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ studyCardId: string; direction: string; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ studyCardId: string; direction: string; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+
+	const goodForm = await superValidate(event, zod(gradeCardSchema));
+	const againForm = await superValidate(event, zod(gradeCardSchema));
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.server.ts:74:51
+Error: Argument of type 'ZodObject<{ studyCardId: ZodString; direction: ZodString; }, "strip", ZodTypeAny, { studyCardId: string; direction: string; }, { studyCardId: string; direction: string; }>' is not assignable to parameter of type 'ZodObjectType'. 
+	const goodForm = await superValidate(event, zod(gradeCardSchema));
+	const againForm = await superValidate(event, zod(gradeCardSchema));
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.server.ts:84:54
+Error: Argument of type 'ZodObject<{ timer: ZodNumber; limit: ZodNumber; }, "strip", ZodTypeAny, { timer: number; limit: number; }, { timer: number; limit: number; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ timer: number; limit: number; }, { timer: number; limit: number; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ timer: number; limit: number; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ timer: number; limit: number; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ timer: number; limit: number; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ timer: number; limit: number; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+
+	const settingsForm = await superValidate(event, zod(studyDeckSettingsSchema));
+	settingsForm.data.limit = studyDeck.newCardsLimit;
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.server.ts:93:51
+Error: Argument of type 'ZodObject<{ studyCardId: ZodString; direction: ZodString; }, "strip", ZodTypeAny, { studyCardId: string; direction: string; }, { studyCardId: string; direction: string; }>' is not assignable to parameter of type 'ZodObjectType'. 
+	good: async (event) => {
+		const goodForm = await superValidate(event, zod(gradeCardSchema));
+		if (!goodForm.valid) {
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.server.ts:98:36
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+		}
+		const res = await gradeStudyCard(goodForm.data.studyCardId, 'Good');
+		if (res) {
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.server.ts:108:52
+Error: Argument of type 'ZodObject<{ studyCardId: ZodString; direction: ZodString; }, "strip", ZodTypeAny, { studyCardId: string; direction: string; }, { studyCardId: string; direction: string; }>' is not assignable to parameter of type 'ZodObjectType'. 
+	again: async (event) => {
+		const againForm = await superValidate(event, zod(gradeCardSchema));
+		if (!againForm.valid) {
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.server.ts:113:36
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+		}
+		const res = await gradeStudyCard(againForm.data.studyCardId, 'Again');
+		if (res) {
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.server.ts:124:47
+Error: Argument of type 'ZodObject<{ timer: ZodNumber; limit: ZodNumber; }, "strip", ZodTypeAny, { timer: number; limit: number; }, { timer: number; limit: number; }>' is not assignable to parameter of type 'ZodObjectType'. 
+		const studyDeckId = event.params.id;
+		const form = await superValidate(event, zod(studyDeckSettingsSchema));
+		if (!form.valid) {
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.server.ts:129:34
+Error: Argument of type 'unknown' is not assignable to parameter of type 'number'. 
+		}
+		await setNewLimit(studyDeckId, form.data.limit);
+		await setTimer(studyDeckId, form.data.timer);
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.server.ts:130:31
+Error: Argument of type 'unknown' is not assignable to parameter of type 'number'. 
+		await setNewLimit(studyDeckId, form.data.limit);
+		await setTimer(studyDeckId, form.data.timer);
+		setFlash({ type: 'success', message: '╨Э╨╛╨▓╤Л╨╣ ╨╗╨╕╨╝╨╕╤В ╤Г╤Б╨┐╨╡╤И╨╜╨╛ ╤Г╤Б╤В╨░╨╜╨╛╨▓╨╗╨╡╨╜' }, event);
+
+d:\Documents\lingo\src\routes\auth\password\reset\+page.server.ts:9:46
+Error: Argument of type 'ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "email">, "strip", ZodTypeAny, { email: string; }, { email: string; }>' is not assignable to parameter of type 'ZodObjectType'. 
+export const load = async (event) => {
+	const form = await superValidate(event, zod(resetPasswordSchema));
+	return {
+
+d:\Documents\lingo\src\routes\auth\password\reset\+page.server.ts:17:47
+Error: Argument of type 'ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "email">, "strip", ZodTypeAny, { email: string; }, { email: string; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ email: string; }, { email: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ email: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ email: string; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ email: string; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ email: string; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+	default: async (event) => {
+		const form = await superValidate(event, zod(resetPasswordSchema));
+
+d:\Documents\lingo\src\routes\auth\password\reset\+page.server.ts:26:38
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+		try {
+			const user = await getUserByEmail(form.data.email);
+			if (!user) {
+
+d:\Documents\lingo\src\routes\auth\password\reset\+page.server.ts:33:33
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+			await updateUser(user.id, { token: token });
+			await sendPasswordResetEmail(form.data.email, token);
+		} catch (e) {
+
+d:\Documents\lingo\src\routes\auth\password\update-[token]\+page.server.ts:8:46
+Error: Argument of type 'ZodEffects<ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "password" | "confirmPassword">, "strip", ZodTypeAny, { password: string; confirmPassword: string; }, { password: string; confirmPassword: string; }>, { password: string; confirmPassword: string; }, { password: string; confirmPassword: string; }>' is not assignable to parameter of type 'ZodObjectType'. 
+export const load = async (event) => {
+	const form = await superValidate(event, zod(userUpdatePasswordSchema));
+	return {
+
+d:\Documents\lingo\src\routes\auth\password\update-[token]\+page.server.ts:16:47
+Error: Argument of type 'ZodEffects<ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "password" | "confirmPassword">, "strip", ZodTypeAny, { password: string; confirmPassword: string; }, { password: string; confirmPassword: string; }>, { password: string; confirmPassword: string; }, { password: string; confirmPassword: string; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ password: string; confirmPassword: string; }, { password: string; confirmPassword: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ password: string; confirmPassword: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ password: string; confirmPassword: string; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ password: string; confirmPassword: string; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ password: string; confirmPassword: string; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+	default: async (event) => {
+		const form = await superValidate(event, zod(userUpdatePasswordSchema));
+
+d:\Documents\lingo\src\routes\auth\password\update-[token]\+page.server.ts:33:48
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+			if (user) {
+				const password = await new Argon2id().hash(form.data.password);
+				// need to update with new token because token is also used for verification
+
+d:\Documents\lingo\src\routes\auth\sign-in\+page.server.ts:14:46
+Error: Argument of type 'ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "email" | "password">, "strip", ZodTypeAny, { email: string; password: string; }, { email: string; password: string; }>' is not assignable to parameter of type 'ZodObjectType'. 
+	}
+	const form = await superValidate(event, zod(signInSchema));
+	return {
+
+d:\Documents\lingo\src\routes\auth\sign-in\+page.server.ts:22:47
+Error: Argument of type 'ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "email" | "password">, "strip", ZodTypeAny, { email: string; password: string; }, { email: string; password: string; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ email: string; password: string; }, { email: string; password: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ email: string; password: string; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ email: string; password: string; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ email: string; password: string; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ email: string; password: string; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+	default: async (event) => {
+		const form = await superValidate(event, zod(signInSchema));
+		//console.log(form);
+
+d:\Documents\lingo\src\routes\auth\sign-in\+page.server.ts:33:18
+Error: 'form.data.email' is of type 'unknown'. 
+		try {
+			const email = form.data.email.toLowerCase();
+			const existingUser = await getUserByEmail(email);
+
+d:\Documents\lingo\src\routes\auth\sign-in\+page.server.ts:43:6
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+					existingUser.password,
+					form.data.password
+				);
+
+d:\Documents\lingo\src\routes\auth\sign-up\+page.server.ts:15:46
+Error: Argument of type 'ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "email" | "firstName" | "lastName" | "password" | "terms">, "strip", ZodTypeAny, { email: string; firstName: string; lastName: string; password: string; terms: boolean; }, { email: string; firstName: string; lastName: string; password: string; terms: boolean; }>' is not assignable to parameter of type 'ZodObjectType'. 
+	}
+	const form = await superValidate(event, zod(signUpSchema));
+	return {
+
+d:\Documents\lingo\src\routes\auth\sign-up\+page.server.ts:23:47
+Error: Argument of type 'ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "email" | "firstName" | "lastName" | "password" | "terms">, "strip", ZodTypeAny, { email: string; firstName: string; lastName: string; password: string; terms: boolean; }, { email: string; firstName: string; lastName: string; password: string; terms: boolean; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ email: string; firstName: string; lastName: string; password: string; terms: boolean; }, { email: string; firstName: string; lastName: string; password: string; terms: boolean; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ email: string; firstName: string; lastName: string; password: string; terms: boolean; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ email: string; firstName: string; lastName: string; password: string; terms: boolean; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ email: string; firstName: string; lastName: string; password: string; terms: boolean; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ email: string; firstName: string; lastName: string; password: string; terms: boolean; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+	default: async (event) => {
+		const form = await superValidate(event, zod(signUpSchema));
+		//console.log(form);
+
+d:\Documents\lingo\src\routes\auth\sign-up\+page.server.ts:33:47
+Error: Argument of type 'unknown' is not assignable to parameter of type 'string'. 
+		try {
+			const password = await new Argon2id().hash(form.data.password);
+			const token = crypto.randomUUID();
+
+d:\Documents\lingo\src\routes\auth\sign-up\+page.server.ts:38:12
+Error: 'form.data.email' is of type 'unknown'. 
+				id: id,
+				email: form.data.email.toLowerCase(),
+				firstName: form.data.firstName,
+
+d:\Documents\lingo\src\routes\auth\sign-up\+page.server.ts:49:37
+Error: Argument of type '{ id: `${string}-${string}-${string}-${string}-${string}`; email: any; firstName: unknown; lastName: unknown; password: string; role: string; verified: boolean; receiveEmail: boolean; token: `${string}-${string}-${string}-${string}-${string}`; createdAt: Date; updatedAt: Date; }' is not assignable to parameter of type '{ id: string; createdAt: Date; email: string; firstName: string; lastName: string; updatedAt: Date; provider?: string | undefined; providerId?: string | undefined; role?: string | undefined; verified?: boolean | undefined; receiveEmail?: boolean | undefined; password?: string | null | undefined; token?: string | null | undefined; initialLevel?: number | undefined; tutorialCompleted?: boolean | undefined; }'.
+  Types of property 'firstName' are incompatible.
+    Type 'unknown' is not assignable to type 'string'. 
+			};
+			const newUser = await createUser(user);
+			if (!newUser) {
+
+d:\Documents\lingo\src\routes\tutorial\+page.server.ts:9:49
+Error: Type instantiation is excessively deep and possibly infinite. 
+export const load = (async (event) => {
+    const skipForm = await superValidate(event, zod(skipSchema));
+    return { skipForm };
+
+d:\Documents\lingo\src\routes\tutorial\test\+page.server.ts:22:60
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "deckId" | "addToStudy">, "strip", ZodTypeAny, { addToStudy: boolean; deckId?: string | undefined; }, { deckId?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+		publicDecks.map(async (deck) => {
+            const addForm = await superValidate(event, zod(startStudySchema), {
+                id: deck.id
+
+d:\Documents\lingo\src\routes\tutorial\test\+page.server.ts:32:49
+Error: Argument of type 'ZodObject<{ rating: ZodNumber; }, "strip", ZodTypeAny, { rating: number; }, { rating: number; }>' is not assignable to parameter of type 'ZodObjectType'.
+  The types returned by 'safeParse(...)' are incompatible between these types.
+    Type 'SafeParseReturnType<{ rating: number; }, { rating: number; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+      Type 'SafeParseError<{ rating: number; }>' is not assignable to type 'SafeParseReturnType<Record<string, unknown> | undefined, Record<string, unknown>>'.
+        Type 'SafeParseError<{ rating: number; }>' is not assignable to type 'SafeParseError<Record<string, unknown> | undefined>'.
+          The types returned by 'error.format()' are incompatible between these types.
+            Type 'ZodFormattedError<{ rating: number; }, string>' is not assignable to type 'ZodFormattedError<Record<string, unknown> | undefined, string>'.
+              Type 'ZodFormattedError<{ rating: number; }, string>' is not assignable to type '{ [x: string]: ZodFormattedError<unknown, string> | undefined; }'.
+                Property '_errors' is incompatible with index signature.
+                  Type 'string[]' is not assignable to type 'ZodFormattedError<unknown, string>'. 
+    
+    const form = await superValidate(event, zod(finishTutorialSchema));
+
+d:\Documents\lingo\src\routes\tutorial\test\+page.server.ts:40:57
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "deckId" | "addToStudy">, "strip", ZodTypeAny, { addToStudy: boolean; deckId?: string | undefined; }, { deckId?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. 
+        console.log('adding')
+		const startStudyForm = await superValidate(event, zod(startStudySchema));
+		if (!startStudyForm.valid) {
+
+d:\Documents\lingo\src\routes\tutorial\test\+page.server.ts:65:53
+Error: Argument of type 'ZodObject<{ rating: ZodNumber; }, "strip", ZodTypeAny, { rating: number; }, { rating: number; }>' is not assignable to parameter of type 'ZodObjectType'. 
+    finishTutorial: async (event) => {
+        const form = await superValidate(event, zod(finishTutorialSchema));
+        try{
+
+d:\Documents\lingo\src\routes\tutorial\test\+page.server.ts:71:57
+Error: Argument of type 'unknown' is not assignable to parameter of type 'number'. 
+            }
+            const result = await finishTutorial(userId, form.data.rating);
+            if (result) {
+
+d:\Documents\lingo\src\lib\server\log.ts:1:10
+Error: Module '"$env/static/private"' has no exported member 'AXIOM_DATASET'. 
+import { AXIOM_DATASET, AXIOM_ORG_ID, AXIOM_TOKEN } from '$env/static/private';
+import getAllUrlParams from '$lib/_helpers/getAllUrlParams';
+
+d:\Documents\lingo\src\lib\server\log.ts:1:25
+Error: Module '"$env/static/private"' has no exported member 'AXIOM_ORG_ID'. 
+import { AXIOM_DATASET, AXIOM_ORG_ID, AXIOM_TOKEN } from '$env/static/private';
+import getAllUrlParams from '$lib/_helpers/getAllUrlParams';
+
+d:\Documents\lingo\src\lib\server\log.ts:1:39
+Error: Module '"$env/static/private"' has no exported member 'AXIOM_TOKEN'. 
+import { AXIOM_DATASET, AXIOM_ORG_ID, AXIOM_TOKEN } from '$env/static/private';
+import getAllUrlParams from '$lib/_helpers/getAllUrlParams';
+
+d:\Documents\lingo\src\lib\components\video\components\ChapterTitle.svelte:1:22
+Error: Object literal may only specify known properties, and '"class"' does not exist in type 'MediaChapterTitleAttributes'. (js)
+<media-chapter-title class="vds-chapter-title"></media-chapter-title>
+
+d:\Documents\lingo\src\lib\components\video\components\VideoCaptions.svelte:2:6
+Error: Type 'Element | undefined' is not assignable to type 'Element'.
+  Type 'undefined' is not assignable to type 'Element'. (ts)
+<script lang="ts">
+	let test: Element = $state();
+	import { content } from '../subFix';
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\SearchResult.svelte:13:23
+Warn: This reference only captures the initial value of `rawWord`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { rawWord, detailed = false }: Props = $props();
+	const word = process(rawWord);
+</script>
+
+d:\Documents\lingo\src\routes\(protected)\video\VideoItem.svelte:28:7
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+			variant="destructive"
+			on:click={() => removeVideoFromHistory(video.url)}>
+			<Trash size={20} />
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:213:3
+Warn: Unused CSS selector "&[data-view-type='audio']"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+		&[data-view-type='audio'] {
+			--media-tooltip-y-offset: 44px;
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:223:3
+Warn: Unused CSS selector "&[data-view-type='video']"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+		&[data-view-type='video'] {
+			--media-tooltip-y-offset: 30px;
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:233:3
+Warn: Unused CSS selector "media-poster"
+https://svelte.dev/e/css_unused_selector (svelte)
+		& :global(video),
+		media-poster {
+			border-radius: var(--media-border-radius);
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:238:2
+Warn: Unused CSS selector ".src-buttons"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.src-buttons {
+		display: flex;
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:43:6
+Error: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'. (ts)
+	const segmenter = new TinySegmenter();
+	let offset: number = $state();
+	let showPopup = $state(false);
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:79:6
+Error: Type 'MediaPlayerElement | undefined' is not assignable to type 'MediaPlayerElement'.
+  Type 'undefined' is not assignable to type 'MaverickElement<HTMLElement, MediaPlayer, MediaPlayerEvents>'.
+    Type 'undefined' is not assignable to type 'Omit<HTMLElement, "addEventListener" | "removeEventListener">'. (ts)
+
+	let player: MediaPlayerElement = $state(),
+		src = $state(''),
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:147:3
+Error: Type 'string[]' is not assignable to type 'never[]'.
+  Type 'string' is not assignable to type 'never'. (ts)
+	run(() => {
+		words = segmenter.segment($content);
+	});
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:161:5
+Error: Object literal may only specify known properties, and '"onprovider-change"' does not exist in type 'MediaPlayerAttributes'. (ts)
+				playsInline
+				onprovider-change={onProviderChange}
+				oncan-play={onCanPlay}
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:189:7
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+			{results}
+			on:click={closePopup}
+			isVisible={showPopup}
+
+d:\Documents\lingo\src\lib\components\video\Player.svelte:195:15
+Error: Type '{ children: () => any; class: string; }' is not assignable to type 'AccordionRootProps | undefined'.
+  Type '{ children: () => any; class: string; }' is not assignable to type 'Omit<AccordionRootMultiplePropsWithoutHTML, "child" | "children"> & { child?: Snippet<[{ props: Record<string, unknown>; }]> | undefined; children?: Snippet<[]> | undefined; style?: any; ref?: HTMLElement | null | undefined; } & Without<BitsPrimitiveDivAttributes, AccordionRootPropsWithoutHTML>'.
+    Property 'type' is missing in type '{ children: () => any; class: string; }' but required in type 'Omit<AccordionRootMultiplePropsWithoutHTML, "child" | "children">'. (ts)
+
+<Accordion.Root class="w-full">
+	<Accordion.Item value="item-1">
+
+d:\Documents\lingo\src\lib\components\video\main.ts:3:1
+Error: Expected 2 arguments, but got 1. 
+
+new Player({
+	target: document.getElementById('player')!
+});
+
+d:\Documents\lingo\src\lib\components\video\main.ts:3:1
+Error: 'new' expression, whose target lacks a construct signature, implicitly has an 'any' type. 
+
+new Player({
+	target: document.getElementById('player')!
+});
+
+d:\Documents\lingo\src\lib\components\forms\ActionButton.svelte:35:50
+Warn: This reference only captures the initial value of `form`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const { enhance, form: formData, submitting } = form;
+	//╨Ъ╨╛╤Б╤В╤Л╨╗╤М╨╜╨░╤П ╨▓╨╡╤Й╤М ╨┐╨╛╨╗╤Г╤З╨╕╨╗╨░╤Б╤М, ╨╜╤Г╨╢╨╜╨░ ╨╗╨╕ ╤Б╤Г╨┐╨╡╤А╤Д╨╛╤А╨╝╨░ ╨┤╨╗╤П ╤В╨░╨║╨╕╤Е ╨║╨╜╨╛╨┐╨╛╨║?, ╨╜╤Г ╨┐╨╛╨║╨░ ╨┐╤Г╤Б╨║╨░╨╣ ╨▒╤Г╨┤╨╡╤В
+
+d:\Documents\lingo\src\lib\components\forms\ActionButton.svelte:43:26
+Error: Property 'attrs' does not exist on type '{ props: { name: string; id: string; "data-fs-error": string | undefined; "aria-describedby": string | undefined; "aria-invalid": "true" | undefined; "aria-required": "true" | undefined; "data-fs-control": string; }; }'. (ts)
+			<Form.Control >
+				{#snippet children({ attrs })}
+								<input name={attrs.name} value={value.value || $formData[attrs.name]} hidden />
+
+d:\Documents\lingo\src\lib\components\forms\ActionButton.svelte:52:6
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+		class="w-full"
+		on:click={(e) => e.stopPropagation()}
+		disabled={(condition || $submitting) && !hideLoading}>
+
+d:\Documents\lingo\src\lib\components\forms\ActionButton.svelte:52:22
+Error: Property 'stopPropagation' does not exist on type 'never'. (ts)
+		class="w-full"
+		on:click={(e) => e.stopPropagation()}
+		disabled={(condition || $submitting) && !hideLoading}>
+
+d:\Documents\lingo\src\lib\components\forms\SimpleCheckbox.svelte:14:29
+Warn: This reference only captures the initial value of `form`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const { form: formData } = form;
+</script>
+
+d:\Documents\lingo\src\lib\components\forms\SimpleCheckbox.svelte:19:24
+Error: Property 'attrs' does not exist on type '{ props: { name: string; id: string; "data-fs-error": string | undefined; "aria-describedby": string | undefined; "aria-invalid": "true" | undefined; "aria-required": "true" | undefined; "data-fs-control": string; }; }'. (ts)
+	<Form.Control >
+		{#snippet children({ attrs })}
+				<Checkbox {...attrs} bind:checked={$formData[name]} />
+
+d:\Documents\lingo\src\lib\components\forms\SimpleInput.svelte:28:29
+Warn: This reference only captures the initial value of `form`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const { form: formData } = form;
+</script>
+
+d:\Documents\lingo\src\lib\components\forms\SimpleInput.svelte:33:24
+Error: Property 'attrs' does not exist on type '{ props: { name: string; id: string; "data-fs-error": string | undefined; "aria-describedby": string | undefined; "aria-invalid": "true" | undefined; "aria-required": "true" | undefined; "data-fs-control": string; }; }'. (ts)
+	<Form.Control >
+		{#snippet children({ attrs })}
+				{#if label}<Form.Label>{label}</Form.Label>{/if}
+
+d:\Documents\lingo\src\lib\components\forms\SimpleForm.svelte:31:30
+Warn: This reference only captures the initial value of `form`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const { enhance, errors } = form;
+</script>
+
+d:\Documents\lingo\src\lib\components\forms\SimpleSubmit.svelte:13:58
+Warn: This reference only captures the initial value of `form`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const { form: formData, enhance, submitting, errors } = form;
+</script>
+
+d:\Documents\lingo\src\lib\components\items\BlockItem.svelte:44:16
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+			{#if !added}
+				<Button on:click class="m-2">+</Button>
+			{:else}
+
+d:\Documents\lingo\src\lib\components\forms\card\CreateCardForm.svelte:37:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let preTags = '';
+	const form = superForm(data, {
+		validators: zodClient(createCardSchema),
+
+d:\Documents\lingo\src\lib\components\forms\card\CreateCardForm.svelte:38:25
+Error: Argument of type 'ZodEffects<ZodObject<Pick<{ topicName: ZodString; blocks: ZodArray<ZodObject<{ id: ZodOptional<ZodString>; type: ZodString; content: ZodString; isNew: ZodBoolean; }, "strip", ZodTypeAny, { type: string; content: string; isNew: boolean; id?: string | undefined; }, { type: string; content: string; isNew: boolean; id?: string | undefined; }>, "many">; tags: ZodOptional<ZodString>; addToStudy: ZodBoolean; studyDeckId: ZodOptional<ZodString>; level: ZodOptional<ZodNumber>; }, "tags" | "level" | "studyDeckId" | "topicName" | "blocks" | "addToStudy">, "strip", ZodTypeAny, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }, { topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const form = superForm(data, {
+		validators: zodClient(createCardSchema),
+		dataType: 'json'
+
+d:\Documents\lingo\src\lib\components\forms\card\CreateCardForm.svelte:109:26
+Error: Property 'attrs' does not exist on type '{ props: { name: string; id: string; "data-fs-error": string | undefined; "aria-describedby": string | undefined; "aria-invalid": "true" | undefined; "aria-required": "true" | undefined; "data-fs-control": string; }; }'. (ts)
+			<Form.Control>
+				{#snippet children({ attrs })}
+					<Form.Label>╨в╨╡╨│╨╕ (╤З╨╡╤А╨╡╨╖ ╨╖╨░╨┐╤П╤В╤Г╤О)</Form.Label>
+
+d:\Documents\lingo\src\lib\components\forms\card\CreateCardForm.svelte:120:26
+Error: Property 'attrs' does not exist on type '{ props: { name: string; id: string; "data-fs-error": string | undefined; "aria-describedby": string | undefined; "aria-invalid": "true" | undefined; "aria-required": "true" | undefined; "data-fs-control": string; }; }'. (ts)
+			<Form.Control>
+				{#snippet children({ attrs })}
+					<Form.Label>╨б╨╗╨╛╨╢╨╜╨╛╤Б╤В╤М ╨║╨░╤А╤В╤Л (╨╛╨┐╤А╨╡╨┤╨╡╨╗╤П╨╡╤В╤Б╤П ╨░╨▓╤В╨╛╨╝╨░╤В╨╕╤З╨╡╤Б╨║╨╕)</Form.Label>
+
+d:\Documents\lingo\src\lib\components\forms\card\CreateCardForm.svelte:130:28
+Error: Property 'attrs' does not exist on type '{ props: { name: string; id: string; "data-fs-error": string | undefined; "aria-describedby": string | undefined; "aria-invalid": "true" | undefined; "aria-required": "true" | undefined; "data-fs-control": string; }; }'. (ts)
+					<Form.Control>
+						{#snippet children({ attrs })}
+							<Form.Label>╨С╨╗╨╛╨║ {i + 1}</Form.Label>
+
+d:\Documents\lingo\src\lib\components\forms\card\CreateCardForm.svelte:139:28
+Error: Property 'attrs' does not exist on type '{ props: { name: string; id: string; "data-fs-error": string | undefined; "aria-describedby": string | undefined; "aria-invalid": "true" | undefined; "aria-required": "true" | undefined; "data-fs-control": string; }; }'. (ts)
+					<Form.Control>
+						{#snippet children({ attrs })}
+							<Form.Label>╨в╨╕╨┐ ╨▒╨╗╨╛╨║╨░</Form.Label>
+
+d:\Documents\lingo\src\lib\components\forms\card\CreateCardForm.svelte:142:14
+Error: Type 'string' is not assignable to type 'string[]'. (ts)
+							<Select.Root
+								bind:value={block.type}
+								onValueChange={(v) => {
+
+d:\Documents\lingo\src\lib\components\forms\card\CreateCardForm.svelte:143:25
+Error: Parameter 'v' implicitly has an 'any' type. (ts)
+								bind:value={block.type}
+								onValueChange={(v) => {
+									if (v && block.isNew) block.type = v;
+
+d:\Documents\lingo\src\lib\components\forms\card\CreateCardForm.svelte:184:10
+Error: Object literal may only specify known properties, and '"onclick"' does not exist in type 'Props'. (ts)
+									blockInfo={block}
+									onclick={() => addExisting(block)}
+									add
+
+d:\Documents\lingo\src\lib\components\forms\card\CreateCardForm.svelte:199:28
+Error: Property 'attrs' does not exist on type '{ props: { name: string; id: string; "data-fs-error": string | undefined; "aria-describedby": string | undefined; "aria-invalid": "true" | undefined; "aria-required": "true" | undefined; "data-fs-control": string; }; }'. (ts)
+					<Form.Control>
+						{#snippet children({ attrs })}
+							<Form.Label>╨Т╤Л╨▒╨╡╤А╨╕╤В╨╡ ╨║╨╛╨╗╨╛╨┤╤Г</Form.Label>
+
+d:\Documents\lingo\src\lib\components\forms\card\CreateCardForm.svelte:202:14
+Error: Type 'string' is not assignable to type 'string[]'. (ts)
+							<Select.Root
+								bind:value={chosenDeckValue}
+								onValueChange={(v) => {
+
+d:\Documents\lingo\src\lib\components\forms\card\CreateCardForm.svelte:203:25
+Error: Parameter 'v' implicitly has an 'any' type. (ts)
+								bind:value={chosenDeckValue}
+								onValueChange={(v) => {
+									$formData.studyDeckId = v;
+
+d:\Documents\lingo\src\lib\components\items\CardItem.svelte:59:17
+Error: Type '{ content: string; id?: string | undefined; type?: string | undefined; createdAt?: Date | undefined; topicId?: string | null | undefined; authorId?: string | null | undefined; }' is not assignable to type '{ id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; } & { liked: boolean; likes: number; dislikes: number; rating: number; }'.
+  Type '{ content: string; id?: string | undefined; type?: string | undefined; createdAt?: Date | undefined; topicId?: string | null | undefined; authorId?: string | null | undefined; }' is not assignable to type '{ id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }'.
+    Types of property 'id' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'. (ts)
+				{#each cardInfo.cardBlocks || [] as cb}
+					<BlockItem blockInfo={cb.block} />
+				{/each}
+
+d:\Documents\lingo\src\lib\components\items\CommentItem.svelte:34:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const likeForm = superForm(data.likeForm, {
+		validators: zodClient(blockLikeSchema)
+
+d:\Documents\lingo\src\lib\components\items\CommentItem.svelte:37:32
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	});
+	const dislikeForm = superForm(data.dislikeForm, {
+		validators: zodClient(blockLikeSchema)
+
+d:\Documents\lingo\src\lib\components\items\CommentItem.svelte:35:25
+Error: Argument of type 'ZodObject<{ blockId: ZodString; userId: ZodOptional<ZodString>; liked: ZodBoolean; }, "strip", ZodTypeAny, { blockId: string; liked: boolean; userId?: string | undefined; }, { blockId: string; liked: boolean; userId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const likeForm = superForm(data.likeForm, {
+		validators: zodClient(blockLikeSchema)
+	});
+
+d:\Documents\lingo\src\lib\components\items\CommentItem.svelte:38:25
+Error: Argument of type 'ZodObject<{ blockId: ZodString; userId: ZodOptional<ZodString>; liked: ZodBoolean; }, "strip", ZodTypeAny, { blockId: string; liked: boolean; userId?: string | undefined; }, { blockId: string; liked: boolean; userId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const dislikeForm = superForm(data.dislikeForm, {
+		validators: zodClient(blockLikeSchema)
+	});
+
+d:\Documents\lingo\src\lib\components\items\DeckItem.svelte:22:29
+Warn: This reference only captures the initial value of `deckInfo`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { deckInfo, noRedirect = false }: Props = $props();
+	const deck_url = `/decks/${deckInfo.id}`;
+
+d:\Documents\lingo\src\lib\components\items\DeckItem.svelte:24:25
+Warn: This reference only captures the initial value of `deckInfo`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const form = superForm(deckInfo.addForm, {
+		validators: zodClient(startStudySchema)
+
+d:\Documents\lingo\src\lib\components\items\DeckItem.svelte:25:25
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "deckId" | "addToStudy">, "strip", ZodTypeAny, { addToStudy: boolean; deckId?: string | undefined; }, { deckId?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const form = superForm(deckInfo.addForm, {
+		validators: zodClient(startStudySchema)
+	});
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:30:19
+Warn: This reference only captures the initial value of `user`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	};
+	const main_url = user ? '/dashboard' : '/';
+	let initials = $state('');
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:74:17
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+				{#if !user}
+					<Button on:click={() => goto('/auth/sign-in')}>╨Т╨╛╨╣╤В╨╕</Button>
+					<DropdownMenu.Root>
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:77:18
+Error: Type '({ builder }: { builder: any; }) => any' is not assignable to type 'Snippet<[]>'.
+  Target signature provides too few arguments. Expected 1 or more, but got 0. (ts)
+						<DropdownMenu.Trigger asChild >
+							{#snippet children({ builder })}
+														<Button builders={[builder]} variant="ghost" size="icon">
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:77:29
+Error: Binding element 'builder' implicitly has an 'any' type. (ts)
+						<DropdownMenu.Trigger asChild >
+							{#snippet children({ builder })}
+														<Button builders={[builder]} variant="ghost" size="icon">
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:78:23
+Error: Object literal may only specify known properties, and '"builders"' does not exist in type 'HTMLButtonAttributes & { ref?: HTMLElement | null | undefined; } & HTMLAnchorAttributes & { variant?: "link" | "default" | "outline" | "secondary" | "ghost" | "destructive" | undefined; size?: "default" | "xs" | "sm" | "lg" | "icon" | "icon-xs" | "icon-sm" | "icon-lg" | undefined; }'. (ts)
+							{#snippet children({ builder })}
+														<Button builders={[builder]} variant="ghost" size="icon">
+									<Sun
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:88:30
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+						<DropdownMenu.Content align="end">
+							<DropdownMenu.Item on:click={() => setMode('light')}>╨б╨▓╨╡╤В╨╗╨░╤П</DropdownMenu.Item>
+							<DropdownMenu.Item on:click={() => setMode('dark')}>╨в╤С╨╝╨╜╨░╤П</DropdownMenu.Item>
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:89:30
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+							<DropdownMenu.Item on:click={() => setMode('light')}>╨б╨▓╨╡╤В╨╗╨░╤П</DropdownMenu.Item>
+							<DropdownMenu.Item on:click={() => setMode('dark')}>╨в╤С╨╝╨╜╨░╤П</DropdownMenu.Item>
+							<DropdownMenu.Item on:click={() => resetMode()}>╨б╨╕╤Б╤В╨╡╨╝╨╜╨░╤П</DropdownMenu.Item>
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:90:30
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+							<DropdownMenu.Item on:click={() => setMode('dark')}>╨в╤С╨╝╨╜╨░╤П</DropdownMenu.Item>
+							<DropdownMenu.Item on:click={() => resetMode()}>╨б╨╕╤Б╤В╨╡╨╝╨╜╨░╤П</DropdownMenu.Item>
+						</DropdownMenu.Content>
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:96:18
+Error: Type '({ builder }: { builder: any; }) => any' is not assignable to type 'Snippet<[]>'.
+  Target signature provides too few arguments. Expected 1 or more, but got 0. (ts)
+						<DropdownMenu.Trigger asChild >
+							{#snippet children({ builder })}
+														<Button variant="ghost" builders={[builder]} class="relative h-8 w-8 rounded-full">
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:96:29
+Error: Binding element 'builder' implicitly has an 'any' type. (ts)
+						<DropdownMenu.Trigger asChild >
+							{#snippet children({ builder })}
+														<Button variant="ghost" builders={[builder]} class="relative h-8 w-8 rounded-full">
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:97:39
+Error: Object literal may only specify known properties, and '"builders"' does not exist in type 'HTMLButtonAttributes & { ref?: HTMLElement | null | undefined; } & HTMLAnchorAttributes & { variant?: "link" | "default" | "outline" | "secondary" | "ghost" | "destructive" | undefined; size?: "default" | "xs" | "sm" | "lg" | "icon" | "icon-xs" | "icon-sm" | "icon-lg" | undefined; }'. (ts)
+							{#snippet children({ builder })}
+														<Button variant="ghost" builders={[builder]} class="relative h-8 w-8 rounded-full">
+									<Avatar.Root class="h-8 w-8">
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:113:31
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+							<DropdownMenu.Group>
+								<DropdownMenu.Item on:click={() => goto('/profile')}>
+									<UserRound class="mr-2 h-4 w-4" />
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:129:32
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+								<DropdownMenu.SubContent>
+									<DropdownMenu.Item on:click={() => setMode('light')}
+										><Sun class="mr-2 h-4 w-4" />╨б╨▓╨╡╤В╨╗╨░╤П
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:132:32
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+									</DropdownMenu.Item>
+									<DropdownMenu.Item on:click={() => setMode('dark')}
+										><Moon class="mr-2 h-4 w-4" />╨в╤С╨╝╨╜╨░╤П
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:135:32
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+									</DropdownMenu.Item>
+									<DropdownMenu.Item on:click={() => setMode('system')}
+										><SunMoon class="mr-2 h-4 w-4" />╨б╨╕╤Б╤В╨╡╨╝╨╜╨░╤П
+
+d:\Documents\lingo\src\lib\components\navigation\navigation.svelte:141:30
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+							<DropdownMenu.Separator />
+							<DropdownMenu.Item on:click={signOut}>
+								<LogOut class="mr-2 h-4 w-4" />
+
+d:\Documents\lingo\src\lib\components\srs\CardCounterMini.svelte:16:16
+Warn: This reference only captures the initial value of `studyCards`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const count = studyCards.reduce((count, card) => {
+		count[card.state]++;
+
+d:\Documents\lingo\src\lib\components\srs\SrsCard.svelte:34:29
+Warn: This reference only captures the initial value of `timerLength`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let timer: NodeJS.Timeout;
+	let remainingTime = $state(timerLength);
+	const revealAfterTimeout = () => {
+
+d:\Documents\lingo\src\lib\components\srs\SrsCard.svelte:45:6
+Warn: This reference only captures the initial value of `timerLength`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	};
+	if (timerLength > 0) {
+		revealAfterTimeout();
+
+d:\Documents\lingo\src\lib\components\srs\SrsCard.svelte:69:17
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+				<Card.Footer class="flex justify-center gap-3 p-0 pb-6">
+					<Button on:click={reveal} class="self-bottom">╨Ю╤В╨║╤А╤Л╤В╤М</Button>
+				</Card.Footer>
+
+d:\Documents\lingo\src\routes\(protected)\books\BookItem.svelte:19:7
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+			variant="destructive"
+			on:click={() => {
+				if (book.id) deleteBook(book.id);
+
+d:\Documents\lingo\src\routes\(protected)\books\+page.svelte:48:26
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+<section class="container grid items-center gap-6">
+	<Button class="w-52" on:click={() => addBook()}>╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╨║╨╜╨╕╨│╤Г</Button>
+	{#if bookList}
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\TableOfContents.svelte:24:32
+Warn: This reference only captures the initial value of `toc`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const chapters = getLeafNodes(toc);
+</script>
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\TableOfContents.svelte:35:9
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+				<DropdownMenu.Item
+					on:click={() => jumpTo(chapter.href)}
+					class="cursor-pointer {isCurrent(chapter) ? 'bg-accent' : ''}">
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\Config.svelte:39:22
+Error: Type 'string' is not assignable to type 'string[]'. (ts)
+		<div class="flex">
+			<Select.Root bind:value={settings.fontFamily}>
+				<Select.Trigger>
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\Config.svelte:59:9
+Error: Type '{ value: number[]; max: number; min: number; step: number; onchange: () => void; }' is not assignable to type 'WithoutChildrenOrChild<SliderRootProps> | undefined'.
+  Property 'type' is missing in type '{ value: number[]; max: number; min: number; step: number; onchange: () => void; }' but required in type 'Omit<Omit<SliderMultiRootPropsWithoutHTML, "child" | "children"> & { child?: Snippet<[SliderRootSnippetProps & { props: Record<string, unknown>; }]> | undefined; children?: Snippet<[SliderRootSnippetProps]> | undefined; style?: any; ref?: HTMLElement | null | undefined; } & Without<BitsPrimitiveSpanAttributes, SliderRootPropsWithoutHTML>, "child" | "children">'. (ts)
+
+		<Slider bind:value={sliderVal} max={30} min={5} step={1} onchange={onScaleChange} />
+	</Popover.Content>
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:48:19
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	let book: Book = data.book;
+	let meta: Metadata = $state(data.meta);
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:49:30
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let book: Book = data.book;
+	let meta: Metadata = $state(data.meta);
+	type settingsType = {
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:17:6
+Error: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'. (ts)
+	import { fade } from 'svelte/transition';
+	let offset: number = $state();
+	let showPopup = $state(false);
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:67:6
+Error: Type 'HTMLElement | undefined' is not assignable to type 'HTMLElement'.
+  Type 'undefined' is not assignable to type 'HTMLElement'. (ts)
+
+	let container: HTMLElement = $state();
+	let entries: ZipInfo['entries'];
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:254:5
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+<Button
+	on:click={() => incrementSection(-1)}
+	class="fixed bottom-10 left-10 z-10 lg:top-1/2"
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:258:5
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+<Button
+	on:click={() => incrementSection(1)}
+	class="fixed bottom-10 right-10 z-10 lg:top-1/2"
+
+d:\Documents\lingo\src\routes\(protected)\books\[id]\+page.svelte:279:7
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+			{results}
+			on:click={closePopup}
+			isVisible={showPopup}
+
+d:\Documents\lingo\src\routes\(protected)\cards\(create)\create\+page.svelte:14:17
+Error: Type 'SuperValidated<Record<string, unknown>, any, Record<string, unknown>>' is not assignable to type 'SuperValidated<{ topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>'.
+  Types of property 'data' are incompatible.
+    Type 'Record<string, unknown>' is not assignable to type '{ topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }'. (ts)
+
+<CreateCardForm data={data.form} decks={data.decks} blocks={data.blocks} />
+{#if data.relatedCards.length > 0}
+
+d:\Documents\lingo\src\routes\(protected)\cards\[id]\+page.svelte:25:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const form = superForm(data.addToDeckForm, {
+		validators: zodClient(addCardToDeckSchema2)
+
+d:\Documents\lingo\src\routes\(protected)\cards\[id]\+page.svelte:26:25
+Error: Argument of type 'ZodObject<Pick<{ cardId: ZodString; deckId: ZodString; }, "deckId">, "strip", ZodTypeAny, { deckId: string; }, { deckId: string; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const form = superForm(data.addToDeckForm, {
+		validators: zodClient(addCardToDeckSchema2)
+	});
+
+d:\Documents\lingo\src\routes\(protected)\cards\[id]\+page.svelte:63:16
+Error: Type '{ id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }' is not assignable to type '{ id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; } & { liked: boolean; likes: number; dislikes: number; rating: number; }'.
+  Type '{ id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }' is missing the following properties from type '{ liked: boolean; likes: number; dislikes: number; rating: number; }': liked, likes, dislikes, rating (ts)
+			{#each data.card.cardBlocks as cb}
+				<BlockItem blockInfo={cb.block} />
+			{/each}
+
+d:\Documents\lingo\src\routes\(protected)\cards\[id]\+page.svelte:95:32
+Error: Property 'attrs' does not exist on type '{ props: { name: string; id: string; "data-fs-error": string | undefined; "aria-describedby": string | undefined; "aria-invalid": "true" | undefined; "aria-required": "true" | undefined; "data-fs-control": string; }; }'. (ts)
+									<Form.Control>
+										{#snippet children({ attrs })}
+											<Form.Label>╨Т╤Л╨▒╨╡╤А╨╕╤В╨╡ ╨║╨╛╨╗╨╛╨┤╤Г</Form.Label>
+
+d:\Documents\lingo\src\routes\(protected)\cards\[id]\+page.svelte:98:18
+Error: Type 'string' is not assignable to type 'string[]'. (ts)
+											<Select.Root
+												bind:value={chosenDeckValue}
+												onValueChange={(v) => {
+
+d:\Documents\lingo\src\routes\(protected)\cards\[id]\+page.svelte:99:29
+Error: Parameter 'v' implicitly has an 'any' type. (ts)
+												bind:value={chosenDeckValue}
+												onValueChange={(v) => {
+													$formData.deckId = v;
+
+d:\Documents\lingo\src\routes\(protected)\cards\browse\+page.svelte:43:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let levelFilter = $state(false);
+	let sliderVal = $state([0, data.recommendedDifficulty]);
+</script>
+
+d:\Documents\lingo\src\routes\(protected)\cards\browse\+page.svelte:59:34
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+				{#if levelFilter}
+				<Button variant="outline" on:click={() => {sliderVal[1] = data.recommendedDifficulty; sliderVal[0] = 0}}>
+					╨а╨╡╨║╨╛╨╝╨╡╨╜╨┤╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╤Г╤А╨╛╨▓╨╡╨╜╤М: {data.recommendedDifficulty}
+
+d:\Documents\lingo\src\routes\(protected)\cards\browse\+page.svelte:68:12
+Error: Type '{ value: number[]; max: number; step: number; class: string; }' is not assignable to type 'WithoutChildrenOrChild<SliderRootProps> | undefined'.
+  Property 'type' is missing in type '{ value: number[]; max: number; step: number; class: string; }' but required in type 'Omit<Omit<SliderMultiRootPropsWithoutHTML, "child" | "children"> & { child?: Snippet<[SliderRootSnippetProps & { props: Record<string, unknown>; }]> | undefined; children?: Snippet<[SliderRootSnippetProps]> | undefined; style?: any; ref?: HTMLElement | null | undefined; } & Without<BitsPrimitiveSpanAttributes, SliderRootPropsWithoutHTML>, "child" | "children">'. (ts)
+					<span>0</span>
+					<Slider bind:value={sliderVal} max={5} step={1} class="max-w-[70%]" />
+					<span>5</span>
+
+d:\Documents\lingo\src\routes\(protected)\dashboard\Welcome.svelte:28:35
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+						>╨Ф╨╛╨▒╤А╨╛ ╨┐╨╛╨╢╨░╨╗╨╛╨▓╨░╤В╤М, ╨▓ LinGo!</Card.Title>
+					<Button variant="outline" on:click={close}><X /></Button>
+				</div>
+
+d:\Documents\lingo\src\routes\(protected)\dashboard\StudyDeckDelete.svelte:17:35
+Warn: This reference only captures the initial value of `studyDeck`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const study_deck_url = `/study/${studyDeck.id}`;
+	const form = superForm(deleteForm, {
+
+d:\Documents\lingo\src\routes\(protected)\dashboard\StudyDeckDelete.svelte:18:25
+Warn: This reference only captures the initial value of `deleteForm`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	const study_deck_url = `/study/${studyDeck.id}`;
+	const form = superForm(deleteForm, {
+		validators: zodClient(deleteDeckSchema)
+
+d:\Documents\lingo\src\routes\(protected)\dashboard\StudyDeckDelete.svelte:25:13
+Error: Type '({ builder }: { builder: any; }) => any' is not assignable to type 'Snippet<[]>'.
+  Target signature provides too few arguments. Expected 1 or more, but got 0. (ts)
+	<AlertDialog.Trigger asChild >
+		{#snippet children({ builder })}
+				<Button builders={[builder]} variant="destructive">╨г╨┤╨░╨╗╨╕╤В╤М</Button>
+
+d:\Documents\lingo\src\routes\(protected)\dashboard\StudyDeckDelete.svelte:25:24
+Error: Binding element 'builder' implicitly has an 'any' type. (ts)
+	<AlertDialog.Trigger asChild >
+		{#snippet children({ builder })}
+				<Button builders={[builder]} variant="destructive">╨г╨┤╨░╨╗╨╕╤В╤М</Button>
+
+d:\Documents\lingo\src\routes\(protected)\dashboard\StudyDeckDelete.svelte:26:13
+Error: Object literal may only specify known properties, and '"builders"' does not exist in type 'HTMLButtonAttributes & { ref?: HTMLElement | null | undefined; } & HTMLAnchorAttributes & { variant?: "link" | "default" | "outline" | "secondary" | "ghost" | "destructive" | undefined; size?: "default" | "xs" | "sm" | "lg" | "icon" | "icon-xs" | "icon-sm" | "icon-lg" | undefined; }'. (ts)
+		{#snippet children({ builder })}
+				<Button builders={[builder]} variant="destructive">╨г╨┤╨░╨╗╨╕╤В╤М</Button>
+					{/snippet}
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:56:34
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const starStudyForm = superForm(data.startStudyForm, {
+		validators: zodClient(startStudySchema)
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:59:35
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	});
+	const deleteDeckForm = superForm(data.deleteDeckForm, {
+		validators: zodClient(deleteDeckSchema)
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:63:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const likeForm = superForm(data.likeForm, {
+		validators: zodClient(likeSchema)
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:66:32
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	});
+	const dislikeForm = superForm(data.dislikeForm, {
+		validators: zodClient(dislikeSchema)
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:70:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const deck_url = `/decks/${data.deck.id}`;
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:57:25
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "deckId" | "addToStudy">, "strip", ZodTypeAny, { addToStudy: boolean; deckId?: string | undefined; }, { deckId?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const starStudyForm = superForm(data.startStudyForm, {
+		validators: zodClient(startStudySchema)
+	});
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:64:25
+Error: Argument of type 'ZodObject<{ deckId: ZodOptional<ZodString>; userId: ZodOptional<ZodString>; liked: ZodBoolean; }, "strip", ZodTypeAny, { liked: boolean; userId?: string | undefined; deckId?: string | undefined; }, { liked: boolean; userId?: string | undefined; deckId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const likeForm = superForm(data.likeForm, {
+		validators: zodClient(likeSchema)
+	});
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:67:25
+Error: Argument of type 'ZodObject<{ deckId: ZodOptional<ZodString>; userId: ZodOptional<ZodString>; liked: ZodBoolean; }, "strip", ZodTypeAny, { liked: boolean; userId?: string | undefined; deckId?: string | undefined; }, { liked: boolean; userId?: string | undefined; deckId?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const dislikeForm = superForm(data.dislikeForm, {
+		validators: zodClient(dislikeSchema)
+	});
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:102:16
+Error: Type '({ builder }: { builder: any; }) => any' is not assignable to type 'Snippet<[]>'.
+  Target signature provides too few arguments. Expected 1 or more, but got 0. (ts)
+				<AlertDialog.Trigger asChild >
+					{#snippet children({ builder })}
+										<Button builders={[builder]} variant="destructive">╨г╨┤╨░╨╗╨╕╤В╤М</Button>
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:102:27
+Error: Binding element 'builder' implicitly has an 'any' type. (ts)
+				<AlertDialog.Trigger asChild >
+					{#snippet children({ builder })}
+										<Button builders={[builder]} variant="destructive">╨г╨┤╨░╨╗╨╕╤В╤М</Button>
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\+layout.svelte:103:19
+Error: Object literal may only specify known properties, and '"builders"' does not exist in type 'HTMLButtonAttributes & { ref?: HTMLElement | null | undefined; } & HTMLAnchorAttributes & { variant?: "link" | "default" | "outline" | "secondary" | "ghost" | "destructive" | undefined; size?: "default" | "xs" | "sm" | "lg" | "icon" | "icon-xs" | "icon-sm" | "icon-lg" | undefined; }'. (ts)
+					{#snippet children({ builder })}
+										<Button builders={[builder]} variant="destructive">╨г╨┤╨░╨╗╨╕╤В╤М</Button>
+														{/snippet}
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\add-card\AddCard.svelte:30:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { data, cardInfo }: Props = $props();
+	const form = superForm(data.form, {
+		validators: zodClient(addCardToDeckSchema),
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\add-card\AddCard.svelte:31:25
+Error: Argument of type 'ZodObject<Pick<{ cardId: ZodString; deckId: ZodString; }, "cardId">, "strip", ZodTypeAny, { cardId: string; }, { cardId: string; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const form = superForm(data.form, {
+		validators: zodClient(addCardToDeckSchema),
+		resetForm: false
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\add-card\+page.svelte:53:13
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+	<Input placeholder="╤В╨╡╨│╨╕ (╤З╨╡╤А╨╡╨╖ ╨╖╨░╨┐╤П╤В╤Г╤О)" class="max-w-xs" bind:value={tagQuery} />
+	<Button on:click={() => (tagQuery = data.deckTags.join(','))} variant="outline" class="flex">
+		<Tags class="mr-2 w-4" /> ╨Ш╤Б╨║╨░╤В╤М ╨┐╨╛ ╤В╨╡╨│╨░╨╝ ╨║╨╛╨╗╨╛╨┤╤Л
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\add-card\+page.svelte:61:31
+Error: Type '{ user: User | null; url: string; deck: { name: string; id: string; authorId: string; public: boolean; description: string | null; deleted: boolean; studyDecks: { id: string; userId: string; deleted: boolean; deckId: string; newCardsLimit: number; timer: number; }[]; }; cards: { id: string; topicId: string; authorId: string; public: boolean; tags: string[]; level: number; topic: { name: string; id: string; }; cardBlocks: { blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]; }[]; blocks: { liked: boolean; likes: { createdAt: Date; userId: string; blockId: string; liked: boolean; }[]; dislikes: { createdAt: Date; userId: string; blockId: string; liked: boolean; }[]; rating: number; id: string; content: string; type: string; }[]; rating: number; likes: { createdAt: Date; userId: string; liked: boolean; deckId: string; }[]; dislikes: { createdAt: Date; userId: string; liked: boolean; deckId: string; }[]; startStudyForm: SuperValidated<Record<string, unknown>, any, Record<string, unknown>>; deckLevel: number; alredyStudying: boolean; canEdit: boolean; deleteDeckForm: SuperValidated<{}, any, {}>; likeForm: SuperValidated<Record<string, unknown>, any, Record<string, unknown>>; dislikeForm: SuperValidated<Record<string, unknown>, any, Record<string, unknown>>; likeStatus: { createdAt: Date; userId: string; liked: boolean; deckId: string; } | undefined; deckTags: string[]; publicCards: CardExp[] | null; userCreatedCards: CardExp[] | null; form: SuperValidated<Record<string, unknown>, any, Record<string, unknown>>; }' is not assignable to type '{ form: SuperValidated<{ cardId: string; }, any, { cardId: string; }>; }'.
+  The types of 'form.data' are incompatible between these types.
+    Type 'Record<string, unknown>' is not assignable to type '{ cardId: string; }'. (ts)
+			<CardItem cardInfo={card}>
+				<AddCard cardInfo={card} {data} />
+			</CardItem>
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\add-card\+page.svelte:73:31
+Error: Type '{ user: User | null; url: string; deck: { name: string; id: string; authorId: string; public: boolean; description: string | null; deleted: boolean; studyDecks: { id: string; userId: string; deleted: boolean; deckId: string; newCardsLimit: number; timer: number; }[]; }; cards: { id: string; topicId: string; authorId: string; public: boolean; tags: string[]; level: number; topic: { name: string; id: string; }; cardBlocks: { blockId: string; cardId: string; block: { id: string; type: string; content: string; createdAt: Date; topicId: string | null; authorId: string | null; }; }[]; }[]; blocks: { liked: boolean; likes: { createdAt: Date; userId: string; blockId: string; liked: boolean; }[]; dislikes: { createdAt: Date; userId: string; blockId: string; liked: boolean; }[]; rating: number; id: string; content: string; type: string; }[]; rating: number; likes: { createdAt: Date; userId: string; liked: boolean; deckId: string; }[]; dislikes: { createdAt: Date; userId: string; liked: boolean; deckId: string; }[]; startStudyForm: SuperValidated<Record<string, unknown>, any, Record<string, unknown>>; deckLevel: number; alredyStudying: boolean; canEdit: boolean; deleteDeckForm: SuperValidated<{}, any, {}>; likeForm: SuperValidated<Record<string, unknown>, any, Record<string, unknown>>; dislikeForm: SuperValidated<Record<string, unknown>, any, Record<string, unknown>>; likeStatus: { createdAt: Date; userId: string; liked: boolean; deckId: string; } | undefined; deckTags: string[]; publicCards: CardExp[] | null; userCreatedCards: CardExp[] | null; form: SuperValidated<Record<string, unknown>, any, Record<string, unknown>>; }' is not assignable to type '{ form: SuperValidated<{ cardId: string; }, any, { cardId: string; }>; }'. (ts)
+			<CardItem cardInfo={card}>
+				<AddCard cardInfo={card} {data} />
+			</CardItem>
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\create-card\+page.svelte:11:17
+Error: Type 'SuperValidated<Record<string, unknown>, any, Record<string, unknown>>' is not assignable to type 'SuperValidated<{ topicName: string; blocks: { type: string; content: string; isNew: boolean; id?: string | undefined; }[]; addToStudy: boolean; tags?: string | undefined; level?: number | undefined; studyDeckId?: string | undefined; }>'. (ts)
+
+<CreateCardForm data={data.form} action="?/addCard" blocks={data.blocks} />
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\edit\+page@.svelte:18:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	const deck_url = `/decks/${$page.params.id}`;
+	const form = superForm(data.form, {
+		validators: zodClient(editDeckSchema),
+
+d:\Documents\lingo\src\routes\(protected)\decks\[id]\edit\+page@.svelte:19:25
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "name" | "public" | "description">, "strip", ZodTypeAny, { name: string; public: boolean; description?: string | undefined; }, { name: string; public?: boolean | undefined; description?: string | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const form = superForm(data.form, {
+		validators: zodClient(editDeckSchema),
+
+d:\Documents\lingo\src\routes\(protected)\decks\browse\+page.svelte:45:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let levelFilter = $state(false);
+	let sliderVal = $state([0, data.recommendedDifficulty]);
+</script>
+
+d:\Documents\lingo\src\routes\(protected)\decks\browse\+page.svelte:61:35
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+				{#if levelFilter}
+					<Button variant="outline" on:click={() => {sliderVal[1] = data.recommendedDifficulty; sliderVal[0] = 0}}>
+						╨а╨╡╨║╨╛╨╝╨╡╨╜╨┤╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╤Г╤А╨╛╨▓╨╡╨╜╤М: {data.recommendedDifficulty}
+
+d:\Documents\lingo\src\routes\(protected)\decks\browse\+page.svelte:70:12
+Error: Type '{ value: number[]; max: number; step: number; class: string; }' is not assignable to type 'WithoutChildrenOrChild<SliderRootProps> | undefined'.
+  Property 'type' is missing in type '{ value: number[]; max: number; step: number; class: string; }' but required in type 'Omit<Omit<SliderMultiRootPropsWithoutHTML, "child" | "children"> & { child?: Snippet<[SliderRootSnippetProps & { props: Record<string, unknown>; }]> | undefined; children?: Snippet<[SliderRootSnippetProps]> | undefined; style?: any; ref?: HTMLElement | null | undefined; } & Without<BitsPrimitiveSpanAttributes, SliderRootPropsWithoutHTML>, "child" | "children">'. (ts)
+					<span>0</span>
+					<Slider bind:value={sliderVal} max={5} step={1} class="max-w-[70%]" />
+					<span>5</span>
+
+d:\Documents\lingo\src\routes\(protected)\decks\create\+page.svelte:16:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const form = superForm(data.form, {
+		validators: zodClient(createDeckSchema)
+
+d:\Documents\lingo\src\routes\(protected)\decks\create\+page.svelte:17:25
+Error: Argument of type 'ZodObject<Pick<{ deckId: ZodOptional<ZodString>; name: ZodString; description: ZodOptional<ZodString>; public: ZodDefault<ZodBoolean>; addToStudy: ZodDefault<ZodBoolean>; authorId: ZodString; }, "name" | "public" | "description" | "addToStudy">, "strip", ZodTypeAny, { name: string; public: boolean; addToStudy: boolean; description?: string | undefined; }, { name: string; public?: boolean | undefined; description?: string | undefined; addToStudy?: boolean | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const form = superForm(data.form, {
+		validators: zodClient(createDeckSchema)
+	});
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.svelte:24:34
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { data }: Props = $props();
+	const word_url = `/dictionary/${data.word.id}`;
+	const commentForm = superForm(data.commentForm, {
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.svelte:25:32
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	const word_url = `/dictionary/${data.word.id}`;
+	const commentForm = superForm(data.commentForm, {
+		validators: zodClient(commentSchema)
+
+d:\Documents\lingo\src\routes\(protected)\dictionary\[id]\+page.svelte:26:25
+Error: Argument of type 'ZodObject<{ topicId: ZodString; comment: ZodString; potentialTopicName: ZodString; type: ZodOptional<ZodEnum<["text", "markdown"]>>; }, "strip", ZodTypeAny, { topicId: string; comment: string; potentialTopicName: string; type?: "text" | "markdown" | undefined; }, { topicId: string; comment: string; potentialTopicName: string; type?: "text" | "markdown" | undefined; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const commentForm = superForm(data.commentForm, {
+		validators: zodClient(commentSchema)
+	});
+
+d:\Documents\lingo\src\routes\(protected)\profile\+page.svelte:18:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const form = superForm(data.form, {
+		validators: zodClient(editUserSchema),
+
+d:\Documents\lingo\src\routes\(protected)\profile\+page.svelte:19:25
+Error: Argument of type 'ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "email" | "firstName" | "lastName">, "strip", ZodTypeAny, { email: string; firstName: string; lastName: string; }, { email: string; firstName: string; lastName: string; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const form = superForm(data.form, {
+		validators: zodClient(editUserSchema),
+		resetForm: false
+
+d:\Documents\lingo\src\routes\(protected)\profile\+page.svelte:51:17
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+				<div class="mt-6 text-center text-sm mb-6">
+					<Button on:click={() => goto('/auth/password/reset')} class="w-full" variant="outline"
+						>╨Ш╨╖╨╝╨╡╨╜╨╕╤В╤М ╨┐╨░╤А╨╛╨╗╤М</Button>
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:48:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				data: [
+					data.stateCount.new,
+					data.stateCount.learning,
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:49:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+					data.stateCount.new,
+					data.stateCount.learning,
+					data.stateCount.relearning,
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:50:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+					data.stateCount.learning,
+					data.stateCount.relearning,
+					data.stateCount.review
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:51:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+					data.stateCount.relearning,
+					data.stateCount.review
+				],
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:58:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const labels = Object.keys(data.reviewData.new);
+	const lineData = {
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:64:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Э╨╛╨▓╤Л╨╡',
+				data: Object.values(data.reviewData.new) as number[],
+				backgroundColor: 'rgb(59 130 246)'
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:69:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Ш╨╖╤Г╤З╨░╤О╤В╤Б╤П',
+				data: Object.values(data.reviewData.learning) as number[],
+				backgroundColor: 'rgb(249 115 22)'
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:74:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Ч╨░╨▒╤Л╤В╤Л',
+				data: Object.values(data.reviewData.relearning) as number[],
+				backgroundColor: 'rgb(239 68 68)'
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:79:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Я╨╛╨▓╤В╨╛╤А╤П╤О╤В╤Б╤П',
+				data: Object.values(data.reviewData.review) as number[],
+				backgroundColor: 'rgb(34 197 94)'
+
+d:\Documents\lingo\src\routes\(protected)\profile\stats\+page.svelte:85:6
+Error: Type 'Element | undefined' is not assignable to type 'Element'.
+  Type 'undefined' is not assignable to type 'Element'. (ts)
+	let CalHeatMap: any;
+	let mapCont: Element = $state();
+	onMount(async () => {
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.svelte:21:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const goodForm = superForm(data.goodForm, {
+		validators: zodClient(gradeCardSchema),
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.svelte:26:30
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	});
+	const againForm = superForm(data.againForm, {
+		validators: zodClient(gradeCardSchema),
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.svelte:31:33
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	});
+	const settingsForm = superForm(data.settingsForm, {
+		validators: zodClient(studyDeckSettingsSchema),
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.svelte:22:25
+Error: Argument of type 'ZodObject<{ studyCardId: ZodString; direction: ZodString; }, "strip", ZodTypeAny, { studyCardId: string; direction: string; }, { studyCardId: string; direction: string; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const goodForm = superForm(data.goodForm, {
+		validators: zodClient(gradeCardSchema),
+		id: 'good',
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.svelte:27:25
+Error: Argument of type 'ZodObject<{ studyCardId: ZodString; direction: ZodString; }, "strip", ZodTypeAny, { studyCardId: string; direction: string; }, { studyCardId: string; direction: string; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const againForm = superForm(data.againForm, {
+		validators: zodClient(gradeCardSchema),
+		id: 'again',
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\+page.svelte:32:25
+Error: Argument of type 'ZodObject<{ timer: ZodNumber; limit: ZodNumber; }, "strip", ZodTypeAny, { timer: number; limit: number; }, { timer: number; limit: number; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const settingsForm = superForm(data.settingsForm, {
+		validators: zodClient(studyDeckSettingsSchema),
+		resetForm: false
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:47:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				data: [
+					data.stateCount.New,
+					data.stateCount.Learning,
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:48:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+					data.stateCount.New,
+					data.stateCount.Learning,
+					data.stateCount.Relearning,
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:49:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+					data.stateCount.Learning,
+					data.stateCount.Relearning,
+					data.stateCount.Review
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:50:6
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+					data.stateCount.Relearning,
+					data.stateCount.Review
+				],
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:57:29
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const labels = Object.keys(data.reviewData.new);
+	const lineData = {
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:63:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Э╨╛╨▓╤Л╨╡',
+				data: Object.values(data.reviewData.new),
+				backgroundColor: 'rgb(59 130 246)'
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:68:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Ш╨╖╤Г╤З╨░╤О╤В╤Б╤П',
+				data: Object.values(data.reviewData.learning),
+				backgroundColor: 'rgb(249 115 22)'
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:73:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Ч╨░╨▒╤Л╤В╤Л',
+				data: Object.values(data.reviewData.relearning),
+				backgroundColor: 'rgb(239 68 68)'
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:78:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+				label: '╨Я╨╛╨▓╤В╨╛╤А╤П╤О╤В╤Б╤П',
+				data: Object.values(data.reviewData.review),
+				backgroundColor: 'rgb(34 197 94)'
+
+d:\Documents\lingo\src\routes\(protected)\study\[id]\stats\+page.svelte:84:6
+Error: Type 'Element | undefined' is not assignable to type 'Element'.
+  Type 'undefined' is not assignable to type 'Element'. (ts)
+	let CalHeatMap: any;
+	let mapCont: Element = $state();
+	onMount(async () => {
+
+d:\Documents\lingo\src\routes\auth\password\reset\+page.svelte:15:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { data }: Props = $props();
+	const form = superForm(data.form, {
+		validators: zodClient(resetPasswordSchema)
+
+d:\Documents\lingo\src\routes\auth\password\reset\+page.svelte:16:25
+Error: Argument of type 'ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "email">, "strip", ZodTypeAny, { email: string; }, { email: string; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const form = superForm(data.form, {
+		validators: zodClient(resetPasswordSchema)
+	});
+
+d:\Documents\lingo\src\routes\auth\password\update-[token]\+page.svelte:15:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { data }: Props = $props();
+	const form = superForm(data.form, {
+		validators: zodClient(userUpdatePasswordSchema)
+
+d:\Documents\lingo\src\routes\auth\password\update-[token]\+page.svelte:16:25
+Error: Argument of type 'ZodEffects<ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "password" | "confirmPassword">, "strip", ZodTypeAny, { password: string; confirmPassword: string; }, { password: string; confirmPassword: string; }>, { password: string; confirmPassword: string; }, { password: string; confirmPassword: string; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const form = superForm(data.form, {
+		validators: zodClient(userUpdatePasswordSchema)
+	});
+
+d:\Documents\lingo\src\routes\auth\sign-in\+page.svelte:18:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { data }: Props = $props();
+	const form = superForm(data.form, {
+		validators: zodClient(signInSchema)
+
+d:\Documents\lingo\src\routes\auth\sign-in\+page.svelte:19:25
+Error: Argument of type 'ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "email" | "password">, "strip", ZodTypeAny, { email: string; password: string; }, { email: string; password: string; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const form = superForm(data.form, {
+		validators: zodClient(signInSchema)
+	});
+
+d:\Documents\lingo\src\routes\auth\sign-up\+page.svelte:17:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const form = superForm(data.form, {
+		validators: zodClient(signUpSchema)
+
+d:\Documents\lingo\src\routes\auth\sign-up\+page.svelte:18:25
+Error: Argument of type 'ZodObject<Pick<{ firstName: ZodString; lastName: ZodString; email: ZodString; password: ZodString; confirmPassword: ZodString; role: ZodDefault<ZodEnum<["USER", "PREMIUM", "ADMIN"]>>; verified: ZodDefault<ZodBoolean>; terms: ZodLiteral<boolean>; token: ZodOptional<ZodString>; receiveEmail: ZodDefault<ZodBoolean>; createdAt: ZodOptional<ZodDate>; updatedAt: ZodOptional<ZodDate>; }, "email" | "firstName" | "lastName" | "password" | "terms">, "strip", ZodTypeAny, { email: string; firstName: string; lastName: string; password: string; terms: boolean; }, { email: string; firstName: string; lastName: string; password: string; terms: boolean; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const form = superForm(data.form, {
+		validators: zodClient(signUpSchema)
+	});
+
+d:\Documents\lingo\src\routes\auth\sign-up\+page.svelte:59:27
+Error: Property 'attrs' does not exist on type '{ props: { name: string; id: string; "data-fs-error": string | undefined; "aria-describedby": string | undefined; "aria-invalid": "true" | undefined; "aria-required": "true" | undefined; "data-fs-control": string; }; }'. (ts)
+				<Form.Control>
+					{#snippet children({ attrs })}
+						<Checkbox {...attrs} bind:checked={$formData.terms} />
+
+d:\Documents\lingo\src\routes\tutorial\+page.svelte:14:28
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let { data }: Props = $props();
+    const form = superForm(data.skipForm, {
+		validators: zodClient(skipSchema)
+
+d:\Documents\lingo\src\routes\tutorial\test\+page.svelte:18:25
+Warn: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	const form = superForm(data.form, {
+		validators: zodClient(finishTutorialSchema)
+
+d:\Documents\lingo\src\routes\tutorial\test\+page.svelte:19:25
+Error: Argument of type 'ZodObject<{ rating: ZodNumber; }, "strip", ZodTypeAny, { rating: number; }, { rating: number; }>' is not assignable to parameter of type 'ZodObjectType'. (ts)
+	const form = superForm(data.form, {
+		validators: zodClient(finishTutorialSchema)
+	});
+
+d:\Documents\lingo\src\routes\tutorial\test\+page.svelte:150:14
+Error: Argument of type 'string' is not assignable to parameter of type 'never'. (ts)
+		</div>
+		<Button on:click={() => (level = calculateLanguageLevel())}>╨Ч╨░╨▓╨╡╤А╤И╨╕╤В╤М</Button>
+	{:else}
+
+====================================
+svelte-check found 192 errors and 65 warnings in 70 files
+тАЙELIFECYCLEтАЙ Command failed with exit code 1.

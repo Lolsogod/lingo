@@ -3,7 +3,11 @@
 	import { AlertCircle } from 'lucide-svelte';
 	import type { SuperForm } from 'sveltekit-superforms';
 
-	export let errors: SuperForm<any>['errors'];
+	interface Props {
+		errors: SuperForm<any>['errors'];
+	}
+
+	let { errors }: Props = $props();
 </script>
 
 {#if $errors._errors?.length}
